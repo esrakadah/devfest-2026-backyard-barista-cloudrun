@@ -11,7 +11,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
             title: '1. Backyard Barista on Cloud Run',
             speakerNotes:
                 'BEAT  [00:00 - 02:00] Enerjik Açılış ve Sözleşme. Salonu selamla, iki cümlelik GDE girişini yap ve herkesin bugün çalışan bir oyunla çıkacağını ilan et.\n'
-                'SAY   "Ben Esra Kadah, Berlin\'de Antigua Mobile\'da Senior Flutter ve AI Engineer olarak çalışıyorum ve Flutter ile Dart alanında Google Developer Expert\'im. Önümüzdeki oturumda size sadece slayt göstermeyeceğim: Google AI Studio, Antigravity ve Flutter ile çok oyunculu bir AI kafe oyununu Google Cloud Run üzerinde canlıya alacağız ve gerçek rakamları konuşacağız."\n'
+                'SAY   "Ben Esra Kadah, Berlin\'de Antigua Mobile\'da Tech Lead, Senior Flutter ve AI Engineer olarak çalışıyorum ve Flutter ile Dart alanında Google Developer Expert\'im. Önümüzdeki oturumda size sadece slayt göstermeyeceğim: Google AI Studio, Antigravity ve Flutter ile çok oyunculu bir AI kafe oyununu Google Cloud Run üzerinde canlıya alacağız ve gerçek rakamları konuşacağız."\n'
                 'HOLD  İlk iki cümleyi ekrana bakmadan, doğrudan salonun gözlerinin içine bakarak söyle. "Google adına değil, sahadaki bir mühendis olarak" vurgusunu net tut.\n'
                 'NEXT  "Peki bugün bu salondan kim, ne kazanarak çıkacak? Hemen kurallarımıza ve ödüllerimize bakalım."',
             footer: FlutterDeckFooterConfiguration(showFooter: false),
@@ -131,7 +131,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Senior Flutter & AI Engineer · Antigua Mobile Berlin',
+                      'Tech Lead, Senior Flutter & AI Engineer · Antigua Mobile Berlin',
                       textAlign: TextAlign.center,
                       style: textTheme.bodySmall,
                     ),

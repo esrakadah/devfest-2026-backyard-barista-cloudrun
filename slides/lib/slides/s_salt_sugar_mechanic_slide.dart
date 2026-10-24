@@ -8,7 +8,7 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/salt-sugar-mechanic',
-            title: "10. Today's Game Mechanic: Tatli mi Tuzlu mu?",
+            title: "10. Today's Game Mechanic: Tatlı mı Tuzlu mu?",
             speakerNotes:
                 'BEAT  [20:30 - 22:30] Oyun Mekaniği ("Tatlı mı Tuzlu mu?") ve Yapılandırılmış JSON Şeması (CafeReview).\n'
                 'SAY   "Oyunumuzun kalbinde çok basit ama çok komik bir mekanik var: iki oyuncu tezgahtaki içecek ve tatlılara tıklayarak sipariş tepsisini hazırlıyor. Ancak tezgahta Şeker kavanozunun hemen yanında ikizi gibi duran Tuzluk ve Acı Sos var! Üstelik arayüzde kırmızı bir ŞAKA uyarısı göstermiyoruz; sadece tepsiye gizlice tuz eklendiğinde küçük bir göz kırpma ikonu (🤫 😉) beliriyor. Servis Et butonuna bastığınızda Gemini yapılandırılmış JSON şemamız üzerinden siparişi denetliyor ve tatlıya tuz atıldıysa ratingStars: 1, tasteVerdict: salty_sabotage ve şehre özel komik bir müşteri tepkisi döndürüyor."\n'
@@ -43,8 +43,8 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         return const SlideFrame(
           eyebrow: 'SLIDE 10 · GAME MECHANIC & STRUCTURED JSON SCHEMA',
-          title: 'Tatli mi Tuzlu mu? Stealth Pranks Meets Structured JSON',
-          subtitle: 'Sneaking Salt (Tuz) next to Sugar (Seker) triggers a deterministic 1-star Gemini roast',
+          title: 'Tatlı mı Tuzlu mu? Stealth Pranks Meets Structured JSON',
+          subtitle: 'Sneaking Salt (Tuz) next to Sugar (Şeker) triggers a deterministic 1-star Gemini roast',
           child: Row(
             children: [
               Expanded(
@@ -58,7 +58,7 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
                         Expanded(
                           child: CafeAssetThumb(
                             assetFileName: 'baklava.png',
-                            label: 'Fistikli Baklava',
+                            label: 'Fıstıklı Baklava',
                             badgeText: 'Sweet Food',
                             borderColor: DeckColors.googleGreen,
                           ),
@@ -67,7 +67,7 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
                         Expanded(
                           child: CafeAssetThumb(
                             assetFileName: 'sugar_jar.png',
-                            label: 'Seker (Sugar)',
+                            label: 'Şeker (Sugar)',
                             badgeText: '5-Star Twin',
                             borderColor: DeckColors.halftoneBlue,
                           ),

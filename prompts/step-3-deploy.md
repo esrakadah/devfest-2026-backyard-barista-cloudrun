@@ -17,9 +17,11 @@ flutter analyze
 flutter test
 
 # 2. Deploy the containerized Flutter Web app to Google Cloud Run from source
+# Note: flutter_client/Dockerfile bakes DEFAULT_CITY and GEMINI_MODEL at Docker build time via --dart-define
+# and runs in deterministic offline mode unless GEMINI_API_KEY is supplied at build time (whereas Path A's
+# AI Studio Cloud Run service proxies GEMINI_API_KEY server-side).
 gcloud run deploy backyard-barista \
   --source . \
   --region europe-west1 \
-  --allow-unauthenticated \
-  --set-env-vars="DEFAULT_CITY=gaziantep,GEMINI_MODEL=gemini-3.5-flash-lite"
+  --allow-unauthenticated
 ```

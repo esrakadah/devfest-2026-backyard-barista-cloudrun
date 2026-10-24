@@ -1,6 +1,6 @@
 name: backyard_barista_cloudrun
 description: >
-  Backyard Barista on Cloud Run: Tatli mi Tuzlu mu? DevFest 2026 Hands-On
+  Backyard Barista on Cloud Run: Tatlı mı Tuzlu mu? DevFest 2026 Hands-On
   Workshop & Vibe Lounge multiplayer AI cafe game with 4 City Editions.
 publish_to: 'none'
 version: 1.0.0+1

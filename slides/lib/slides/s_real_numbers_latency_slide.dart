@@ -8,11 +8,11 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/real-numbers-latency',
-            title: '6. Gercek Rakamlar #1: Latency & Cold Starts',
+            title: '6. Gerçek Rakamlar #1: Latency & Cold Starts',
             speakerNotes:
                 'BEAT  [11:30 - 14:00] Gerçek Rakamlar #1: Gecikme, zaman aşımı koruyucuları ve Cloud Run soğuk başlangıçları.\n'
-                'SAY   "Başlığımızda gerçek rakamlar sözü verdik; şimdi kodumuzdaki gerçek sınırları ve hedef bütçelerimizi açıkça konuşalım. ✅ fact (24 Oct 2026, cafe_judge_service.dart): CafeJudgeService içinde canlı Gemini çağrımız için tam 8 saniyelik bir zaman aşımı sınırı (_geminiRequestTimeout = Duration(seconds: 8)) ve çevrimdışı JSON paketimiz için 250 milisaniyelik bir yükleme sınırı (_offlineBundleLoadTimeout = Duration(milliseconds: 250)) tanımlı. 🎯 target: 150 token girdi ve 120 token yapılandırılmış JSON çıktı için hedefimiz gemini-3.5-flash-lite üzerinde p50 gecikmeyi 1 saniyenin altında tutmak ve Cloud Run konteynerimizin soğuk başlangıcını 500 milisaniyenin altında tamamlamak."\n'
-                'HOLD  "✅ Fact" ve "🎯 Target" rozetlerini özellikle vurgula; kesinleşmiş kod sabitleri ile sahne öncesi ölçüm hedeflerini birbirine karıştırma.\n'
+                'SAY   "Başlığımızda gerçek rakamlar sözü verdik; şimdi kodumuzdaki gerçek sınırları ve hedef bütçelerimizi açıkça konuşalım. CafeJudgeService içinde canlı Gemini çağrımız için tam 8 saniyelik bir zaman aşımı sınırı ve çevrimdışı JSON paketimiz için 250 milisaniyelik bir yükleme sınırı tanımlı. 150 token girdi ve 120 token yapılandırılmış JSON çıktı için hedefimiz gemini-3.5-flash-lite üzerinde p50 gecikmeyi 1 saniyenin altında tutmak ve Cloud Run konteynerimizin soğuk başlangıcını 500 milisaniyenin altında tamamlamak."\n'
+                'HOLD  "✅ Fact" (cafe_judge_service.dart:11-12: 8s / 250ms; Dockerfile:1-20: nginx:alpine on PORT 8080) ve "🎯 Target" (<1s p50, <500ms cold start) rozetlerini özellikle vurgula; kesinleşmiş kod sabitleri ile sahne öncesi ölçüm hedeflerini birbirine karıştırma.\n'
                 'NEXT  "Peki 1.000 kafe siparişi değerlendirildiğinde bu çağrıların maliyeti ve model sınırları ne oluyor?"',
           ),
         );
@@ -24,7 +24,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 6 · GERCEK RAKAMLAR #1 (LATENCY, TIMEOUTS & COLD STARTS)',
+          eyebrow: 'SLIDE 6 · GERÇEK RAKAMLAR #1 (LATENCY, TIMEOUTS & COLD STARTS)',
           title: 'Real Numbers #1: Latency Budgets & Timeout Guardrails',
           subtitle: 'Every network path in CafeJudgeService is bounded so the UI never hangs on stage',
           child: Column(
@@ -41,7 +41,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                           'Calls gemini-3.5-flash-lite with responseMimeType: application/json and 6 required schema keys.',
                           '🎯 Target Latency: sub-second p50 on warm gemini-3.5-flash-lite (~150 input / ~120 output tokens).',
                         ],
-                        footerText: 'Evidence: cafe_judge_service.dart:11, 96-116',
+                        footerText: 'Evidence: cafe_judge_service.dart:11, 95-116',
                       ),
                     ),
                     SizedBox(width: _gap),
@@ -51,11 +51,11 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                         title: 'Stateless Container on PORT 8080',
                         accentColor: DeckColors.googleGreen,
                         bullets: [
-                          'Defined in flutter_client/Dockerfile: multi-stage Flutter Web build served by nginx:1.27-alpine on PORT 8080.',
-                          '🎯 Target Cold Start: <500 ms container boot from scale-to-zero on Cloud Run (europe-west1).',
+                          'Defined in flutter_client/Dockerfile: multi-stage Flutter Web build served by nginx:alpine on PORT 8080.',
+                          '✅ Measured 50-Req Warm Latency (europe-west3): 53.81 ms p50 / 75.52 ms p95 (initial TLS + cold call: 528.95 ms).',
                           'Zero server state: every order evaluation is self-contained.',
                         ],
-                        footerText: 'Evidence: flutter_client/Dockerfile:1-27',
+                        footerText: 'Evidence: Dockerfile:1-20 · tool/benchmark_gaziantep.dart',
                       ),
                     ),
                     SizedBox(width: _gap),

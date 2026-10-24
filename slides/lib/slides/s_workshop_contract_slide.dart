@@ -73,7 +73,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                           'Scan deployed .run.app QR codes from the stage wall.',
                           'Sneak Salt (Tuz) into sweet orders to test the AI Judge!',
                         ],
-                        footerText: '<600px responsive 2-column mobile counter',
+                        footerText: '<620px responsive 2-column mobile counter',
                       ),
                     ),
                   ],

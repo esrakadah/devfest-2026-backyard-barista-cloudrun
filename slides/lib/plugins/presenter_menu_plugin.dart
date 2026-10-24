@@ -27,7 +27,7 @@ const List<PresenterSection> presenterSections = [
   PresenterSection(icon: Icons.title, label: '1. Title & City Editions', route: '/title'),
   PresenterSection(icon: Icons.emoji_events, label: '2. Workshop Lanes & Prizes', route: '/workshop-contract'),
   PresenterSection(icon: Icons.auto_awesome, label: '3. AI Studio & Antigravity', route: '/ai-studio-pipeline'),
-  PresenterSection(icon: Icons.speed, label: '6. Gercek Rakamlar (Benchmarks)', route: '/real-numbers-latency'),
+  PresenterSection(icon: Icons.speed, label: '6. Gerçek Rakamlar (Benchmarks)', route: '/real-numbers-latency'),
   PresenterSection(icon: Icons.public, label: '9. Multi-City Remote Config', route: '/multi-city-remote-config'),
   PresenterSection(icon: Icons.restaurant_menu, label: '10. Salt vs Sugar & Assets', route: '/salt-sugar-mechanic'),
   PresenterSection(icon: Icons.timer, label: '12. Live Build Dashboard', route: '/live-build-dashboard'),

@@ -267,6 +267,7 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
           }
 
           final remainingSeconds = (_totalSipSeconds * (1.0 - sipProgress)).clamp(0.0, _totalSipSeconds);
+          final badgeEmoji = widget.badgeEmoji;
 
           return SizedBox(
             width: widget.avatarSize + 18,
@@ -355,7 +356,7 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
                     ),
                   ),
                 // Layer 6: Character Persona / Mood Badge Pill
-                if (widget.badgeEmoji != null)
+                if (badgeEmoji != null)
                   Positioned(
                     right: -2,
                     bottom: -2,
@@ -374,7 +375,7 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
                         ],
                       ),
                       child: Text(
-                        _effectiveSipping ? '🫖✨' : widget.badgeEmoji!,
+                        _effectiveSipping ? '🫖✨' : badgeEmoji,
                         style: const TextStyle(fontSize: 11),
                       ),
                     ),
@@ -451,7 +452,7 @@ class _TurkishTeaGlassSipPainter extends CustomPainter {
     // Start near bottom-right of avatar, lift toward the character's mouth (center-right)
     final startCenter = Offset(size.width * 0.80, size.height * 0.82);
     final mouthCenter = Offset(size.width * 0.62, size.height * 0.54);
-    final cupCenter = Offset.lerp(startCenter, mouthCenter, liftProgress)!;
+    final cupCenter = Offset.lerp(startCenter, mouthCenter, liftProgress) ?? startCenter;
 
     // Tea liquid level drops from 88% full down to 24% full across the 5 seconds
     final teaFillFraction = (0.88 - (0.64 * sipProgress)).clamp(0.24, 0.88);
@@ -713,7 +714,7 @@ class CafeCrewCharacterStage extends StatelessWidget {
     }
     final currentReview = latestReview;
     if (currentReview != null) {
-      return currentReview.isPrankCaught ? CafeCharacterMood.sweetCelebration : CafeCharacterMood.sweetCelebration;
+      return CafeCharacterMood.sweetCelebration;
     }
     if (_hasPrankOnTray) {
       return CafeCharacterMood.stealthPrankWink;

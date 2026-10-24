@@ -10,7 +10,7 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
             route: '/winner-podium-closing',
             title: '14. Winner Podium, Vibe Lounge Badge & Q&A',
             speakerNotes:
-                'BEAT  [63:00 - 80:00] 60 Saniyelik Sahne Demoları, Google Piksel Gözlük + Dash Ödül Töreni, Vibe Lounge Rozeti ve Q&A.\n'
+                'BEAT  [65:00 - 80:00] 60 Saniyelik Sahne Demoları, Google Piksel Gözlük + Dash Ödül Töreni, Vibe Lounge Rozeti ve Q&A.\n'
                 'SAY   "Şimdi en heyecanlı an! Oyununu Cloud Run (.run.app) veya GitHub üzerinde yayınlayan arkadaşlarımızı 60 saniyelik canlı demoları için sahneye davet ediyorum. Tatlı siparişine tuz şakası yapıp 1 yıldızlı yorumu canlı gösteren en yaratıcı kafelere 4 adet Google renkli piksel gözlüğümüzü ve Dash hediyelerimizi takdim ediyoruz! Ayrıca herkes ekrandaki goo.gle/devfest26-vibe-lounge adresinden resmi DevFest 2026 Vibe Lounge rozetini alabilir. Hepinize enerjiniz ve harika oyunlarınız için çok teşekkür ederim, şimdi sorularınızı alabiliriz!"\n'
                 'HOLD  Kazananlara gözlüklerini takdim ettikten sonra tüm salonla birlikte gözlükleri takıp büyük bir grup fotoğrafı çek. Ardından Q&A sorularını mikrofonda tekrar ederek yanıtla.\n'
                 'NEXT  "Q&A ve grup fotoğrafı. Soruları mikrofonda tekrar et."',
@@ -52,7 +52,7 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                   bullets: [
                     'Claim your DevFest 2026 Vibe Lounge Badge: goo.gle/devfest26-vibe-lounge',
                     'Starter Repo & Slides: github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
-                    'Speaker: Esra Kadah · @esrakadah · esra.tech',
+                    'Speaker: Esra Kadah · Tech Lead, Senior Flutter & AI Engineer · @esrakadah · esra.tech',
                     'Google Developer Expert, Flutter & Dart · Does not speak for Google',
                   ],
                   footerText: "Questions? Let's talk Cloud Run, Firebase AI Logic & Flutter!",

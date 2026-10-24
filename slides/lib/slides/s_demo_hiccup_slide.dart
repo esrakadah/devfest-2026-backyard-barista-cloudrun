@@ -9,7 +9,7 @@ class DemoHiccupSlide extends FlutterDeckSlideWidget {
             route: '/demo-hiccup',
             title: 'Backup: Demo Hiccup & Offline Mode',
             speakerNotes: 'BEAT  [BACKUP] Konferans Wi-Fi Bağlantısı Kesildiğinde Cankurtaran Slaydı.\n'
-                'SAY   "Konferans Wi-Fi ağımız şu an300 kişinin yüklenmesiyle kısa bir mola verdi; ama mimarimizi tam da bu an için tasarladık! Şimdi uygulamamızı OFFLINE_MODE=true bayrağıyla veya doğrudan yerel mock_responses.json yedeğimizle çalıştırıp 4 şehrin tamamında şaka testlerimize sıfır kesintiyle devam ediyoruz."\n'
+                'SAY   "Konferans Wi-Fi ağımız şu an 300 kişinin yüklenmesiyle kısa bir mola verdi; ama mimarimizi tam da bu an için tasarladık! Şimdi uygulamamızı OFFLINE_MODE=true bayrağıyla veya doğrudan yerel mock_responses.json yedeğimizle çalıştırıp 4 şehrin tamamında şaka testlerimize sıfır kesintiyle devam ediyoruz."\n'
                 'HOLD  Sakin kal, gülümse ve yerel sekmedeki çevrimdışı çalışan Flutter Web örneğine geç.\n'
                 'NEXT  "Canlı inşa panosuna (/live-build-dashboard) geri dön."',
           ),

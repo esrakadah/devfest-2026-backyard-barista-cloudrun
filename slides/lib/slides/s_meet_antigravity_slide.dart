@@ -11,8 +11,8 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
             title: '4. Meet Google Antigravity',
             speakerNotes:
                 'BEAT  [07:30 - 09:30] Google Antigravity ile çoklu dosya düzenleme ve yerinde vektör/widget üretimi.\n'
-                'SAY   "Tarayıcıda prototiplemek harika; peki gerçek bir Flutter projesinde aynı anda hem veri kataloğunu, hem özel çizim sınıfını, hem de JSON şemasını nasıl güncelliyoruz? İşte burada Google Antigravity devreye giriyor. Antigravity içinde Cmd+I veya Agent Mode kullanarak kafemize yeni bir imza tatlısı ekle dediğimizde, dışarıdan kırık bir resim dosyası aramak yerine doğrudan CustomPainter veya inline SVG kodunu üretip ingredients_catalog.dart içine bağlıyor."\n'
-                'HOLD  Sağ taraftaki CustomCupcakePainting ve ingredients_catalog.dart kod kutusunu işaret et.\n'
+                'SAY   "Tarayıcıda prototiplemek harika; peki gerçek bir Flutter projesinde aynı anda hem veri kataloğunu, hem özel çizim sınıfını, hem de JSON şemasını nasıl güncelliyoruz? İşte burada Google Antigravity devreye giriyor. Antigravity içinde Cmd+I veya Agent Mode kullanarak kafemize yeni bir imza tatlısı ekle dediğimizde, dışarıdan kırık bir resim dosyası aramak yerine doğrudan CustomVectorIngredientGraphic çizim kodunu üretip ingredients_catalog.dart içindeki roundTwoCustomItems listesine bağlıyor."\n'
+                'HOLD  Sağ taraftaki roundTwoCustomItems (custom_katmer_roll ve custom_isot_pepper) ve CustomVectorArtworkKind kod kutusunu işaret et.\n'
                 'NEXT  "Burada çok önemli bir mimari kararımız var: neden bu oyunda Flame oyun motoru yerine saf Flutter widget\'ları kullandık?"',
           ),
         );
@@ -20,25 +20,33 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
   static const double _columnGap = 28;
 
   static const String _antigravitySnippet = '''
-// Generated in seconds with Google Antigravity Agent Mode:
-// flutter_client/lib/data/ingredients_catalog.dart
-CafeIngredient(
-  id: 'custom_cupcake',
-  titleEn: 'AI Studio Berry Cupcake',
-  titleTr: 'AI Studio Orman Meyveli Cupcake',
-  category: IngredientCategory.food,
-  assetPath: null, // Rendered via on-the-fly CustomPainter / SVG!
-  customGeneratedKind: 'cupcake',
-  isSweet: true,
-),
-CafeIngredient(
-  id: 'custom_garlic_prank',
-  titleEn: 'Whipped Garlic Cream (Prank!)',
-  titleTr: 'Sarımsaklı Krem Şanti (Şaka!)',
-  category: IngredientCategory.toppingOrPrank,
-  customGeneratedKind: 'garlic_sauce',
-  prankKind: 'salt', // Triggers 1-star Gemini JSON roast!
-),''';
+// flutter_client/lib/data/ingredients_catalog.dart (Lines 183-208)
+static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
+  CafeIngredient(
+    id: 'custom_katmer_roll',
+    titleEn: 'AI Custom: Katmer Roll',
+    titleTr: 'AI Özel: Fıstıklı Katmer Sarma',
+    subtitleEn: 'Crispy Phyllo · Kaymak & Pistachio',
+    subtitleTr: 'Çıtır Yufka · Kaymak & Boz Fıstık',
+    category: IngredientCategory.food,
+    isPrankItem: false,
+    prankKind: 'none',
+    assetPath: 'assets/base/foods/katmer_roll.png',
+    customVectorKind: CustomVectorArtworkKind.pistachioKatmerRoll,
+  ),
+  CafeIngredient(
+    id: 'custom_isot_pepper',
+    titleEn: 'AI Flakes: İsot Pepper',
+    titleTr: 'AI Özel: İsot Biberi',
+    subtitleEn: 'Smoky Urfa Chili Flakes',
+    subtitleTr: 'İsli Urfa & Antep İsotu',
+    category: IngredientCategory.toppingOrPrank,
+    isPrankItem: true,
+    prankKind: 'chili',
+    assetPath: 'assets/base/toppings_pranks/isot_pepper.png',
+    customVectorKind: CustomVectorArtworkKind.isotPepperShaker,
+  ),
+];''';
 
   @override
   FlutterDeckSlide build(BuildContext context) {

@@ -33,7 +33,7 @@ class BackyardBaristaDeckApp extends StatelessWidget {
       darkTheme: PresentationTheme.darkTheme,
       speakerInfo: const FlutterDeckSpeakerInfo(
         name: 'Esra Kadah',
-        description: 'Google Developer Expert, Flutter & Dart · Antigua Mobile Berlin',
+        description: 'Google Developer Expert, Flutter & Dart · Tech Lead, Senior Flutter & AI Engineer',
         socialHandle: '@esrakadah',
         imagePath: 'assets/images/esra.png',
       ),

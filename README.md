@@ -1,7 +1,7 @@
 # Backyard Barista on Cloud Run: Tatlı mı Tuzlu mu? ☕🥐🧂☁️
 
 **DevFest 2026 Hands-On Workshop & Vibe Lounge Starter Repository**
-- **Author:** Esra Kadah (Flutter & Dart GDE, Senior Flutter & AI Engineer)
+- **Author:** Esra Kadah (Flutter & Dart GDE · Tech Lead, Senior Flutter & AI Engineer at Antigua Mobile Berlin)
 - **Live Cloud Run Reference App (`europe-west1` · 3D Characters + Lottie):** `https://backyard-barista-870328613866.europe-west1.run.app` (`soundstage-dea29`)
 - **Live Cloud Run Mirror (`europe-west3`):** `https://backyard-barista-389486729482.europe-west3.run.app` (`devfest-backyard-barista-2026`)
 - **City Editions Included:**
@@ -16,7 +16,7 @@
 
 A zero-typing, tap-to-serve 2-player AI Cafe Game where players assemble **Drinks** (`Espresso`, `Milk`, `Menengiç Kahvesi`) and **Simple Foods** (`Croissant`, `San Sebastian Cheesecake`, `Baklava`) by tapping ingredients on the counter.
 
-Right next to the **Sugar (`Şeker`)** jar sits a deceptive **Salt (`Tuz`)** shaker and **Chili Sauce (`Acı Sos`)**! If a player sneaks Salt into a sweet order, **Gemini (`gemini-3.5-flash-lite` via `firebase_ai` or Google Cloud Run)** catches the sabotage in its structured JSON review (`ratingStars: 1`, `tasteVerdict: "salty_sabotage"`, `customerReaction`) and roasts the barista with a city-specific joke.
+Right next to the **Sugar (`Şeker`)** jar sits a deceptive **Salt (`Tuz`)** shaker and **Chili Sauce (`Acı Sos`)**! If a player sneaks Salt into a sweet order, **Gemini (`gemini-3.5-flash-lite` via REST `generateContent` in `package:http` for zero-setup workshops, or `firebase_ai` + App Check in production)** catches the sabotage in its structured JSON review (`ratingStars: 1`, `tasteVerdict: "salty_sabotage"`, `customerReaction`) and roasts the barista with a city-specific joke.
 
 ---
 
@@ -28,7 +28,7 @@ Right next to the **Sugar (`Şeker`)** jar sits a deceptive **Salt (`Tuz`)** sha
 3. Copy and paste [`prompts/step-2-custom-dish.md`](prompts/step-2-custom-dish.md) to generate your own **Custom Signature Dish SVG** and **Custom Prank Ingredient SVG** on the fly, wired to the Gemini JSON customer judge.
 4. Follow [`prompts/step-3-deploy.md`](prompts/step-3-deploy.md) to click **Deploy to Cloud Run** (`.run.app`, no credit card required on AI Studio Starter Tier) and **Sync to GitHub**.
 
-### Lane B: Flutter + `firebase_ai` + Google Antigravity IDE -> Cloud Run + GitHub
+### Lane B: Flutter + Gemini REST API (`package:http`) + Google Antigravity IDE -> Cloud Run + GitHub
 ```bash
 cd flutter_client
 flutter pub get
@@ -47,8 +47,14 @@ Scan any classmate's deployed `.run.app` QR code on the stage screen to test the
 ```text
 devfest-2026-backyard-barista-cloudrun/
 ├── README.md
+├── ai_studio_lane_a/
+│   └── index.html             # Self-contained Lane A reference web game (HTML/CSS/JS + 5s tea sip + Web Audio)
+├── docs/
+│   ├── benchmark-report-2026-10-24.md # 50-request Cloud Run & offline fallback latency report (53.8ms p50)
+│   ├── challenge-landing-page.md      # Bilingual (TR + EN) Vibe Lounge & Workshop challenge sheet
+│   └── vibe-lounge-poster.html        # Print-ready A4 Vibe Lounge table poster with live Cloud Run QR
 ├── prompts/
-│   ├── step-1-base-cafe.md    # AI Studio Build mode seed prompt (Base Cafe + 4-City Switcher)
+│   ├── step-1-base-cafe.md    # AI Studio Build mode seed prompt (Base Cafe + 4-City Switcher + 5s Tea Sip)
 │   ├── step-2-custom-dish.md  # On-the-fly custom SVG dish + prank icon + Gemini JSON judge
 │   └── step-3-deploy.md       # One-click Cloud Run (.run.app) & GitHub sync guide
 ├── slides/                    # 14-slide flutter_deck presentation + Stage Navigator + Turkish speaker notes
@@ -64,10 +70,12 @@ devfest-2026-backyard-barista-cloudrun/
     ├── pubspec.yaml
     ├── Dockerfile             # Multi-stage Cloud Run container (PORT=8080)
     ├── remote_config_template.json
+    ├── tool/
+    │   └── benchmark_gaziantep.dart # 50-request Gerçek Rakamlar CLI latency & token cost harness
     ├── assets/
-    │   ├── animations/        # 4 ready-made Lottie JSON animations (coffee_steam_loop, barista_brewing_pulse, sweet_celebration_burst, salty_spicy_explosion)
-    │   ├── audio/             # 6 cafe sound effects (tap_pop, stealth_wink, serve_bell, sweet_fanfare, salty_buzzer, next_chime)
-    │   ├── base/              # 20 studio 9D PNG cafe & 3D character assets (512x512)
+    │   ├── animations/        # 5 ready-made Lottie JSON animations (coffee_steam_loop, barista_brewing_pulse, sweet_celebration_burst, salty_spicy_explosion, tea_sip_steam_loop)
+    │   ├── audio/             # 7 cafe sound effects (tap_pop, stealth_wink, serve_bell, tea_sip, sweet_fanfare, salty_buzzer, next_chime)
+    │   ├── base/              # 20 studio 9D PNG cafe & 3D character assets (12 Round-1 base + 2 Round-2 custom + 6 3D characters, 512x512)
     │   │   ├── characters/    # barista_p1.png, pastry_chef_p2.png, customer_ayse_usta.png, customer_mustafa.png, customer_lukas.png, customer_deniz.png
     │   │   ├── drinks/        # espresso.png, milk.png, menengic_coffee.png
     │   │   ├── foods/         # croissant.png, san_sebastian.png, baklava.png, katmer_roll.png
@@ -104,10 +112,10 @@ devfest-2026-backyard-barista-cloudrun/
 
 ## Full Production Architecture ("En Son Mimaride Ne Yaptık?")
 
-1. **Layer 1 (Presentation & Hybrid Assets):** Pure Flutter Declarative Widgets (`Stack`, `AnimatedScale`, `AnimatedSwitcher`, `SvgPicture`) combining 12 pre-generated PNGs (`assets/base/`) with on-the-fly Gemini-generated inline SVGs (`custom_svg_items.dart`).
-2. **Layer 2 (3-Layer Multi-City Configuration):**
-   - **Priority 1:** In-App Settings Switcher Override (`city_settings_drawer.dart`)
-   - **Priority 2:** Firebase Remote Config (`active_city_id` in `remote_config_template.json`)
-   - **Priority 3:** Bundled local fallback (`assets/editions/city_editions.json`)
-3. **Layer 3 (AI & Guardrails):** Structured JSON output (`CafeReview`) evaluated by `gemini-3.5-flash-lite` (via `firebase_ai` / Gemini API) with deterministic offline fallback (`mock_responses.json`).
-4. **Layer 4 (Serverless Cloud & Source Control):** Stateless container deployed via `gcloud run deploy backyard-barista --source .` to **Google Cloud Run (`*.run.app`)** and synced to **GitHub**.
+1. **Layer 1 (Presentation & Hybrid Assets):** Pure Flutter Declarative Widgets (`Stack`, `AnimatedScale`, `AnimatedSwitcher`, `CustomPaint`) combining 20 pre-generated PNGs in `assets/base/` (`12` Round-1 base PNGs + `2` Round-2 custom PNGs + `6` 3D character portraits) with on-the-fly Antigravity/Gemini-generated `CustomVectorIngredientGraphic` vector artwork (`custom_svg_items.dart`), `5` Lottie JSON animations, and `7` synthesized WAV audio cues.
+2. **Layer 2 (3-Layer Multi-City Configuration in `CityEditionController`):**
+   - **Priority 1:** In-App Settings Switcher Override (`_manualOverrideCityId` via `city_settings_drawer.dart`)
+   - **Priority 2:** Firebase Remote Config template / `--dart-define=DEFAULT_CITY` (`_remoteConfigCityId` via `remote_config_template.json`)
+   - **Priority 3:** Bundled local fallback (`_fallbackCityId` from `assets/editions/city_editions.json`)
+3. **Layer 3 (AI & Guardrails):** Single-shot structured JSON output (`CafeReview`) evaluated by `gemini-3.5-flash-lite` over REST `generateContent` (`package:http` for zero-setup workshops; upgrade to `firebase_ai` + Firebase App Check in production) with an `8,000 ms` live timeout and a `250 ms` deterministic offline fallback (`mock_responses.json`).
+4. **Layer 4 (Serverless Cloud & Source Control):** Stateless `nginx:alpine` container (`Dockerfile`, lines 1-20) deployed via `gcloud run deploy backyard-barista --source .` to **Google Cloud Run (`*.run.app`)** and synced to **GitHub**.

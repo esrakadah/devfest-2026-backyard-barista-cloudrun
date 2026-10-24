@@ -8,9 +8,9 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/architecture-recap',
-            title: '13. En Son Mimaride Ne Yaptik? (Architecture Recap)',
-            speakerNotes: 'BEAT  [58:00 - 63:00] "En Son Mimaride Ne Yaptık?" (Ödül Töreni Öncesi Tam Mimari Özeti).\n'
-                'SAY   "Ödüllerimizi dağıtmadan önce herkesin ekrana bakmasını istiyorum: bugün 40 dakikada eğlenceli bir kafe oyunu yaptık ama aslında arkada dört katmanlı, gerçek bir prodüksiyon bulut mimarisi kurduk! 1. Katmanda saf Flutter widget\'ları ile 12 hazır GitHub PNG görselini ve yolda ürettiğimiz AI vektörlerini birleştirdik. 2. Katmanda Firebase Remote Config ile uygulamamızı yeniden derlemeden 4 farklı DevFest şehrine (Berlin, Gaziantep, Adana, İstanbul) uyarladık. 3. Katmanda gemini-3.5-flash-lite ve yapılandırılmış JSON şeması (CafeReview) ile deterministik bir jüri kurup çevrimdışı yedeklemeyle koruduk. 4. Katmanda ise durumsuz konteynerimizi Google Cloud Run üzerinde canlı bir .run.app adresine ve GitHub\'a taşıdık!"\n'
+            title: '13. En Son Mimaride Ne Yaptık? (Architecture Recap)',
+            speakerNotes: 'BEAT  [60:00 - 65:00] "En Son Mimaride Ne Yaptık?" (Ödül Töreni Öncesi Tam Mimari Özeti).\n'
+                'SAY   "Ödüllerimizi dağıtmadan önce herkesin ekrana bakmasını istiyorum: bugün eğlenceli bir kafe oyunu yaptık ama aslında arkada dört katmanlı, gerçek bir prodüksiyon bulut mimarisi kurduk! 1. Katmanda saf Flutter widget\'ları ile 20 hazır stüdyo PNG görselini ve yolda ürettiğimiz CustomPaint AI vektörlerini birleştirdik. 2. Katmanda 3 öncelikli CityEditionController ve Firebase Remote Config şablonu ile uygulamamızı yeniden derlemeden 4 farklı DevFest şehrine (Berlin, Gaziantep, Adana, İstanbul) uyarladık. 3. Katmanda gemini-3.5-flash-lite ve yapılandırılmış JSON şeması (CafeReview) ile deterministik bir jüri kurup çevrimdışı yedeklemeyle koruduk. 4. Katmanda ise durumsuz konteynerimizi Google Cloud Run üzerinde canlı bir .run.app adresine ve GitHub\'a taşıdık!"\n'
                 'HOLD  4 katmanı yukarıdan aşağıya veya soldan sağa net bir ritimle say; salondaki herkesin ne öğrendiğini içselleştirmesini sağla.\n'
                 'NEXT  "Şimdi sahne sizin: canlı linkini yayınlayanları 60 saniyelik demoları ve Google piksel gözlük ödülleri için sahneye alıyoruz!"',
           ),
@@ -23,7 +23,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 13 · EN SON MIMARIDE NE YAPTIK? (FULL PRODUCTION ARCHITECTURE RECAP)',
+          eyebrow: 'SLIDE 13 · EN SON MİMARİDE NE YAPTIK? (FULL PRODUCTION ARCHITECTURE RECAP)',
           title: 'What We Just Built: 4-Layer Production Cloud Architecture',
           subtitle: 'Every pattern you shipped today transfers directly to real production Flutter & Cloud apps',
           accentColor: DeckColors.halftoneBlue,
@@ -37,8 +37,8 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                         badge: 'LAYER 1 · PRESENTATION & ASSETS',
                         title: 'Declarative Flutter UI + Hybrid Assets',
                         bullets: [
-                          'Pure Flutter Widgets (Stack, AnimatedScale, CustomPaint) with <600px mobile responsiveness.',
-                          '12 pre-generated studio PNGs in assets/base/ + on-the-fly AI-generated CustomPainter/SVG dishes.',
+                          'Pure Flutter Widgets (Stack, AnimatedScale, CustomPaint) with <620px mobile responsiveness.',
+                          '20 studio PNGs in assets/base/ (12 Round-1 + 2 Round-2 + 6 3D characters) + CustomVectorIngredientGraphic.',
                         ],
                         footerText: 'flutter/one-codebase',
                       ),
@@ -47,12 +47,12 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: 'LAYER 2 · MULTI-CITY CONFIG',
-                        title: '3-Layer Firebase Remote Config',
+                        title: '3-Layer CityEditionController',
                         accentColor: DeckColors.googleYellow,
                         bullets: [
-                          'Priority 1: In-App Settings Drawer Override (uiOverrideCityCode).',
-                          'Priority 2: Firebase Remote Config (active_city_id across Berlin, Gaziantep, Adana, Istanbul).',
-                          'Priority 3: Bundled local city_editions.json fallback.',
+                          'Priority 1: In-App Settings Drawer Override (_manualOverrideCityId / selectManualOverride).',
+                          'Priority 2: Firebase Remote Config template / --dart-define (_remoteConfigCityId across 4 cities).',
+                          'Priority 3: Bundled local city_editions.json fallback (_fallbackCityId).',
                         ],
                         footerText: 'firebase/monitoring/remote-config',
                       ),
@@ -70,7 +70,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                         title: 'Structured JSON Judge + Offline Net',
                         accentColor: DeckColors.googleGreen,
                         bullets: [
-                          'Single generateContent call per order (~270 tokens) on gemini-3.5-flash-lite / firebase_ai.',
+                          'Single generateContent REST call per order (~270 tokens) on gemini-3.5-flash-lite (upgrade to firebase_ai + App Check in prod).',
                           'Strict responseSchema (CafeReview: ratingStars, tasteVerdict, customerFace, customerReaction).',
                           '8s network timeout + 250ms deterministic offline fallback (mock_responses.json).',
                         ],

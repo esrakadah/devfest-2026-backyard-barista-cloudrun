@@ -20,7 +20,7 @@ enum CafeSoundCue {
 }
 
 /// Plays cozy cafe sound effects (`tap_pop`, `stealth_wink`, `serve_bell`, `sweet_fanfare`,
-/// `salty_buzzer`, `next_chime`) and tactile haptics across Web, iOS, Android, and macOS,
+/// `salty_buzzer`, `next_chime`, `tea_sip`) and tactile haptics across Web, iOS, Android, and macOS,
 /// with an in-app mute toggle for workshop halls.
 class CafeSoundController {
   CafeSoundController({bool initialMuted = false}) : _isMuted = initialMuted;

@@ -8,11 +8,11 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/hybrid-asset-pipeline',
-            title: '11. Hybrid Asset Pipeline: 12 PNGs + On-the-Fly AI SVGs',
+            title: '11. Hybrid Asset Pipeline: 20 Studio PNGs + On-the-Fly AI SVGs',
             speakerNotes:
-                'BEAT  [22:30 - 25:00] Hibrit Görsel Boru Hattı: 12 Hazır Stüdyo PNG + Yolda Üretilen AI Vektörleri.\n'
-                'SAY   "Bir oyun atölyesinde en çok vakit kaybettiren şey görsel bulmak ve yüklemektir. Biz bunu hibrit bir boru hattıyla çözdük: ✅ fact (flutter_client/assets/base/): 3 içecek, 3 tatlı, 3 şaka malzemesi ve 3 müşteri tepkisinden oluşan toplam 12 adet yüksek çözünürlüklü PNG görseli doğrudan GitHub repomuzun içinde hazır veriyoruz. Ardından 2. Turda herkes kendi özel imza tatlısını ve kendi şaka malzemesini Google AI Studio veya Antigravity ile anında vektör/CustomPainter kodu olarak üretiyor. Sıfır dosya yükleme hatası, anında görsel sonuç!"\n'
-                'HOLD  Soldaki hazır PNG vitrinini ve sağdaki yolda üretilen vektör/CustomPainter akışını göster.\n'
+                'BEAT  [22:30 - 25:00] Hibrit Görsel Boru Hattı: 20 Hazır Stüdyo PNG + Yolda Üretilen AI Vektörleri.\n'
+                'SAY   "Bir oyun atölyesinde en çok vakit kaybettiren şey görsel bulmak ve yüklemektir. Biz bunu hibrit bir boru hattıyla çözdük: 3 içecek, 3 tatlı, 3 şaka malzemesi ve 3 müşteri tepkisinden oluşan toplam 12 adet yüksek çözünürlüklü 1. Tur PNG görselini, 2 adet 2. Tur özel PNG görselini ve 6 adet 3D karakter portresini doğrudan GitHub repomuzun içinde hazır veriyoruz. Ardından 2. Turda herkes kendi özel imza tatlısını ve kendi şaka malzemesini Google AI Studio veya Antigravity ile anında CustomPaint vektör kodu olarak üretiyor. Sıfır dosya yükleme hatası, anında görsel sonuç!"\n'
+                'HOLD  Soldaki hazır PNG vitrinini ve sağdaki yolda üretilen CustomPaint vektör akışını göster. [✅ fact (flutter_client/assets/): 20 PNGs in assets/base/ (12 Round-1 + 2 Round-2 + 6 3D characters), 5 Lottie JSONs in assets/animations/, 7 audio WAVs in assets/audio/].\n'
                 'NEXT  "Şimdi bilgisayarlarımızı ve telefonlarımızı açıyoruz: 3 turluk canlı inşa maratonumuz başlıyor!"',
           ),
         );
@@ -26,7 +26,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         return const SlideFrame(
           eyebrow: 'SLIDE 11 · HYBRID ASSET PIPELINE (ZERO UPLOAD FAILURES)',
-          title: '12 Pre-Generated Studio PNGs + On-the-Fly AI Vector Dishes',
+          title: '20 Pre-Generated Studio PNGs + On-the-Fly AI Vector Dishes',
           subtitle: 'Combining instant visual polish from GitHub with live generative creativity in Round 2',
           accentColor: DeckColors.googleBlue,
           child: Row(
@@ -50,7 +50,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
                         Expanded(
                           child: CafeAssetThumb(
                             assetFileName: 'menengic_coffee.png',
-                            label: 'Menengic',
+                            label: 'Menengiç',
                             badgeText: 'Drinks (3/3)',
                             imageSize: 96,
                           ),
@@ -81,7 +81,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
                         Expanded(
                           child: CafeAssetThumb(
                             assetFileName: 'chili_sauce.png',
-                            label: 'Aci Sos',
+                            label: 'Acı Sos',
                             badgeText: 'Pranks (3/3)',
                             imageSize: 96,
                           ),
@@ -108,8 +108,8 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
                   title: 'Why Hybrid Assets Win in a 300-Seat Hall',
                   accentColor: DeckColors.googleYellow,
                   bullets: [
-                    'Part 1 (12 Base PNGs in GitHub): 3 drinks, 3 foods, 3 toppings/pranks, and 3 customer reactions sit inside flutter_client/assets/base/ (no external image hosting needed).',
-                    'Part 2 (On-the-Fly AI Codegen): In Round 2, builders prompt AI Studio or Antigravity to generate 1 custom signature dish + 1 custom prank ingredient as inline SVG / CustomPainter code.',
+                    'Part 1 (20 Studio PNGs in GitHub): 12 Round-1 base PNGs (3 drinks, 3 foods, 3 toppings/pranks, 3 reactions) + 2 Round-2 custom PNGs + 6 3D characters sit inside flutter_client/assets/base/ alongside 5 Lottie JSONs and 7 audio WAVs.',
+                    'Part 2 (On-the-Fly AI Codegen): In Round 2, builders prompt AI Studio or Antigravity to generate 1 custom signature dish + 1 custom prank ingredient as CustomPaint / CustomVectorIngredientGraphic code.',
                     'Self-Contained Cloud Run Build: All assets live inside flutter_client/ so gcloud run deploy --source . bundles everything cleanly.',
                   ],
                   footerText: 'Evidence: flutter_client/lib/data/custom_svg_items.dart',
