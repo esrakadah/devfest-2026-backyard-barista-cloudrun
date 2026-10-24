@@ -52,6 +52,8 @@ devfest-2026-backyard-barista-cloudrun/
 ├── docs/
 │   ├── benchmark-report-2026-10-24.md # 50-request Cloud Run & offline fallback latency report (53.8ms p50)
 │   ├── challenge-landing-page.md      # Bilingual (TR + EN) Vibe Lounge & Workshop challenge sheet
+│   ├── rehearsal-3g-report-2026-10-24.md # Section 4.6 Slow 3G (750 Kbps / 150ms RTT) & HTTP 429 chaos report
+│   ├── speaker-drill-cards-tr.md      # Stage drill scripts (Drills 1-4: 60s open, 90s close, 5m cut, 20m recovery)
 │   └── vibe-lounge-poster.html        # Print-ready A4 Vibe Lounge table poster with live Cloud Run QR
 ├── prompts/
 │   ├── step-1-base-cafe.md    # AI Studio Build mode seed prompt (Base Cafe + 4-City Switcher + 5s Tea Sip)
@@ -71,7 +73,8 @@ devfest-2026-backyard-barista-cloudrun/
     ├── Dockerfile             # Multi-stage Cloud Run container (PORT=8080)
     ├── remote_config_template.json
     ├── tool/
-    │   └── benchmark_gaziantep.dart # 50-request Gerçek Rakamlar CLI latency & token cost harness
+    │   ├── benchmark_gaziantep.dart   # 50-request Gerçek Rakamlar CLI latency & token cost harness
+    │   └── rehearsal_3g_check.dart    # Section 4.6 Slow 3G & HTTP 429 chaos verification suite (5/5 PASS)
     ├── assets/
     │   ├── animations/        # 5 ready-made Lottie JSON animations (coffee_steam_loop, barista_brewing_pulse, sweet_celebration_burst, salty_spicy_explosion, tea_sip_steam_loop)
     │   ├── audio/             # 7 cafe sound effects (tap_pop, stealth_wink, serve_bell, tea_sip, sweet_fanfare, salty_buzzer, next_chime)
