@@ -11,7 +11,7 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
             title: "10. Today's Game Mechanic: Tatlı mı Tuzlu mu?",
             speakerNotes:
                 'BEAT  [20:30 - 22:30] Oyun Mekaniği ("Tatlı mı Tuzlu mu?") ve Yapılandırılmış JSON Şeması (CafeReview).\n'
-                'SAY   "Oyunumuzun kalbinde çok basit ama çok komik bir mekanik var: iki oyuncu tezgahtaki içecek ve tatlılara tıklayarak sipariş tepsisini hazırlıyor. Ancak tezgahta Şeker kavanozunun hemen yanında ikizi gibi duran Tuzluk ve Acı Sos var! Üstelik arayüzde kırmızı bir ŞAKA uyarısı göstermiyoruz; sadece tepsiye gizlice tuz eklendiğinde küçük bir göz kırpma ikonu (🤫 😉) beliriyor. Servis Et butonuna bastığınızda Gemini yapılandırılmış JSON şemamız üzerinden siparişi denetliyor ve tatlıya tuz atıldıysa ratingStars: 1, tasteVerdict: salty_sabotage ve şehre özel komik bir müşteri tepkisi döndürüyor."\n'
+                'SAY   "Oyunumuzun kalbinde çok basit ama çok komik bir mekanik var: iki oyuncu tezgahtaki içecek ve tatlılara tıklayarak sipariş tepsisini hazırlıyor. Ancak tezgahta Şeker kavanozunun hemen yanında ikizi gibi duran Tuzluk ve Acı Sos var! Üstelik arayüzde kırmızı bir ŞAKA uyarısı göstermiyoruz; sadece tepsiye gizlice tuz eklendiğinde küçük bir göz kırpma ikonu beliriyor. Servis Et butonuna bastığınızda Gemini yapılandırılmış JSON şemamız üzerinden siparişi denetliyor ve tatlıya tuz atıldıysa ratingStars: 1, tasteVerdict: salty_sabotage ve şehre özel komik bir müşteri tepkisi döndürüyor."\n'
                 'HOLD  Sol taraftaki gerçek görselleri (Baklava, Şeker, Tuz, 1 Yıldızlı Müşteri) ve sağdaki JSON şemasını göster.\n'
                 'NEXT  "Peki bu yüksek kaliteli 9D görselleri 300 kişinin bilgisayarında sıfır yükleme hatasıyla nasıl birleştiriyoruz?"',
           ),
@@ -82,7 +82,7 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
                           child: CafeAssetThumb(
                             assetFileName: 'salt_shaker.png',
                             label: 'Tuz (Salt Prank!)',
-                            badgeText: 'Stealth Twin 🤫',
+                            badgeText: 'Stealth Twin (Wink)',
                             borderColor: DeckColors.googleYellow,
                           ),
                         ),
@@ -107,6 +107,7 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
                   filePathLabel: 'flutter_client/lib/services/cafe_judge_service.dart',
                   code: _schemaSnippet,
                   accentColor: DeckColors.googleYellow,
+                  badgeLabel: 'CAFEREVIEW SCHEMA',
                 ),
               ),
             ],

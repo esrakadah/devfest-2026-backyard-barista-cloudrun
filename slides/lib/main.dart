@@ -21,6 +21,7 @@ class BackyardBaristaDeckApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterDeckApp(
       configuration: const FlutterDeckConfiguration(
+        slideSize: FlutterDeckSlideSize.custom(width: 2560, height: 1440),
         transition: FlutterDeckTransition.fade(),
         background: FlutterDeckBackgroundConfiguration(
           light: FlutterDeckBackground.solid(DeckColors.navy),

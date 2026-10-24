@@ -17,7 +17,7 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
           ),
         );
 
-  static const double _columnGap = 28;
+  static const double _columnGap = 24;
 
   static const String _cityControllerSnippet = '''
 // flutter_client/lib/config/city_edition_controller.dart (Lines 147-168)
@@ -44,29 +44,65 @@ CityEditionConfig get activeEdition =>
           title: 'One Codebase, Four DevFest Cities via Remote Config',
           subtitle: '3-Layer resolution in CityEditionController: UI Override -> Remote Config -> Local JSON',
           accentColor: DeckColors.halftoneBlue,
-          child: Row(
+          child: Column(
             children: [
-              Expanded(
-                flex: 5,
-                child: DeckFeatureCard(
-                  badge: '4 CITY EDITIONS IN 1 REPO',
-                  title: 'Live City Switching Without Redeploying',
-                  accentColor: DeckColors.halftoneBlue,
-                  bullets: [
-                    '🇩🇪 Berlin (14 Nov): Kreuzberg Späti & Kiez Roasters · Berliner Pfannkuchen & Späti Club-Mate.',
-                    '🇹🇷 Gaziantep (15 Nov): Şehitkamil Baklava & Menengiç Kahvesi · "Şehitkamil\'den sınır dışı ederler!"',
-                    '🇹🇷 Adana (11 Dec): Gar Kahvesi & Bici Bici Durağı · Bici Bici & Gar Kahvesi ("Şalgam suyu mu sandın?").',
-                    '🇹🇷 Istanbul (19 Dec): Galata & Vapur Kafe · Galata San Sebastian & Vapur Çayı.',
-                  ],
-                  footerText: 'Template: flutter_client/remote_config_template.json',
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: StatChip(
+                      value: '1 · UI Override',
+                      label: '_manualOverrideCityId',
+                      accentColor: DeckColors.googleYellow,
+                    ),
+                  ),
+                  SizedBox(width: 14),
+                  Expanded(
+                    child: StatChip(
+                      value: '2 · Remote Config',
+                      label: '_remoteConfigCityId',
+                      accentColor: DeckColors.halftoneBlue,
+                    ),
+                  ),
+                  SizedBox(width: 14),
+                  Expanded(
+                    child: StatChip(
+                      value: '3 · Local JSON',
+                      label: '_fallbackCityId (Gaziantep)',
+                      accentColor: DeckColors.googleGreen,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: _columnGap),
+              SizedBox(height: 16),
               Expanded(
-                flex: 6,
-                child: DeckCodeCard(
-                  filePathLabel: 'flutter_client/lib/config/city_edition_controller.dart',
-                  code: _cityControllerSnippet,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 5,
+                      child: DeckFeatureCard(
+                        badge: '4 CITY EDITIONS IN 1 REPO',
+                        badgeIcon: Icons.public,
+                        title: 'Live City Switching Without Redeploying',
+                        accentColor: DeckColors.halftoneBlue,
+                        bullets: [
+                          'DE · Berlin (14 Nov): Kreuzberg Späti & Kiez Roasters · Berliner Pfannkuchen & Späti Club-Mate.',
+                          'TR · Gaziantep (15 Nov): Şehitkamil Baklava & Menengiç Kahvesi · "Şehitkamil\'den sınır dışı ederler!"',
+                          'TR · Adana (11 Dec): Gar Kahvesi & Bici Bici Durağı · Bici Bici & Gar Kahvesi ("Şalgam suyu mu sandın?").',
+                          'TR · Istanbul (19 Dec): Galata & Vapur Kafe · Galata San Sebastian & Vapur Çayı.',
+                        ],
+                        footerText: 'Template: flutter_client/remote_config_template.json',
+                      ),
+                    ),
+                    SizedBox(width: _columnGap),
+                    Expanded(
+                      flex: 6,
+                      child: DeckCodeCard(
+                        filePathLabel: 'flutter_client/lib/config/city_edition_controller.dart',
+                        code: _cityControllerSnippet,
+                        badgeLabel: '3-TIER CASCADE',
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

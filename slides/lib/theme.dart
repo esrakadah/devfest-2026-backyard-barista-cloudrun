@@ -1,29 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
-/// Official GDE 2026 deck palette: navy ground, off-white text, the four Google hues as accents, halftones for depth.
+/// Unified GDE Midnight Navy palette (`BoardTokens.gde` + 2026 GDE Brand Guide).
 abstract final class DeckColors {
-  static const Color navy = Color(0xFF20344B);
-  static const Color offWhite = Color(0xFFF0F0F0);
+  /// Deep Midnight Navy canvas ground.
+  static const Color navy = Color(0xFF0E1824);
 
-  static const Color googleBlue = Color(0xFF4285F4);
-  static const Color googleGreen = Color(0xFF34A853);
-  static const Color googleYellow = Color(0xFFF9AB00);
-  static const Color googleRed = Color(0xFFEA4335);
+  /// Primary text on dark surfaces.
+  static const Color offWhite = Color(0xFFF2F6FC);
 
+  /// Dark-mode pastel accents for text, chips, and data visualization on dark backgrounds.
+  static const Color googleBlue = Color(0xFF8AB4F8);
+  static const Color googleGreen = Color(0xFF81C995);
+  static const Color googleYellow = Color(0xFFFDD663);
+  static const Color googleRed = Color(0xFFF28B82);
+
+  /// Official 2026 GDE Brand Guide core colors for bracket logos and primary fills.
+  static const Color coreBlue = Color(0xFF4285F4);
+  static const Color coreGreen = Color(0xFF34A853);
+  static const Color coreYellow = Color(0xFFF9AB00);
+  static const Color coreRed = Color(0xFFEA4335);
+
+  /// Official 2026 GDE Brand Guide halftones for secondary accents and diagrams.
   static const Color halftoneBlue = Color(0xFF57CAFF);
   static const Color halftoneGreen = Color(0xFF5CDB6D);
   static const Color halftoneYellow = Color(0xFFFFD427);
   static const Color halftonePink = Color(0xFFFF7DAF);
 
-  /// One step lighter than [navy], for cards and code blocks that sit on the slide background.
-  static const Color surface = Color(0xFF2B4361);
+  /// Surface hierarchy (`s1`, `s2`, `s3`, and `inset`).
+  static const Color surface = Color(0xFF16273A);
+  static const Color surfaceElevated = Color(0xFF1D3148);
+  static const Color surface3 = Color(0xFF22344F);
+  static const Color surfaceInset = Color(0xFF0B141F);
 
-  /// Hairlines and dividers on [surface].
-  static const Color outline = Color(0xFF3D5878);
+  /// Hairlines and borders on [surface].
+  static const Color outline = Color(0xFF284162);
+  static const Color outlineLight = Color(0xFF3A5C88);
 
-  /// Secondary text: captions, footers, the third line of a bullet.
-  static const Color mutedText = Color(0xFFB3BDC9);
+  /// Top 1px specular highlight on elevated cards.
+  static const Color specularTop = Color(0x1EFFFFFF);
+
+  /// Secondary text: captions, footers, muted labels.
+  static const Color mutedText = Color(0xFF9EB1C9);
 }
 
 /// The two font families bundled under assets/fonts and declared in pubspec.yaml.
@@ -34,16 +52,16 @@ abstract final class DeckFonts {
 
 /// The type scale, in logical pixels on a 1920 x 1080 slide.
 abstract final class DeckTypeScale {
-  static const double display = 84;
-  static const double header = 58;
-  static const double title = 48;
-  static const double subtitle = 34;
-  static const double bodyLarge = 28;
-  static const double bodyMedium = 22;
+  static const double display = 80;
+  static const double header = 54;
+  static const double title = 44;
+  static const double subtitle = 32;
+  static const double bodyLarge = 26;
+  static const double bodyMedium = 21;
   static const double bodySmall = 16;
 
   /// Code is rendered verbatim by FlutterDeckCodeHighlight, with no auto-sizing, so it never goes below this.
-  static const double code = 20;
+  static const double code = 18;
 }
 
 /// Presentation theme for the DevFest 2026 Backyard Barista on Cloud Run deck.
@@ -62,7 +80,7 @@ abstract final class PresentationTheme {
         secondary: DeckColors.googleYellow,
         surface: DeckColors.surface,
         onSurface: DeckColors.offWhite,
-        onPrimary: DeckColors.offWhite,
+        onPrimary: DeckColors.navy,
         brightness: Brightness.dark,
       ),
       useMaterial3: true,
@@ -92,12 +110,12 @@ abstract final class PresentationTheme {
         fontFamily: DeckFonts.sans,
         fontSize: DeckTypeScale.subtitle,
         fontWeight: FontWeight.w500,
-        color: DeckColors.halftoneBlue,
+        color: DeckColors.googleBlue,
       ),
       bodyLarge: TextStyle(
         fontFamily: DeckFonts.sans,
         fontSize: DeckTypeScale.bodyLarge,
-        color: Color.fromRGBO(0xF0, 0xF0, 0xF0, _bodyOpacity),
+        color: Color.fromRGBO(0xF2, 0xF6, 0xFC, _bodyOpacity),
       ),
       bodyMedium: TextStyle(fontFamily: DeckFonts.sans, fontSize: DeckTypeScale.bodyMedium, color: DeckColors.offWhite),
       bodySmall: TextStyle(fontFamily: DeckFonts.sans, fontSize: DeckTypeScale.bodySmall, color: DeckColors.mutedText),
@@ -121,13 +139,13 @@ abstract final class PresentationTheme {
       footerTheme: FlutterDeckFooterThemeData(
         slideNumberColor: DeckColors.mutedText,
         slideNumberTextStyle: textTheme.bodySmall,
-        socialHandleColor: DeckColors.halftoneBlue,
+        socialHandleColor: DeckColors.googleBlue,
         socialHandleTextStyle: textTheme.bodySmall,
       ),
       speakerInfoWidgetTheme: FlutterDeckSpeakerInfoWidgetThemeData(
         nameTextStyle: textTheme.subtitle.copyWith(color: DeckColors.offWhite),
         descriptionTextStyle: textTheme.bodyMedium,
-        socialHandleTextStyle: textTheme.bodyMedium.copyWith(color: DeckColors.halftoneBlue),
+        socialHandleTextStyle: textTheme.bodyMedium.copyWith(color: DeckColors.googleBlue),
       ),
       bulletListTheme: FlutterDeckBulletListThemeData(color: DeckColors.googleYellow, textStyle: textTheme.bodyLarge),
       imageSlideTheme: FlutterDeckImageSlideThemeData(labelTextStyle: textTheme.bodySmall),
@@ -138,7 +156,7 @@ abstract final class PresentationTheme {
         rightColor: DeckColors.offWhite,
       ),
       codeHighlightTheme: const FlutterDeckCodeHighlightThemeData(
-        backgroundColor: DeckColors.surface,
+        backgroundColor: DeckColors.surfaceInset,
         textStyle: TextStyle(fontFamily: DeckFonts.mono, fontSize: DeckTypeScale.code, color: DeckColors.offWhite),
       ),
     );

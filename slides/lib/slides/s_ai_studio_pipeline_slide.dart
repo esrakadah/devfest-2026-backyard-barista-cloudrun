@@ -11,12 +11,12 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
             title: '3. What Comes Out of Google AI Studio Today',
             speakerNotes: 'BEAT  [05:00 - 07:30] "AI Studio\'dan ne gelir?" sorusunun somut cevabı.\n'
                 'SAY   "Mustafa ile konuşurken en önemli soru şuydu: Google AI Studio\'dan bugün tam olarak ne çıkıyor? Eskiden sadece bir prompt test ekranıydı. Bugün ise AI Studio Build modu size çalışan tam yığın bir web uygulaması üretiyor, çift yönlü GitHub senkronizasyonu yapıyor ve Starter Tier kapsamında kredi kartı veya fatura hesabı açmadan 2 adede kadar tam yığın uygulamayı tek tıkla Google Cloud Run üzerinde canlı bir .run.app adresine yayınlıyor. Dikkat etmeniz gereken tek önemli kural: eski Firebase Studio kapandı, yeni kayıt almıyor; doğru adres doğrudan Google AI Studio ve Google Antigravity."\n'
-                'HOLD  Slayttaki 4 adımlı boru hattını soldan sağa doğru işaret et. [✅ fact (Oct 2026, ai.google.dev): Starter Tier = 2 Cloud Run apps; Firebase Studio sign-ups disabled 22 Jun 2026 ahead of Mar 2027 sunset].\n'
+                'HOLD  Slayttaki 4 adımlı boru hattını soldan sağa doğru işaret et. [Fact (Oct 2026, ai.google.dev): Starter Tier = 2 Cloud Run apps; Firebase Studio sign-ups disabled 22 Jun 2026 ahead of Mar 2027 sunset].\n'
                 'NEXT  "Peki işin çoklu dosya ve Flutter tarafında Google Antigravity bize ne kazandırıyor?"',
           ),
         );
 
-  static const double _gap = 20;
+  static const double _gap = 16;
 
   @override
   FlutterDeckSlide build(BuildContext context) {
@@ -29,12 +29,15 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
           accentColor: DeckColors.halftoneBlue,
           child: Column(
             children: [
+              AiStudioPipelineDiagramCard(),
+              SizedBox(height: _gap),
               Expanded(
                 child: Row(
                   children: [
                     Expanded(
                       child: DeckFeatureCard(
                         badge: 'STEP 1 · SEED + ASSETS',
+                        badgeIcon: Icons.description,
                         title: 'Prompt + GitHub PNGs',
                         bullets: [
                           'Paste prompts/step-1-base-cafe.md in AI Studio Build mode.',
@@ -47,6 +50,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: 'STEP 2 · LIVE APP',
+                        badgeIcon: Icons.web,
                         title: 'Full-Stack Web Preview',
                         accentColor: DeckColors.googleGreen,
                         bullets: [
@@ -60,6 +64,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: 'STEP 3 · SOURCE CONTROL',
+                        badgeIcon: Icons.sync,
                         title: 'Two-Way GitHub Sync',
                         accentColor: DeckColors.googleYellow,
                         bullets: [
@@ -73,6 +78,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: 'STEP 4 · CLOUD RUN',
+                        badgeIcon: Icons.cloud_done,
                         title: 'No-Card .run.app Deploy',
                         accentColor: DeckColors.googleRed,
                         bullets: [
@@ -86,13 +92,27 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                 ),
               ),
               SizedBox(height: _gap),
-              DeckFeatureCard(
-                badge: 'VERIFIED 2026 GUARDRAIL',
-                title: 'Do Not Use Legacy Firebase Studio (Project IDX)',
-                accentColor: DeckColors.halftonePink,
-                bullets: [
-                  'Firebase Studio disabled new sign-ups on 22 June 2026 ahead of its March 2027 sunset. Use Google AI Studio (Browser Lane A) and Google Antigravity (IDE Lane B).',
-                ],
+              DeckCard(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                backgroundColor: DeckColors.surfaceInset,
+                borderColor: DeckColors.halftonePink,
+                child: Row(
+                  children: [
+                    Icon(Icons.info_outline, color: DeckColors.halftonePink, size: 22),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'VERIFIED 2026 GUARDRAIL: Legacy Firebase Studio (Project IDX) disabled new sign-ups on 22 June 2026 ahead of its March 2027 sunset. Use Google AI Studio (Browser Lane A) and Google Antigravity (IDE Lane B).',
+                        style: TextStyle(
+                          fontFamily: DeckFonts.sans,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: DeckColors.offWhite,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

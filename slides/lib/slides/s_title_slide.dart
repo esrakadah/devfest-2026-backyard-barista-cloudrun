@@ -18,15 +18,13 @@ class TitleSlide extends FlutterDeckSlideWidget {
           ),
         );
 
-  static const double _outerHorizontalPadding = 88;
-  static const double _outerVerticalPadding = 56;
-  static const double _gap = 18;
-  static const double _largeGap = 28;
+  static const double _outerHorizontalPadding = 80;
+  static const double _outerVerticalPadding = 44;
+  static const double _gap = 16;
+  static const double _largeGap = 24;
   static const double _badgeSpacing = 12;
-  static const double _photoSize = 260;
-  static const double _photoRadius = 28;
-  static const double _cardPadding = 22;
-  static const double _cardRadius = 20;
+  static const double _photoSize = 230;
+  static const double _photoRadius = 26;
 
   @override
   FlutterDeckSlide build(BuildContext context) {
@@ -50,10 +48,25 @@ class TitleSlide extends FlutterDeckSlideWidget {
                       spacing: _badgeSpacing,
                       runSpacing: _badgeSpacing,
                       children: [
-                        DeckBadge(label: '🇩🇪 Berlin · 14 Nov'),
-                        DeckBadge(label: '🇹🇷 Gaziantep · 15 Nov', color: DeckColors.googleRed),
-                        DeckBadge(label: '🇹🇷 Adana · 11 Dec', color: DeckColors.googleGreen),
-                        DeckBadge(label: '🇹🇷 Istanbul · 19 Dec', color: DeckColors.halftoneBlue),
+                        DeckBadge(
+                          label: 'DE · Berlin · 14 Nov',
+                          icon: Icons.location_on,
+                        ),
+                        DeckBadge(
+                          label: 'TR · Gaziantep · 15 Nov',
+                          color: DeckColors.googleRed,
+                          icon: Icons.location_on,
+                        ),
+                        DeckBadge(
+                          label: 'TR · Adana · 11 Dec',
+                          color: DeckColors.googleGreen,
+                          icon: Icons.location_on,
+                        ),
+                        DeckBadge(
+                          label: 'TR · Istanbul · 19 Dec',
+                          color: DeckColors.halftoneBlue,
+                          icon: Icons.location_on,
+                        ),
                       ],
                     ),
                     const SizedBox(height: _largeGap),
@@ -69,17 +82,40 @@ class TitleSlide extends FlutterDeckSlideWidget {
                     const SizedBox(height: _gap),
                     Text(
                       'TR: AI Studio, Antigravity ve Flutter ile Kendi AI Kafe Oyununu Canlıya Al (Tatlı mı Tuzlu mu?)',
-                      style: textTheme.bodyLarge.copyWith(color: DeckColors.halftoneYellow),
+                      style: textTheme.bodyLarge.copyWith(color: DeckColors.googleYellow),
                     ),
                     const SizedBox(height: _largeGap),
-                    Container(
-                      padding: const EdgeInsets.all(_cardPadding),
-                      decoration: BoxDecoration(
-                        color: DeckColors.surface,
-                        borderRadius: BorderRadius.circular(_cardRadius),
-                        border: Border.all(color: DeckColors.googleBlue),
-                      ),
-                      child: const Column(
+                    const Wrap(
+                      spacing: 14,
+                      runSpacing: 12,
+                      children: [
+                        StatChip(
+                          value: '53.81 ms',
+                          label: 'Cloud Run p50 Warm',
+                          accentColor: DeckColors.googleGreen,
+                        ),
+                        StatChip(
+                          value: '~270 tok',
+                          label: '1 JSON Call / Order',
+                        ),
+                        StatChip(
+                          value: '20 PNGs + SVG',
+                          label: 'Hybrid Asset Pipeline',
+                          accentColor: DeckColors.googleYellow,
+                        ),
+                        StatChip(
+                          value: '4 Cities',
+                          label: 'Remote Config Editions',
+                          accentColor: DeckColors.halftonePink,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: _gap),
+                    const DeckCard(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      backgroundColor: DeckColors.surfaceInset,
+                      borderColor: DeckColors.outlineLight,
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -91,7 +127,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                               color: DeckColors.offWhite,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          SizedBox(height: 6),
                           Text(
                             'Topics: ai/ai-dev-tools/ai-studio · cloud/serverless-containers/cloud-run · firebase/monitoring/remote-config',
                             style: TextStyle(
@@ -106,42 +142,36 @@ class TitleSlide extends FlutterDeckSlideWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 40),
+              const SizedBox(width: 36),
               Expanded(
                 flex: 3,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(_photoRadius),
-                      child: Image.asset(
-                        'assets/images/esra.png',
-                        width: _photoSize,
-                        height: _photoSize,
-                        fit: BoxFit.cover,
+                child: DeckCard(
+                  backgroundColor: DeckColors.surfaceElevated,
+                  borderColor: DeckColors.outlineLight,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(_photoRadius),
+                        child: Image.asset(
+                          'assets/images/esra.png',
+                          width: _photoSize,
+                          height: _photoSize,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: _gap),
-                    Text('Esra Kadah', style: textTheme.title),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Google Developer Expert, Flutter & Dart',
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodyMedium.copyWith(color: DeckColors.halftoneBlue),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Tech Lead, Senior Flutter & AI Engineer · Antigua Mobile Berlin',
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodySmall,
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Google Developer Expert, does not speak for Google',
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodySmall.copyWith(color: DeckColors.mutedText),
-                    ),
-                  ],
+                      const SizedBox(height: _gap),
+                      Text('Esra Kadah', style: textTheme.title),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Tech Lead, Senior Flutter & AI Engineer · Antigua Mobile Berlin',
+                        textAlign: TextAlign.center,
+                        style: textTheme.bodySmall.copyWith(color: DeckColors.offWhite),
+                      ),
+                      const SizedBox(height: 16),
+                      const GdeBadgeStrip(),
+                    ],
+                  ),
                 ),
               ),
             ],

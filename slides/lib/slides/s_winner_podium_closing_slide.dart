@@ -26,37 +26,67 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         return const SlideFrame(
           eyebrow: 'SLIDE 14 · SHOWCASE PODIUM, VIBE LOUNGE BADGE & Q&A',
-          title: 'Teşekkürler! Show Us Your Cafe & Claim Your Prizes 🕶️🏆',
+          title: 'Teşekkürler! Show Us Your Cafe & Claim Your Prizes',
           subtitle: '60-second live demos -> Google Pixel Sunglasses + Dash Gifts -> Official Vibe Lounge Badge',
-          child: Row(
+          child: Column(
             children: [
               Expanded(
-                child: DeckFeatureCard(
-                  badge: '1. STAGE DEMO & PRIZES',
-                  title: '60-Second Live Showcase',
-                  accentColor: DeckColors.googleYellow,
-                  bullets: [
-                    'Open your deployed *.run.app URL or GitHub repo on stage.',
-                    'Show your custom Round 2 signature dish & trigger the Salt-instead-of-Sugar 1-star roast!',
-                    'Win 1 of 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts.',
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: DeckFeatureCard(
+                        badge: '1. STAGE DEMO & PRIZES',
+                        badgeIcon: Icons.emoji_events,
+                        title: '60-Second Live Showcase',
+                        accentColor: DeckColors.googleYellow,
+                        bullets: [
+                          'Open your deployed *.run.app URL or GitHub repo on stage.',
+                          'Show your custom Round 2 signature dish & trigger the Salt-instead-of-Sugar 1-star roast!',
+                          'Win 1 of 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts.',
+                        ],
+                        footerText: '2 winners per 45-min Vibe Lounge wave / 4 winners in 80-min workshop',
+                      ),
+                    ),
+                    SizedBox(width: _gap),
+                    Expanded(
+                      child: DeckFeatureCard(
+                        badge: '2. CLAIM BADGE & STAY IN TOUCH',
+                        badgeIcon: Icons.verified,
+                        title: 'Official Badge & Starter Repo',
+                        accentColor: DeckColors.halftoneBlue,
+                        bullets: [
+                          'Claim your DevFest 2026 Vibe Lounge Badge: goo.gle/devfest26-vibe-lounge',
+                          'Starter Repo & Slides: github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
+                          'Speaker: Esra Kadah · Tech Lead, Senior Flutter & AI Engineer · @esrakadah · esra.tech',
+                          'Google Developer Expert, Flutter & Dart · Does not speak for Google',
+                        ],
+                        footerText: "Questions? Let's talk Cloud Run, Firebase AI Logic & Flutter!",
+                      ),
+                    ),
                   ],
-                  footerText: '2 winners per 45-min Vibe Lounge wave / 4 winners in 80-min workshop',
                 ),
               ),
-              SizedBox(width: _gap),
-              Expanded(
-                child: DeckFeatureCard(
-                  badge: '2. CLAIM BADGE & STAY IN TOUCH',
-                  title: 'Official Badge & Starter Repo',
-                  accentColor: DeckColors.halftoneBlue,
-                  bullets: [
-                    'Claim your DevFest 2026 Vibe Lounge Badge: goo.gle/devfest26-vibe-lounge',
-                    'Starter Repo & Slides: github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
-                    'Speaker: Esra Kadah · Tech Lead, Senior Flutter & AI Engineer · @esrakadah · esra.tech',
-                    'Google Developer Expert, Flutter & Dart · Does not speak for Google',
-                  ],
-                  footerText: "Questions? Let's talk Cloud Run, Firebase AI Logic & Flutter!",
-                ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GdeBadgeStrip(),
+                  Wrap(
+                    spacing: 12,
+                    children: [
+                      PillTag(
+                        label: '4 PIXEL SUNGLASSES + DASH GIFTS',
+                        color: DeckColors.googleYellow,
+                        icon: Icons.celebration,
+                      ),
+                      PillTag(
+                        label: 'goo.gle/devfest26-vibe-lounge',
+                        color: DeckColors.googleGreen,
+                        icon: Icons.qr_code_2,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
