@@ -1,0 +1,18 @@
+#!/bin/sh
+# Sourced by the nginx image entrypoint before 20-envsubst-on-templates.sh renders the template.
+# A key with a quote, space or `?` breaks the rendered config and nginx would refuse to start, so a malformed
+# key is dropped and the game serves its offline roasts instead. The key itself is never logged.
+GEMINI_API_KEY=$(printf '%s' "${GEMINI_API_KEY:-}" | tr -d '[:space:]')
+case "$GEMINI_API_KEY" in
+  "")
+    echo "gemini-key: GEMINI_API_KEY is not set; serving offline roasts" >&2
+    ;;
+  *[!A-Za-z0-9_-]*)
+    echo "gemini-key: GEMINI_API_KEY has characters an API key never contains (length ${#GEMINI_API_KEY}); serving offline roasts" >&2
+    GEMINI_API_KEY=""
+    ;;
+  *)
+    echo "gemini-key: GEMINI_API_KEY accepted (length ${#GEMINI_API_KEY})" >&2
+    ;;
+esac
+export GEMINI_API_KEY

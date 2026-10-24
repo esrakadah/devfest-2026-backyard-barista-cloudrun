@@ -20,5 +20,6 @@ ENV GEMINI_MODEL=${GEMINI_MODEL}
 ENV GEMINI_RATE_LIMIT=10r/s
 COPY --from=build /app/build/web /usr/share/nginx/html
 COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
+COPY nginx/15-gemini-key.envsh /docker-entrypoint.d/15-gemini-key.envsh
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
