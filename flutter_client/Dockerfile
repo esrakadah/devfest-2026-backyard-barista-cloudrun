@@ -11,10 +11,14 @@ RUN flutter pub get && \
     flutter build web --release \
       --no-web-resources-cdn \
       --dart-define=DEFAULT_CITY=${DEFAULT_CITY} \
-      --dart-define=GEMINI_MODEL=${GEMINI_MODEL}
+      --dart-define=GEMINI_MODEL=${GEMINI_MODEL} \
+      --dart-define=GEMINI_PROXY_PATH=/api/gemini/generate
 
 FROM nginx:alpine
+ARG GEMINI_MODEL=gemini-3.5-flash-lite
+ENV GEMINI_MODEL=${GEMINI_MODEL}
+ENV GEMINI_RATE_LIMIT=10r/s
 COPY --from=build /app/build/web /usr/share/nginx/html
-RUN printf 'server {\n  listen 8080;\n  server_name _;\n  root /usr/share/nginx/html;\n  index index.html;\n  location / {\n    try_files $uri $uri/ /index.html;\n  }\n}\n' > /etc/nginx/conf.d/default.conf
+COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
