@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:backyard_barista_cloudrun/services/sound_player_stub.dart'
     if (dart.library.js_interop) 'package:backyard_barista_cloudrun/services/sound_player_web.dart'
     if (dart.library.io) 'package:backyard_barista_cloudrun/services/sound_player_io.dart';
@@ -34,6 +36,6 @@ class CafeSoundController {
     if (_isMuted) {
       return;
     }
-    playPlatformCafeCue(cue.assetPath);
+    unawaited(playPlatformCafeCue(cue.assetPath));
   }
 }

@@ -29,6 +29,8 @@ migrate_working_dir/
 /build/
 flutter_client/build/
 flutter_client/.dart_tool/
+slides/build/
+slides/.dart_tool/
 
 # Secrets & Environment
 .env

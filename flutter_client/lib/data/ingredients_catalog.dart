@@ -25,7 +25,7 @@ enum IngredientCategory {
 }
 
 /// Represents a single tap-to-add item on the Backyard Barista counter.
-/// Uses either one of the 12 pre-generated GitHub PNGs (`assetPath`) or an on-the-fly
+/// Uses either one of the 14 pre-generated 9D studio PNGs (`assetPath`) or an on-the-fly
 /// Gemini/Antigravity generated vector graphic (`customVectorKind`).
 @immutable
 class CafeIngredient {
@@ -64,8 +64,8 @@ class CafeIngredient {
   }
 }
 
-/// Pre-wired catalog of the 9 counter PNG items (plus 3 customer face PNGs = 12 base PNGs total)
-/// and the 2 Round-2 custom vector items generated on the fly with Antigravity.
+/// Pre-wired catalog of the 9 counter PNG items (plus 3 customer face PNGs and 2 Round-2 custom PNGs = 14 studio 9D PNGs total)
+/// with on-the-fly vector graphic fallbacks generated with Antigravity.
 class IngredientsCatalog {
   const IngredientsCatalog._();
 

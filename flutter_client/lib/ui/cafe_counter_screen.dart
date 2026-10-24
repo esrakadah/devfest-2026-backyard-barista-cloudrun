@@ -7,6 +7,7 @@ import 'package:backyard_barista_cloudrun/models/cafe_review.dart';
 import 'package:backyard_barista_cloudrun/models/customer_order_ticket.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
+import 'package:backyard_barista_cloudrun/ui/cafe_character_animations.dart';
 import 'package:backyard_barista_cloudrun/ui/city_settings_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -273,14 +274,28 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                               });
                             },
                           ),
+                          const SizedBox(height: 12),
+                          CafeCrewCharacterStage(
+                            languageCode: languageCode,
+                            selectedTray: _selectedTray,
+                            latestReview: latestReview,
+                            playerOneScore: _playerOneBaristaScore,
+                            playerTwoScore: _playerTwoPastryScore,
+                            onTapCharacterEmote: () {
+                              _soundController.play(CafeSoundCue.tapPop);
+                            },
+                          ),
                           const SizedBox(height: 14),
                           _CustomerOrderStage(
                             ticket: currentTicket,
                             totalTickets: totalTickets,
                             languageCode: languageCode,
                             selectedTray: _selectedTray,
-                            latestReview: _latestReview,
+                            latestReview: latestReview,
                             onNextCustomer: _advanceToNextCustomer,
+                            onTapCustomerCharacter: () {
+                              _soundController.play(CafeSoundCue.tapPop);
+                            },
                           ),
                           const SizedBox(height: 16),
                           for (final category in IngredientCategory.values) ...<Widget>[
@@ -528,6 +543,7 @@ class _CustomerOrderStage extends StatelessWidget {
     required this.selectedTray,
     required this.latestReview,
     required this.onNextCustomer,
+    required this.onTapCustomerCharacter,
   });
 
   final CustomerOrderTicket ticket;
@@ -536,10 +552,33 @@ class _CustomerOrderStage extends StatelessWidget {
   final List<CafeIngredient> selectedTray;
   final CafeReview? latestReview;
   final VoidCallback onNextCustomer;
+  final VoidCallback onTapCustomerCharacter;
+
+  CafeCharacterMood get _customerMood {
+    final currentReview = latestReview;
+    if (currentReview != null) {
+      return currentReview.isPrankCaught ? CafeCharacterMood.saltySabotageShock : CafeCharacterMood.sweetCelebration;
+    }
+    if (selectedTray.isNotEmpty) {
+      return CafeCharacterMood.brewingActive;
+    }
+    return CafeCharacterMood.talkingOrder;
+  }
+
+  String get _activeCustomerPortraitAsset {
+    final currentReview = latestReview;
+    if (currentReview != null && currentReview.isPrankCaught) {
+      return currentReview.customerFace.assetPath;
+    }
+    return ticket.portraitAssetPath;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final activeFaceAsset = latestReview?.customerFace.assetPath ?? CustomerFaceState.happy.assetPath;
+    final currentReview = latestReview;
+    final windowBorderColor = currentReview == null
+        ? const Color(0xFFD7A86E)
+        : (currentReview.isPrankCaught ? const Color(0xFFE53935) : const Color(0xFF43A047));
 
     return Container(
       padding: const EdgeInsets.all(14),
@@ -561,36 +600,16 @@ class _CustomerOrderStage extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Arched Customer Cafe Window
-          Container(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFF8EE),
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(44),
-                bottom: Radius.circular(16),
-              ),
-              border: Border.all(color: const Color(0xFFD7A86E), width: 2.5),
-            ),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(38),
-                bottom: Radius.circular(12),
-              ),
-              child: Image.asset(
-                activeFaceAsset,
-                width: _customerAvatarSize,
-                height: _customerAvatarSize,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(
-                    Icons.face_retouching_natural,
-                    size: _customerAvatarSize,
-                    color: Color(0xFF6D4C41),
-                  );
-                },
-              ),
-            ),
+          // Animated Arched Customer Cafe Window + Lottie Aura
+          AnimatedCafeCharacterAvatar(
+            key: const Key('customer_arch_character_avatar'),
+            portraitAssetPath: _activeCustomerPortraitAsset,
+            mood: _customerMood,
+            avatarSize: _customerAvatarSize,
+            borderColor: windowBorderColor,
+            badgeEmoji: ticket.characterBadgeEmoji,
+            isArchedWindow: true,
+            onTapCharacter: onTapCustomerCharacter,
           ),
           const SizedBox(width: 14),
           // Speech-Bubble Order Ticket
@@ -1169,21 +1188,13 @@ class _CustomerReviewCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(_photoCornerRadius),
-            child: Image.asset(
-              currentReview.customerFace.assetPath,
-              width: _customerAvatarSize,
-              height: _customerAvatarSize,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  isSabotage ? Icons.sentiment_very_dissatisfied : Icons.sentiment_very_satisfied,
-                  size: _customerAvatarSize,
-                  color: borderColor,
-                );
-              },
-            ),
+          AnimatedCafeCharacterAvatar(
+            key: const Key('review_verdict_character_avatar'),
+            portraitAssetPath: currentReview.customerFace.assetPath,
+            mood: isSabotage ? CafeCharacterMood.saltySabotageShock : CafeCharacterMood.sweetCelebration,
+            avatarSize: _customerAvatarSize,
+            borderColor: borderColor,
+            badgeEmoji: isSabotage ? '🧂💥' : '🌟😍',
           ),
           const SizedBox(width: 14),
           Expanded(

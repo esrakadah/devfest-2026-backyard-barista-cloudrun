@@ -11,9 +11,16 @@ Future<void> playPlatformCafeCue(String assetPath) async {
   try {
     await SystemSound.play(SystemSoundType.click);
     if (Platform.isMacOS) {
-      final candidateFile = File(assetPath);
-      if (candidateFile.existsSync()) {
-        await Process.start('afplay', <String>[candidateFile.path]);
+      final candidatePaths = <String>[
+        assetPath,
+        '${File(Platform.resolvedExecutable).parent.parent.path}/Frameworks/App.framework/Resources/flutter_assets/$assetPath',
+      ];
+      for (final path in candidatePaths) {
+        final candidateFile = File(path);
+        if (candidateFile.existsSync()) {
+          await Process.start('afplay', <String>[candidateFile.path]);
+          return;
+        }
       }
     }
   } on Object {

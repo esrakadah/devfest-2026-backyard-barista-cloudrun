@@ -1,4 +1,8 @@
+import 'dart:js_interop';
+
 import 'package:web/web.dart' as web;
+
+const double _defaultCafeSoundVolume = 0.85;
 
 /// Plays bundled `.wav` assets inside Chrome, Mobile Safari, and WebViews using HTMLAudioElement.
 Future<void> playPlatformCafeCue(String assetPath) async {
@@ -6,8 +10,8 @@ Future<void> playPlatformCafeCue(String assetPath) async {
     final resolvedAssetUrl = 'assets/$assetPath';
     final audioElement = web.HTMLAudioElement()
       ..src = resolvedAssetUrl
-      ..volume = 0.85;
-    audioElement.play();
+      ..volume = _defaultCafeSoundVolume;
+    await audioElement.play().toDart;
   } on Object {
     // Ignore autoplay restrictions before first user gesture.
   }

@@ -1,0 +1,11 @@
+{
+  "name": "Backyard Barista on Cloud Run Deck",
+  "short_name": "Barista Deck",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#20344B",
+  "theme_color": "#4285F4",
+  "description": "DevFest 2026 Backyard Barista on Cloud Run presentation deck.",
+  "orientation": "landscape-primary",
+  "prefer_related_applications": false
+}

@@ -1,7 +1,20 @@
 import 'package:backyard_barista_cloudrun/config/city_edition_controller.dart';
 import 'package:flutter/foundation.dart';
 
-/// Represents a single customer order in the 3-step cafe game loop.
+/// Character portrait asset paths bundled under `assets/base/characters/` and `assets/base/customers/`.
+class CafeCharacterAssets {
+  const CafeCharacterAssets._();
+
+  static const String baristaPlayerOne = 'assets/base/characters/barista_p1.png';
+  static const String pastryChefPlayerTwo = 'assets/base/characters/pastry_chef_p2.png';
+  static const String customerAyseUsta = 'assets/base/characters/customer_ayse_usta.png';
+  static const String customerMustafa = 'assets/base/characters/customer_mustafa.png';
+  static const String customerLukas = 'assets/base/characters/customer_lukas.png';
+  static const String customerDeniz = 'assets/base/characters/customer_deniz.png';
+  static const String customerZeynepHappy = 'assets/base/customers/customer_happy.png';
+}
+
+/// Represents a single customer order in the 3-step cafe game loop, paired with a distinct animated character profile.
 @immutable
 class CustomerOrderTicket {
   const CustomerOrderTicket({
@@ -12,6 +25,8 @@ class CustomerOrderTicket {
     required this.orderBubbleEn,
     required this.orderBubbleTr,
     required this.requestedIngredientIds,
+    required this.portraitAssetPath,
+    required this.characterBadgeEmoji,
   });
 
   final int ticketNumber;
@@ -21,6 +36,8 @@ class CustomerOrderTicket {
   final String orderBubbleEn;
   final String orderBubbleTr;
   final List<String> requestedIngredientIds;
+  final String portraitAssetPath;
+  final String characterBadgeEmoji;
 
   String localizedRole(String languageCode) => languageCode == 'en' ? customerRoleEn : customerRoleTr;
 
@@ -38,6 +55,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'One Double Espresso, a flaky Butter Croissant, and Sweet Sugar please!',
             orderBubbleTr: 'Bir Çift Shot Espresso, Tereyağlı Kruvasan ve Tatlı Şeker lütfen!',
             requestedIngredientIds: <String>['espresso', 'croissant', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerLukas,
+            characterBadgeEmoji: '🧢💻',
           ),
           CustomerOrderTicket(
             ticketNumber: 2,
@@ -47,6 +66,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Steamed Milk with San Sebastian Cheesecake and a touch of Sweet Sugar!',
             orderBubbleTr: 'Köpüklü Süt, San Sebastian Cheesecake ve biraz Tatlı Şeker rica ediyorum!',
             requestedIngredientIds: <String>['milk', 'san_sebastian', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerDeniz,
+            characterBadgeEmoji: '🧣☁️',
           ),
           CustomerOrderTicket(
             ticketNumber: 3,
@@ -56,6 +77,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Surprise me with Menengiç Coffee, AI Custom Katmer Roll, and Sweet Sugar!',
             orderBubbleTr: 'Menengiç Kahvesi, AI Özel Katmer Sarma ve Tatlı Şeker ile enerji verin!',
             requestedIngredientIds: <String>['menengic_coffee', 'custom_katmer_roll', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerMustafa,
+            characterBadgeEmoji: '🎙️⚡',
           ),
         ];
 
@@ -69,6 +92,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Menengiç Pistachio Coffee + Pistachio Baklava + Sweet Sugar (No salt tricks!)',
             orderBubbleTr: 'Menengiç Kahvesi + Fıstıklı Baklava + Tatlı Şeker (Sakın tuz şakası yapmayın!)',
             requestedIngredientIds: <String>['menengic_coffee', 'baklava', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerAyseUsta,
+            characterBadgeEmoji: '👓🟢',
           ),
           CustomerOrderTicket(
             ticketNumber: 2,
@@ -78,6 +103,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Double Espresso + AI Custom Katmer Roll + Sweet Sugar before the next wave!',
             orderBubbleTr: 'Çift Shot Espresso + AI Özel Katmer Sarma + Tatlı Şeker, yeni seans başlıyor!',
             requestedIngredientIds: <String>['espresso', 'custom_katmer_roll', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerMustafa,
+            characterBadgeEmoji: '🎤🚀',
           ),
           CustomerOrderTicket(
             ticketNumber: 3,
@@ -87,6 +114,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Steamed Milk + San Sebastian Cheesecake + Sweet Sugar please!',
             orderBubbleTr: 'Köpüklü Süt + San Sebastian Cheesecake + Tatlı Şeker lütfen!',
             requestedIngredientIds: <String>['milk', 'san_sebastian', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerZeynepHappy,
+            characterBadgeEmoji: '🦋☕',
           ),
         ];
 
@@ -100,6 +129,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Double Espresso + Pistachio Baklava + Sweet Sugar please!',
             orderBubbleTr: 'Gar Kahvesi niyetine Çift Shot Espresso + Fıstıklı Baklava + Tatlı Şeker!',
             requestedIngredientIds: <String>['espresso', 'baklava', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerMustafa,
+            characterBadgeEmoji: '☀️☁️',
           ),
           CustomerOrderTicket(
             ticketNumber: 2,
@@ -109,6 +140,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Steamed Milk + Butter Croissant + Sweet Sugar!',
             orderBubbleTr: 'Buz gibi Köpüklü Süt + Tereyağlı Kruvasan + Tatlı Şeker!',
             requestedIngredientIds: <String>['milk', 'croissant', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerZeynepHappy,
+            characterBadgeEmoji: '✨🤖',
           ),
           CustomerOrderTicket(
             ticketNumber: 3,
@@ -118,6 +151,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Menengiç Coffee + AI Custom Katmer Roll + Sweet Sugar!',
             orderBubbleTr: 'Menengiç Kahvesi + AI Özel Katmer Sarma + Tatlı Şeker lütfen!',
             requestedIngredientIds: <String>['menengic_coffee', 'custom_katmer_roll', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerLukas,
+            characterBadgeEmoji: '🎤🔥',
           ),
         ];
 
@@ -131,6 +166,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Double Espresso + Galata San Sebastian Cheesecake + Sweet Sugar!',
             orderBubbleTr: 'Çift Shot Espresso + Galata San Sebastian Cheesecake + Tatlı Şeker!',
             requestedIngredientIds: <String>['espresso', 'san_sebastian', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerDeniz,
+            characterBadgeEmoji: '🎨🗼',
           ),
           CustomerOrderTicket(
             ticketNumber: 2,
@@ -140,6 +177,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Menengiç Coffee + Pistachio Baklava + Sweet Sugar!',
             orderBubbleTr: 'Menengiç Kahvesi + Fıstıklı Baklava + Tatlı Şeker lütfen!',
             requestedIngredientIds: <String>['menengic_coffee', 'baklava', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerLukas,
+            characterBadgeEmoji: '⛴️🌊',
           ),
           CustomerOrderTicket(
             ticketNumber: 3,
@@ -149,6 +188,8 @@ class CustomerOrderTicket {
             orderBubbleEn: 'Steamed Milk + AI Custom Katmer Roll + Sweet Sugar!',
             orderBubbleTr: 'Köpüklü Süt + AI Özel Katmer Sarma + Tatlı Şeker!',
             requestedIngredientIds: <String>['milk', 'custom_katmer_roll', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerAyseUsta,
+            characterBadgeEmoji: '🌟👩‍🏫',
           ),
         ];
     }

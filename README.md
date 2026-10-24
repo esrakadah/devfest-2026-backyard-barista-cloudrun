@@ -49,16 +49,27 @@ devfest-2026-backyard-barista-cloudrun/
 │   ├── step-1-base-cafe.md    # AI Studio Build mode seed prompt (Base Cafe + 4-City Switcher)
 │   ├── step-2-custom-dish.md  # On-the-fly custom SVG dish + prank icon + Gemini JSON judge
 │   └── step-3-deploy.md       # One-click Cloud Run (.run.app) & GitHub sync guide
+├── slides/                    # 14-slide flutter_deck presentation + Stage Navigator + Turkish speaker notes
+│   ├── pubspec.yaml
+│   ├── lib/
+│   │   ├── main.dart
+│   │   ├── theme.dart
+│   │   ├── plugins/presenter_menu_plugin.dart
+│   │   └── slides/            # Slides 1..14 + /demo-hiccup backup slide
+│   └── test/
+│       └── deck_manifest_test.dart
 └── flutter_client/            # Self-contained Flutter Web app & Cloud Run build context
     ├── pubspec.yaml
     ├── Dockerfile             # Multi-stage Cloud Run container (PORT=8080)
     ├── remote_config_template.json
     ├── assets/
-    │   ├── base/              # 12 pre-generated 256x256 RGBA PNG cafe assets (3x4 = 12)
+    │   ├── audio/             # 6 cafe sound effects (tap_pop, stealth_wink, serve_bell, sweet_fanfare, salty_buzzer, next_chime)
+    │   ├── base/              # 14 studio 9D PNG cafe assets (512x512)
     │   │   ├── drinks/        # espresso.png, milk.png, menengic_coffee.png
-    │   │   ├── foods/         # croissant.png, san_sebastian.png, baklava.png
-    │   │   ├── toppings_pranks/ # sugar_jar.png, salt_shaker.png, chili_sauce.png
+    │   │   ├── foods/         # croissant.png, san_sebastian.png, baklava.png, katmer_roll.png
+    │   │   ├── toppings_pranks/ # sugar_jar.png, salt_shaker.png, chili_sauce.png, isot_pepper.png
     │   │   └── customers/     # customer_happy.png, customer_shocked.png, customer_salty_disgusted.png
+    │   ├── fonts/             # Bundled GoogleSans-Regular, Medium, SemiBold, Bold (.ttf)
     │   ├── editions/
     │   │   └── city_editions.json
     │   └── offline_fallback/
@@ -71,9 +82,14 @@ devfest-2026-backyard-barista-cloudrun/
         │   ├── ingredients_catalog.dart
         │   └── custom_svg_items.dart
         ├── models/
-        │   └── cafe_review.dart
+        │   ├── cafe_review.dart
+        │   └── customer_order_ticket.dart
         ├── services/
-        │   └── cafe_judge_service.dart
+        │   ├── cafe_judge_service.dart
+        │   ├── cafe_sound_controller.dart
+        │   ├── sound_player_io.dart
+        │   ├── sound_player_stub.dart
+        │   └── sound_player_web.dart
         └── ui/
             ├── cafe_counter_screen.dart
             └── city_settings_drawer.dart

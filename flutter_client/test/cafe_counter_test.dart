@@ -49,6 +49,20 @@ void main() {
       // Verify zero red 'PRANK!' spoiler badges exist on the counter
       expect(find.text('PRANK!'), findsNothing);
       expect(find.textContaining('Ayşe Usta'), findsOneWidget);
+      expect(find.byKey(const Key('crew_character_barista_p1')), findsOneWidget);
+      expect(find.byKey(const Key('crew_character_pastry_p2')), findsOneWidget);
+      expect(find.byKey(const Key('customer_arch_character_avatar')), findsOneWidget);
+
+      // Verify sound mute toggle button works cleanly
+      final muteToggle = find.byKey(const Key('sound_mute_toggle_button'));
+      expect(muteToggle, findsOneWidget);
+      expect(find.byIcon(Icons.volume_up_rounded), findsOneWidget);
+      await tester.tap(muteToggle);
+      await tester.pump();
+      expect(find.byIcon(Icons.volume_off_rounded), findsOneWidget);
+      await tester.tap(muteToggle);
+      await tester.pump();
+      expect(find.byIcon(Icons.volume_up_rounded), findsOneWidget);
 
       // 1. Tap Espresso + Baklava + Sweet Sugar
       await tester.tap(find.byKey(const Key('ingredient_card_espresso')));
