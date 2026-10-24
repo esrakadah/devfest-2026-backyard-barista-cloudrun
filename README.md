@@ -2,7 +2,8 @@
 
 **DevFest 2026 Hands-On Workshop & Vibe Lounge Starter Repository**
 - **Author:** Esra Kadah (Flutter & Dart GDE, Senior Flutter & AI Engineer)
-- **Live Cloud Run Reference App (`europe-west3`):** `https://backyard-barista-389486729482.europe-west3.run.app` (`devfest-backyard-barista-2026`)
+- **Live Cloud Run Reference App (`europe-west1` · 3D Characters + Lottie):** `https://backyard-barista-870328613866.europe-west1.run.app` (`soundstage-dea29`)
+- **Live Cloud Run Mirror (`europe-west3`):** `https://backyard-barista-389486729482.europe-west3.run.app` (`devfest-backyard-barista-2026`)
 - **City Editions Included:**
   - `berlin` (🇩🇪 DevFest Berlin, 14 Nov 2026)
   - `gaziantep` (🇹🇷 DevFest Gaziantep, 15 Nov 2026)
