@@ -38,7 +38,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                         title: 'Declarative Flutter UI + Hybrid Assets',
                         bullets: [
                           'Pure Flutter Widgets (Stack, AnimatedScale, CustomPaint) with <620px mobile responsiveness.',
-                          '20 studio PNGs in assets/base/ (12 Round-1 + 2 Round-2 + 6 3D characters) + CustomVectorIngredientGraphic.',
+                          '20 studio PNGs (6 3D characters), 5 Lottie animations, 10 Web Audio API SFX (coffee_grinder, espresso_steam, serve_bell, level_up) + CustomVectorIngredientGraphic.',
                         ],
                         footerText: 'flutter/one-codebase',
                       ),

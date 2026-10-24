@@ -12,7 +12,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
             speakerNotes:
                 'BEAT  [22:30 - 25:00] Hibrit Görsel Boru Hattı: 20 Hazır Stüdyo PNG + Yolda Üretilen AI Vektörleri.\n'
                 'SAY   "Bir oyun atölyesinde en çok vakit kaybettiren şey görsel bulmak ve yüklemektir. Biz bunu hibrit bir boru hattıyla çözdük: 3 içecek, 3 tatlı, 3 şaka malzemesi ve 3 müşteri tepkisinden oluşan toplam 12 adet yüksek çözünürlüklü 1. Tur PNG görselini, 2 adet 2. Tur özel PNG görselini ve 6 adet 3D karakter portresini doğrudan GitHub repomuzun içinde hazır veriyoruz. Ardından 2. Turda herkes kendi özel imza tatlısını ve kendi şaka malzemesini Google AI Studio veya Antigravity ile anında CustomPaint vektör kodu olarak üretiyor. Sıfır dosya yükleme hatası, anında görsel sonuç!"\n'
-                'HOLD  Soldaki hazır PNG vitrinini ve sağdaki yolda üretilen CustomPaint vektör akışını göster. [Fact (flutter_client/assets/): 20 PNGs in assets/base/ (12 Round-1 + 2 Round-2 + 6 3D characters), 5 Lottie JSONs in assets/animations/, 7 audio WAVs in assets/audio/].\n'
+                'HOLD  Soldaki hazır PNG vitrinini ve sağdaki yolda üretilen CustomPaint vektör akışını göster. [Fact (flutter_client/assets/): 20 PNGs in assets/base/ (12 Round-1 + 2 Round-2 + 6 3D characters), 5 Lottie JSONs in assets/animations/, 10 audio WAVs + Web Audio API synth in assets/audio/].\n'
                 'NEXT  "Şimdi bilgisayarlarımızı ve telefonlarımızı açıyoruz: 3 turluk canlı inşa maratonumuz başlıyor!"',
           ),
         );
@@ -114,7 +114,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
                         title: 'Why Hybrid Assets Win in a 300-Seat Hall',
                         accentColor: DeckColors.googleYellow,
                         bullets: [
-                          'Part 1 (20 Studio PNGs in GitHub): 12 Round-1 base PNGs + 2 Round-2 custom PNGs + 6 3D characters in flutter_client/assets/base/ alongside 5 Lottie JSONs and 7 audio WAVs.',
+                          'Part 1 (20 Studio PNGs in GitHub): 12 Round-1 base PNGs + 2 Round-2 custom PNGs + 6 3D characters in flutter_client/assets/base/ alongside 5 Lottie JSONs and 10 Web Audio API + WAV cafe sounds.',
                           'Part 2 (On-the-Fly AI Codegen): Builders prompt AI Studio or Antigravity to generate custom signature dishes as CustomVectorIngredientGraphic code.',
                           'Self-Contained Cloud Run Build: All assets live inside flutter_client/ so gcloud run deploy --source . bundles everything cleanly.',
                         ],

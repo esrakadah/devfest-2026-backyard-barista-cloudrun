@@ -99,8 +99,8 @@ class TitleSlide extends FlutterDeckSlideWidget {
                           label: '1 JSON Call / Order',
                         ),
                         StatChip(
-                          value: '20 PNGs + SVG',
-                          label: 'Hybrid Asset Pipeline',
+                          value: '20 PNGs + SFX',
+                          label: '3D Crew · Lottie · Web Audio',
                           accentColor: DeckColors.googleYellow,
                         ),
                         StatChip(
