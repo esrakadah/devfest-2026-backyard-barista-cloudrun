@@ -411,6 +411,7 @@
         title: '🇹🇷 DevFest Gaziantep 2026 Edition',
         sub: 'Şehitkamil Baklava & Menengiç Kahve Evi · Fıstıklı Baklava & Menengiç Kahvesi',
         customer: 'Müşteri #1/3 · Ayşe Usta (Şehitkamil Gurme Jüri)',
+        avatar: 'characters/customer_ayse_usta.png',
         quote: 'Menengiç Kahvesi + Fıstıklı Baklava + Tatlı Şeker (Sakın tuz şakası yapmayın!)',
         reqs: ['menengic_coffee', 'baklava', 'sugar_jar'],
         sweetHeadline: 'Ayşe Usta: "İşte Gerçek Antep Usulü Ziyafet!"',
@@ -422,6 +423,7 @@
         title: '🇩🇪 DevFest Berlin 2026 Edition',
         sub: 'Kreuzberg Späti & Kiez Roasters · Flat White & Berliner Pfannkuchen',
         customer: 'Customer #1/3 · Lukas (Kreuzberg Specialty Roaster)',
+        avatar: 'characters/customer_lukas.png',
         quote: 'Double Espresso + Butter Croissant + Sweet Sugar (Zero salt pranks please!)',
         reqs: ['espresso', 'croissant', 'sugar_jar'],
         sweetHeadline: 'Lukas: "Perfekter Kiez-Espresso & Croissant!"',
@@ -433,6 +435,7 @@
         title: '🇹🇷 DevFest Adana 2026 Edition',
         sub: 'Seyhan Gar Kahvesi & Tatlı Durağı · Köpüklü Kahve & Bici Bici',
         customer: 'Müşteri #1/3 · Mustafa (Adana Gurme Eleştirmen)',
+        avatar: 'characters/customer_mustafa.png',
         quote: 'Çift Shot Espresso + Fıstıklı Katmer Sarma + Tatlı Şeker',
         reqs: ['espresso', 'katmer_roll', 'sugar_jar'],
         sweetHeadline: 'Mustafa: "Adana Sıcağında Tam Kıvamında Keyif!"',
@@ -444,6 +447,7 @@
         title: '🇹🇷 DevFest Istanbul 2026 Edition',
         sub: 'Galata & Vapur Kafe · San Sebastian Cheesecake & Espresso',
         customer: 'Müşteri #1/3 · Deniz (Galata Kahve Küratörü)',
+        avatar: 'characters/customer_deniz.png',
         quote: 'Çift Shot Espresso + San Sebastian Cheesecake + Tatlı Şeker',
         reqs: ['espresso', 'san_sebastian', 'sugar_jar'],
         sweetHeadline: 'Deniz: "Boğaz Vapurunda 5 Yıldızlı Lezzet!"',
@@ -621,6 +625,12 @@
       document.getElementById('editionHeader').textContent = cityEdition.title;
       document.getElementById('citySubtitle').textContent = cityEdition.sub;
       document.getElementById('customerTitle').textContent = cityEdition.customer;
+      const customerAvatarElement = document.getElementById('customerAvatar');
+      customerAvatarElement.src = `../flutter_client/assets/base/${cityEdition.avatar}`;
+      customerAvatarElement.onerror = function () {
+        this.onerror = null;
+        this.src = `https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/${cityEdition.avatar}`;
+      };
       document.getElementById('p1ScoreBadge').textContent = `☕ P1 Barista: ${playerOneScore}`;
       document.getElementById('p2ScoreBadge').textContent = `🥐 P2 Pastry: ${playerTwoScore}`;
       document.getElementById('tipsBadge').textContent = `🪙 Tips: +${tipPoints} pts`;

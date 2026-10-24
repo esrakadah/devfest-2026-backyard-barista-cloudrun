@@ -1,8 +1,11 @@
 import 'package:backyard_barista_cloudrun/config/city_edition_controller.dart';
+import 'package:backyard_barista_cloudrun/data/ingredients_catalog.dart';
 import 'package:backyard_barista_cloudrun/main.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
 
 void main() {
   DateTime fixedClock() => DateTime.utc(2026, 11, 15, 14);
@@ -210,5 +213,56 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('tea_sip_countdown_badge')), findsNothing);
     expect(find.text('5sn Çay Yudumlat'), findsOneWidget);
+  });
+
+  testWidgets('HTTP 429 room-quota chaos falls back cleanly and Settings sheet RC chips update Priority 2', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(1280, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final http429Client = MockClient((request) async {
+      return http.Response('{"error":{"code":429,"message":"Resource has been exhausted"}}', 429);
+    });
+
+    final cityController = CityEditionController(remoteConfigCityCode: 'gaziantep')
+      ..syncRemoteConfigFromUri(uri: Uri.parse('https://backyard-barista.run.app/?remote_city=adana'));
+    expect(cityController.activeCityId, CityEditionId.adana);
+    expect(cityController.activeSourceLayer, CityConfigSourceLayer.firebaseRemoteConfig);
+
+    final judgeService = CafeJudgeService(
+      clock: fixedClock,
+      httpClient: http429Client,
+      geminiApiKey: 'test-room-shared-key',
+    );
+
+    final review = await judgeService.evaluateOrder(
+      selectedIngredients: <CafeIngredient>[
+        IngredientsCatalog.baseItems.firstWhere((item) => item.id == 'espresso'),
+        IngredientsCatalog.baseItems.firstWhere((item) => item.id == 'salt_shaker'),
+      ],
+      cityEdition: cityController.activeEdition,
+    );
+    expect(review.ratingStars, 1);
+    expect(review.tasteVerdict, 'salty_sabotage');
+    expect(review.isFromLiveGemini, isFalse);
+
+    await tester.pumpWidget(
+      BackyardBaristaApp(
+        cityController: cityController,
+        judgeService: judgeService,
+      ),
+    );
+
+    await tester.tap(find.byKey(const Key('city_edition_switcher_button')));
+    await tester.pumpAndSettle();
+
+    final rcBerlinChip = find.byKey(const Key('remote_config_chip_berlin'));
+    expect(rcBerlinChip, findsOneWidget);
+    await tester.tap(rcBerlinChip);
+    await tester.pumpAndSettle();
+
+    expect(cityController.activeCityId, CityEditionId.berlin);
+    expect(cityController.activeSourceLayer, CityConfigSourceLayer.firebaseRemoteConfig);
   });
 }
