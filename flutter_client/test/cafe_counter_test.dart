@@ -174,4 +174,41 @@ void main() {
     expect(find.byKey(const Key('customer_review_card')), findsOneWidget);
     expect(find.textContaining('1/5 · Tuzlu Sabotaj 🧂'), findsOneWidget);
   });
+
+  testWidgets('5-second Turkish Tea Sipping animation plays and auto-completes after 5s', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(1280, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final cityController = CityEditionController(remoteConfigCityCode: 'gaziantep');
+    final judgeService = CafeJudgeService(
+      clock: fixedClock,
+      forceOfflineMode: true,
+    );
+
+    await tester.pumpWidget(
+      BackyardBaristaApp(
+        cityController: cityController,
+        judgeService: judgeService,
+      ),
+    );
+
+    final sipTeaButton = find.byKey(const Key('customer_sip_tea_5s_button'));
+    expect(sipTeaButton, findsOneWidget);
+    expect(find.text('5sn Çay Yudumlat'), findsOneWidget);
+
+    await tester.tap(sipTeaButton);
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 2));
+
+    expect(find.byKey(const Key('tea_sip_countdown_badge')), findsWidgets);
+    expect(find.byKey(const Key('turkish_tea_sip_canvas')), findsWidgets);
+    expect(find.textContaining('tavşan kanı çayımı 5 saniye keyifle yudumluyorum'), findsOneWidget);
+
+    // Advance past the remaining 3 seconds of the 5-second animation
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('tea_sip_countdown_badge')), findsNothing);
+    expect(find.text('5sn Çay Yudumlat'), findsOneWidget);
+  });
 }

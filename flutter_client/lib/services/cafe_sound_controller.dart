@@ -11,7 +11,8 @@ enum CafeSoundCue {
   serveBell('assets/audio/serve_bell.wav'),
   sweetFanfare('assets/audio/sweet_fanfare.wav'),
   saltyBuzzer('assets/audio/salty_buzzer.wav'),
-  nextChime('assets/audio/next_chime.wav');
+  nextChime('assets/audio/next_chime.wav'),
+  teaSip('assets/audio/tea_sip.wav');
 
   const CafeSoundCue(this.assetPath);
 

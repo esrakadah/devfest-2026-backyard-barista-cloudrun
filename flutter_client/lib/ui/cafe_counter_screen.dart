@@ -47,6 +47,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   final CafeSoundController _soundController = CafeSoundController();
   bool _includeRoundTwoCustomItems = true;
   bool _isEvaluatingOrder = false;
+  bool _isCharacterSippingTea = false;
   int _activeTicketIndex = 0;
   int _playerOneBaristaScore = 0;
   int _playerTwoPastryScore = 0;
@@ -57,6 +58,9 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   void initState() {
     super.initState();
     widget.cityController.addListener(_handleCityChanged);
+    if (!isRunningInAutomatedWidgetTest) {
+      _isCharacterSippingTea = true;
+    }
   }
 
   @override
@@ -90,10 +94,15 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
         _selectedTray.removeWhere((existing) => existing.id == ingredient.id);
       } else {
         _selectedTray.add(ingredient);
+        if (ingredient.category == IngredientCategory.drink && !isRunningInAutomatedWidgetTest) {
+          _isCharacterSippingTea = true;
+        }
       }
     });
     if (!isRemoving && ingredient.isPrankItem) {
       _soundController.play(CafeSoundCue.stealthWink);
+    } else if (!isRemoving && ingredient.category == IngredientCategory.drink) {
+      _soundController.play(CafeSoundCue.teaSip);
     } else {
       _soundController.play(CafeSoundCue.tapPop);
     }
@@ -113,8 +122,25 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       _activeTicketIndex = (_activeTicketIndex + 1) % tickets.length;
       _selectedTray.clear();
       _latestReview = null;
+      _isCharacterSippingTea = !isRunningInAutomatedWidgetTest;
     });
     _soundController.play(CafeSoundCue.nextChime);
+  }
+
+  void _triggerFiveSecondTeaSip() {
+    setState(() {
+      _isCharacterSippingTea = true;
+    });
+    _soundController.play(CafeSoundCue.teaSip);
+  }
+
+  void _handleTeaSipCompleted() {
+    if (!mounted || !_isCharacterSippingTea) {
+      return;
+    }
+    setState(() {
+      _isCharacterSippingTea = false;
+    });
   }
 
   Future<void> _serveOrder() async {
@@ -281,9 +307,10 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                             latestReview: latestReview,
                             playerOneScore: _playerOneBaristaScore,
                             playerTwoScore: _playerTwoPastryScore,
-                            onTapCharacterEmote: () {
-                              _soundController.play(CafeSoundCue.tapPop);
-                            },
+                            isCrewSippingTea: _isCharacterSippingTea,
+                            onTriggerFiveSecondTeaSip: _triggerFiveSecondTeaSip,
+                            onSipTeaCompleted: _handleTeaSipCompleted,
+                            onTapCharacterEmote: _triggerFiveSecondTeaSip,
                           ),
                           const SizedBox(height: 14),
                           _CustomerOrderStage(
@@ -292,10 +319,11 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                             languageCode: languageCode,
                             selectedTray: _selectedTray,
                             latestReview: latestReview,
+                            isCustomerSippingTea: _isCharacterSippingTea,
                             onNextCustomer: _advanceToNextCustomer,
-                            onTapCustomerCharacter: () {
-                              _soundController.play(CafeSoundCue.tapPop);
-                            },
+                            onTriggerFiveSecondTeaSip: _triggerFiveSecondTeaSip,
+                            onSipTeaCompleted: _handleTeaSipCompleted,
+                            onTapCustomerCharacter: _triggerFiveSecondTeaSip,
                           ),
                           const SizedBox(height: 16),
                           for (final category in IngredientCategory.values) ...<Widget>[
@@ -542,7 +570,10 @@ class _CustomerOrderStage extends StatelessWidget {
     required this.languageCode,
     required this.selectedTray,
     required this.latestReview,
+    required this.isCustomerSippingTea,
     required this.onNextCustomer,
+    required this.onTriggerFiveSecondTeaSip,
+    required this.onSipTeaCompleted,
     required this.onTapCustomerCharacter,
   });
 
@@ -551,10 +582,16 @@ class _CustomerOrderStage extends StatelessWidget {
   final String languageCode;
   final List<CafeIngredient> selectedTray;
   final CafeReview? latestReview;
+  final bool isCustomerSippingTea;
   final VoidCallback onNextCustomer;
+  final VoidCallback onTriggerFiveSecondTeaSip;
+  final VoidCallback onSipTeaCompleted;
   final VoidCallback onTapCustomerCharacter;
 
   CafeCharacterMood get _customerMood {
+    if (isCustomerSippingTea) {
+      return CafeCharacterMood.sippingTeaFiveSeconds;
+    }
     final currentReview = latestReview;
     if (currentReview != null) {
       return currentReview.isPrankCaught ? CafeCharacterMood.saltySabotageShock : CafeCharacterMood.sweetCelebration;
@@ -600,7 +637,7 @@ class _CustomerOrderStage extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Animated Arched Customer Cafe Window + Lottie Aura
+          // Animated Arched Customer Cafe Window + Lottie Aura + 5s Turkish Tea Glass Sipping
           AnimatedCafeCharacterAvatar(
             key: const Key('customer_arch_character_avatar'),
             portraitAssetPath: _activeCustomerPortraitAsset,
@@ -609,7 +646,10 @@ class _CustomerOrderStage extends StatelessWidget {
             borderColor: windowBorderColor,
             badgeEmoji: ticket.characterBadgeEmoji,
             isArchedWindow: true,
+            isSippingTea: isCustomerSippingTea,
+            languageCode: languageCode,
             onTapCharacter: onTapCustomerCharacter,
+            onSipTeaCompleted: onSipTeaCompleted,
           ),
           const SizedBox(width: 14),
           // Speech-Bubble Order Ticket
@@ -639,28 +679,56 @@ class _CustomerOrderStage extends StatelessWidget {
                           color: Color(0xFF3E2723),
                         ),
                       ),
-                      TextButton.icon(
-                        key: const Key('next_customer_button'),
-                        style: TextButton.styleFrom(
-                          visualDensity: VisualDensity.compact,
-                          foregroundColor: const Color(0xFFC85A32),
-                        ),
-                        onPressed: onNextCustomer,
-                        icon: const Icon(Icons.skip_next_rounded, size: 16),
-                        label: Text(
-                          languageCode == 'en' ? 'Next Customer' : 'Sıradaki Müşteri',
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
-                        ),
+                      Wrap(
+                        spacing: 4,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: <Widget>[
+                          FilledButton.tonalIcon(
+                            key: const Key('customer_sip_tea_5s_button'),
+                            style: FilledButton.styleFrom(
+                              visualDensity: VisualDensity.compact,
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              backgroundColor: isCustomerSippingTea ? const Color(0xFFB71C1C) : const Color(0xFFFFE0B2),
+                              foregroundColor: isCustomerSippingTea ? Colors.white : const Color(0xFF8D3218),
+                            ),
+                            onPressed: onTriggerFiveSecondTeaSip,
+                            icon: const Text('🫖', style: TextStyle(fontSize: 13)),
+                            label: Text(
+                              isCustomerSippingTea
+                                  ? (languageCode == 'en' ? 'Sipping Tea (5s)...' : 'Çay Yudumluyor (5sn)...')
+                                  : (languageCode == 'en' ? 'Sip Tea (5s)' : '5sn Çay Yudumlat'),
+                              style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w800),
+                            ),
+                          ),
+                          TextButton.icon(
+                            key: const Key('next_customer_button'),
+                            style: TextButton.styleFrom(
+                              visualDensity: VisualDensity.compact,
+                              foregroundColor: const Color(0xFFC85A32),
+                            ),
+                            onPressed: onNextCustomer,
+                            icon: const Icon(Icons.skip_next_rounded, size: 16),
+                            label: Text(
+                              languageCode == 'en' ? 'Next Customer' : 'Sıradaki Müşteri',
+                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '"${ticket.localizedBubble(languageCode)}"',
-                    style: const TextStyle(
+                    isCustomerSippingTea
+                        ? (languageCode == 'en'
+                            ? '"🫖 Siiip... Enjoying my hot Turkish tulip-glass tea for 5 seconds! Ohhh! ✨"'
+                            : '"🫖 Hüüüp... İnce belli bardakta tavşan kanı çayımı 5 saniye keyifle yudumluyorum! Ohhh! ✨"')
+                        : '"${ticket.localizedBubble(languageCode)}"',
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF4E342E),
+                      color: isCustomerSippingTea ? const Color(0xFFB71C1C) : const Color(0xFF4E342E),
                     ),
                   ),
                   const SizedBox(height: 8),

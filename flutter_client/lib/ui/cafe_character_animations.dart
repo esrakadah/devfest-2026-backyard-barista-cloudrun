@@ -6,6 +6,9 @@ import 'package:backyard_barista_cloudrun/models/customer_order_ticket.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+/// Total duration of the choreographed Turkish tea sipping animation (5.0 seconds).
+const Duration kTeaSipAnimationDuration = Duration(seconds: 5);
+
 const Duration _characterCycleDuration = Duration(milliseconds: 520);
 const double _crewAvatarSize = 68;
 const double _crewCardCornerRadius = 18;
@@ -18,6 +21,10 @@ const double _maxTiltRadians = 0.06;
 const double _celebrationScaleBoost = 0.08;
 const double _brewingScaleBoost = 0.05;
 const double _lottieOverlayScaleFactor = 1.28;
+const double _sipLiftPhaseEnd = 0.20;
+const double _sipDrinkingPhaseEnd = 0.82;
+const double _sipCupMaxTiltRadians = -0.52;
+const double _totalSipSeconds = 5;
 
 /// Bundled ready-made Lottie animation JSON assets under `assets/animations/`.
 class CafeAnimationAssets {
@@ -27,6 +34,7 @@ class CafeAnimationAssets {
   static const String sweetCelebrationBurst = 'assets/animations/sweet_celebration_burst.json';
   static const String saltySpicyExplosion = 'assets/animations/salty_spicy_explosion.json';
   static const String baristaBrewingPulse = 'assets/animations/barista_brewing_pulse.json';
+  static const String teaSipSteamLoop = 'assets/animations/tea_sip_steam_loop.json';
 }
 
 /// Live animation state for P1 Barista, P2 Pastry Chef, and the Customer in the Cafe Arch Window.
@@ -34,6 +42,8 @@ enum CafeCharacterMood {
   idleBreathing,
   talkingOrder,
   brewingActive,
+  sippingTeaFiveSeconds,
+  tastingPastryFiveSeconds,
   stealthPrankWink,
   sweetCelebration,
   saltySabotageShock;
@@ -46,6 +56,9 @@ enum CafeCharacterMood {
       case CafeCharacterMood.brewingActive:
       case CafeCharacterMood.stealthPrankWink:
         return CafeAnimationAssets.baristaBrewingPulse;
+      case CafeCharacterMood.sippingTeaFiveSeconds:
+        return CafeAnimationAssets.teaSipSteamLoop;
+      case CafeCharacterMood.tastingPastryFiveSeconds:
       case CafeCharacterMood.sweetCelebration:
         return CafeAnimationAssets.sweetCelebrationBurst;
       case CafeCharacterMood.saltySabotageShock:
@@ -54,14 +67,15 @@ enum CafeCharacterMood {
   }
 }
 
-bool get _isRunningInAutomatedWidgetTest {
+/// Returns true when running inside `flutter test` so animations never block `pumpAndSettle`.
+bool get isRunningInAutomatedWidgetTest {
   final bindingTypeName = WidgetsBinding.instance.runtimeType.toString();
   return bindingTypeName.contains('Test');
 }
 
 /// Interactive 60fps animated character portrait combining 3D Pixar-style character art,
-/// ready-made Lottie JSON overlays (`package:lottie`), and procedural motion (breathing,
-/// talking bounce, brewing pulse, stealth wink wiggle, celebration jump, and salty shake).
+/// ready-made Lottie JSON overlays (`package:lottie`), procedural motion, and a
+/// 5-second Turkish tulip-glass tea sipping (`İnce Belli Çay Yudumlama`) sequence.
 class AnimatedCafeCharacterAvatar extends StatefulWidget {
   const AnimatedCafeCharacterAvatar({
     required this.portraitAssetPath,
@@ -70,7 +84,10 @@ class AnimatedCafeCharacterAvatar extends StatefulWidget {
     required this.borderColor,
     this.badgeEmoji,
     this.isArchedWindow = false,
+    this.isSippingTea = false,
+    this.languageCode = 'tr',
     this.onTapCharacter,
+    this.onSipTeaCompleted,
     super.key,
   });
 
@@ -80,14 +97,22 @@ class AnimatedCafeCharacterAvatar extends StatefulWidget {
   final Color borderColor;
   final String? badgeEmoji;
   final bool isArchedWindow;
+  final bool isSippingTea;
+  final String languageCode;
   final VoidCallback? onTapCharacter;
+  final VoidCallback? onSipTeaCompleted;
 
   @override
   State<AnimatedCafeCharacterAvatar> createState() => _AnimatedCafeCharacterAvatarState();
 }
 
-class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvatar> with SingleTickerProviderStateMixin {
+class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvatar> with TickerProviderStateMixin {
   late final AnimationController _motionController;
+  late final AnimationController _teaSipController;
+  bool _isLocalSippingActive = false;
+
+  bool get _effectiveSipping =>
+      widget.isSippingTea || _isLocalSippingActive || widget.mood == CafeCharacterMood.sippingTeaFiveSeconds;
 
   @override
   void initState() {
@@ -96,19 +121,53 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
       vsync: this,
       duration: _characterCycleDuration,
     );
+    _teaSipController = AnimationController(
+      vsync: this,
+      duration: kTeaSipAnimationDuration,
+    )..addStatusListener(_handleTeaSipStatus);
+
     _startCharacterMotion();
+    if (widget.isSippingTea || widget.mood == CafeCharacterMood.sippingTeaFiveSeconds) {
+      _triggerFiveSecondTeaSip();
+    }
   }
 
   @override
   void didUpdateWidget(covariant AnimatedCafeCharacterAvatar oldWidget) {
     super.didUpdateWidget(oldWidget);
+    if ((widget.isSippingTea && !oldWidget.isSippingTea) ||
+        (widget.mood == CafeCharacterMood.sippingTeaFiveSeconds &&
+            oldWidget.mood != CafeCharacterMood.sippingTeaFiveSeconds)) {
+      _triggerFiveSecondTeaSip();
+    } else if (!widget.isSippingTea && oldWidget.isSippingTea && _isLocalSippingActive) {
+      setState(() {
+        _isLocalSippingActive = false;
+      });
+      _teaSipController.reset();
+    }
     if (oldWidget.mood != widget.mood || oldWidget.portraitAssetPath != widget.portraitAssetPath) {
       _startCharacterMotion();
     }
   }
 
+  void _handleTeaSipStatus(AnimationStatus status) {
+    if (status == AnimationStatus.completed && mounted) {
+      setState(() {
+        _isLocalSippingActive = false;
+      });
+      widget.onSipTeaCompleted?.call();
+    }
+  }
+
+  void _triggerFiveSecondTeaSip() {
+    setState(() {
+      _isLocalSippingActive = true;
+    });
+    _teaSipController.forward(from: 0);
+  }
+
   void _startCharacterMotion() {
-    if (_isRunningInAutomatedWidgetTest) {
+    if (isRunningInAutomatedWidgetTest) {
       _motionController.forward(from: 0);
       return;
     }
@@ -116,14 +175,15 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
   }
 
   void _handleTap() {
-    if (_isRunningInAutomatedWidgetTest) {
-      _motionController.forward(from: 0);
-    }
+    _triggerFiveSecondTeaSip();
     widget.onTapCharacter?.call();
   }
 
   @override
   void dispose() {
+    _teaSipController
+      ..removeStatusListener(_handleTeaSipStatus)
+      ..dispose();
     _motionController.dispose();
     super.dispose();
   }
@@ -138,13 +198,15 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
         : BorderRadius.circular(20);
 
     final lottieDimension = widget.avatarSize * _lottieOverlayScaleFactor;
+    final activeMood = _effectiveSipping ? CafeCharacterMood.sippingTeaFiveSeconds : widget.mood;
 
     return GestureDetector(
       onTap: _handleTap,
       child: AnimatedBuilder(
-        animation: _motionController,
+        animation: Listenable.merge(<Listenable>[_motionController, _teaSipController]),
         builder: (context, child) {
           final progress = _motionController.value;
+          final sipProgress = _teaSipController.value;
           final sineWave = math.sin(progress * math.pi * 2);
           final halfWave = math.sin(progress * math.pi);
 
@@ -153,7 +215,7 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
           var rotationRadians = 0.0;
           var scaleValue = 1.0;
 
-          switch (widget.mood) {
+          switch (activeMood) {
             case CafeCharacterMood.idleBreathing:
               offsetY = -halfWave * _breathingAmplitudePixels;
               scaleValue = 1.0 + (halfWave * 0.025);
@@ -165,6 +227,31 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
               offsetY = -halfWave * 4.5;
               rotationRadians = sineWave * (_maxTiltRadians * 0.7);
               scaleValue = 1.0 + (halfWave * _brewingScaleBoost);
+            case CafeCharacterMood.sippingTeaFiveSeconds:
+              // 3-phase 5-second sipping head & body choreography
+              if (sipProgress < _sipLiftPhaseEnd) {
+                final liftRatio = sipProgress / _sipLiftPhaseEnd;
+                offsetY = -3.5 * liftRatio;
+                rotationRadians = 0.05 * liftRatio;
+                scaleValue = 1.0 + (0.04 * liftRatio);
+              } else if (sipProgress < _sipDrinkingPhaseEnd) {
+                final drinkPhase = (sipProgress - _sipLiftPhaseEnd) / (_sipDrinkingPhaseEnd - _sipLiftPhaseEnd);
+                // 3 distinct sips across the drinking window
+                final sipPulse = math.sin(drinkPhase * math.pi * 3).abs();
+                offsetY = -3.5 - (4.0 * sipPulse);
+                rotationRadians = -0.09 * sipPulse;
+                scaleValue = 1.03 + (0.05 * sipPulse);
+              } else {
+                final finishRatio = (sipProgress - _sipDrinkingPhaseEnd) / (1.0 - _sipDrinkingPhaseEnd);
+                final happyNod = math.sin(finishRatio * math.pi * 2);
+                offsetY = -4.5 * (1.0 - finishRatio);
+                rotationRadians = 0.06 * happyNod;
+                scaleValue = 1.0 + (0.05 * (1.0 - finishRatio));
+              }
+            case CafeCharacterMood.tastingPastryFiveSeconds:
+              offsetY = -halfWave * 6.0;
+              rotationRadians = sineWave * (_maxTiltRadians * 0.9);
+              scaleValue = 1.0 + (halfWave * 0.07);
             case CafeCharacterMood.stealthPrankWink:
               offsetX = sineWave * 3.0;
               rotationRadians = sineWave * _maxTiltRadians;
@@ -179,9 +266,11 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
               scaleValue = 1.0 + (halfWave * 0.05);
           }
 
+          final remainingSeconds = (_totalSipSeconds * (1.0 - sipProgress)).clamp(0.0, _totalSipSeconds);
+
           return SizedBox(
-            width: widget.avatarSize + 14,
-            height: widget.avatarSize + 14,
+            width: widget.avatarSize + 18,
+            height: widget.avatarSize + 24,
             child: Stack(
               alignment: Alignment.center,
               clipBehavior: Clip.none,
@@ -192,9 +281,9 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
                     width: lottieDimension,
                     height: lottieDimension,
                     child: Lottie.asset(
-                      widget.mood.lottieAssetPath,
-                      repeat: !_isRunningInAutomatedWidgetTest,
-                      animate: !_isRunningInAutomatedWidgetTest,
+                      activeMood.lottieAssetPath,
+                      repeat: !isRunningInAutomatedWidgetTest,
+                      animate: !isRunningInAutomatedWidgetTest,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
                     ),
@@ -214,14 +303,58 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
                 // Layer 3: Expressive Particle Overlay (Floating Hearts, Sparkles, or Spicy Steam)
                 IgnorePointer(
                   child: CustomPaint(
-                    size: Size(widget.avatarSize + 14, widget.avatarSize + 14),
+                    size: Size(widget.avatarSize + 18, widget.avatarSize + 18),
                     painter: _CharacterMoodParticlePainter(
-                      mood: widget.mood,
-                      progress: progress,
+                      mood: activeMood,
+                      progress: _effectiveSipping ? sipProgress : progress,
                     ),
                   ),
                 ),
-                // Layer 4: Character Persona / Mood Badge Pill
+                // Layer 4: 5-Second Turkish Tulip Tea Glass (İnce Belli Çay Bardağı) Sipping Animation
+                if (_effectiveSipping)
+                  IgnorePointer(
+                    child: CustomPaint(
+                      key: const Key('turkish_tea_sip_canvas'),
+                      size: Size(widget.avatarSize + 28, widget.avatarSize + 28),
+                      painter: _TurkishTeaGlassSipPainter(
+                        sipProgress: sipProgress,
+                      ),
+                    ),
+                  ),
+                // Layer 5: Live 5-Second Tea Sipping Countdown Pill ("🫖 Hüüüp! · 3.8s")
+                if (_effectiveSipping)
+                  Positioned(
+                    top: -12,
+                    child: Container(
+                      key: const Key('tea_sip_countdown_badge'),
+                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: <Color>[Color(0xFFB71C1C), Color(0xFFD84315)],
+                        ),
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(color: const Color(0xFFFFF8EE), width: 1.5),
+                        boxShadow: const <BoxShadow>[
+                          BoxShadow(
+                            color: Color(0x33000000),
+                            blurRadius: 6,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        widget.languageCode == 'en'
+                            ? '🫖 Sipping · ${remainingSeconds.toStringAsFixed(1)}s'
+                            : '🫖 Hüüüp! · ${remainingSeconds.toStringAsFixed(1)}sn',
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                // Layer 6: Character Persona / Mood Badge Pill
                 if (widget.badgeEmoji != null)
                   Positioned(
                     right: -2,
@@ -241,7 +374,7 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
                         ],
                       ),
                       child: Text(
-                        widget.badgeEmoji!,
+                        _effectiveSipping ? '🫖✨' : widget.badgeEmoji!,
                         style: const TextStyle(fontSize: 11),
                       ),
                     ),
@@ -286,6 +419,151 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
   }
 }
 
+/// Paints a prominent Turkish tulip tea glass (`İnce Belli Çay Bardağı`), crimson-rimmed porcelain
+/// saucer, silver spoon, curling white steam, and decreasing ruby-red tea level across the 5s sip.
+class _TurkishTeaGlassSipPainter extends CustomPainter {
+  const _TurkishTeaGlassSipPainter({
+    required this.sipProgress,
+  });
+
+  final double sipProgress;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Compute cup position & tilt across the 3 phases of the 5-second sip
+    double liftProgress;
+    double cupTiltRadians;
+
+    if (sipProgress < _sipLiftPhaseEnd) {
+      liftProgress = Curves.easeOutBack.transform((sipProgress / _sipLiftPhaseEnd).clamp(0.0, 1.0));
+      cupTiltRadians = _sipCupMaxTiltRadians * 0.35 * liftProgress;
+    } else if (sipProgress < _sipDrinkingPhaseEnd) {
+      liftProgress = 1.0;
+      final drinkWindow = (sipProgress - _sipLiftPhaseEnd) / (_sipDrinkingPhaseEnd - _sipLiftPhaseEnd);
+      final sipWave = math.sin(drinkWindow * math.pi * 3).abs();
+      cupTiltRadians = _sipCupMaxTiltRadians * (0.45 + 0.55 * sipWave);
+    } else {
+      final lowerWindow = (sipProgress - _sipDrinkingPhaseEnd) / (1.0 - _sipDrinkingPhaseEnd);
+      liftProgress = 1.0 - Curves.easeInOut.transform(lowerWindow.clamp(0.0, 1.0));
+      cupTiltRadians = _sipCupMaxTiltRadians * 0.25 * liftProgress;
+    }
+
+    // Start near bottom-right of avatar, lift toward the character's mouth (center-right)
+    final startCenter = Offset(size.width * 0.80, size.height * 0.82);
+    final mouthCenter = Offset(size.width * 0.62, size.height * 0.54);
+    final cupCenter = Offset.lerp(startCenter, mouthCenter, liftProgress)!;
+
+    // Tea liquid level drops from 88% full down to 24% full across the 5 seconds
+    final teaFillFraction = (0.88 - (0.64 * sipProgress)).clamp(0.24, 0.88);
+
+    canvas.save();
+    canvas.translate(cupCenter.dx, cupCenter.dy);
+    canvas.rotate(cupTiltRadians);
+    canvas.scale(1.22);
+
+    // 1. Porcelain Saucer (Çay Tabağı) with traditional crimson & gold rim
+    final saucerRect = Rect.fromCenter(center: const Offset(0, 13), width: 34, height: 9);
+    final saucerPaint = Paint()
+      ..color = const Color(0xFFFFF8EE)
+      ..style = PaintingStyle.fill;
+    final saucerRimPaint = Paint()
+      ..color = const Color(0xFFC62828)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.2;
+    canvas
+      ..drawOval(saucerRect, saucerPaint)
+      ..drawOval(saucerRect, saucerRimPaint);
+
+    // 2. Miniature Silver Tea Spoon resting on saucer
+    final spoonPaint = Paint()
+      ..color = const Color(0xFFB0BEC5)
+      ..strokeWidth = 2.2
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(const Offset(6, 12), const Offset(17, 8), spoonPaint);
+
+    // 3. Tulip Tea Glass Outline (İnce Belli Çay Bardağı silhouette)
+    final glassPath = Path()
+      ..moveTo(-9.5, -12.5)
+      ..cubicTo(-10.5, -5, -5.5, -1, -6.5, 4)
+      ..cubicTo(-8.5, 8, -9.5, 11, -7.5, 12.5)
+      ..lineTo(7.5, 12.5)
+      ..cubicTo(9.5, 11, 8.5, 8, 6.5, 4)
+      ..cubicTo(5.5, -1, 10.5, -5, 9.5, -12.5)
+      ..close();
+
+    // 4. Ruby-Red Turkish Tea Fill (Tavşan Kanı Çay) clipped inside the tulip glass
+    canvas.save();
+    canvas.clipPath(glassPath);
+    final teaTopY = 12.5 - (25.0 * teaFillFraction);
+    final teaRect = Rect.fromLTRB(-12, teaTopY, 12, 13);
+    final teaPaint = Paint()
+      ..shader = const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: <Color>[
+          Color(0xFFE64A19),
+          Color(0xFF8E0000),
+        ],
+      ).createShader(teaRect);
+    canvas.drawRect(teaRect, teaPaint);
+
+    // Tea surface meniscus highlight
+    final meniscusPaint = Paint()
+      ..color = const Color(0xFFFFCCBC).withValues(alpha: 0.82)
+      ..style = PaintingStyle.fill;
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(0, teaTopY), width: 15, height: 3.4),
+      meniscusPaint,
+    );
+    canvas.restore();
+
+    // 5. Glass rim & specular highlight
+    final glassFillPaint = Paint()
+      ..color = const Color(0x38FFFFFF)
+      ..style = PaintingStyle.fill;
+    final glassBorderPaint = Paint()
+      ..color = const Color(0xFFFFECB3)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.8;
+    canvas
+      ..drawPath(glassPath, glassFillPaint)
+      ..drawPath(glassPath, glassBorderPaint);
+
+    // Gold rim band at top of tulip glass
+    final rimOval = Rect.fromCenter(center: const Offset(0, -12.5), width: 19, height: 3.6);
+    final goldRimPaint = Paint()
+      ..color = const Color(0xFFFFB300)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.6;
+    canvas.drawOval(rimOval, goldRimPaint);
+
+    // 6. Curling Hot Steam Ribbons above the tea glass
+    final steamWave = math.sin(sipProgress * math.pi * 8);
+    final steamPaint = Paint()
+      ..color = const Color(0xEEFFF8E1)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0
+      ..strokeCap = StrokeCap.round;
+
+    final leftSteam = Path()
+      ..moveTo(-4, -15)
+      ..quadraticBezierTo(-7 + (steamWave * 2.5), -21, -3, -27);
+    final rightSteam = Path()
+      ..moveTo(4, -15)
+      ..quadraticBezierTo(7 - (steamWave * 2.5), -22, 3, -28);
+    canvas
+      ..drawPath(leftSteam, steamPaint)
+      ..drawPath(rightSteam, steamPaint);
+
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _TurkishTeaGlassSipPainter oldDelegate) {
+    return oldDelegate.sipProgress != sipProgress;
+  }
+}
+
 class _CharacterMoodParticlePainter extends CustomPainter {
   const _CharacterMoodParticlePainter({
     required this.mood,
@@ -299,6 +577,7 @@ class _CharacterMoodParticlePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     switch (mood) {
       case CafeCharacterMood.sweetCelebration:
+      case CafeCharacterMood.tastingPastryFiveSeconds:
         final sparklePaint = Paint()
           ..color = const Color(0xFFFFB300)
           ..style = PaintingStyle.fill;
@@ -315,6 +594,26 @@ class _CharacterMoodParticlePainter extends CustomPainter {
           3.8,
           emeraldPaint,
         );
+      case CafeCharacterMood.sippingTeaFiveSeconds:
+        // Warm ruby & golden aroma bubbles rising during the 5s tea sip
+        final rubyAromaPaint = Paint()
+          ..color = const Color(0xFFD84315).withValues(alpha: 0.85)
+          ..style = PaintingStyle.fill;
+        final goldAromaPaint = Paint()
+          ..color = const Color(0xFFFFB300).withValues(alpha: 0.9)
+          ..style = PaintingStyle.fill;
+        final floatOffset = (progress * 24) % 16;
+        canvas
+          ..drawCircle(
+            Offset(10, size.height * 0.28 - floatOffset),
+            4.2,
+            rubyAromaPaint,
+          )
+          ..drawCircle(
+            Offset(size.width - 10, size.height * 0.24 - floatOffset * 0.8),
+            4.6,
+            goldAromaPaint,
+          );
       case CafeCharacterMood.saltySabotageShock:
         final flamePaint = Paint()
           ..color = const Color(0xFFD32F2F)
@@ -362,7 +661,8 @@ class _CharacterMoodParticlePainter extends CustomPainter {
 }
 
 /// Interactive 2-Player Crew Character Stage displaying P1 Barista (Esra) and
-/// P2 Pastry & Prank Chef (Can) with animated 3D portraits, Lottie effects, and live reactions.
+/// P2 Pastry & Prank Chef (Can) with animated 3D portraits, Lottie effects, and
+/// a 5-second Turkish Tea Sipping (`5sn Çay Yudumlama`) animation trigger.
 class CafeCrewCharacterStage extends StatelessWidget {
   const CafeCrewCharacterStage({
     required this.languageCode,
@@ -371,6 +671,9 @@ class CafeCrewCharacterStage extends StatelessWidget {
     required this.playerOneScore,
     required this.playerTwoScore,
     required this.onTapCharacterEmote,
+    this.isCrewSippingTea = false,
+    this.onTriggerFiveSecondTeaSip,
+    this.onSipTeaCompleted,
     super.key,
   });
 
@@ -380,6 +683,9 @@ class CafeCrewCharacterStage extends StatelessWidget {
   final int playerOneScore;
   final int playerTwoScore;
   final VoidCallback onTapCharacterEmote;
+  final bool isCrewSippingTea;
+  final VoidCallback? onTriggerFiveSecondTeaSip;
+  final VoidCallback? onSipTeaCompleted;
 
   bool get _hasHotDrinkOnTray => selectedTray.any((ingredient) => ingredient.category == IngredientCategory.drink);
 
@@ -388,6 +694,9 @@ class CafeCrewCharacterStage extends StatelessWidget {
   bool get _hasPrankOnTray => selectedTray.any((ingredient) => ingredient.isPrankItem);
 
   CafeCharacterMood get _baristaMood {
+    if (isCrewSippingTea) {
+      return CafeCharacterMood.sippingTeaFiveSeconds;
+    }
     final currentReview = latestReview;
     if (currentReview != null) {
       return currentReview.isPrankCaught ? CafeCharacterMood.saltySabotageShock : CafeCharacterMood.sweetCelebration;
@@ -399,6 +708,9 @@ class CafeCrewCharacterStage extends StatelessWidget {
   }
 
   CafeCharacterMood get _pastryChefMood {
+    if (isCrewSippingTea) {
+      return CafeCharacterMood.sippingTeaFiveSeconds;
+    }
     final currentReview = latestReview;
     if (currentReview != null) {
       return currentReview.isPrankCaught ? CafeCharacterMood.sweetCelebration : CafeCharacterMood.sweetCelebration;
@@ -407,12 +719,17 @@ class CafeCrewCharacterStage extends StatelessWidget {
       return CafeCharacterMood.stealthPrankWink;
     }
     if (_hasPastryOnTray) {
-      return CafeCharacterMood.brewingActive;
+      return CafeCharacterMood.tastingPastryFiveSeconds;
     }
     return CafeCharacterMood.idleBreathing;
   }
 
   String _baristaSpeechLine(bool isEnglish) {
+    if (isCrewSippingTea) {
+      return isEnglish
+          ? '🫖 Siiip... Ah! Nothing beats 5 seconds of hot Turkish tulip-glass tea on stage!'
+          : '🫖 Hüüüp... Ohhh! Tezgah başında 5 saniye ince belli demli çay keyfi gibisi yok!';
+    }
     final currentReview = latestReview;
     if (currentReview != null) {
       if (currentReview.isPrankCaught) {
@@ -430,11 +747,16 @@ class CafeCrewCharacterStage extends StatelessWidget {
           : '☕ Sıcak kahve tepside tütüyor! Tatlı ve şekerle servise hazır!';
     }
     return isEnglish
-        ? '☕ Tap a coffee on my bar to start brewing for our guest!'
-        : '☕ Misafirimiz bekliyor! Kahve barından sıcak içeceği seçelim!';
+        ? '☕ Tap a coffee on my bar (or tap me for a 5s tea sip break!)'
+        : '☕ Kahve barından içeceği seç (veya bana tıklayıp 5sn çay yudumlat!)';
   }
 
   String _pastryChefSpeechLine(bool isEnglish) {
+    if (isCrewSippingTea) {
+      return isEnglish
+          ? '🫖 Siiip... Pairing hot ruby tea with fresh pistachio baklava for 5 seconds! ✨'
+          : '🫖 Hüüüp... Çıtır fıstıklı baklava yanında 5 saniye tavşan kanı çay molası! ✨';
+    }
     final currentReview = latestReview;
     if (currentReview != null) {
       if (currentReview.isPrankCaught) {
@@ -479,7 +801,10 @@ class CafeCrewCharacterStage extends StatelessWidget {
           badgeEmoji: _hasHotDrinkOnTray ? '☕🔥' : '☕✨',
           cardBackgroundColor: const Color(0xFFFFF4E8),
           borderColor: const Color(0xFFC85A32),
-          onTapCharacter: onTapCharacterEmote,
+          languageCode: languageCode,
+          isSippingTea: isCrewSippingTea,
+          onTapCharacter: onTriggerFiveSecondTeaSip ?? onTapCharacterEmote,
+          onSipTeaCompleted: onSipTeaCompleted,
         );
 
         final pastryChefCard = _CrewCharacterCard(
@@ -493,7 +818,10 @@ class CafeCrewCharacterStage extends StatelessWidget {
           badgeEmoji: _hasPrankOnTray ? '🤫🧂' : '🥐😉',
           cardBackgroundColor: const Color(0xFFFAF0F6),
           borderColor: const Color(0xFF8D3218),
-          onTapCharacter: onTapCharacterEmote,
+          languageCode: languageCode,
+          isSippingTea: isCrewSippingTea,
+          onTapCharacter: onTriggerFiveSecondTeaSip ?? onTapCharacterEmote,
+          onSipTeaCompleted: onSipTeaCompleted,
         );
 
         if (isCompactViewport) {
@@ -531,7 +859,10 @@ class _CrewCharacterCard extends StatelessWidget {
     required this.badgeEmoji,
     required this.cardBackgroundColor,
     required this.borderColor,
+    required this.languageCode,
+    required this.isSippingTea,
     required this.onTapCharacter,
+    this.onSipTeaCompleted,
     super.key,
   });
 
@@ -544,7 +875,10 @@ class _CrewCharacterCard extends StatelessWidget {
   final String badgeEmoji;
   final Color cardBackgroundColor;
   final Color borderColor;
+  final String languageCode;
+  final bool isSippingTea;
   final VoidCallback onTapCharacter;
+  final VoidCallback? onSipTeaCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -571,7 +905,10 @@ class _CrewCharacterCard extends StatelessWidget {
             avatarSize: _crewAvatarSize,
             borderColor: borderColor,
             badgeEmoji: badgeEmoji,
+            languageCode: languageCode,
+            isSippingTea: isSippingTea,
             onTapCharacter: onTapCharacter,
+            onSipTeaCompleted: onSipTeaCompleted,
           ),
           const SizedBox(width: 12),
           Expanded(
