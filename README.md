@@ -2,6 +2,7 @@
 
 **DevFest 2026 Hands-On Workshop & Vibe Lounge Starter Repository**
 - **Author:** Esra Kadah (Flutter & Dart GDE, Senior Flutter & AI Engineer)
+- **Live Cloud Run Reference App (`europe-west3`):** `https://backyard-barista-389486729482.europe-west3.run.app` (`devfest-backyard-barista-2026`)
 - **City Editions Included:**
   - `berlin` (🇩🇪 DevFest Berlin, 14 Nov 2026)
   - `gaziantep` (🇹🇷 DevFest Gaziantep, 15 Nov 2026)
@@ -63,8 +64,10 @@ devfest-2026-backyard-barista-cloudrun/
     ├── Dockerfile             # Multi-stage Cloud Run container (PORT=8080)
     ├── remote_config_template.json
     ├── assets/
+    │   ├── animations/        # 4 ready-made Lottie JSON animations (coffee_steam_loop, barista_brewing_pulse, sweet_celebration_burst, salty_spicy_explosion)
     │   ├── audio/             # 6 cafe sound effects (tap_pop, stealth_wink, serve_bell, sweet_fanfare, salty_buzzer, next_chime)
-    │   ├── base/              # 14 studio 9D PNG cafe assets (512x512)
+    │   ├── base/              # 20 studio 9D PNG cafe & 3D character assets (512x512)
+    │   │   ├── characters/    # barista_p1.png, pastry_chef_p2.png, customer_ayse_usta.png, customer_mustafa.png, customer_lukas.png, customer_deniz.png
     │   │   ├── drinks/        # espresso.png, milk.png, menengic_coffee.png
     │   │   ├── foods/         # croissant.png, san_sebastian.png, baklava.png, katmer_roll.png
     │   │   ├── toppings_pranks/ # sugar_jar.png, salt_shaker.png, chili_sauce.png, isot_pepper.png
@@ -91,6 +94,7 @@ devfest-2026-backyard-barista-cloudrun/
         │   ├── sound_player_stub.dart
         │   └── sound_player_web.dart
         └── ui/
+            ├── cafe_character_animations.dart
             ├── cafe_counter_screen.dart
             └── city_settings_drawer.dart
 ```
