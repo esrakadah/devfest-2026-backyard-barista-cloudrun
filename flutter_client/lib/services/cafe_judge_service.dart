@@ -31,6 +31,8 @@ class CafeJudgeService {
   final String geminiModel;
   final bool forceOfflineMode;
 
+  static Map<String, dynamic>? _cachedReviewsByCity;
+
   /// Evaluates the selected tray ingredients for the active [cityEdition].
   Future<CafeReview> evaluateOrder({
     required List<CafeIngredient> selectedIngredients,
@@ -177,12 +179,19 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
 
     final effectiveBundle = bundle ?? rootBundle;
     try {
-      final rawMockString = await effectiveBundle.loadString(
-        'assets/offline_fallback/mock_responses.json',
-      );
-      final decodedRoot = jsonDecode(rawMockString) as Map<String, dynamic>;
-      final reviewsByCity = decodedRoot['reviewsByCity'];
-      if (reviewsByCity is Map<String, dynamic>) {
+      var reviewsByCity = _cachedReviewsByCity;
+      if (reviewsByCity == null) {
+        final rawMockString = await effectiveBundle
+            .loadString('assets/offline_fallback/mock_responses.json')
+            .timeout(const Duration(milliseconds: 250));
+        final decodedRoot = jsonDecode(rawMockString) as Map<String, dynamic>;
+        final parsedNode = decodedRoot['reviewsByCity'];
+        if (parsedNode is Map<String, dynamic>) {
+          reviewsByCity = parsedNode;
+          _cachedReviewsByCity = parsedNode;
+        }
+      }
+      if (reviewsByCity != null) {
         final cityNode = reviewsByCity[cityEdition.editionId.code];
         if (cityNode is Map<String, dynamic>) {
           final verdictNode = cityNode[verdictKey];

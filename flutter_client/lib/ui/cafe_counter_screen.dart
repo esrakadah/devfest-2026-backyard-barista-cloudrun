@@ -8,11 +8,15 @@ import 'package:flutter/material.dart';
 
 const double _counterCardRadius = 16;
 const double _ingredientImageSize = 56;
-const double _customerAvatarSize = 72;
+const double _customerAvatarSize = 64;
+const double _mobileBreakpointWidth = 600;
+const double _gridSpacing = 12;
+const double _desktopCardWidth = 172;
 const Duration _cardScaleDuration = Duration(milliseconds: 180);
 
 /// Main 2-Player Tap-to-Serve Cafe Counter screen built with pure Flutter declarative widgets
-/// (`Stack`, `AnimatedScale`, `AnimatedSwitcher`, `CustomPaint`, and `Image.asset`).
+/// (`LayoutBuilder`, `Stack`, `AnimatedScale`, `AnimatedSwitcher`, `CustomPaint`, and `Image.asset`).
+/// Works across Mobile Web, Native iOS/Android, and Desktop Chrome with zero overflow.
 class CafeCounterScreen extends StatefulWidget {
   const CafeCounterScreen({
     required this.cityController,
@@ -99,11 +103,15 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
               children: <Widget>[
                 const Text(
                   'Backyard Barista on Cloud Run ☕🥐🧂',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 Text(
                   '${activeEdition.cafeSubtitle} · ${activeEdition.signatureSpecialty}',
-                  style: const TextStyle(fontSize: 12, color: Color(0xFFFFCCBC)),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 11, color: Color(0xFFFFCCBC)),
                 ),
               ],
             ),
@@ -115,76 +123,92 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                   onPressed: _openCityEditionSheet,
                   icon: Text(
                     activeEdition.flagEmoji,
-                    style: const TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  label: Text('${activeEdition.cityName} Edition ▾'),
+                  label: Text(
+                    '${activeEdition.cityName} Edition ▾',
+                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
             ],
           ),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _ArchitectureBanner(
-                  cityEdition: activeEdition,
-                  sourceLayer: widget.cityController.activeSourceLayer,
-                  includeRoundTwoItems: _includeRoundTwoCustomItems,
-                  onToggleRoundTwoItems: (enabled) {
-                    setState(() {
-                      _includeRoundTwoCustomItems = enabled;
-                    });
-                  },
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              final availableContentWidth = constraints.maxWidth - 32;
+              final isMobileViewport = constraints.maxWidth < _mobileBreakpointWidth;
+              final cardWidth = isMobileViewport
+                  ? ((availableContentWidth - _gridSpacing) / 2).clamp(120.0, _desktopCardWidth)
+                  : _desktopCardWidth;
+
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _ArchitectureBanner(
+                      cityEdition: activeEdition,
+                      sourceLayer: widget.cityController.activeSourceLayer,
+                      includeRoundTwoItems: _includeRoundTwoCustomItems,
+                      onToggleRoundTwoItems: (enabled) {
+                        setState(() {
+                          _includeRoundTwoCustomItems = enabled;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    for (final category in IngredientCategory.values) ...<Widget>[
+                      Text(
+                        category.sectionTitle,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: const Color(0xFF3E2723),
+                            ),
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: _gridSpacing,
+                        runSpacing: _gridSpacing,
+                        children: IngredientsCatalog.itemsForCategory(
+                          category,
+                          includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
+                        ).map((ingredient) {
+                          final isSelected = _selectedTray.any((item) => item.id == ingredient.id);
+                          return _IngredientCounterCard(
+                            ingredient: ingredient,
+                            languageCode: languageCode,
+                            isSelected: isSelected,
+                            cardWidth: cardWidth,
+                            onTap: () => _toggleIngredient(ingredient),
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 18),
+                    ],
+                    _TrayAndServeBar(
+                      selectedTray: _selectedTray,
+                      languageCode: languageCode,
+                      isEvaluating: _isEvaluatingOrder,
+                      onServeOrder: _serveOrder,
+                      onClearTray: _clearTray,
+                    ),
+                    const SizedBox(height: 16),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 250),
+                      child: _latestReview != null
+                          ? _CustomerReviewCard(
+                              key: ValueKey<DateTime>(
+                                _latestReview?.evaluatedAt ?? DateTime.utc(2026),
+                              ),
+                              review: _latestReview,
+                              cityEdition: activeEdition,
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                for (final category in IngredientCategory.values) ...<Widget>[
-                  Text(
-                    category.sectionTitle,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0xFF3E2723),
-                        ),
-                  ),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    children: IngredientsCatalog.itemsForCategory(
-                      category,
-                      includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
-                    ).map((ingredient) {
-                      final isSelected = _selectedTray.any((item) => item.id == ingredient.id);
-                      return _IngredientCounterCard(
-                        ingredient: ingredient,
-                        languageCode: languageCode,
-                        isSelected: isSelected,
-                        onTap: () => _toggleIngredient(ingredient),
-                      );
-                    }).toList(),
-                  ),
-                  const SizedBox(height: 18),
-                ],
-                _TrayAndServeBar(
-                  selectedTray: _selectedTray,
-                  languageCode: languageCode,
-                  isEvaluating: _isEvaluatingOrder,
-                  onServeOrder: _serveOrder,
-                  onClearTray: _clearTray,
-                ),
-                const SizedBox(height: 16),
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 250),
-                  child: _latestReview != null
-                      ? _CustomerReviewCard(
-                          key: ValueKey<DateTime>(_latestReview?.evaluatedAt ?? DateTime.utc(2026)),
-                          review: _latestReview,
-                          cityEdition: activeEdition,
-                        )
-                      : const SizedBox.shrink(),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         );
       },
@@ -236,9 +260,11 @@ class _ArchitectureBanner extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text(
-                'Round 2 AI Custom SVG Items:',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+              const Flexible(
+                child: Text(
+                  'Round 2 AI Custom SVG Items:',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                ),
               ),
               Switch(
                 key: const Key('round_two_custom_items_switch'),
@@ -258,12 +284,14 @@ class _IngredientCounterCard extends StatelessWidget {
     required this.ingredient,
     required this.languageCode,
     required this.isSelected,
+    required this.cardWidth,
     required this.onTap,
   });
 
   final CafeIngredient ingredient;
   final String languageCode;
   final bool isSelected;
+  final double cardWidth;
   final VoidCallback onTap;
 
   @override
@@ -282,7 +310,7 @@ class _IngredientCounterCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(_counterCardRadius),
         onTap: onTap,
         child: Container(
-          width: 170,
+          width: cardWidth,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: backgroundColor,
@@ -321,6 +349,8 @@ class _IngredientCounterCard extends StatelessWidget {
               Text(
                 ingredient.localizedTitle(languageCode),
                 textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
               ),
             ],
@@ -424,7 +454,8 @@ class _TrayAndServeBar extends StatelessWidget {
                 : const Icon(Icons.auto_awesome),
             label: Text(
               languageCode == 'en' ? 'Serve Order & Ask Gemini Judge!' : 'Siparişi Servis Et & Gemini Jürisine Sor!',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
           ),
         ],
@@ -477,27 +508,30 @@ class _CustomerReviewCard extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 4,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: <Widget>[
                     Text(
                       '★' * currentReview.ratingStars + '☆' * (maxCafeRatingStars - currentReview.ratingStars),
                       key: const Key('review_stars_text'),
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: borderColor,
                       ),
                     ),
-                    const SizedBox(width: 8),
                     Chip(
+                      visualDensity: VisualDensity.compact,
                       label: Text(
                         '${currentReview.ratingStars}/$maxCafeRatingStars · ${currentReview.tasteVerdict}',
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -505,7 +539,7 @@ class _CustomerReviewCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   currentReview.headline,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
                 const SizedBox(height: 6),
                 Text(
@@ -518,7 +552,7 @@ class _CustomerReviewCard extends StatelessWidget {
                   'City Edition: ${cityEdition.flagEmoji} ${cityEdition.cityName} · '
                   'Tip: +${currentReview.cityBonusTip} pts · '
                   'Source: ${currentReview.isFromLiveGemini ? "Live Gemini 3.5 Flash-Lite" : "Offline JSON Schema"}',
-                  style: const TextStyle(fontSize: 12, color: Color(0xFF4E342E)),
+                  style: const TextStyle(fontSize: 11, color: Color(0xFF4E342E)),
                 ),
               ],
             ),
