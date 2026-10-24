@@ -8,6 +8,151 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Backyard Barista on Cloud Run</title>
   <link rel="manifest" href="manifest.json">
+  <script>
+    (function () {
+      let audioCtx = null;
+      function getCtx() {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return null;
+        if (!audioCtx) {
+          audioCtx = new AudioContextClass();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        return audioCtx;
+      }
+
+      function playTone(ctx, freq, type, startTime, duration, peakGain) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, startTime);
+        gain.gain.setValueAtTime(0.0001, startTime);
+        gain.gain.linearRampToValueAtTime(peakGain, startTime + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration + 0.02);
+      }
+
+      window.playBackyardBaristaWebAudio = function (cueName) {
+        try {
+          const ctx = getCtx();
+          if (!ctx) return false;
+          const now = ctx.currentTime;
+
+          if (cueName === 'coffeeGrinder') {
+            // Burr grinder motor sawtooth + cracking coffee bean noise bursts
+            const osc = ctx.createOscillator();
+            const motorGain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(118, now);
+            osc.frequency.linearRampToValueAtTime(142, now + 0.4);
+            osc.frequency.linearRampToValueAtTime(112, now + 0.8);
+            motorGain.gain.setValueAtTime(0.001, now);
+            motorGain.gain.linearRampToValueAtTime(0.14, now + 0.06);
+            motorGain.gain.exponentialRampToValueAtTime(0.001, now + 0.82);
+            osc.connect(motorGain);
+            motorGain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.84);
+
+            const bufferSize = Math.floor(ctx.sampleRate * 0.8);
+            const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const data = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+              const gate = 0.5 + 0.5 * Math.sin((2 * Math.PI * 28 * i) / ctx.sampleRate);
+              data[i] = (Math.random() * 2 - 1) * gate;
+            }
+            const noise = ctx.createBufferSource();
+            noise.buffer = noiseBuffer;
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(1150, now);
+            filter.Q.setValueAtTime(2.8, now);
+            const noiseGain = ctx.createGain();
+            noiseGain.gain.setValueAtTime(0.22, now);
+            noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+            noise.connect(filter);
+            filter.connect(noiseGain);
+            noiseGain.connect(ctx.destination);
+            noise.start(now);
+            return true;
+          }
+
+          if (cueName === 'espressoSteam') {
+            // Pressurized steam wand hiss with sweeping bandpass filter + boiler resonance
+            const bufferSize = Math.floor(ctx.sampleRate * 0.9);
+            const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const data = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+              data[i] = Math.random() * 2 - 1;
+            }
+            const noise = ctx.createBufferSource();
+            noise.buffer = noiseBuffer;
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.setValueAtTime(900, now);
+            filter.frequency.exponentialRampToValueAtTime(2400, now + 0.45);
+            filter.frequency.exponentialRampToValueAtTime(1250, now + 0.9);
+            filter.Q.setValueAtTime(1.6, now);
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.linearRampToValueAtTime(0.24, now + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+            noise.start(now);
+            playTone(ctx, 168, 'sine', now, 0.75, 0.06);
+            return true;
+          }
+
+          if (cueName === 'serveBell') {
+            // Dual-strike metallic brass counter bell
+            playTone(ctx, 1567.98, 'sine', now, 0.55, 0.22);
+            playTone(ctx, 3135.96, 'triangle', now, 0.42, 0.12);
+            playTone(ctx, 4186.01, 'sine', now + 0.14, 0.65, 0.18);
+            return true;
+          }
+
+          if (cueName === 'levelUpFanfare' || cueName === 'sweetFanfare') {
+            // Celebratory 5-note barista level-up fanfare (C5 -> E5 -> G5 -> B5 -> C6)
+            const notes = [523.25, 659.25, 783.99, 987.77, 1046.5];
+            notes.forEach(function (freq, idx) {
+              const t = now + idx * 0.11;
+              const dur = idx === notes.length - 1 ? 0.52 : 0.22;
+              playTone(ctx, freq, 'triangle', t, dur, 0.2);
+              playTone(ctx, freq * 2, 'sine', t, dur * 0.8, 0.08);
+            });
+            return true;
+          }
+
+          if (cueName === 'saltyBuzzer') {
+            playTone(ctx, 155, 'sawtooth', now, 0.26, 0.18);
+            playTone(ctx, 130, 'sawtooth', now + 0.22, 0.36, 0.2);
+            return true;
+          }
+
+          if (cueName === 'stealthWink') {
+            playTone(ctx, 880, 'sine', now, 0.11, 0.15);
+            playTone(ctx, 1318.51, 'sine', now + 0.09, 0.16, 0.15);
+            return true;
+          }
+
+          if (cueName === 'nextChime' || cueName === 'teaSip' || cueName === 'tapPop') {
+            playTone(ctx, cueName === 'tapPop' ? 660 : 784, 'sine', now, 0.14, 0.14);
+            return true;
+          }
+          return false;
+        } catch (_) {
+          return false;
+        }
+      };
+    })();
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>

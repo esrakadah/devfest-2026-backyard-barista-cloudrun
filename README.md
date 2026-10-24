@@ -77,7 +77,7 @@ devfest-2026-backyard-barista-cloudrun/
     │   └── rehearsal_3g_check.dart    # Section 4.6 Slow 3G & HTTP 429 chaos verification suite (5/5 PASS)
     ├── assets/
     │   ├── animations/        # 5 ready-made Lottie JSON animations (coffee_steam_loop, barista_brewing_pulse, sweet_celebration_burst, salty_spicy_explosion, tea_sip_steam_loop)
-    │   ├── audio/             # 7 cafe sound effects (tap_pop, stealth_wink, serve_bell, tea_sip, sweet_fanfare, salty_buzzer, next_chime)
+    │   ├── audio/             # 10 cafe sound effects + Web Audio API synth (coffee_grinder, espresso_steam, serve_bell, level_up, tap_pop, stealth_wink, tea_sip, sweet_fanfare, salty_buzzer, next_chime)
     │   ├── base/              # 20 studio 9D PNG cafe & 3D character assets (12 Round-1 base + 2 Round-2 custom + 6 3D characters, 512x512)
     │   │   ├── characters/    # barista_p1.png, pastry_chef_p2.png, customer_ayse_usta.png, customer_mustafa.png, customer_lukas.png, customer_deniz.png
     │   │   ├── drinks/        # espresso.png, milk.png, menengic_coffee.png

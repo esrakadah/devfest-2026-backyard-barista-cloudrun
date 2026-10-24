@@ -70,7 +70,10 @@ void main() {
       // 1. Tap Espresso + Baklava + Sweet Sugar
       await tester.tap(find.byKey(const Key('ingredient_card_espresso')));
       await tester.tap(find.byKey(const Key('ingredient_card_baklava')));
-      await tester.tap(find.byKey(const Key('ingredient_card_sugar_jar')));
+      final sugarFinder = find.byKey(const Key('ingredient_card_sugar_jar'));
+      await tester.ensureVisible(sugarFinder);
+      await tester.pumpAndSettle();
+      await tester.tap(sugarFinder);
       await tester.pumpAndSettle();
 
       // Serve order
@@ -265,4 +268,62 @@ void main() {
     expect(cityController.activeCityId, CityEditionId.berlin);
     expect(cityController.activeSourceLayer, CityConfigSourceLayer.firebaseRemoteConfig);
   });
+
+  testWidgets(
+    'Web Audio API Barista Soundboard buttons and Level Up progression trigger coffee grinder, steam, bell, and level-up fanfare',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1280, 1200));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      final cityController = CityEditionController(remoteConfigCityCode: 'gaziantep');
+      final judgeService = CafeJudgeService(
+        clock: fixedClock,
+        forceOfflineMode: true,
+      );
+
+      await tester.pumpWidget(
+        BackyardBaristaApp(
+          cityController: cityController,
+          judgeService: judgeService,
+        ),
+      );
+
+      expect(find.byKey(const Key('cafe_crew_level_badge')), findsOneWidget);
+      expect(find.text('Lv.1 Barista'), findsOneWidget);
+      expect(find.byKey(const Key('barista_web_audio_soundboard')), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('sound_fx_coffee_grinder_button')));
+      await tester.pump();
+      expect(find.text('Kahve Değirmeni · Burr Grinder'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('sound_fx_espresso_steam_button')));
+      await tester.pump();
+      expect(find.text('Espresso Buharı · Steam Wand'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('sound_fx_serve_bell_button')));
+      await tester.pump();
+      expect(find.text('Sipariş Zili · Order Bell'), findsOneWidget);
+
+      // Select Espresso + Baklava + Sugar and serve: P1 (+50) + P2 (+50) = 100 pts -> Lv.2 Barista + Level Up Fanfare!
+      await tester.tap(find.byKey(const Key('ingredient_card_espresso')));
+      await tester.pump();
+      expect(find.text('Kahve Değirmeni · Burr Grinder'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('ingredient_card_baklava')));
+      final sugarJar = find.byKey(const Key('ingredient_card_sugar_jar'));
+      await tester.ensureVisible(sugarJar);
+      await tester.pumpAndSettle();
+      await tester.tap(sugarJar);
+      await tester.pumpAndSettle();
+
+      final serveButton = find.byKey(const Key('serve_order_button'));
+      await tester.ensureVisible(serveButton);
+      await tester.pumpAndSettle();
+      await tester.tap(serveButton);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Lv.2 Barista'), findsOneWidget);
+      expect(find.text('Seviye Atlama · Level Up!'), findsOneWidget);
+    },
+  );
 }

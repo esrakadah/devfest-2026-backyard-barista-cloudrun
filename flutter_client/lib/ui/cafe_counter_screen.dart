@@ -87,6 +87,22 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
     return tickets[_activeTicketIndex % tickets.length];
   }
 
+  int get _crewLevel => 1 + ((_playerOneBaristaScore + _playerTwoPastryScore) ~/ 100);
+
+  static const Set<String> _coffeeGrindIds = <String>{
+    'espresso',
+    'turkish_coffee',
+    'menengic_coffee',
+    'dibek_coffee',
+    'oat_flat_white',
+  };
+
+  void _triggerManualSoundCue(CafeSoundCue cue) {
+    setState(() {
+      _soundController.play(cue);
+    });
+  }
+
   void _toggleIngredient(CafeIngredient ingredient) {
     final isRemoving = _selectedTray.any((existing) => existing.id == ingredient.id);
     setState(() {
@@ -98,14 +114,16 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
           _isCharacterSippingTea = true;
         }
       }
+      if (!isRemoving && ingredient.isPrankItem) {
+        _soundController.play(CafeSoundCue.stealthWink);
+      } else if (!isRemoving && _coffeeGrindIds.contains(ingredient.id)) {
+        _soundController.play(CafeSoundCue.coffeeGrinder);
+      } else if (!isRemoving && ingredient.category == IngredientCategory.drink) {
+        _soundController.play(CafeSoundCue.teaSip);
+      } else {
+        _soundController.play(CafeSoundCue.tapPop);
+      }
     });
-    if (!isRemoving && ingredient.isPrankItem) {
-      _soundController.play(CafeSoundCue.stealthWink);
-    } else if (!isRemoving && ingredient.category == IngredientCategory.drink) {
-      _soundController.play(CafeSoundCue.teaSip);
-    } else {
-      _soundController.play(CafeSoundCue.tapPop);
-    }
   }
 
   void _clearTray() {
@@ -160,6 +178,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
     if (!mounted) {
       return;
     }
+    final previousLevel = _crewLevel;
     setState(() {
       _isEvaluatingOrder = false;
       _latestReview = review;
@@ -170,10 +189,15 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
         _playerOneBaristaScore += _baristaRoundPoints;
         _playerTwoPastryScore += _baristaRoundPoints;
       }
+      final didLevelUp = _crewLevel > previousLevel;
+      if (review.isPrankCaught) {
+        _soundController.play(CafeSoundCue.saltyBuzzer);
+      } else if (didLevelUp) {
+        _soundController.play(CafeSoundCue.levelUpFanfare);
+      } else {
+        _soundController.play(CafeSoundCue.sweetFanfare);
+      }
     });
-    _soundController.play(
-      review.isPrankCaught ? CafeSoundCue.saltyBuzzer : CafeSoundCue.sweetFanfare,
-    );
   }
 
   void _openCityEditionSheet() {
@@ -292,6 +316,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                             sourceLayer: widget.cityController.activeSourceLayer,
                             playerOneScore: _playerOneBaristaScore,
                             playerTwoScore: _playerTwoPastryScore,
+                            crewLevel: _crewLevel,
                             tipJarTotal: _tipJarTotal,
                             includeRoundTwoItems: _includeRoundTwoCustomItems,
                             onToggleRoundTwoItems: (enabled) {
@@ -299,6 +324,13 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                                 _includeRoundTwoCustomItems = enabled;
                               });
                             },
+                          ),
+                          const SizedBox(height: 10),
+                          _BaristaWebAudioSoundboardBar(
+                            languageCode: languageCode,
+                            isMuted: _soundController.isMuted,
+                            lastPlayedCue: _soundController.lastPlayedCue,
+                            onPlayCue: _triggerManualSoundCue,
                           ),
                           const SizedBox(height: 12),
                           CafeCrewCharacterStage(
@@ -428,6 +460,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
     required this.sourceLayer,
     required this.playerOneScore,
     required this.playerTwoScore,
+    required this.crewLevel,
     required this.tipJarTotal,
     required this.includeRoundTwoItems,
     required this.onToggleRoundTwoItems,
@@ -437,6 +470,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
   final CityConfigSourceLayer sourceLayer;
   final int playerOneScore;
   final int playerTwoScore;
+  final int crewLevel;
   final int tipJarTotal;
   final bool includeRoundTwoItems;
   final ValueChanged<bool> onToggleRoundTwoItems;
@@ -482,6 +516,30 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
             runSpacing: 6,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: <Widget>[
+              Container(
+                key: const Key('cafe_crew_level_badge'),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF4CC),
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(color: const Color(0xFFE5B84B)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const Icon(Icons.emoji_events_rounded, size: 15, color: Color(0xFF8C5800)),
+                    const SizedBox(width: 5),
+                    Text(
+                      'Lv.$crewLevel Barista',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 12,
+                        color: Color(0xFF6E4300),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               _ScorePill(
                 icon: Icons.coffee_rounded,
                 label: 'P1 Barista: $playerOneScore',
@@ -517,6 +575,140 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _BaristaWebAudioSoundboardBar extends StatelessWidget {
+  const _BaristaWebAudioSoundboardBar({
+    required this.languageCode,
+    required this.isMuted,
+    required this.lastPlayedCue,
+    required this.onPlayCue,
+  });
+
+  final String languageCode;
+  final bool isMuted;
+  final CafeSoundCue? lastPlayedCue;
+  final ValueChanged<CafeSoundCue> onPlayCue;
+
+  @override
+  Widget build(BuildContext context) {
+    final isTurkish = languageCode == 'tr';
+    final statusText = isMuted
+        ? (isTurkish ? 'Ses Kapalı' : 'Muted')
+        : (lastPlayedCue?.displayLabel ?? (isTurkish ? 'Web Audio API Hazır' : 'Web Audio API Ready'));
+
+    return Container(
+      key: const Key('barista_web_audio_soundboard'),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: const Color(0xFF3A2319),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: const Color(0xFF6D4C41)),
+      ),
+      child: Wrap(
+        alignment: WrapAlignment.spaceBetween,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        spacing: 10,
+        runSpacing: 6,
+        children: <Widget>[
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 6,
+            runSpacing: 4,
+            children: <Widget>[
+              const Icon(Icons.graphic_eq_rounded, size: 16, color: Color(0xFFFFCCBC)),
+              Text(
+                isTurkish ? 'Barista Ses Efektleri (Web Audio):' : 'Barista SFX (Web Audio):',
+                style: const TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFFFFF8EE),
+                ),
+              ),
+              Container(
+                key: const Key('active_web_audio_cue_badge'),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF563527),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  statusText,
+                  style: const TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFFFFD54F),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: <Widget>[
+              _SoundboardActionChip(
+                buttonKey: const Key('sound_fx_coffee_grinder_button'),
+                label: isTurkish ? '⚙️ Kahve Değirmeni' : '⚙️ Coffee Grinder',
+                onTap: () => onPlayCue(CafeSoundCue.coffeeGrinder),
+              ),
+              _SoundboardActionChip(
+                buttonKey: const Key('sound_fx_espresso_steam_button'),
+                label: isTurkish ? '💨 Espresso Buharı' : '💨 Espresso Steam',
+                onTap: () => onPlayCue(CafeSoundCue.espressoSteam),
+              ),
+              _SoundboardActionChip(
+                buttonKey: const Key('sound_fx_serve_bell_button'),
+                label: isTurkish ? '🔔 Sipariş Zili' : '🔔 Order Bell',
+                onTap: () => onPlayCue(CafeSoundCue.serveBell),
+              ),
+              _SoundboardActionChip(
+                buttonKey: const Key('sound_fx_level_up_button'),
+                label: isTurkish ? '🏆 Seviye Atlama' : '🏆 Level Up',
+                onTap: () => onPlayCue(CafeSoundCue.levelUpFanfare),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SoundboardActionChip extends StatelessWidget {
+  const _SoundboardActionChip({
+    required this.buttonKey,
+    required this.label,
+    required this.onTap,
+  });
+
+  final Key buttonKey;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: const Color(0xFF513224),
+      borderRadius: BorderRadius.circular(999),
+      child: InkWell(
+        key: buttonKey,
+        borderRadius: BorderRadius.circular(999),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          child: Text(
+            label,
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFFFFF8EE),
+            ),
+          ),
+        ),
       ),
     );
   }
