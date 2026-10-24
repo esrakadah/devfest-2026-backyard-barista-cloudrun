@@ -40,11 +40,20 @@ class BackyardBaristaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final baseColorScheme = ColorScheme.fromSeed(
+      seedColor: const Color(0xFFB84A24),
+      primary: const Color(0xFF3A2218),
+      secondary: const Color(0xFFC85A32),
+      surface: const Color(0xFFFFF8EE),
+    );
+
     return MaterialApp(
       title: 'Backyard Barista on Cloud Run',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6D4C41)),
+        fontFamily: 'GoogleSans',
+        colorScheme: baseColorScheme,
+        scaffoldBackgroundColor: const Color(0xFFFFF8EE),
         useMaterial3: true,
       ),
       home: CafeCounterScreen(

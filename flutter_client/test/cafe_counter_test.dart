@@ -28,9 +28,9 @@ void main() {
   );
 
   testWidgets(
-    'Serving sweet order with Sugar gives 5 stars; sneaking Salt triggers 1-star sabotage',
+    'Serving sweet order gives 5 stars; sneaking stealth Salt shows wink badge & triggers 1-star sabotage',
     (tester) async {
-      await tester.binding.setSurfaceSize(const Size(1280, 1024));
+      await tester.binding.setSurfaceSize(const Size(1280, 1200));
       addTearDown(() => tester.binding.setSurfaceSize(null));
 
       final cityController = CityEditionController(remoteConfigCityCode: 'gaziantep');
@@ -46,6 +46,10 @@ void main() {
         ),
       );
 
+      // Verify zero red 'PRANK!' spoiler badges exist on the counter
+      expect(find.text('PRANK!'), findsNothing);
+      expect(find.textContaining('Ayşe Usta'), findsOneWidget);
+
       // 1. Tap Espresso + Baklava + Sweet Sugar
       await tester.tap(find.byKey(const Key('ingredient_card_espresso')));
       await tester.tap(find.byKey(const Key('ingredient_card_baklava')));
@@ -53,28 +57,44 @@ void main() {
       await tester.pumpAndSettle();
 
       // Serve order
-      await tester.tap(find.byKey(const Key('serve_order_button')));
+      final serveButton = find.byKey(const Key('serve_order_button'));
+      await tester.ensureVisible(serveButton);
+      await tester.pumpAndSettle();
+      await tester.tap(serveButton);
       await tester.pumpAndSettle();
 
       expect(find.byKey(const Key('customer_review_card')), findsOneWidget);
       expect(find.textContaining('5/5 · sweet_perfection'), findsOneWidget);
 
-      // 2. Now sneak Salt Shaker (Tuz!) onto the tray and serve again
-      await tester.tap(find.byKey(const Key('ingredient_card_salt_shaker')));
+      // 2. Sneak Salt Shaker (Tuz!) onto the tray: verify stealth wink badge appears
+      final saltCard = find.byKey(const Key('ingredient_card_salt_shaker'));
+      await tester.ensureVisible(saltCard);
+      await tester.pumpAndSettle();
+      await tester.tap(saltCard);
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key('serve_order_button')));
+      expect(find.byKey(const Key('stealth_prank_wink_badge')), findsOneWidget);
+
+      await tester.ensureVisible(serveButton);
+      await tester.pumpAndSettle();
+      await tester.tap(serveButton);
       await tester.pumpAndSettle();
 
       expect(find.textContaining('1/5 · salty_sabotage'), findsOneWidget);
-      expect(
-        find.textContaining('sınır dışı ederler'),
-        findsOneWidget,
-      );
+      expect(find.textContaining('sınır dışı ederler'), findsOneWidget);
+
+      // 3. Advance to Next Customer (#2 Mustafa)
+      final nextCustomerButton = find.byKey(const Key('next_customer_button'));
+      await tester.ensureVisible(nextCustomerButton);
+      await tester.pumpAndSettle();
+      await tester.tap(nextCustomerButton);
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('Mustafa'), findsOneWidget);
     },
   );
 
-  testWidgets('Switching City Edition in Settings sheet updates flag and city roasts', (
+  testWidgets('Switching City Edition in Settings sheet updates flag and customer queue', (
     tester,
   ) async {
     await tester.binding.setSurfaceSize(const Size(1280, 1024));
@@ -103,6 +123,7 @@ void main() {
 
     expect(cityController.activeCityId, CityEditionId.berlin);
     expect(find.textContaining('Berlin Edition'), findsOneWidget);
+    expect(find.textContaining('Lukas'), findsOneWidget);
   });
 
   testWidgets('Renders and plays cleanly on narrow mobile phone screen (360x780) without overflow', (

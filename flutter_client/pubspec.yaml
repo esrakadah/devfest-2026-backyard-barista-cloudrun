@@ -27,3 +27,14 @@ flutter:
     - assets/base/customers/
     - assets/editions/city_editions.json
     - assets/offline_fallback/mock_responses.json
+  fonts:
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/GoogleSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/GoogleSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/GoogleSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/GoogleSans-Bold.ttf
+          weight: 700

@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 const int _httpOkStatus = 200;
 const int _sweetBonusTipAmount = 40;
 const Duration _geminiRequestTimeout = Duration(seconds: 8);
+const Duration _offlineBundleLoadTimeout = Duration(milliseconds: 250);
 
 /// Evaluates an assembled 2-player cafe tray using Gemini (`gemini-3.5-flash-lite`) structured JSON output,
 /// with automatic fallback to `assets/offline_fallback/mock_responses.json` when conference Wi-Fi drops.
@@ -115,8 +116,9 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       },
     };
 
+    final shouldCloseClient = _httpClient == null;
+    final client = _httpClient ?? http.Client();
     try {
-      final client = _httpClient ?? http.Client();
       final response = await client
           .post(
             endpointUri,
@@ -162,6 +164,10 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       );
     } on Object {
       return null;
+    } finally {
+      if (shouldCloseClient) {
+        client.close();
+      }
     }
   }
 
@@ -183,7 +189,7 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       if (reviewsByCity == null) {
         final rawMockString = await effectiveBundle
             .loadString('assets/offline_fallback/mock_responses.json')
-            .timeout(const Duration(milliseconds: 250));
+            .timeout(_offlineBundleLoadTimeout);
         final decodedRoot = jsonDecode(rawMockString) as Map<String, dynamic>;
         final parsedNode = decodedRoot['reviewsByCity'];
         if (parsedNode is Map<String, dynamic>) {

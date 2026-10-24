@@ -3,13 +3,25 @@ import 'package:flutter/foundation.dart';
 
 /// Station category on the 2-player cafe counter.
 enum IngredientCategory {
-  drink('Drinks / İçecekler (Player 1)'),
-  food('Simple Foods / Tatlılar (Player 2)'),
-  toppingOrPrank('Sugar vs. Salt & Pranks / Şeker & Tuzak Malzemeler');
+  drink(
+    '☕ Player 1: Espresso & Coffee Bar',
+    '☕ Oyuncu 1: Kahve & İçecek Barı',
+  ),
+  food(
+    '🥐 Player 2: Glass Pastry Vitrine',
+    '🥐 Oyuncu 2: Cam Tatlı Vitrini',
+  ),
+  toppingOrPrank(
+    '🧂 Sweet or Salty? Twin Condiment Jars',
+    '🧂 Tatlı mı Tuzlu mu? İkiz Kavanozlar',
+  );
 
-  const IngredientCategory(this.sectionTitle);
+  const IngredientCategory(this.titleEn, this.titleTr);
 
-  final String sectionTitle;
+  final String titleEn;
+  final String titleTr;
+
+  String localizedTitle(String languageCode) => languageCode == 'en' ? titleEn : titleTr;
 }
 
 /// Represents a single tap-to-add item on the Backyard Barista counter.
@@ -21,9 +33,12 @@ class CafeIngredient {
     required this.id,
     required this.titleEn,
     required this.titleTr,
+    required this.subtitleEn,
+    required this.subtitleTr,
     required this.category,
     required this.isPrankItem,
     required this.prankKind,
+    this.isHotDrink = false,
     this.assetPath,
     this.customVectorKind,
   });
@@ -31,14 +46,21 @@ class CafeIngredient {
   final String id;
   final String titleEn;
   final String titleTr;
+  final String subtitleEn;
+  final String subtitleTr;
   final IngredientCategory category;
   final bool isPrankItem;
   final String prankKind;
+  final bool isHotDrink;
   final String? assetPath;
   final CustomVectorArtworkKind? customVectorKind;
 
   String localizedTitle(String languageCode) {
     return languageCode == 'en' ? titleEn : titleTr;
+  }
+
+  String localizedSubtitle(String languageCode) {
+    return languageCode == 'en' ? subtitleEn : subtitleTr;
   }
 }
 
@@ -53,27 +75,36 @@ class IngredientsCatalog {
       id: 'espresso',
       titleEn: 'Double Espresso',
       titleTr: 'Çift Shot Espresso',
+      subtitleEn: 'Velvety Crema · 92°C',
+      subtitleTr: 'Kadife Krema · 92°C',
       category: IngredientCategory.drink,
       isPrankItem: false,
       prankKind: 'none',
+      isHotDrink: true,
       assetPath: 'assets/base/drinks/espresso.png',
     ),
     CafeIngredient(
       id: 'milk',
       titleEn: 'Steamed Milk',
       titleTr: 'Köpüklü Süt',
+      subtitleEn: 'Silky Microfoam · 65°C',
+      subtitleTr: 'İpeksi Süt Köpüğü · 65°C',
       category: IngredientCategory.drink,
       isPrankItem: false,
       prankKind: 'none',
+      isHotDrink: true,
       assetPath: 'assets/base/drinks/milk.png',
     ),
     CafeIngredient(
       id: 'menengic_coffee',
       titleEn: 'Menengiç Pistachio Coffee',
       titleTr: 'Menengiç Kahvesi',
+      subtitleEn: 'Roasted Terebinth · Copper Cup',
+      subtitleTr: 'Kavrulmuş Menengiç · Bakır Fincan',
       category: IngredientCategory.drink,
       isPrankItem: false,
       prankKind: 'none',
+      isHotDrink: true,
       assetPath: 'assets/base/drinks/menengic_coffee.png',
     ),
 
@@ -82,6 +113,8 @@ class IngredientsCatalog {
       id: 'croissant',
       titleEn: 'Butter Croissant',
       titleTr: 'Tereyağlı Kruvasan',
+      subtitleEn: 'Flaky Golden Layers',
+      subtitleTr: 'Çıtır Katmanlı Hamur',
       category: IngredientCategory.food,
       isPrankItem: false,
       prankKind: 'none',
@@ -91,6 +124,8 @@ class IngredientsCatalog {
       id: 'san_sebastian',
       titleEn: 'San Sebastian Cheesecake',
       titleTr: 'San Sebastian Cheesecake',
+      subtitleEn: 'Caramelized Basque Crust',
+      subtitleTr: 'Karamelize Yanık Üst Katman',
       category: IngredientCategory.food,
       isPrankItem: false,
       prankKind: 'none',
@@ -100,17 +135,21 @@ class IngredientsCatalog {
       id: 'baklava',
       titleEn: 'Pistachio Baklava',
       titleTr: 'Fıstıklı Baklava',
+      subtitleEn: '40 Phyllo Layers · Boz Pistachio',
+      subtitleTr: '40 Kat Yufka · Boz Fıstık',
       category: IngredientCategory.food,
       isPrankItem: false,
       prankKind: 'none',
       assetPath: 'assets/base/foods/baklava.png',
     ),
 
-    // 3. Toppings & Pranks (3 base PNGs: Sugar sits right next to Salt and Chili!)
+    // 3. Toppings & Stealth Pranks (Twin glass jars with zero red spoiler badges!)
     CafeIngredient(
       id: 'sugar_jar',
       titleEn: 'Sweet Sugar (Şeker)',
       titleTr: 'Tatlı Şeker Kavanozu',
+      subtitleEn: '2-Hole Rose Lid · Fine Crystals',
+      subtitleTr: '2 Delikli Kapak · Beyaz Kristal',
       category: IngredientCategory.toppingOrPrank,
       isPrankItem: false,
       prankKind: 'none',
@@ -119,7 +158,9 @@ class IngredientsCatalog {
     CafeIngredient(
       id: 'salt_shaker',
       titleEn: 'Salt Shaker (Tuz!)',
-      titleTr: 'Tuzluk (Şeker Tuzağı!)',
+      titleTr: 'Tuzluk (Şeker İkizi)',
+      subtitleEn: '3-Hole Silver Lid · White Crystals',
+      subtitleTr: '3 Delikli Kapak · Beyaz Kristal',
       category: IngredientCategory.toppingOrPrank,
       isPrankItem: true,
       prankKind: 'salt',
@@ -127,8 +168,10 @@ class IngredientsCatalog {
     ),
     CafeIngredient(
       id: 'chili_sauce',
-      titleEn: 'Hot Chili Sauce (Acı Sos!)',
-      titleTr: 'Acı Biber Sosu (Tuzak!)',
+      titleEn: 'Red Glaze / Chili Sauce',
+      titleTr: 'Kırmızı Sos (Acı Biber)',
+      subtitleEn: 'Looks Like Berry Glaze · Scoville!',
+      subtitleTr: 'Çilek Sosu Görünümlü · Acı!',
       category: IngredientCategory.toppingOrPrank,
       isPrankItem: true,
       prankKind: 'chili',
@@ -142,6 +185,8 @@ class IngredientsCatalog {
       id: 'custom_katmer_roll',
       titleEn: 'AI Custom: Katmer Roll',
       titleTr: 'AI Özel: Fıstıklı Katmer Sarma',
+      subtitleEn: 'Round 2 Generated SVG Dish',
+      subtitleTr: '2. Tur Canlı Üretilen SVG Tatlı',
       category: IngredientCategory.food,
       isPrankItem: false,
       prankKind: 'none',
@@ -149,14 +194,25 @@ class IngredientsCatalog {
     ),
     CafeIngredient(
       id: 'custom_isot_pepper',
-      titleEn: 'AI Prank: İsot Pepper',
-      titleTr: 'AI Tuzak: İsot Biberi',
+      titleEn: 'AI Flakes: İsot Pepper',
+      titleTr: 'AI Özel: İsot Biberi',
+      subtitleEn: 'Round 2 Generated SVG Spice',
+      subtitleTr: '2. Tur Canlı Üretilen SVG Baharat',
       category: IngredientCategory.toppingOrPrank,
       isPrankItem: true,
       prankKind: 'chili',
       customVectorKind: CustomVectorArtworkKind.isotPepperShaker,
     ),
   ];
+
+  static CafeIngredient? findById(String id) {
+    for (final item in <CafeIngredient>[...baseItems, ...roundTwoCustomItems]) {
+      if (item.id == id) {
+        return item;
+      }
+    }
+    return null;
+  }
 
   static List<CafeIngredient> itemsForCategory(
     IngredientCategory category, {
