@@ -85,6 +85,61 @@
     .badge-p1 { background: #EFEBE9; color: #3E2723; }
     .badge-p2 { background: #FBE9E7; color: #BF360C; }
     .badge-tips { background: #E6F4EA; color: #137333; }
+    .badge-level { background: #FFF8E1; color: #E65100; border: 1px solid #FFB300; }
+    .soundboard-bar {
+      background: linear-gradient(90deg, #3E2418, #5A3522);
+      border-radius: 16px;
+      padding: 10px 14px;
+      border: 1.5px solid rgba(255, 179, 0, 0.55);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: #FFF8EE;
+    }
+    .soundboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .soundboard-title {
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .soundboard-status {
+      background: rgba(255, 179, 0, 0.18);
+      border: 1px solid rgba(255, 213, 79, 0.65);
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #FFE082;
+    }
+    .soundboard-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .btn-sfx {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 204, 188, 0.40);
+      border-radius: 999px;
+      padding: 5px 11px;
+      color: #FFF8EE;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: transform 0.14s ease, background 0.14s ease;
+    }
+    .btn-sfx:hover { background: rgba(255, 255, 255, 0.18); }
+    .btn-sfx:active { transform: scale(0.96); }
     .crew-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -300,9 +355,23 @@
         <div style="font-size:11px;color:#6D4C41;" id="priorityLayerText">Priority 2: Firebase Remote Config (active_city_id)</div>
       </div>
       <div class="score-badges">
+        <span class="badge badge-level" id="crewLevelBadge">🏆 Lv.1 Barista</span>
         <span class="badge badge-p1" id="p1ScoreBadge">☕ P1 Barista: 0</span>
         <span class="badge badge-p2" id="p2ScoreBadge">🥐 P2 Pastry: 0</span>
         <span class="badge badge-tips" id="tipsBadge">🪙 Tips: +0 pts</span>
+      </div>
+    </section>
+
+    <section class="soundboard-bar" id="baristaSoundboard">
+      <div class="soundboard-header">
+        <span class="soundboard-title">🎛️ Barista Ses Efektleri (Web Audio API)</span>
+        <span class="soundboard-status" id="activeWebAudioCueBadge">🎵 Web Audio Hazır</span>
+      </div>
+      <div class="soundboard-buttons">
+        <button class="btn-sfx" id="sfxCoffeeGrinderBtn" onclick="playBaristaCue('coffeeGrinder')">⚙️ Kahve Değirmeni</button>
+        <button class="btn-sfx" id="sfxEspressoSteamBtn" onclick="playBaristaCue('espressoSteam')">💨 Espresso Buharı</button>
+        <button class="btn-sfx" id="sfxServeBellBtn" onclick="playBaristaCue('serveBell')">🔔 Sipariş Zili</button>
+        <button class="btn-sfx" id="sfxLevelUpBtn" onclick="playBaristaCue('levelUpFanfare')">🏆 Seviye Atlama</button>
       </div>
     </section>
 
@@ -480,31 +549,171 @@
     let sipInterval = null;
     let sharedAudioContext = null;
 
+    const CUE_LABELS = {
+      coffeeGrinder: '⚙️ Kahve Değirmeni Sesi',
+      espressoSteam: '💨 Espresso Buhar Çubuğu',
+      serveBell: '🔔 Servis Zili',
+      levelUpFanfare: '🏆 Seviye Atlama Fanfarı',
+      teaSipSlurp: '🫖 İnce Belli Çay Hüplemesi',
+      saltySabotage: '🧂 Tuzlu Sabotaj Alarmı',
+      prankSprinkle: '🤫 Gizli Şaka Serpintisi'
+    };
+
+    function getCrewLevel() {
+      return 1 + Math.floor((playerOneScore + playerTwoScore) / 100);
+    }
+
+    function updateActiveCueBadge(cueName) {
+      const badgeEl = document.getElementById('activeWebAudioCueBadge');
+      if (!badgeEl) return;
+      if (isMuted) {
+        badgeEl.textContent = '🔇 Sessiz Mod';
+        return;
+      }
+      badgeEl.textContent = CUE_LABELS[cueName] || '🎵 Web Audio Hazır';
+    }
+
+    function ensureAudioContext() {
+      if (!sharedAudioContext) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        sharedAudioContext = new AudioContextClass();
+      }
+      if (sharedAudioContext.state === 'suspended') {
+        sharedAudioContext.resume();
+      }
+      return sharedAudioContext;
+    }
+
+    function playNoiseBurst(audioCtx, startTime, durationSec, filterType, frequencyHz, qFactor, peakGain) {
+      const sampleRate = audioCtx.sampleRate;
+      const frameCount = Math.max(1, Math.floor(sampleRate * durationSec));
+      const buffer = audioCtx.createBuffer(1, frameCount, sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < frameCount; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      const source = audioCtx.createBufferSource();
+      source.buffer = buffer;
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = filterType;
+      filter.frequency.setValueAtTime(frequencyHz, startTime);
+      filter.Q.setValueAtTime(qFactor, startTime);
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.001, startTime);
+      gain.gain.linearRampToValueAtTime(peakGain, startTime + Math.min(0.04, durationSec * 0.2));
+      gain.gain.exponentialRampToValueAtTime(0.0008, startTime + durationSec);
+      source.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+      source.start(startTime);
+      source.stop(startTime + durationSec);
+    }
+
+    function playBaristaCue(cueName) {
+      updateActiveCueBadge(cueName);
+      if (isMuted) return;
+      try {
+        const audioCtx = ensureAudioContext();
+        const now = audioCtx.currentTime;
+        if (cueName === 'coffeeGrinder') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(92, now);
+          osc.frequency.linearRampToValueAtTime(118, now + 0.45);
+          osc.frequency.linearRampToValueAtTime(96, now + 0.9);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.14, now + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.92);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.93);
+          playNoiseBurst(audioCtx, now, 0.9, 'bandpass', 1450, 2.4, 0.16);
+        } else if (cueName === 'espressoSteam') {
+          playNoiseBurst(audioCtx, now, 0.78, 'bandpass', 2800, 1.4, 0.2);
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(175, now);
+          osc.frequency.exponentialRampToValueAtTime(125, now + 0.72);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.74);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.75);
+        } else if (cueName === 'serveBell') {
+          [1046.5, 1318.5, 1567.98].forEach((freq, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.055);
+            gain.gain.setValueAtTime(0.16 / (idx + 1), now + idx * 0.055);
+            gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.055 + 0.55);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + idx * 0.055);
+            osc.stop(now + idx * 0.055 + 0.56);
+          });
+        } else if (cueName === 'levelUpFanfare') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+            const start = now + idx * 0.095;
+            const dur = idx === 3 ? 0.42 : 0.16;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, start);
+            gain.gain.setValueAtTime(0.18, start);
+            gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + dur + 0.01);
+          });
+        } else if (cueName === 'teaSipSlurp') {
+          playNoiseBurst(audioCtx, now, 0.36, 'bandpass', 1800, 3.0, 0.14);
+          playTone(587, 320, 'triangle');
+        } else if (cueName === 'saltySabotage') {
+          [293.66, 233.08, 185.0].forEach((freq, idx) => {
+            const start = now + idx * 0.13;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(freq, start);
+            gain.gain.setValueAtTime(0.15, start);
+            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.18);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + 0.19);
+          });
+        } else if (cueName === 'prankSprinkle') {
+          playNoiseBurst(audioCtx, now, 0.22, 'highpass', 3200, 1.8, 0.14);
+          playTone(310, 180, 'sawtooth');
+        }
+      } catch (_error) {}
+    }
+
     function playTone(frequencyHz, durationMilliseconds, waveType = 'sine') {
       if (isMuted) return;
       try {
-        if (!sharedAudioContext) {
-          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-          sharedAudioContext = new AudioContextClass();
-        }
-        if (sharedAudioContext.state === 'suspended') {
-          sharedAudioContext.resume();
-        }
-        const oscillator = sharedAudioContext.createOscillator();
-        const gainNode = sharedAudioContext.createGain();
+        const audioCtx = ensureAudioContext();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
         oscillator.type = waveType;
         oscillator.frequency.value = frequencyHz;
-        gainNode.gain.setValueAtTime(0.18, sharedAudioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, sharedAudioContext.currentTime + durationMilliseconds / 1000);
+        gainNode.gain.setValueAtTime(0.18, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + durationMilliseconds / 1000);
         oscillator.connect(gainNode);
-        gainNode.connect(sharedAudioContext.destination);
+        gainNode.connect(audioCtx.destination);
         oscillator.start();
-        oscillator.stop(sharedAudioContext.currentTime + durationMilliseconds / 1000);
+        oscillator.stop(audioCtx.currentTime + durationMilliseconds / 1000);
       } catch (_error) {}
     }
 
     function triggerTeaSip5Seconds() {
-      playTone(587, 320, 'triangle');
+      playBaristaCue('teaSipSlurp');
       const rootElement = document.getElementById('appRoot');
       rootElement.classList.add('sipping-active');
       const startTimestampMs = Date.now();
@@ -536,6 +745,7 @@
     function toggleMute() {
       isMuted = !isMuted;
       document.getElementById('muteBtn').textContent = isMuted ? '🔇 Ses Kapalı' : '🔊 Ses Açık';
+      updateActiveCueBadge(null);
     }
 
     function changeCity(cityKey) {
@@ -561,9 +771,17 @@
         playTone(440, 110);
       } else {
         tray.push(itemId);
-        if (selectedItem.isPrank) playTone(310, 220, 'sawtooth');
-        else if (selectedItem.category === 'drink') triggerTeaSip5Seconds();
-        else playTone(520, 120);
+        if (selectedItem.isPrank) {
+          playBaristaCue('prankSprinkle');
+        } else if (selectedItem.id === 'espresso' || selectedItem.id === 'menengic_coffee') {
+          triggerTeaSip5Seconds();
+          playBaristaCue('coffeeGrinder');
+        } else if (selectedItem.id === 'milk') {
+          triggerTeaSip5Seconds();
+          playBaristaCue('espressoSteam');
+        } else {
+          playTone(520, 120);
+        }
       }
       renderAll();
     }
@@ -576,12 +794,13 @@
 
     function serveOrder() {
       if (tray.length === 0) return;
+      const previousCrewLevel = getCrewLevel();
       const hasPrank = tray.some(trayItemId => ITEMS.find(item => item.id === trayItemId)?.isPrank);
       const cityEdition = CITY_EDITIONS[activeCity];
       const reviewCard = document.getElementById('reviewCard');
       reviewCard.classList.add('visible');
       if (hasPrank) {
-        playTone(195, 450, 'sawtooth');
+        playBaristaCue('saltySabotage');
         playerTwoScore += 30;
         reviewCard.classList.add('sabotage');
         document.getElementById('reviewFaceImg').src = '../flutter_client/assets/base/customers/customer_salty_disgusted.png';
@@ -590,7 +809,7 @@
         document.getElementById('reviewHeadline').textContent = cityEdition.saltyHeadline;
         document.getElementById('reviewBody').textContent = cityEdition.saltyReaction;
       } else {
-        playTone(784, 380, 'triangle');
+        playBaristaCue('serveBell');
         playerOneScore += 50;
         playerTwoScore += 50;
         tipPoints += 25;
@@ -600,6 +819,9 @@
         document.getElementById('reviewBadge').style.color = '#2E7D32';
         document.getElementById('reviewHeadline').textContent = cityEdition.sweetHeadline;
         document.getElementById('reviewBody').textContent = cityEdition.sweetReaction;
+      }
+      if (getCrewLevel() > previousCrewLevel) {
+        playBaristaCue('levelUpFanfare');
       }
       renderAll();
     }
@@ -631,6 +853,7 @@
         this.onerror = null;
         this.src = `https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/${cityEdition.avatar}`;
       };
+      document.getElementById('crewLevelBadge').textContent = `🏆 Lv.${getCrewLevel()} Barista`;
       document.getElementById('p1ScoreBadge').textContent = `☕ P1 Barista: ${playerOneScore}`;
       document.getElementById('p2ScoreBadge').textContent = `🥐 P2 Pastry: ${playerTwoScore}`;
       document.getElementById('tipsBadge').textContent = `🪙 Tips: +${tipPoints} pts`;
