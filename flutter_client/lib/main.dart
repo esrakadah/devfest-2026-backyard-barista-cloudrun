@@ -15,6 +15,7 @@ Future<void> main() async {
     remoteConfigCityCode: _defaultCityFromEnv,
   );
   await cityController.loadBundledEditions();
+  cityController.syncRemoteConfigFromUri();
 
   final judgeService = CafeJudgeService(
     clock: DateTime.now,

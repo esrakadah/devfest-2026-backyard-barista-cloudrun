@@ -88,6 +88,33 @@ class CitySettingsSheet extends StatelessWidget {
                       },
                     ),
                   ),
+                const SizedBox(height: 8),
+                Text(
+                  'Simulate Live Firebase Remote Config Push (Priority 2: active_city_id):',
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: const Color(0xFF5D4037),
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+                const SizedBox(height: 6),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 6,
+                  children: <Widget>[
+                    for (final edition in controller.allEditions)
+                      ActionChip(
+                        key: Key('remote_config_chip_${edition.editionId.code}'),
+                        avatar: Text(edition.flagEmoji),
+                        label: Text('RC: ${edition.editionId.code}'),
+                        onPressed: () {
+                          controller
+                            ..clearManualOverride()
+                            ..applyRemoteConfigCity(edition.editionId);
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                  ],
+                ),
                 const SizedBox(height: 4),
                 Align(
                   alignment: Alignment.centerRight,
