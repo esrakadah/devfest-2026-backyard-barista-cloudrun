@@ -1,0 +1,29 @@
+name: backyard_barista_cloudrun
+description: >
+  Backyard Barista on Cloud Run: Tatli mi Tuzlu mu? DevFest 2026 Hands-On
+  Workshop & Vibe Lounge multiplayer AI cafe game with 4 City Editions.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/base/drinks/
+    - assets/base/foods/
+    - assets/base/toppings_pranks/
+    - assets/base/customers/
+    - assets/editions/city_editions.json
+    - assets/offline_fallback/mock_responses.json

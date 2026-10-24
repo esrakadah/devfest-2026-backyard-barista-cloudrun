@@ -1,0 +1,9 @@
+{
+  "name": "Backyard Barista on Cloud Run",
+  "short_name": "Backyard Barista",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FFF8F0",
+  "theme_color": "#6D4C41",
+  "description": "DevFest 2026 Multiplayer AI Cafe Game on Google Cloud Run"
+}

@@ -1,0 +1,37 @@
+{
+  "parameters": {
+    "active_city_id": {
+      "defaultValue": {
+        "value": "gaziantep"
+      },
+      "conditionalValues": {
+        "devfest_berlin_2026": {
+          "value": "berlin"
+        },
+        "devfest_gaziantep_2026": {
+          "value": "gaziantep"
+        },
+        "devfest_adana_2026": {
+          "value": "adana"
+        },
+        "devfest_istanbul_2026": {
+          "value": "istanbul"
+        }
+      },
+      "description": "Active DevFest City Edition (berlin, gaziantep, adana, istanbul) for Backyard Barista on Cloud Run.",
+      "valueType": "STRING"
+    },
+    "custom_city_jokes_json": {
+      "defaultValue": {
+        "value": "{}"
+      },
+      "description": "Optional live JSON override for city-specific Salt-vs-Sugar prank jokes.",
+      "valueType": "JSON"
+    }
+  },
+  "version": {
+    "versionNumber": "1",
+    "updateOrigin": "REST_API",
+    "updateType": "INCREMENTAL_UPDATE"
+  }
+}
