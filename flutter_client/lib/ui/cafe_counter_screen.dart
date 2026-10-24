@@ -6,6 +6,7 @@ import 'package:backyard_barista_cloudrun/data/ingredients_catalog.dart';
 import 'package:backyard_barista_cloudrun/models/cafe_review.dart';
 import 'package:backyard_barista_cloudrun/models/customer_order_ticket.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
+import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
 import 'package:backyard_barista_cloudrun/ui/city_settings_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +43,7 @@ class CafeCounterScreen extends StatefulWidget {
 
 class _CafeCounterScreenState extends State<CafeCounterScreen> {
   final List<CafeIngredient> _selectedTray = <CafeIngredient>[];
+  final CafeSoundController _soundController = CafeSoundController();
   bool _includeRoundTwoCustomItems = true;
   bool _isEvaluatingOrder = false;
   int _activeTicketIndex = 0;
@@ -81,13 +83,19 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   }
 
   void _toggleIngredient(CafeIngredient ingredient) {
+    final isRemoving = _selectedTray.any((existing) => existing.id == ingredient.id);
     setState(() {
-      if (_selectedTray.any((existing) => existing.id == ingredient.id)) {
+      if (isRemoving) {
         _selectedTray.removeWhere((existing) => existing.id == ingredient.id);
       } else {
         _selectedTray.add(ingredient);
       }
     });
+    if (!isRemoving && ingredient.isPrankItem) {
+      _soundController.play(CafeSoundCue.stealthWink);
+    } else {
+      _soundController.play(CafeSoundCue.tapPop);
+    }
   }
 
   void _clearTray() {
@@ -95,6 +103,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       _selectedTray.clear();
       _latestReview = null;
     });
+    _soundController.play(CafeSoundCue.tapPop);
   }
 
   void _advanceToNextCustomer() {
@@ -104,6 +113,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       _selectedTray.clear();
       _latestReview = null;
     });
+    _soundController.play(CafeSoundCue.nextChime);
   }
 
   Future<void> _serveOrder() async {
@@ -113,6 +123,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
     setState(() {
       _isEvaluatingOrder = true;
     });
+    _soundController.play(CafeSoundCue.serveBell);
 
     final review = await widget.judgeService.evaluateOrder(
       selectedIngredients: List<CafeIngredient>.unmodifiable(_selectedTray),
@@ -133,6 +144,9 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
         _playerTwoPastryScore += _baristaRoundPoints;
       }
     });
+    _soundController.play(
+      review.isPrankCaught ? CafeSoundCue.saltyBuzzer : CafeSoundCue.sweetFanfare,
+    );
   }
 
   void _openCityEditionSheet() {
@@ -188,22 +202,39 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
               ],
             ),
             actions: <Widget>[
+              IconButton(
+                key: const Key('sound_mute_toggle_button'),
+                visualDensity: VisualDensity.compact,
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                tooltip: _soundController.isMuted ? 'Unmute Cafe Sounds' : 'Mute Cafe Sounds',
+                onPressed: () {
+                  setState(_soundController.toggleMute);
+                },
+                icon: Icon(
+                  _soundController.isMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
+                  size: 20,
+                  color: const Color(0xFFFFCCBC),
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.only(right: 8, top: 6, bottom: 6),
                 child: FilledButton.tonalIcon(
                   key: const Key('city_edition_switcher_button'),
                   style: FilledButton.styleFrom(
+                    visualDensity: VisualDensity.compact,
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     backgroundColor: const Color(0xFFC85A32),
                     foregroundColor: Colors.white,
                   ),
                   onPressed: _openCityEditionSheet,
                   icon: Text(
                     activeEdition.flagEmoji,
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 15),
                   ),
                   label: Text(
                     '${activeEdition.cityName} Edition ▾',
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
                   ),
                 ),
               ),
@@ -873,14 +904,6 @@ class _IngredientArtwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vectorKind = ingredient.customVectorKind;
-    if (vectorKind != null) {
-      return CustomVectorIngredientGraphic(
-        artworkKind: vectorKind,
-        size: size,
-      );
-    }
-
     final assetPath = ingredient.assetPath;
     if (assetPath != null) {
       return Container(
@@ -904,10 +927,25 @@ class _IngredientArtwork extends StatelessWidget {
             height: size,
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) {
+              final vectorFallback = ingredient.customVectorKind;
+              if (vectorFallback != null) {
+                return CustomVectorIngredientGraphic(
+                  artworkKind: vectorFallback,
+                  size: size,
+                );
+              }
               return Icon(Icons.local_cafe, size: size, color: const Color(0xFF6D4C41));
             },
           ),
         ),
+      );
+    }
+
+    final vectorKind = ingredient.customVectorKind;
+    if (vectorKind != null) {
+      return CustomVectorIngredientGraphic(
+        artworkKind: vectorKind,
+        size: size,
       );
     }
 
@@ -1166,11 +1204,24 @@ class _CustomerReviewCard extends StatelessWidget {
                         color: borderColor,
                       ),
                     ),
-                    Chip(
-                      visualDensity: VisualDensity.compact,
-                      label: Text(
-                        '${currentReview.ratingStars}/$maxCafeRatingStars · ${currentReview.tasteVerdict}',
-                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
+                    Container(
+                      key: const Key('review_verdict_badge'),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: isSabotage ? const Color(0xFFFCE8E6) : const Color(0xFFE6F4EA),
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(
+                          color: isSabotage ? const Color(0xFFF28B82) : const Color(0xFF81C995),
+                        ),
+                      ),
+                      child: Text(
+                        '${currentReview.ratingStars}/$maxCafeRatingStars · '
+                        '${currentReview.localizedVerdictLabel(languageCode)}',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: borderColor,
+                        ),
                       ),
                     ),
                   ],

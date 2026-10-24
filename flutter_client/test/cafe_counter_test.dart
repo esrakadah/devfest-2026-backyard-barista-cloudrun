@@ -64,7 +64,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byKey(const Key('customer_review_card')), findsOneWidget);
-      expect(find.textContaining('5/5 · sweet_perfection'), findsOneWidget);
+      expect(find.textContaining('5/5 · Tatlı Mükemmellik ✨'), findsOneWidget);
 
       // 2. Sneak Salt Shaker (Tuz!) onto the tray: verify stealth wink badge appears
       final saltCard = find.byKey(const Key('ingredient_card_salt_shaker'));
@@ -80,7 +80,7 @@ void main() {
       await tester.tap(serveButton);
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('1/5 · salty_sabotage'), findsOneWidget);
+      expect(find.textContaining('1/5 · Tuzlu Sabotaj 🧂'), findsOneWidget);
       expect(find.textContaining('sınır dışı ederler'), findsOneWidget);
 
       // 3. Advance to Next Customer (#2 Mustafa)
@@ -158,6 +158,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('customer_review_card')), findsOneWidget);
-    expect(find.textContaining('1/5 · salty_sabotage'), findsOneWidget);
+    expect(find.textContaining('1/5 · Tuzlu Sabotaj 🧂'), findsOneWidget);
   });
 }

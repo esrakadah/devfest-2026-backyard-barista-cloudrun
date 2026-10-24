@@ -179,28 +179,30 @@ class IngredientsCatalog {
     ),
   ];
 
-  /// Round 2 items generated on the fly as inline vector widgets (zero external file dependency).
+  /// Round 2 items generated with 9D photorealistic studio photography + vector fallback.
   static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
     CafeIngredient(
       id: 'custom_katmer_roll',
       titleEn: 'AI Custom: Katmer Roll',
       titleTr: 'AI Özel: Fıstıklı Katmer Sarma',
-      subtitleEn: 'Round 2 Generated SVG Dish',
-      subtitleTr: '2. Tur Canlı Üretilen SVG Tatlı',
+      subtitleEn: 'Crispy Phyllo · Kaymak & Pistachio',
+      subtitleTr: 'Çıtır Yufka · Kaymak & Boz Fıstık',
       category: IngredientCategory.food,
       isPrankItem: false,
       prankKind: 'none',
+      assetPath: 'assets/base/foods/katmer_roll.png',
       customVectorKind: CustomVectorArtworkKind.pistachioKatmerRoll,
     ),
     CafeIngredient(
       id: 'custom_isot_pepper',
       titleEn: 'AI Flakes: İsot Pepper',
       titleTr: 'AI Özel: İsot Biberi',
-      subtitleEn: 'Round 2 Generated SVG Spice',
-      subtitleTr: '2. Tur Canlı Üretilen SVG Baharat',
+      subtitleEn: 'Smoky Urfa Chili Flakes',
+      subtitleTr: 'İsli Urfa & Antep İsotu',
       category: IngredientCategory.toppingOrPrank,
       isPrankItem: true,
       prankKind: 'chili',
+      assetPath: 'assets/base/toppings_pranks/isot_pepper.png',
       customVectorKind: CustomVectorArtworkKind.isotPepperShaker,
     ),
   ];
