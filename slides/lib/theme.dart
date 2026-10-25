@@ -44,6 +44,14 @@ abstract final class DeckColors {
   static const Color mutedText = Color(0xFF9EB1C9);
 }
 
+/// The logical slide canvas. The type scale below is designed for it; flutter_deck scales the
+/// canvas to whatever the projector is (1080p, 1440p or 4K), so text never shrinks on big screens.
+abstract final class DeckCanvas {
+  static const double width = 1920;
+  static const double height = 1080;
+  static const FlutterDeckSlideSize slideSize = FlutterDeckSlideSize.custom(width: width, height: height);
+}
+
 /// The two font families bundled under assets/fonts and declared in pubspec.yaml.
 abstract final class DeckFonts {
   static const String sans = 'GoogleSansFlex';

@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -8,7 +9,7 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/room-quota-trap',
-            title: '8. Gerçek Rakamlar #3: The 300-Person Quota Trap',
+            title: '9. Gerçek Rakamlar #3: The 300-Person Quota Trap',
             speakerNotes:
                 'BEAT  [16:30 - 18:30] Gerçek Rakamlar #3: 300 kişilik salonda HTTP 429 RESOURCE_EXHAUSTED tuzağı ve çözümümüz.\n'
                 'SAY   "Bir konferans atölyesini batıran en klasik hata nedir? Konuşmacının kendi API anahtarını 300 kişiyle paylaşması! Ücretsiz katman hız sınırları API anahtarı başına değil, Google Cloud projesi başına uygulanır ve dakikada 5 ila 15 istek seviyesindedir. Yani 300 kişi tek bir projeye yüklenirse 3 saniye içinde HTTP 429 RESOURCE_EXHAUSTED hatası alırsınız. Ayrıca GEAR ve Qwiklabs sanal laboratuvarları etkinlik başına 100 katılımcı ile sınırlıdır. Biz bu iki engeli dört katmanlı savunmayla aşıyoruz: herkes kendi ücretsiz AI Studio anahtarını kullanıyor, sipariş başına sadece 1 JSON isteği atıyoruz, AI Studio Starter Tier ile sanal makine sınırına takılmadan Cloud Run yayını yapıyoruz ve ağ kesilirse uygulama otomatik olarak çevrimdışı şaka yanıtlarına düşüyor."\n'
@@ -24,8 +25,9 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 8 · GERÇEK RAKAMLAR #3 (QUOTAS & RATE LIMITS)',
+          eyebrow: 'GERÇEK RAKAMLAR #3 (QUOTAS & RATE LIMITS)',
           title: 'Real Numbers #3: Surviving a 300-Person Room Without HTTP 429',
+          act: StoryAct.realNumbers,
           subtitle: 'Why shared keys and 100-seat lab VMs fail at scale, and how our architecture stays green',
           accentColor: DeckColors.googleRed,
           child: Column(

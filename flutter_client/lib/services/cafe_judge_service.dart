@@ -70,7 +70,7 @@ class CafeJudgeService {
     required bool containsChiliPrank,
   }) async {
     final endpointUri = Uri.parse(
-      'https://generativelanguage.googleapis.com/v1beta/models/$geminiModel:generateContent?key=$geminiApiKey',
+      'https://generativelanguage.googleapis.com/v1beta/models/$geminiModel:generateContent',
     );
     final itemDescriptions =
         selectedIngredients.map((item) => '${item.id} (${item.titleEn} / prank=${item.prankKind})').join(', ');
@@ -122,7 +122,8 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       final response = await client
           .post(
             endpointUri,
-            headers: const <String, String>{'Content-Type': 'application/json'},
+            // The key travels in a header, not the URL, so it never lands in proxy or server access logs.
+            headers: <String, String>{'Content-Type': 'application/json', 'x-goog-api-key': geminiApiKey},
             body: jsonEncode(requestBody),
           )
           .timeout(_geminiRequestTimeout);

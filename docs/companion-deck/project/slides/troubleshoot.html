@@ -1,0 +1,14 @@
+<section id="troubleshoot" data-transition="fade" style="background:#0E1824;color:#F2F6FC;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#F28B82">When something breaks</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">Symptom, cause, one fix</h2>
+<table style="font-size:26px;color:#F2F6FC">
+<tr style="background:#16273A"><th style="width:30%">Symptom</th><th style="width:32%">Likely cause</th><th style="width:38%">Fix</th></tr>
+<tr><td>Every review looks the same</td><td>No key, or offline mode on</td><td>Expected offline. Add your own key locally.</td></tr>
+<tr style="background:#122133"><td>HTTP 429 in the logs</td><td>Shared project quota</td><td>Use your own AI Studio key.</td></tr>
+<tr><td>404 model not found</td><td>Old model name</td><td>Use gemini-3.5-flash-lite (the default).</td></tr>
+<tr style="background:#122133"><td>Images missing in AI Studio</td><td>Asset URLs not loaded</td><td>Re-paste step 1; check the raw GitHub URLs.</td></tr>
+<tr><td>Deploy asks for billing</td><td>Lane B uses your GCP project</td><td>Switch to Lane A deploy for today.</td></tr>
+<tr style="background:#122133"><td>Wi-Fi dies</td><td>300 people, one router</td><td>Keep playing: offline judge. Tether if you must ship.</td></tr>
+</table>
+<aside>Raise your hand for a mentor if a fix takes longer than two minutes; jumping to the next checkpoint is always allowed. The offline judge is a feature, not a failure: it is the same fallback the speaker uses on stage.</aside>
+</section>

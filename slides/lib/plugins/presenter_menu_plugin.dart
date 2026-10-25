@@ -25,14 +25,15 @@ class PresenterSection {
 /// `deck_manifest_test.dart` asserts it.
 const List<PresenterSection> presenterSections = [
   PresenterSection(icon: Icons.title, label: '1. Title & City Editions', route: '/title'),
-  PresenterSection(icon: Icons.emoji_events, label: '2. Workshop Lanes & Prizes', route: '/workshop-contract'),
-  PresenterSection(icon: Icons.auto_awesome, label: '3. AI Studio & Antigravity', route: '/ai-studio-pipeline'),
-  PresenterSection(icon: Icons.speed, label: '6. Gerçek Rakamlar (Benchmarks)', route: '/real-numbers-latency'),
-  PresenterSection(icon: Icons.public, label: '9. Multi-City Remote Config', route: '/multi-city-remote-config'),
-  PresenterSection(icon: Icons.restaurant_menu, label: '10. Salt vs Sugar & Assets', route: '/salt-sugar-mechanic'),
-  PresenterSection(icon: Icons.timer, label: '12. Live Build Dashboard', route: '/live-build-dashboard'),
-  PresenterSection(icon: Icons.layers, label: '13. Architecture Recap', route: '/architecture-recap'),
-  PresenterSection(icon: Icons.celebration, label: '14. Winner Podium & Badge', route: '/winner-podium-closing'),
+  PresenterSection(icon: Icons.how_to_vote, label: '2. Cold Open: Hangisi şeker?', route: '/sweet-or-salty'),
+  PresenterSection(icon: Icons.emoji_events, label: '3. Workshop Lanes & Prizes', route: '/workshop-contract'),
+  PresenterSection(icon: Icons.auto_awesome, label: '4. AI Studio & Antigravity', route: '/ai-studio-pipeline'),
+  PresenterSection(icon: Icons.speed, label: '7. Gerçek Rakamlar (Benchmarks)', route: '/real-numbers-latency'),
+  PresenterSection(icon: Icons.public, label: '10. Multi-City Remote Config', route: '/multi-city-remote-config'),
+  PresenterSection(icon: Icons.restaurant_menu, label: '11. Salt vs Sugar & Assets', route: '/salt-sugar-mechanic'),
+  PresenterSection(icon: Icons.timer, label: '13. Live Build Dashboard', route: '/live-build-dashboard'),
+  PresenterSection(icon: Icons.layers, label: '14. Architecture Recap', route: '/architecture-recap'),
+  PresenterSection(icon: Icons.celebration, label: '15. Winner Podium & Badge', route: '/winner-podium-closing'),
   PresenterSection(
     icon: Icons.wifi_tethering_error,
     label: 'Demo Hiccup (Offline Backup)',

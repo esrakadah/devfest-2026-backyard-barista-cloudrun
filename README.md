@@ -42,6 +42,16 @@ Scan any classmate's deployed `.run.app` QR code on the stage screen to test the
 
 ---
 
+## Deck at a Glance
+
+![Deck overview](docs/visuals/deck-overview.jpg)
+
+The talk follows a 5-act arc shown on every slide (Hook, Tools, Gerçek Rakamlar, Under the Hood, Build & Ship) and opens with an audience poll: *Hangisi şeker?* Before stage day, run the checklist in [`docs/stage-runbook.md`](docs/stage-runbook.md), including the PDF backup export.
+
+![Architecture](docs/visuals/architecture.png)
+
+---
+
 ## Repository Structure
 
 ```text
@@ -54,20 +64,27 @@ devfest-2026-backyard-barista-cloudrun/
 │   ├── challenge-landing-page.md      # Bilingual (TR + EN) Vibe Lounge & Workshop challenge sheet
 │   ├── rehearsal-3g-report-2026-10-24.md # Section 4.6 Slow 3G (750 Kbps / 150ms RTT) & HTTP 429 chaos report
 │   ├── speaker-drill-cards-tr.md      # Stage drill scripts (Drills 1-4: 60s open, 90s close, 5m cut, 20m recovery)
+│   ├── stage-runbook.md               # T-24h / T-2h / T-15m checklist, 5-act timing table, failure playbook
+│   ├── companion-deck/                # Source of the attendee Workshop Companion deck (16 slides, Claude Slides format)
+│   ├── visuals/                       # architecture.png, social-card.png, deck-overview.jpg (+ src/ to re-render)
 │   └── vibe-lounge-poster.html        # Print-ready A4 Vibe Lounge table poster with live Cloud Run QR
 ├── prompts/
 │   ├── step-1-base-cafe.md    # AI Studio Build mode seed prompt (Base Cafe + 4-City Switcher + 5s Tea Sip)
 │   ├── step-2-custom-dish.md  # On-the-fly custom SVG dish + prank icon + Gemini JSON judge
 │   └── step-3-deploy.md       # One-click Cloud Run (.run.app) & GitHub sync guide
-├── slides/                    # 14-slide flutter_deck presentation + Stage Navigator + Turkish speaker notes
+├── slides/                    # 15-slide flutter_deck presentation (5-act story arc) + Stage Navigator + Turkish speaker notes
 │   ├── pubspec.yaml
 │   ├── lib/
 │   │   ├── main.dart
 │   │   ├── theme.dart
 │   │   ├── plugins/presenter_menu_plugin.dart
-│   │   └── slides/            # Slides 1..14 + /demo-hiccup backup slide
-│   └── test/
-│       └── deck_manifest_test.dart
+│   │   └── slides/            # Slides 1..15 + /demo-hiccup backup slide
+│   ├── test/
+│   │   ├── deck_manifest_test.dart
+│   │   └── slides_render_test.dart  # Renders every slide with the real fonts and fails on any overflow
+│   └── tool/
+│       ├── export_slides_test.dart  # flutter test tool/export_slides_test.dart -> build/slides/*.png
+│       └── pngs_to_pdf.py           # python3 tool/pngs_to_pdf.py -> offline PDF backup of the deck
 └── flutter_client/            # Self-contained Flutter Web app & Cloud Run build context
     ├── pubspec.yaml
     ├── Dockerfile             # Multi-stage Cloud Run container (PORT=8080)
@@ -115,7 +132,7 @@ devfest-2026-backyard-barista-cloudrun/
 
 ## Full Production Architecture ("En Son Mimaride Ne Yaptık?")
 
-1. **Layer 1 (Presentation & Hybrid Assets):** Pure Flutter Declarative Widgets (`Stack`, `AnimatedScale`, `AnimatedSwitcher`, `CustomPaint`) combining 20 pre-generated PNGs in `assets/base/` (`12` Round-1 base PNGs + `2` Round-2 custom PNGs + `6` 3D character portraits) with on-the-fly Antigravity/Gemini-generated `CustomVectorIngredientGraphic` vector artwork (`custom_svg_items.dart`), `5` Lottie JSON animations, and `7` synthesized WAV audio cues.
+1. **Layer 1 (Presentation & Hybrid Assets):** Pure Flutter Declarative Widgets (`Stack`, `AnimatedScale`, `AnimatedSwitcher`, `CustomPaint`) combining 20 pre-generated PNGs in `assets/base/` (`12` Round-1 base PNGs + `2` Round-2 custom PNGs + `6` 3D character portraits) with on-the-fly Antigravity/Gemini-generated `CustomVectorIngredientGraphic` vector artwork (`custom_svg_items.dart`), `5` Lottie JSON animations, and `10` WAV audio cues plus a Web Audio API synth.
 2. **Layer 2 (3-Layer Multi-City Configuration in `CityEditionController`):**
    - **Priority 1:** In-App Settings Switcher Override (`_manualOverrideCityId` via `city_settings_drawer.dart`)
    - **Priority 2:** Firebase Remote Config template / `--dart-define=DEFAULT_CITY` (`_remoteConfigCityId` via `remote_config_template.json`)

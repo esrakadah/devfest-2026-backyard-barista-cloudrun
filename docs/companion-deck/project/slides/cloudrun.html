@@ -1,0 +1,26 @@
+<section id="cloudrun" data-transition="fade" style="background:#0E1824;color:#F2F6FC;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#57CAFF">Pattern 5 · Serverless ship</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">A stateless container on a public URL</h2>
+<div style="display:flex;gap:48px">
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:36px;font-weight:700">Stage 1 · Build</h3>
+<p style="font-size:28px;color:#BFD0E4">The Flutter image compiles a release web build, baking in the city and model.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:36px;font-weight:700">Stage 2 · Serve</h3>
+<p style="font-size:28px;color:#BFD0E4">nginx:alpine serves the files on port 8080, the port Cloud Run expects.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:36px;font-weight:700">Scale to zero</h3>
+<p style="font-size:28px;color:#BFD0E4">No state on the server, so Cloud Run can add or remove instances freely.</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#0B141F;border:2px solid #284162;border-radius:20px;padding:36px">
+<p style="font-size:24px;font-weight:700;color:#57CAFF">LANE B · FROM flutter_client/</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;white-space:nowrap">gcloud run deploy backyard-barista \<br>  --source . \<br>  --region europe-west1 \<br>  --allow-unauthenticated</p>
+<p style="font-size:26px;color:#9EB1C9">Lane A: press “Deploy to Cloud Run” in AI Studio instead.</p>
+</div>
+</div>
+<aside>Source: flutter_client/Dockerfile and prompts/step-3-deploy.md. The repo’s own warm benchmark against the live europe-west3 service measured 53.81 ms p50 for serving the app; that is static file serving, not the Gemini call. Lane A deploys through AI Studio, which keeps the API key on the server side.</aside>
+</section>

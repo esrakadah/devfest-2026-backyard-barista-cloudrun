@@ -10,6 +10,7 @@ import 'package:backyard_barista_deck/slides/s_real_numbers_cost_slide.dart';
 import 'package:backyard_barista_deck/slides/s_real_numbers_latency_slide.dart';
 import 'package:backyard_barista_deck/slides/s_room_quota_trap_slide.dart';
 import 'package:backyard_barista_deck/slides/s_salt_sugar_mechanic_slide.dart';
+import 'package:backyard_barista_deck/slides/s_sweet_or_salty_slide.dart';
 import 'package:backyard_barista_deck/slides/s_title_slide.dart';
 import 'package:backyard_barista_deck/slides/s_winner_podium_closing_slide.dart';
 import 'package:backyard_barista_deck/slides/s_workshop_contract_slide.dart';
@@ -27,13 +28,15 @@ export 's_real_numbers_cost_slide.dart';
 export 's_real_numbers_latency_slide.dart';
 export 's_room_quota_trap_slide.dart';
 export 's_salt_sugar_mechanic_slide.dart';
+export 's_sweet_or_salty_slide.dart';
 export 's_title_slide.dart';
 export 's_winner_podium_closing_slide.dart';
 export 's_workshop_contract_slide.dart';
 
-/// Main 14-slide workshop & Vibe Lounge presentation order.
+/// Main 15-slide workshop & Vibe Lounge presentation order.
 const List<FlutterDeckSlideWidget> mainSlides = [
   TitleSlide(),
+  SweetOrSaltySlide(),
   WorkshopContractSlide(),
   AiStudioPipelineSlide(),
   MeetAntigravitySlide(),
@@ -54,7 +57,7 @@ const List<FlutterDeckSlideWidget> backupSlides = [
   DemoHiccupSlide(),
 ];
 
-/// Full running order (14 main slides + 1 backup slide).
+/// Full running order (15 main slides + 1 backup slide).
 const List<FlutterDeckSlideWidget> deckSlides = [
   ...mainSlides,
   ...backupSlides,
