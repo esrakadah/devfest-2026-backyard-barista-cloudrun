@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class DemoHiccupScreen extends StatelessWidget {
   const DemoHiccupScreen({required this.message, super.key});
 
-  static const double _iconSize = 56;
-  static const double _titleSize = 36;
-  static const double _messageSize = 18;
+  static const double _iconSize = 80;
+  static const double _titleSize = 56;
+  static const double _messageSize = 28;
   static const double _padding = 36;
   static const double _gap = 18;
 
@@ -22,7 +22,7 @@ class DemoHiccupScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(_padding),
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 960),
+            constraints: const BoxConstraints(maxWidth: 1400),
             child: DeckCard(
               padding: const EdgeInsets.all(40),
               backgroundColor: DeckColors.surfaceElevated,

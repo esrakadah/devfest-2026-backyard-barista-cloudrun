@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -8,7 +9,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/real-numbers-latency',
-            title: '6. Gerçek Rakamlar #1: Latency & Cold Starts',
+            title: '7. Gerçek Rakamlar #1: Latency & Cold Starts',
             speakerNotes:
                 'BEAT  [11:30 - 14:00] Gerçek Rakamlar #1: Gecikme, zaman aşımı koruyucuları ve Cloud Run soğuk başlangıçları.\n'
                 'SAY   "Başlığımızda gerçek rakamlar sözü verdik; şimdi kodumuzdaki gerçek sınırları ve hedef bütçelerimizi açıkça konuşalım. CafeJudgeService içinde canlı Gemini çağrımız için tam 8 saniyelik bir zaman aşımı sınırı ve çevrimdışı JSON paketimiz için 250 milisaniyelik bir yükleme sınırı tanımlı. 150 token girdi ve 120 token yapılandırılmış JSON çıktı için hedefimiz gemini-3.5-flash-lite üzerinde p50 gecikmeyi 1 saniyenin altında tutmak ve Cloud Run konteynerimizin soğuk başlangıcını 500 milisaniyenin altında tamamlamak."\n'
@@ -24,8 +25,9 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 6 · GERÇEK RAKAMLAR #1 (LATENCY, TIMEOUTS & COLD STARTS)',
+          eyebrow: 'GERÇEK RAKAMLAR #1 (LATENCY, TIMEOUTS & COLD STARTS)',
           title: 'Real Numbers #1: Latency Budgets & Timeout Guardrails',
+          act: StoryAct.realNumbers,
           subtitle: 'Every network path in CafeJudgeService is bounded so the UI never hangs on stage',
           child: Column(
             children: [

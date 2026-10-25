@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -8,9 +9,9 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/workshop-contract',
-            title: '2. The Workshop Contract & Prizes',
+            title: '3. The Workshop Contract & Prizes',
             speakerNotes:
-                'BEAT  [02:00 - 05:00] Üç Kulvar (Lane A, B, C) ve Ödül Sözleşmesi. Salondaki hiç kimsenin dışarıda kalmayacağını garanti et.\n'
+                'BEAT  [03:30 - 05:00] Üç Kulvar (Lane A, B, C) ve Ödül Sözleşmesi. Salondaki hiç kimsenin dışarıda kalmayacağını garanti et.\n'
                 'SAY   "Bugünkü anlaşmamız çok net: bu salondaki hiç kimse sadece izleyici olarak kalmayacak. Bilgisayarında hiçbir kurulum olmayanlar Yol A ile doğrudan tarayıcıda Google AI Studio üzerinden oyununu kurup kredi kartı gerekmeden Cloud Run üzerinde canlıya alacak. Bilgisayarında Flutter ve Antigravity yüklü olanlar Yol B ile başlangıç repomuzdan ilerleyecek. Sadece telefonuyla katılanlar bile Yol C ile sahnedeki QR kodları okutup arkadaşlarının kafelerinde şaka malzemelerini test edecek. Ve en güzeli: oyununu canlıya alıp sahnede 60 saniyede gösteren katılımcılarımıza yanımızda getirdiğimiz 4 adet Google renkli piksel gözlüğü ve Dash ödüllerini hediye ediyoruz!"\n'
                 'HOLD  Piksel gözlükleri ve Dash oyuncaklarını eline alıp salona göster. Enerjiyi yükselt.\n'
                 'NEXT  "Önce en çok sorulan soruya net bir yanıt verelim: Google AI Studio\'dan bugün tam olarak ne çıkıyor?"',
@@ -28,8 +29,9 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         final textTheme = FlutterDeckTheme.of(context).textTheme;
         return SlideFrame(
-          eyebrow: 'SLIDE 2 · ZERO-EXCLUSION CONTRACT & PRIZES',
+          eyebrow: 'ZERO-EXCLUSION CONTRACT & PRIZES',
           title: 'Three Lanes, One Finish Line: A Live URL or GitHub Repo',
+          act: StoryAct.hook,
           subtitle: 'Every builder leaves with a deployed multiplayer AI cafe game',
           child: Column(
             children: [

@@ -1,6 +1,6 @@
 name: backyard_barista_deck
 description: >
-  The 14-slide flutter_deck presentation for "Backyard Barista on Cloud Run:
+  The 15-slide flutter_deck presentation for "Backyard Barista on Cloud Run:
   Build & Ship a Multiplayer AI Cafe Game with AI Studio, Antigravity & Flutter"
   (DevFest Berlin, Gaziantep, Adana & Istanbul 2026).
 publish_to: none

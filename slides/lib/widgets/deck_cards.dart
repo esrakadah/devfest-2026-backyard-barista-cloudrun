@@ -1,12 +1,14 @@
 import 'package:backyard_barista_deck/theme.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
-/// Standard 1920x1080 slide frame with header badge, title, subtitle, and body content.
+/// Standard 1920x1080 slide frame: topic badge and story-arc strip, title, subtitle, and body content.
 class SlideFrame extends StatelessWidget {
   const SlideFrame({
     required this.eyebrow,
     required this.title,
+    required this.act,
     required this.child,
     this.subtitle,
     this.accentColor = DeckColors.googleYellow,
@@ -21,6 +23,7 @@ class SlideFrame extends StatelessWidget {
 
   final String eyebrow;
   final String title;
+  final StoryAct act;
   final String? subtitle;
   final Color accentColor;
   final Widget child;
@@ -36,7 +39,13 @@ class SlideFrame extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DeckBadge(label: eyebrow, color: accentColor),
+          Row(
+            children: [
+              DeckBadge(label: eyebrow, color: accentColor),
+              const Spacer(),
+              StoryArcStrip(current: act),
+            ],
+          ),
           const SizedBox(height: _eyebrowGap),
           Text(title, style: textTheme.header),
           if (subtitle != null) ...[
@@ -1134,5 +1143,110 @@ class _RoundTwoVectorPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _RoundTwoVectorPainter oldDelegate) {
     return oldDelegate.isKatmer != isKatmer;
+  }
+}
+
+/// A scannable QR code card with a caption, sized for the back row of a 300-seat hall.
+class QrCodeCard extends StatelessWidget {
+  const QrCodeCard({
+    required this.assetPath,
+    required this.caption,
+    this.url,
+    this.size = 220,
+    this.accentColor = DeckColors.googleYellow,
+    super.key,
+  });
+
+  final String assetPath;
+  final String caption;
+  final String? url;
+  final double size;
+  final Color accentColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return DeckCard(
+      padding: const EdgeInsets.all(18),
+      backgroundColor: DeckColors.surfaceElevated,
+      borderColor: accentColor.withValues(alpha: 0.6),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(assetPath, width: size, height: size, fit: BoxFit.contain),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            caption,
+            style: TextStyle(
+              fontFamily: DeckFonts.sans,
+              fontSize: DeckTypeScale.bodyMedium,
+              fontWeight: FontWeight.w700,
+              color: accentColor,
+            ),
+          ),
+          if (url != null)
+            SizedBox(
+              width: size,
+              child: Text(
+                url!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontFamily: DeckFonts.mono, fontSize: 13, color: DeckColors.mutedText),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A proportional timeline of the live-build rounds: each segment's width is its share of the minutes.
+class RoundTimelineBar extends StatelessWidget {
+  const RoundTimelineBar({required this.rounds, super.key});
+
+  final List<({String label, int minutes, Color color})> rounds;
+
+  @override
+  Widget build(BuildContext context) {
+    final totalMinutes = rounds.fold<int>(0, (sum, round) => sum + round.minutes);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            for (final round in rounds)
+              Expanded(
+                flex: round.minutes,
+                child: Container(
+                  height: 64,
+                  margin: const EdgeInsets.only(right: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(color: round.color, borderRadius: BorderRadius.circular(14)),
+                  child: Text(
+                    '${round.label} · ${round.minutes} MIN',
+                    style: const TextStyle(
+                      fontFamily: DeckFonts.sans,
+                      fontSize: DeckTypeScale.bodyLarge,
+                      fontWeight: FontWeight.w700,
+                      color: DeckColors.navy,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Text(
+          '$totalMinutes minutes · fall behind? jump to the next checkpoint, never finish the old round',
+          style: const TextStyle(
+            fontFamily: DeckFonts.mono,
+            fontSize: DeckTypeScale.bodySmall,
+            color: DeckColors.mutedText,
+          ),
+        ),
+      ],
+    );
   }
 }

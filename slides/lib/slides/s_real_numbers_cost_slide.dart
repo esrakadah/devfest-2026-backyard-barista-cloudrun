@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -8,7 +9,7 @@ class RealNumbersCostSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/real-numbers-cost',
-            title: '7. Gerçek Rakamlar #2: Token Math & Model Trap',
+            title: '8. Gerçek Rakamlar #2: Token Math & Model Trap',
             speakerNotes:
                 'BEAT  [14:00 - 16:30] Gerçek Rakamlar #2: Token matematiği ve 2026 model kısıtlaması tuzağı.\n'
                 'SAY   "İkinci gerçek rakamımız doğrudan cüzdanımızı ve yeni hesapları ilgilendiriyor. Bizim oyunumuzda her malzeme tıklamasında yapay zekaya gitmiyoruz; yalnızca tepsi hazır olup Servis Et butonuna basıldığında tek bir JSON çağrısı yapıyoruz. Bu çağrı yaklaşık 150 girdi tokenı ve 120 çıktı tokenı tüketiyor, yani toplamda sipariş başına 270 token! Ve çok kritik bir 2026 gerçeği: yeni açılan Google Cloud projelerinde eski gemini-2.5-flash modelleri kısıtlandı. Eğer atölyede eski model adını yazarsanız yeni hesaplar anında hata alır. Bu yüzden kodumuzda varsayılan model doğrudan gemini-3.5-flash-lite olarak sabitlendi."\n'
@@ -37,8 +38,9 @@ this.geminiModel = const String.fromEnvironment(
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 7 · GERÇEK RAKAMLAR #2 (TOKEN MATH & 2026 MODEL GUARD)',
+          eyebrow: 'GERÇEK RAKAMLAR #2 (TOKEN MATH & 2026 MODEL GUARD)',
           title: 'Real Numbers #2: ~270 Tokens per Order & The 2.5 Trap',
+          act: StoryAct.realNumbers,
           subtitle: 'Why 1 structured JSON call per order keeps costs near zero and avoids legacy model blocks',
           accentColor: DeckColors.googleGreen,
           child: Column(

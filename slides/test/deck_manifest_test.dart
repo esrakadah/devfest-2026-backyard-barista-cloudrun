@@ -4,9 +4,10 @@ import 'package:backyard_barista_deck/plugins/presenter_menu_plugin.dart';
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Locked 14-slide main running order + 1 backup slide (`/demo-hiccup`).
+/// Locked 15-slide main running order + 1 backup slide (`/demo-hiccup`).
 const List<String> expectedRunningOrder = [
   '/title',
+  '/sweet-or-salty',
   '/workshop-contract',
   '/ai-studio-pipeline',
   '/meet-antigravity',
@@ -25,10 +26,10 @@ const List<String> expectedRunningOrder = [
 
 void main() {
   group('the Backyard Barista deck manifest', () {
-    test('has exactly 14 main slides and 1 backup slide', () {
-      expect(mainSlides.length, 14);
+    test('has exactly 15 main slides and 1 backup slide', () {
+      expect(mainSlides.length, 15);
       expect(backupSlides.length, 1);
-      expect(deckSlides.length, 15);
+      expect(deckSlides.length, 16);
     });
 
     test('every slide declares a configuration with a route', () {
@@ -93,8 +94,8 @@ void main() {
 
     test('slideNumberForRoute is one-based and agrees with the order', () {
       expect(slideNumberForRoute('/title'), 1);
-      expect(slideNumberForRoute('/winner-podium-closing'), 14);
-      expect(slideNumberForRoute('/demo-hiccup'), 15);
+      expect(slideNumberForRoute('/winner-podium-closing'), 15);
+      expect(slideNumberForRoute('/demo-hiccup'), 16);
       expect(slideNumberForRoute('/does-not-exist'), isNull);
     });
   });

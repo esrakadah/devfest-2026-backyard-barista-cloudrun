@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -8,7 +9,7 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/salt-sugar-mechanic',
-            title: "10. Today's Game Mechanic: Tatlı mı Tuzlu mu?",
+            title: "11. Today's Game Mechanic: Tatlı mı Tuzlu mu?",
             speakerNotes:
                 'BEAT  [20:30 - 22:30] Oyun Mekaniği ("Tatlı mı Tuzlu mu?") ve Yapılandırılmış JSON Şeması (CafeReview).\n'
                 'SAY   "Oyunumuzun kalbinde çok basit ama çok komik bir mekanik var: iki oyuncu tezgahtaki içecek ve tatlılara tıklayarak sipariş tepsisini hazırlıyor. Ancak tezgahta Şeker kavanozunun hemen yanında ikizi gibi duran Tuzluk ve Acı Sos var! Üstelik arayüzde kırmızı bir ŞAKA uyarısı göstermiyoruz; sadece tepsiye gizlice tuz eklendiğinde küçük bir göz kırpma ikonu beliriyor. Servis Et butonuna bastığınızda Gemini yapılandırılmış JSON şemamız üzerinden siparişi denetliyor ve tatlıya tuz atıldıysa ratingStars: 1, tasteVerdict: salty_sabotage ve şehre özel komik bir müşteri tepkisi döndürüyor."\n'
@@ -42,8 +43,9 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 10 · GAME MECHANIC & STRUCTURED JSON SCHEMA',
+          eyebrow: 'GAME MECHANIC & STRUCTURED JSON SCHEMA',
           title: 'Tatlı mı Tuzlu mu? Stealth Pranks Meets Structured JSON',
+          act: StoryAct.underTheHood,
           subtitle: 'Sneaking Salt (Tuz) next to Sugar (Şeker) triggers a deterministic 1-star Gemini roast',
           child: Row(
             children: [

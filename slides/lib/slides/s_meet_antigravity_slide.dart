@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -8,7 +9,7 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/meet-antigravity',
-            title: '4. Meet Google Antigravity',
+            title: '5. Meet Google Antigravity',
             speakerNotes:
                 'BEAT  [07:30 - 09:30] Google Antigravity ile çoklu dosya düzenleme ve yerinde vektör/widget üretimi.\n'
                 'SAY   "Tarayıcıda prototiplemek harika; peki gerçek bir Flutter projesinde aynı anda hem veri kataloğunu, hem özel çizim sınıfını, hem de JSON şemasını nasıl güncelliyoruz? İşte burada Google Antigravity devreye giriyor. Antigravity içinde Cmd+I veya Agent Mode kullanarak kafemize yeni bir imza tatlısı ekle dediğimizde, dışarıdan kırık bir resim dosyası aramak yerine doğrudan CustomVectorIngredientGraphic çizim kodunu üretip ingredients_catalog.dart içindeki roundTwoCustomItems listesine bağlıyor."\n'
@@ -53,8 +54,9 @@ static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 4 · AI-FIRST AGENTIC IDE (ai/ai-dev-tools/antigravity)',
+          eyebrow: 'AI-FIRST AGENTIC IDE (ai/ai-dev-tools/antigravity)',
           title: 'Meet Google Antigravity: Multi-File Flutter Velocity',
+          act: StoryAct.tools,
           subtitle: 'Generating zero-upload vector dishes and wiring Gemini JSON across files',
           child: Row(
             children: [

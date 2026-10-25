@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -8,7 +9,7 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/multi-city-remote-config',
-            title: '9. Multi-City Architecture with Firebase Remote Config',
+            title: '10. Multi-City Architecture with Firebase Remote Config',
             speakerNotes:
                 'BEAT  [18:30 - 20:30] Firebase Remote Config ile 4 Şehir (Berlin, Gaziantep, Adana, İstanbul) Mimarisi.\n'
                 'SAY   "Bu oyunu 14 Kasım\'da Berlin\'de, 15 Kasım\'da Gaziantep\'te, 11 Aralık\'ta Adana\'da ve 19 Aralık\'ta İstanbul\'da sahneye taşıyoruz. Her şehir için ayrı bir uygulama derlemek yerine CityEditionController içinde 3 katmanlı bir öncelik mimarisi kurduk: birinci öncelik uygulama içi Ayarlar çekmecesi (_manualOverrideCityId), ikinci öncelik Firebase Remote Config veya dart-define üzerindeki active_city_id parametresi (_remoteConfigCityId), üçüncü öncelik ise çevrimdışı çalışan city_editions.json dosyamız (_fallbackCityId). Böylece sahnede tek bir Remote Config anahtarını değiştirerek tüm salonun menüsünü ve şaka yanıtlarını Gaziantep Baklavası ve Menengiç Kahvesi moduna geçirebiliyoruz!"\n'
@@ -40,8 +41,9 @@ CityEditionConfig get activeEdition =>
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 9 · FIREBASE REMOTE CONFIG (firebase/monitoring/remote-config)',
+          eyebrow: 'FIREBASE REMOTE CONFIG (firebase/monitoring/remote-config)',
           title: 'One Codebase, Four DevFest Cities via Remote Config',
+          act: StoryAct.underTheHood,
           subtitle: '3-Layer resolution in CityEditionController: UI Override -> Remote Config -> Local JSON',
           accentColor: DeckColors.halftoneBlue,
           child: Column(

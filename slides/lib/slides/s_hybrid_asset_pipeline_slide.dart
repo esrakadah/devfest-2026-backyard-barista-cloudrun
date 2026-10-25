@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -8,7 +9,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/hybrid-asset-pipeline',
-            title: '11. Hybrid Asset Pipeline: 20 Studio PNGs + On-the-Fly AI SVGs',
+            title: '12. Hybrid Asset Pipeline: 20 Studio PNGs + On-the-Fly AI SVGs',
             speakerNotes:
                 'BEAT  [22:30 - 25:00] Hibrit Görsel Boru Hattı: 20 Hazır Stüdyo PNG + Yolda Üretilen AI Vektörleri.\n'
                 'SAY   "Bir oyun atölyesinde en çok vakit kaybettiren şey görsel bulmak ve yüklemektir. Biz bunu hibrit bir boru hattıyla çözdük: 3 içecek, 3 tatlı, 3 şaka malzemesi ve 3 müşteri tepkisinden oluşan toplam 12 adet yüksek çözünürlüklü 1. Tur PNG görselini, 2 adet 2. Tur özel PNG görselini ve 6 adet 3D karakter portresini doğrudan GitHub repomuzun içinde hazır veriyoruz. Ardından 2. Turda herkes kendi özel imza tatlısını ve kendi şaka malzemesini Google AI Studio veya Antigravity ile anında CustomPaint vektör kodu olarak üretiyor. Sıfır dosya yükleme hatası, anında görsel sonuç!"\n'
@@ -25,8 +26,9 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 11 · HYBRID ASSET PIPELINE (ZERO UPLOAD FAILURES)',
+          eyebrow: 'HYBRID ASSET PIPELINE (ZERO UPLOAD FAILURES)',
           title: '20 Pre-Generated Studio PNGs + On-the-Fly AI Vector Dishes',
+          act: StoryAct.underTheHood,
           subtitle: 'Combining instant visual polish from GitHub with live generative creativity in Round 2',
           accentColor: DeckColors.googleBlue,
           child: Row(

@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -8,7 +9,7 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/pure-flutter-widgets',
-            title: '5. Why Pure Flutter Widgets Beat Flame Here',
+            title: '6. Why Pure Flutter Widgets Beat Flame Here',
             speakerNotes: 'BEAT  [09:30 - 11:30] Mimari Karar: Neden Flame değil de saf Flutter widget ağacı?\n'
                 'SAY   "Bir oyun yapıyoruz dediğimizde akla ilk Flame motoru gelebilir. Ama 40 dakikalık bir atölyede, tezgaha tıklayarak kahve ve tatlı hazırladığımız bir oyunda Flame kullanmak büyük bir tuzak olurdu. Neden? Çünkü dil modelleri Flame içinde Vector2 koordinatlarını sık sık yanlış hesaplıyor ve ekran dışına taşırıyor. Oysa saf Flutter widget\'ları, yani Stack, AnimatedScale, AnimatedSwitcher ve LayoutBuilder kullandığımızda hem 360 piksel mobil ekranda hem masaüstünde sıfır taşmayla çalışıyor, hem de AI Studio\'nun ürettiği web arayüzüyle birebir aynı mantığı paylaşıyor."\n'
                 'HOLD  Sol karttaki yeşil avantajları ve sağ karttaki kırmızı riskleri karşılaştır.\n'
@@ -23,8 +24,9 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'SLIDE 5 · ARCHITECTURAL DECISION (flutter/one-codebase)',
+          eyebrow: 'ARCHITECTURAL DECISION (flutter/one-codebase)',
           title: 'Why Pure Flutter Declarative Widgets Beat Flame Here',
+          act: StoryAct.tools,
           subtitle: 'Designing for 40-minute beginner ergonomics and LLM code-generation accuracy',
           accentColor: DeckColors.googleGreen,
           child: Row(

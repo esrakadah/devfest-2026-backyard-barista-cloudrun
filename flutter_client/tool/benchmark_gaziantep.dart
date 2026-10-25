@@ -206,7 +206,7 @@ Future<_LatencySummary> _benchmarkLiveGeminiJson({
 }) async {
   stdout.writeln('-> Running Live Gemini ($model) Structured JSON Benchmark ($iterationCount requests)...');
   final endpoint = Uri.parse(
-    'https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent?key=$apiKey',
+    'https://generativelanguage.googleapis.com/v1beta/models/$model:generateContent',
   );
   final requestBody = jsonEncode(<String, Object?>{
     'contents': <Object?>[
@@ -236,7 +236,7 @@ Future<_LatencySummary> _benchmarkLiveGeminiJson({
     final stopwatch = Stopwatch()..start();
     final response = await client.post(
       endpoint,
-      headers: const <String, String>{'Content-Type': 'application/json'},
+      headers: <String, String>{'Content-Type': 'application/json', 'x-goog-api-key': apiKey},
       body: requestBody,
     );
     stopwatch.stop();

@@ -5,7 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'helpers/deck_fonts.dart';
+
 void main() {
+  setUpAll(loadDeckFonts);
+
   group('Theme Coverage', () {
     test('PresentationTheme darkTheme generates valid configuration', () {
       final theme = PresentationTheme.darkTheme;
@@ -40,7 +44,7 @@ void main() {
         await tester.pumpWidget(
           FlutterDeckApp(
             configuration: const FlutterDeckConfiguration(
-              slideSize: FlutterDeckSlideSize.custom(width: 2560, height: 1440),
+              slideSize: DeckCanvas.slideSize,
             ),
             darkTheme: PresentationTheme.darkTheme,
             lightTheme: PresentationTheme.darkTheme,
