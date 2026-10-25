@@ -1,9 +1,9 @@
 # Backyard Barista on Cloud Run: Tatlı mı Tuzlu mu? ☕🥐🧂☁️
 
 **DevFest 2026 Hands-On Workshop & Vibe Lounge Starter Repository**
-- **Author:** Esra Kadah (Flutter & Dart GDE · Tech Lead, Senior Flutter & AI Engineer at Antigua Mobile Berlin)
-- **Live Cloud Run Reference App (`europe-west1` · 3D Characters + Lottie):** `https://backyard-barista-870328613866.europe-west1.run.app` (`soundstage-dea29`)
-- **Live Cloud Run Mirror (`europe-west3`):** `https://backyard-barista-389486729482.europe-west3.run.app` (`devfest-backyard-barista-2026`)
+- **Author:** Esra Kadah (Tech Lead, Senior Flutter & AI Engineer at Antigua Mobile Berlin · Flutter & Dart GDE)
+- **Live Cloud Run Reference App (`europe-west3` · 3D Characters + Lottie + 10 Web Audio SFX):** `https://backyard-barista-389486729482.europe-west3.run.app` (`devfest-backyard-barista-2026`)
+- **Live Cloud Run Mirror (`europe-west1`):** `https://backyard-barista-870328613866.europe-west1.run.app` (`soundstage-dea29`)
 - **City Editions Included:**
   - `berlin` (🇩🇪 DevFest Berlin, 14 Nov 2026)
   - `gaziantep` (🇹🇷 DevFest Gaziantep, 15 Nov 2026)
@@ -132,7 +132,7 @@ devfest-2026-backyard-barista-cloudrun/
 
 ## Full Production Architecture ("En Son Mimaride Ne Yaptık?")
 
-1. **Layer 1 (Presentation & Hybrid Assets):** Pure Flutter Declarative Widgets (`Stack`, `AnimatedScale`, `AnimatedSwitcher`, `CustomPaint`) combining 20 pre-generated PNGs in `assets/base/` (`12` Round-1 base PNGs + `2` Round-2 custom PNGs + `6` 3D character portraits) with on-the-fly Antigravity/Gemini-generated `CustomVectorIngredientGraphic` vector artwork (`custom_svg_items.dart`), `5` Lottie JSON animations, and `10` WAV audio cues plus a Web Audio API synth.
+1. **Layer 1 (Presentation & Hybrid Assets):** Pure Flutter Declarative Widgets (`Stack`, `AnimatedScale`, `AnimatedSwitcher`, `CustomPaint`) combining 20 pre-generated PNGs in `assets/base/` (`12` Round-1 base PNGs + `2` Round-2 custom PNGs + `6` 3D character portraits) with on-the-fly Antigravity/Gemini-generated `CustomVectorIngredientGraphic` vector artwork (`custom_svg_items.dart`), `5` Lottie JSON animations, and `10` synthesized WAV + Web Audio API audio cues.
 2. **Layer 2 (3-Layer Multi-City Configuration in `CityEditionController`):**
    - **Priority 1:** In-App Settings Switcher Override (`_manualOverrideCityId` via `city_settings_drawer.dart`)
    - **Priority 2:** Firebase Remote Config template / `--dart-define=DEFAULT_CITY` (`_remoteConfigCityId` via `remote_config_template.json`)

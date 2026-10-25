@@ -337,6 +337,7 @@
       <div class="brand-sub" id="citySubtitle">Şehitkamil Baklava &amp; Menengiç Kahve Evi · Fıstıklı Baklava &amp; Menengiç Kahvesi</div>
     </div>
     <div class="header-controls">
+      <button class="btn-pill btn-mute" id="round2Btn" onclick="toggleRound2Items()" style="background:#FFF8E1;color:#E65100;border-color:#FFB300;">✨ Round 2 AI SVGs: ON</button>
       <button class="btn-pill btn-mute" id="muteBtn" onclick="toggleMute()">🔊 Ses Açık</button>
       <select class="btn-pill btn-city" id="citySelect" onchange="changeCity(this.value)" aria-label="City Edition">
         <option value="gaziantep">🇹🇷 Gaziantep Edition</option>
@@ -364,7 +365,7 @@
 
     <section class="soundboard-bar" id="baristaSoundboard">
       <div class="soundboard-header">
-        <span class="soundboard-title">🎛️ Barista Ses Efektleri (Web Audio API)</span>
+        <span class="soundboard-title" id="soundboardTitle">🎛️ Barista Ses Efektleri (10 Web Audio API SFX)</span>
         <span class="soundboard-status" id="activeWebAudioCueBadge">🎵 Web Audio Hazır</span>
       </div>
       <div class="soundboard-buttons">
@@ -387,8 +388,8 @@
           </svg>
         </div>
         <div>
-          <div style="font-weight:800;font-size:13px;">Oyuncu 1 · Baş Barista Esra</div>
-          <div style="font-size:11px;color:#6D4C41;margin-bottom:6px;">Espresso &amp; Bakır Cezve İstasyonu</div>
+          <div style="font-weight:800;font-size:13px;" id="p1RoleTitle">Oyuncu 1 · Baş Barista Esra</div>
+          <div style="font-size:11px;color:#6D4C41;margin-bottom:6px;" id="p1RoleSub">Espresso &amp; Bakır Cezve İstasyonu</div>
           <div style="background:#fff;padding:6px 10px;border-radius:10px;font-size:11.5px;font-weight:600;" id="p1Speech">
             🫖 Hüüüp... Ohhh! Tezgah başında 5 saniye ince belli demli çay keyfi gibisi yok!
           </div>
@@ -405,8 +406,8 @@
           </svg>
         </div>
         <div>
-          <div style="font-weight:800;font-size:13px;">Oyuncu 2 · Tatlı &amp; Şaka Şefi Can</div>
-          <div style="font-size:11px;color:#6D4C41;margin-bottom:6px;">Tatlı Vitrini &amp; İkiz Kavanozlar</div>
+          <div style="font-weight:800;font-size:13px;" id="p2RoleTitle">Oyuncu 2 · Tatlı &amp; Şaka Şefi Can</div>
+          <div style="font-size:11px;color:#6D4C41;margin-bottom:6px;" id="p2RoleSub">Tatlı Vitrini &amp; İkiz Kavanozlar</div>
           <div style="background:#fff;padding:6px 10px;border-radius:10px;font-size:11.5px;font-weight:600;" id="p2Speech">
             🫖 Hüüüp... Çıtır fıstıklı baklava yanında 5 saniye tavşan kanı çay molası! ✨
           </div>
@@ -428,7 +429,7 @@
           <strong id="customerTitle">Müşteri #1/3 · Ayşe Usta (Şehitkamil Gurme Jüri)</strong>
           <div style="display:flex;gap:6px;flex-wrap:wrap;">
             <button class="btn-pill" id="sipTeaBtn" style="background:#B71C1C;color:#fff;" onclick="triggerTeaSip5Seconds()">🫖 5sn Çay Yudumlat</button>
-            <button class="btn-pill" style="background:#FFF3E0;color:#C85A32;" onclick="nextCustomer()">⏭ Sıradaki Müşteri</button>
+            <button class="btn-pill" id="nextCustomerBtn" style="background:#FFF3E0;color:#C85A32;" onclick="nextCustomer()">⏭ Sıradaki Müşteri</button>
           </div>
         </div>
         <div id="customerQuote" style="font-size:13px;font-weight:600;color:#B71C1C;">
@@ -439,33 +440,33 @@
     </section>
 
     <section class="shelf" id="drinkShelf">
-      <div class="shelf-title">☕ Oyuncu 1: Kahve &amp; İçecek Barı</div>
+      <div class="shelf-title" id="drinkShelfTitle">☕ Oyuncu 1: Kahve &amp; İçecek Barı</div>
       <div class="cards-grid" id="drinkGrid"></div>
     </section>
 
     <section class="shelf food" id="foodShelf">
-      <div class="shelf-title">🥐 Oyuncu 2: Cam Tatlı Vitrini</div>
+      <div class="shelf-title" id="foodShelfTitle">🥐 Oyuncu 2: Cam Tatlı Vitrini</div>
       <div class="cards-grid" id="foodGrid"></div>
     </section>
 
     <section class="shelf prank" id="prankShelf">
-      <div class="shelf-title">🧂 Tatlı mı Tuzlu mu? İkiz Kavanozlar (Sürpriz Şaka!)</div>
+      <div class="shelf-title" id="prankShelfTitle">🧂 Tatlı mı Tuzlu mu? İkiz Kavanozlar (Sürpriz Şaka!)</div>
       <div class="cards-grid" id="prankGrid"></div>
     </section>
 
     <section class="wooden-tray">
       <div>
-        <div style="font-weight:800;font-size:14px;">🪵 Ahşap Servis Tepsisi <span id="stealthWinkBadge" style="display:none;background:#3E2723;color:#FFD54F;padding:2px 8px;border-radius:999px;font-size:11px;">🤫 😉 Şaka Eklendi!</span></div>
+        <div style="font-weight:800;font-size:14px;"><span id="trayHeaderTitle">🪵 Ahşap Servis Tepsisi</span> <span id="stealthWinkBadge" style="display:none;background:#3E2723;color:#FFD54F;padding:2px 8px;border-radius:999px;font-size:11px;">🤫 😉 Şaka Eklendi!</span></div>
         <div class="tray-items" id="trayItems" style="margin-top:6px;"></div>
       </div>
       <div style="display:flex;gap:8px;">
-        <button class="btn-pill" style="background:rgba(255,255,255,0.16);color:#fff;" onclick="clearTray()">Temizle</button>
-        <button class="btn-pill btn-serve" onclick="serveOrder()">🔔 Siparişi Servis Et!</button>
+        <button class="btn-pill" id="clearTrayBtn" style="background:rgba(255,255,255,0.16);color:#fff;" onclick="clearTray()">Temizle</button>
+        <button class="btn-pill btn-serve" id="serveOrderBtn" onclick="serveOrder()">🔔 Siparişi Servis Et!</button>
       </div>
     </section>
 
     <section class="review-card" id="reviewCard">
-      <img id="reviewFaceImg" src="../flutter_client/assets/base/customers/customer_happy.png" alt="Reaction" style="width:76px;height:76px;border-radius:16px;object-fit:cover;" />
+      <img id="reviewFaceImg" src="../flutter_client/assets/base/customers/customer_happy.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/customers/customer_happy.png'" alt="Reaction" style="width:76px;height:76px;border-radius:16px;object-fit:cover;" />
       <div>
         <div id="reviewBadge" style="font-weight:800;font-size:12px;color:#2E7D32;">5/5 · Tatlı Mükemmellik ✨</div>
         <div id="reviewHeadline" style="font-weight:800;font-size:15px;margin:3px 0;"></div>
@@ -527,20 +528,21 @@
     };
 
     const ITEMS = [
-      { id: 'espresso', category: 'drink', name: 'Çift Shot Espresso', subtitle: 'Kadife Krema · 92°C', imagePath: 'drinks/espresso.png', isPrank: false },
-      { id: 'milk', category: 'drink', name: 'Köpüklü Süt', subtitle: 'İpeksi Süt Köpüğü · 65°C', imagePath: 'drinks/milk.png', isPrank: false },
-      { id: 'menengic_coffee', category: 'drink', name: 'Menengiç Kahvesi', subtitle: 'Kavrulmuş Menengiç · Cezve', imagePath: 'drinks/menengic_coffee.png', isPrank: false },
-      { id: 'croissant', category: 'food', name: 'Tereyağlı Kruvasan', subtitle: 'Çıtır Katmanlı Hamur', imagePath: 'foods/croissant.png', isPrank: false },
-      { id: 'san_sebastian', category: 'food', name: 'San Sebastian', subtitle: 'Karamelize Yanık Üst', imagePath: 'foods/san_sebastian.png', isPrank: false },
-      { id: 'baklava', category: 'food', name: 'Fıstıklı Baklava', subtitle: '40 Kat Yufka · Boz Fıstık', imagePath: 'foods/baklava.png', isPrank: false },
-      { id: 'katmer_roll', category: 'food', name: 'AI Özel: Katmer Sarma', subtitle: 'Kaymak & Boz Fıstık', imagePath: 'foods/katmer_roll.png', isPrank: false },
-      { id: 'sugar_jar', category: 'prank', name: 'Tatlı Şeker Kavanozu', subtitle: '2 Delikli Kapak · Beyaz Kristal', imagePath: 'toppings_pranks/sugar_jar.png', isPrank: false },
-      { id: 'salt_shaker', category: 'prank', name: 'Tuzluk (Şeker İkizi)', subtitle: '3 Delikli Kapak · Beyaz Kristal', imagePath: 'toppings_pranks/salt_shaker.png', isPrank: true },
-      { id: 'chili_sauce', category: 'prank', name: 'Kırmızı Sos (Acı Biber)', subtitle: 'Çilek Sosu Görünümlü · Acı!', imagePath: 'toppings_pranks/chili_sauce.png', isPrank: true },
-      { id: 'isot_pepper', category: 'prank', name: 'AI Özel: İsot Biberi', subtitle: 'İsli Urfa & Antep İsotu', imagePath: 'toppings_pranks/isot_pepper.png', isPrank: true }
+      { id: 'espresso', category: 'drink', name: 'Çift Shot Espresso', nameEn: 'Double Shot Espresso', subtitle: 'Kadife Krema · 92°C', subtitleEn: 'Velvet Crema · 92°C', imagePath: 'drinks/espresso.png', isPrank: false, isRound2: false },
+      { id: 'milk', category: 'drink', name: 'Köpüklü Süt', nameEn: 'Steamed Milk Foam', subtitle: 'İpeksi Süt Köpüğü · 65°C', subtitleEn: 'Silky Microfoam · 65°C', imagePath: 'drinks/milk.png', isPrank: false, isRound2: false },
+      { id: 'menengic_coffee', category: 'drink', name: 'Menengiç Kahvesi', nameEn: 'Pistachio Menengic Coffee', subtitle: 'Kavrulmuş Menengiç · Cezve', subtitleEn: 'Roasted Pistachio · Copper Pot', imagePath: 'drinks/menengic_coffee.png', isPrank: false, isRound2: false },
+      { id: 'croissant', category: 'food', name: 'Tereyağlı Kruvasan', nameEn: 'Butter Croissant', subtitle: 'Çıtır Katmanlı Hamur', subtitleEn: 'Flaky Golden Layers', imagePath: 'foods/croissant.png', isPrank: false, isRound2: false },
+      { id: 'san_sebastian', category: 'food', name: 'San Sebastian', nameEn: 'San Sebastian Cheesecake', subtitle: 'Karamelize Yanık Üst', subtitleEn: 'Caramelized Basque Crust', imagePath: 'foods/san_sebastian.png', isPrank: false, isRound2: false },
+      { id: 'baklava', category: 'food', name: 'Fıstıklı Baklava', nameEn: 'Pistachio Baklava', subtitle: '40 Kat Yufka · Boz Fıstık', subtitleEn: '40 Filo Layers · Antep Pistachio', imagePath: 'foods/baklava.png', isPrank: false, isRound2: false },
+      { id: 'katmer_roll', category: 'food', name: 'AI Özel: Katmer Sarma', nameEn: 'AI Custom: Pistachio Katmer', subtitle: 'Kaymak & Boz Fıstık', subtitleEn: 'Clotted Cream & Pistachio', imagePath: 'foods/katmer_roll.png', isPrank: false, isRound2: true },
+      { id: 'sugar_jar', category: 'prank', name: 'Tatlı Şeker Kavanozu', nameEn: 'Sweet Sugar Jar', subtitle: '2 Delikli Kapak · Beyaz Kristal', subtitleEn: '2-Hole Lid · Sweet Crystals', imagePath: 'toppings_pranks/sugar_jar.png', isPrank: false, isRound2: false },
+      { id: 'salt_shaker', category: 'prank', name: 'Tuzluk (Şeker İkizi)', nameEn: 'Salt Shaker (Twin Jar)', subtitle: '3 Delikli Kapak · Beyaz Kristal', subtitleEn: '3-Hole Lid · Salty Prank!', imagePath: 'toppings_pranks/salt_shaker.png', isPrank: true, isRound2: false },
+      { id: 'chili_sauce', category: 'prank', name: 'Kırmızı Sos (Acı Biber)', nameEn: 'Chili Sauce (Berry Twin)', subtitle: 'Çilek Sosu Görünümlü · Acı!', subtitleEn: 'Looks Like Berry Syrup · Spicy!', imagePath: 'toppings_pranks/chili_sauce.png', isPrank: true, isRound2: false },
+      { id: 'isot_pepper', category: 'prank', name: 'AI Özel: İsot Biberi', nameEn: 'AI Custom: Urfa Isot Pepper', subtitle: 'İsli Urfa & Antep İsotu', subtitleEn: 'Smoky Spicy Pepper Flakes', imagePath: 'toppings_pranks/isot_pepper.png', isPrank: true, isRound2: true }
     ];
 
     let activeCity = 'gaziantep';
+    let showRound2CustomItems = true;
     let tray = [];
     let playerOneScore = 0;
     let playerTwoScore = 0;
@@ -550,14 +552,38 @@
     let sharedAudioContext = null;
 
     const CUE_LABELS = {
-      coffeeGrinder: '⚙️ Kahve Değirmeni Sesi',
-      espressoSteam: '💨 Espresso Buhar Çubuğu',
-      serveBell: '🔔 Servis Zili',
-      levelUpFanfare: '🏆 Seviye Atlama Fanfarı',
-      teaSipSlurp: '🫖 İnce Belli Çay Hüplemesi',
-      saltySabotage: '🧂 Tuzlu Sabotaj Alarmı',
-      prankSprinkle: '🤫 Gizli Şaka Serpintisi'
+      coffeeGrinder: { tr: '⚙️ Kahve Değirmeni Sesi', en: '⚙️ Burr Coffee Grinder' },
+      espressoSteam: { tr: '💨 Espresso Buhar Çubuğu', en: '💨 Espresso Steam Wand' },
+      serveBell: { tr: '🔔 Servis Zili', en: '🔔 Order Counter Bell' },
+      levelUpFanfare: { tr: '🏆 Seviye Atlama Fanfarı', en: '🏆 Level-Up Fanfare' },
+      teaSipSlurp: { tr: '🫖 İnce Belli Çay Hüplemesi', en: '🫖 Turkish Tea Sip' },
+      saltySabotage: { tr: '🧂 Tuzlu Sabotaj Alarmı', en: '🧂 Salty Sabotage Buzzer' },
+      prankSprinkle: { tr: '🤫 Gizli Şaka Serpintisi', en: '🤫 Stealth Prank Wink' },
+      tapPop: { tr: '🫧 Tezgah Seçim Sesi', en: '🫧 Counter Tap Pop' },
+      sweetFanfare: { tr: '✨ 5 Yıldız Tatlı Kutlaması', en: '✨ 5-Star Sweet Fanfare' },
+      nextChime: { tr: '⏭ Sıradaki Müşteri Zili', en: '⏭ Next Customer Chime' }
     };
+
+    function isEnglishUi() {
+      return activeCity === 'berlin';
+    }
+
+    function itemTitle(item) {
+      return isEnglishUi() ? item.nameEn : item.name;
+    }
+
+    function itemSubtitle(item) {
+      return isEnglishUi() ? item.subtitleEn : item.subtitle;
+    }
+
+    function setAssetWithFallback(imgElement, relativePath) {
+      if (!imgElement) return;
+      imgElement.onerror = function () {
+        this.onerror = null;
+        this.src = `https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/${relativePath}`;
+      };
+      imgElement.src = `../flutter_client/assets/base/${relativePath}`;
+    }
 
     function getCrewLevel() {
       return 1 + Math.floor((playerOneScore + playerTwoScore) / 100);
@@ -566,11 +592,13 @@
     function updateActiveCueBadge(cueName) {
       const badgeEl = document.getElementById('activeWebAudioCueBadge');
       if (!badgeEl) return;
+      const en = isEnglishUi();
       if (isMuted) {
-        badgeEl.textContent = '🔇 Sessiz Mod';
+        badgeEl.textContent = en ? '🔇 Muted' : '🔇 Sessiz Mod';
         return;
       }
-      badgeEl.textContent = CUE_LABELS[cueName] || '🎵 Web Audio Hazır';
+      const labelObj = CUE_LABELS[cueName];
+      badgeEl.textContent = labelObj ? (en ? labelObj.en : labelObj.tr) : (en ? '🎵 10 Web Audio SFX Ready' : '🎵 Web Audio Hazır');
     }
 
     function ensureAudioContext() {
@@ -691,6 +719,24 @@
         } else if (cueName === 'prankSprinkle') {
           playNoiseBurst(audioCtx, now, 0.22, 'highpass', 3200, 1.8, 0.14);
           playTone(310, 180, 'sawtooth');
+        } else if (cueName === 'tapPop') {
+          playTone(540, 95, 'sine');
+        } else if (cueName === 'sweetFanfare') {
+          [523.25, 659.25, 783.99].forEach((freq, idx) => {
+            const start = now + idx * 0.08;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, start);
+            gain.gain.setValueAtTime(0.15, start);
+            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.24);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + 0.25);
+          });
+        } else if (cueName === 'nextChime') {
+          playTone(660, 140, 'triangle');
         }
       } catch (_error) {}
     }
@@ -714,27 +760,31 @@
 
     function triggerTeaSip5Seconds() {
       playBaristaCue('teaSipSlurp');
+      const en = isEnglishUi();
       const rootElement = document.getElementById('appRoot');
       rootElement.classList.add('sipping-active');
       const startTimestampMs = Date.now();
       if (sipInterval) clearInterval(sipInterval);
       const pillElements = document.querySelectorAll('[data-sip-pill]');
       const sipButton = document.getElementById('sipTeaBtn');
-      sipButton.textContent = '🫖 Çay Yudumluyor (5sn)...';
-      document.getElementById('customerQuote').textContent =
-        '"🫖 Hüüüp... İnce belli bardakta tavşan kanı çayımı 5 saniye keyifle yudumluyorum! Ohhh! ✨"';
+      sipButton.textContent = en ? '🫖 Sipping Tea (5s)...' : '🫖 Çay Yudumluyor (5sn)...';
+      document.getElementById('customerQuote').textContent = en
+        ? '"🫖 Slurp... Sipping hot Turkish tulip-glass tea for 5 seconds at the counter! ✨"'
+        : '"🫖 Hüüüp... İnce belli bardakta tavşan kanı çayımı 5 saniye keyifle yudumluyorum! Ohhh! ✨"';
       document.getElementById('customerQuote').style.color = '#B71C1C';
 
       sipInterval = setInterval(() => {
         const elapsedSeconds = (Date.now() - startTimestampMs) / 1000;
         const remainingSeconds = Math.max(0, 5.0 - elapsedSeconds);
+        const unit = isEnglishUi() ? 's' : 'sn';
+        const prefix = isEnglishUi() ? '🫖 Sip!' : '🫖 Hüüüp!';
         pillElements.forEach(pillElement => {
-          pillElement.textContent = `🫖 Hüüüp! · ${remainingSeconds.toFixed(1)}sn`;
+          pillElement.textContent = `${prefix} · ${remainingSeconds.toFixed(1)}${unit}`;
         });
         if (remainingSeconds <= 0) {
           clearInterval(sipInterval);
           rootElement.classList.remove('sipping-active');
-          sipButton.textContent = '🫖 5sn Çay Yudumlat';
+          sipButton.textContent = isEnglishUi() ? '🫖 Sip Tea (5s)' : '🫖 5sn Çay Yudumlat';
           const cityEdition = CITY_EDITIONS[activeCity];
           document.getElementById('customerQuote').textContent = `"${cityEdition.quote}"`;
           document.getElementById('customerQuote').style.color = '#4E342E';
@@ -742,9 +792,18 @@
       }, 100);
     }
 
+    function toggleRound2Items() {
+      showRound2CustomItems = !showRound2CustomItems;
+      if (!showRound2CustomItems) {
+        tray = tray.filter(id => !ITEMS.find(item => item.id === id)?.isRound2);
+      }
+      playBaristaCue('tapPop');
+      renderAll();
+    }
+
     function toggleMute() {
       isMuted = !isMuted;
-      document.getElementById('muteBtn').textContent = isMuted ? '🔇 Ses Kapalı' : '🔊 Ses Açık';
+      renderAll();
       updateActiveCueBadge(null);
     }
 
@@ -757,6 +816,7 @@
     }
 
     function nextCustomer() {
+      playBaristaCue('nextChime');
       const cityKeys = Object.keys(CITY_EDITIONS);
       const nextCityIndex = (cityKeys.indexOf(activeCity) + 1) % cityKeys.length;
       document.getElementById('citySelect').value = cityKeys[nextCityIndex];
@@ -768,7 +828,7 @@
       const itemIndex = tray.indexOf(itemId);
       if (itemIndex >= 0) {
         tray.splice(itemIndex, 1);
-        playTone(440, 110);
+        playBaristaCue('tapPop');
       } else {
         tray.push(itemId);
         if (selectedItem.isPrank) {
@@ -780,7 +840,7 @@
           triggerTeaSip5Seconds();
           playBaristaCue('espressoSteam');
         } else {
-          playTone(520, 120);
+          playBaristaCue('tapPop');
         }
       }
       renderAll();
@@ -794,28 +854,31 @@
 
     function serveOrder() {
       if (tray.length === 0) return;
+      const en = isEnglishUi();
       const previousCrewLevel = getCrewLevel();
       const hasPrank = tray.some(trayItemId => ITEMS.find(item => item.id === trayItemId)?.isPrank);
       const cityEdition = CITY_EDITIONS[activeCity];
       const reviewCard = document.getElementById('reviewCard');
       reviewCard.classList.add('visible');
+      const faceImg = document.getElementById('reviewFaceImg');
       if (hasPrank) {
         playBaristaCue('saltySabotage');
         playerTwoScore += 30;
         reviewCard.classList.add('sabotage');
-        document.getElementById('reviewFaceImg').src = '../flutter_client/assets/base/customers/customer_salty_disgusted.png';
-        document.getElementById('reviewBadge').textContent = '1/5 · Tuzlu Sabotaj 🧂';
+        setAssetWithFallback(faceImg, 'customers/customer_salty_disgusted.png');
+        document.getElementById('reviewBadge').textContent = en ? '1/5 · Salty Sabotage 🧂' : '1/5 · Tuzlu Sabotaj 🧂';
         document.getElementById('reviewBadge').style.color = '#B71C1C';
         document.getElementById('reviewHeadline').textContent = cityEdition.saltyHeadline;
         document.getElementById('reviewBody').textContent = cityEdition.saltyReaction;
       } else {
         playBaristaCue('serveBell');
+        setTimeout(() => playBaristaCue('sweetFanfare'), 180);
         playerOneScore += 50;
         playerTwoScore += 50;
         tipPoints += 25;
         reviewCard.classList.remove('sabotage');
-        document.getElementById('reviewFaceImg').src = '../flutter_client/assets/base/customers/customer_happy.png';
-        document.getElementById('reviewBadge').textContent = '5/5 · Tatlı Mükemmellik ✨';
+        setAssetWithFallback(faceImg, 'customers/customer_happy.png');
+        document.getElementById('reviewBadge').textContent = en ? '5/5 · Sweet Perfection ✨' : '5/5 · Tatlı Mükemmellik ✨';
         document.getElementById('reviewBadge').style.color = '#2E7D32';
         document.getElementById('reviewHeadline').textContent = cityEdition.sweetHeadline;
         document.getElementById('reviewBody').textContent = cityEdition.sweetReaction;
@@ -828,31 +891,60 @@
 
     function renderShelf(category, containerId) {
       const container = document.getElementById(containerId);
-      container.innerHTML = ITEMS.filter(item => item.category === category).map(item => {
+      container.innerHTML = ITEMS.filter(item => item.category === category && (showRound2CustomItems || !item.isRound2)).map(item => {
         const selectedClass = tray.includes(item.id) ? 'selected' : '';
         const localSource = `../flutter_client/assets/base/${item.imagePath}`;
         const rawSource = `https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/${item.imagePath}`;
+        const titleText = itemTitle(item);
+        const subText = itemSubtitle(item);
         return `
           <div class="item-card ${selectedClass}" onclick="toggleItem('${item.id}')">
-            <img src="${localSource}" alt="${item.name}" onerror="this.onerror=null;this.src='${rawSource}'" />
-            <div class="item-name">${item.name}</div>
-            <div class="item-sub">${item.subtitle}</div>
+            <img src="${localSource}" alt="${titleText}" onerror="this.onerror=null;this.src='${rawSource}'" />
+            <div class="item-name">${titleText}</div>
+            <div class="item-sub">${subText}</div>
           </div>
         `;
       }).join('');
     }
 
     function renderAll() {
+      const en = isEnglishUi();
       const cityEdition = CITY_EDITIONS[activeCity];
       document.getElementById('editionHeader').textContent = cityEdition.title;
       document.getElementById('citySubtitle').textContent = cityEdition.sub;
       document.getElementById('customerTitle').textContent = cityEdition.customer;
       const customerAvatarElement = document.getElementById('customerAvatar');
-      customerAvatarElement.src = `../flutter_client/assets/base/${cityEdition.avatar}`;
-      customerAvatarElement.onerror = function () {
-        this.onerror = null;
-        this.src = `https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/${cityEdition.avatar}`;
-      };
+      setAssetWithFallback(customerAvatarElement, cityEdition.avatar);
+
+      document.getElementById('round2Btn').textContent = `✨ Round 2 AI SVGs: ${showRound2CustomItems ? 'ON' : 'OFF'}`;
+      document.getElementById('muteBtn').textContent = isMuted ? (en ? '🔇 Sound Off' : '🔇 Ses Kapalı') : (en ? '🔊 Sound On' : '🔊 Ses Açık');
+      document.getElementById('soundboardTitle').textContent = en ? '🎛️ Barista Soundboard (10 Web Audio API SFX)' : '🎛️ Barista Ses Efektleri (10 Web Audio API SFX)';
+      document.getElementById('sfxCoffeeGrinderBtn').textContent = en ? '⚙️ Coffee Grinder' : '⚙️ Kahve Değirmeni';
+      document.getElementById('sfxEspressoSteamBtn').textContent = en ? '💨 Espresso Steam' : '💨 Espresso Buharı';
+      document.getElementById('sfxServeBellBtn').textContent = en ? '🔔 Order Bell' : '🔔 Sipariş Zili';
+      document.getElementById('sfxLevelUpBtn').textContent = en ? '🏆 Level Up' : '🏆 Seviye Atlama';
+
+      document.getElementById('p1RoleTitle').textContent = en ? 'Player 1 · Head Barista Esra' : 'Oyuncu 1 · Baş Barista Esra';
+      document.getElementById('p1RoleSub').textContent = en ? 'Espresso & Copper Pot Station' : 'Espresso & Bakır Cezve İstasyonu';
+      document.getElementById('p1Speech').textContent = en
+        ? '🫖 Slurp... Nothing beats a 5-second Turkish tulip-glass tea break behind the bar!'
+        : '🫖 Hüüüp... Ohhh! Tezgah başında 5 saniye ince belli demli çay keyfi gibisi yok!';
+
+      document.getElementById('p2RoleTitle').textContent = en ? 'Player 2 · Pastry & Prank Chef Can' : 'Oyuncu 2 · Tatlı & Şaka Şefi Can';
+      document.getElementById('p2RoleSub').textContent = en ? 'Pastry Showcase & Twin Jars' : 'Tatlı Vitrini & İkiz Kavanozlar';
+      document.getElementById('p2Speech').textContent = en
+        ? '🫖 Slurp... Crispy pistachio pastry paired with a 5-second crimson tea break! ✨'
+        : '🫖 Hüüüp... Çıtır fıstıklı baklava yanında 5 saniye tavşan kanı çay molası! ✨';
+
+      document.getElementById('nextCustomerBtn').textContent = en ? '⏭ Next Customer' : '⏭ Sıradaki Müşteri';
+      document.getElementById('drinkShelfTitle').textContent = en ? '☕ Player 1: Coffee & Drink Bar' : '☕ Oyuncu 1: Kahve & İçecek Barı';
+      document.getElementById('foodShelfTitle').textContent = en ? '🥐 Player 2: Glass Pastry Showcase' : '🥐 Oyuncu 2: Cam Tatlı Vitrini';
+      document.getElementById('prankShelfTitle').textContent = en ? '🧂 Sweet or Salty? Twin Jars (Stealth Prank!)' : '🧂 Tatlı mı Tuzlu mu? İkiz Kavanozlar (Sürpriz Şaka!)';
+      document.getElementById('trayHeaderTitle').textContent = en ? '🪵 Wooden Serving Tray' : '🪵 Ahşap Servis Tepsisi';
+      document.getElementById('stealthWinkBadge').textContent = en ? '🤫 😉 Prank Added!' : '🤫 😉 Şaka Eklendi!';
+      document.getElementById('clearTrayBtn').textContent = en ? 'Clear' : 'Temizle';
+      document.getElementById('serveOrderBtn').textContent = en ? '🔔 Serve Order!' : '🔔 Siparişi Servis Et!';
+
       document.getElementById('crewLevelBadge').textContent = `🏆 Lv.${getCrewLevel()} Barista`;
       document.getElementById('p1ScoreBadge').textContent = `☕ P1 Barista: ${playerOneScore}`;
       document.getElementById('p2ScoreBadge').textContent = `🥐 P2 Pastry: ${playerTwoScore}`;
@@ -861,7 +953,7 @@
       document.getElementById('reqChips').innerHTML = cityEdition.reqs.map(requestedIngredientId => {
         const item = ITEMS.find(candidate => candidate.id === requestedIngredientId);
         const doneClass = tray.includes(requestedIngredientId) ? 'done' : '';
-        return `<span class="req-chip ${doneClass}">${doneClass ? '✓ ' : '○ '}${item ? item.name : requestedIngredientId}</span>`;
+        return `<span class="req-chip ${doneClass}">${doneClass ? '✓ ' : '○ '}${item ? itemTitle(item) : requestedIngredientId}</span>`;
       }).join('');
 
       renderShelf('drink', 'drinkGrid');
@@ -873,13 +965,14 @@
 
       const trayElement = document.getElementById('trayItems');
       if (tray.length === 0) {
-        trayElement.innerHTML = '<span style="font-size:12px;color:#D7CCC8;">Tepsi boş: raflardan içecek, tatlı ve şeker (veya gizli tuz!) seçin.</span>';
+        trayElement.innerHTML = `<span style="font-size:12px;color:#D7CCC8;">${en ? 'Tray is empty: tap drinks, pastries, and sugar (or stealth salt!) above.' : 'Tepsi boş: raflardan içecek, tatlı ve şeker (veya gizli tuz!) seçin.'}</span>`;
       } else {
         trayElement.innerHTML = tray.map(trayItemId => {
           const item = ITEMS.find(candidate => candidate.id === trayItemId);
-          return `<span class="tray-chip" onclick="toggleItem('${trayItemId}')">${item.name} ✕</span>`;
+          return `<span class="tray-chip" onclick="toggleItem('${trayItemId}')">${itemTitle(item)} ✕</span>`;
         }).join('');
       }
+      updateActiveCueBadge(null);
     }
 
     renderAll();

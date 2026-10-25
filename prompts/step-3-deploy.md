@@ -22,6 +22,6 @@ flutter test
 # AI Studio Cloud Run service proxies GEMINI_API_KEY server-side).
 gcloud run deploy backyard-barista \
   --source . \
-  --region europe-west1 \
+  --region europe-west3 \
   --allow-unauthenticated
 ```

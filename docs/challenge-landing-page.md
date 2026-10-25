@@ -1,7 +1,7 @@
 # ⚡ DevFest 2026 Vibe Lounge & Workshop Challenge Landing Page
 ## Backyard Barista on Cloud Run: Tatlı mı Tuzlu mu? ☕🥐🧂☁️
 
-- **Speaker & Host:** Esra Kadah (Google Developer Expert in Flutter & Dart · Senior Flutter & AI Engineer at Antigua Mobile Berlin)
+- **Speaker & Host:** Esra Kadah (Tech Lead, Senior Flutter & AI Engineer at Antigua Mobile Berlin · Flutter & Dart GDE)
 - **Live Cloud Run Reference App (`europe-west3`):** https://backyard-barista-389486729482.europe-west3.run.app
 - **Live Cloud Run Mirror (`europe-west1`):** https://backyard-barista-870328613866.europe-west1.run.app
 - **Starter GitHub Repository:** https://github.com/esrakadah/devfest-2026-backyard-barista-cloudrun
@@ -13,7 +13,7 @@
 
 **Süre:** 45 Dakika (Vibe Lounge) / 80 Dakika (Tam Atölye) | **Seviye:** Başlangıçtan İleriye (Kodlama deneyimi şart değil!)
 **Araçlar:** Google AI Studio (`aistudio.google.com`), Google Antigravity (`antigravity.google`), Flutter (`package:http` Gemini REST / `firebase_ai`, `firebase_remote_config`) & Google Cloud Run
-**Ödüller:** Her seansta oyununu canlıya alıp (`Publish`) sahnede 60 saniyede sunan **2 kişiye Google Piksel Gözlük + Flutter Dash Hediyesi!** 🕶️🐦
+**Ödüller:** Toplam **4 Adet Google Renkli Pixel Gözlük (Sarı, Mavi, Yeşil, Kırmızı) + Flutter Dash Hediyesi!** (45 dk Vibe Lounge turunda 2 kazanan / 80 dk tam atölyede 4 kazanan) 🕶️🐦
 
 Hoş geldin! Bugün klavyeyle uzun mesajlar yazılan klasik bir sohbet botu değil; yanındaki arkadaşınla butonlara tıklayarak içecek ve tatlı hazırladığın, karakterlere **5 saniye boyunca ince belli bardakta çay yudumlattığın (`🫖 5sn Çay Yudumlat`)** ve **Şeker (`Tatlı Şeker`) yerine gizlice Tuz (`Tuzluk`) atarsan Gemini'dan 1 yıldızlı komik bir eleştiri yediğin** 2 kişilik bir Kafe Oyunu kurup **Google Cloud Run (`.run.app`)** üzerinde canlıya alacaksın!
 
@@ -38,7 +38,7 @@ Hoş geldin! Bugün klavyeyle uzun mesajlar yazılan klasik bir sohbet botu değ
 
 **Duration:** 45 Minutes (Vibe Lounge) / 80 Minutes (Full Workshop) | **Level:** Beginner to Intermediate (Zero coding experience required for Lane A!)
 **Tools:** Google AI Studio (`aistudio.google.com`), Google Antigravity (`antigravity.google`), Flutter (`package:http` Gemini REST / `firebase_ai`, `firebase_remote_config`) & Google Cloud Run
-**Prizes:** **2 Google Pixel Sunglasses + Flutter Dash Gifts** per session for the top 2 builders who publish to Cloud Run (`.run.app`) or GitHub and demo live in 60 seconds! 🕶️🐦
+**Prizes:** **4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Flutter Dash Gifts** for builders who publish to Cloud Run (`.run.app`) or GitHub and demo live in 60 seconds! (`2` winners per 45-min Vibe Lounge wave / `4` winners in 80-min workshop) 🕶️🐦
 
 ### 🚀 3 Progressive Levels
 
