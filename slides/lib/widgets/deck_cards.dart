@@ -361,12 +361,14 @@ class DeckFeatureCard extends StatelessWidget {
     this.badgeIcon,
     this.accentColor = DeckColors.googleBlue,
     this.footerText,
+    this.padding,
     super.key,
   });
 
-  static const double _padding = 22;
+  static const double _paddingHorizontal = 22;
+  static const double _paddingVertical = 15;
   static const double _titleGap = 12;
-  static const double _bulletGap = 8;
+  static const double _bulletGap = 7;
   static const double _dotSize = 8;
   static const double _dotTopOffset = 9;
   static const double _dotRightGap = 12;
@@ -377,12 +379,13 @@ class DeckFeatureCard extends StatelessWidget {
   final List<String> bullets;
   final Color accentColor;
   final String? footerText;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = FlutterDeckTheme.of(context).textTheme;
     return DeckCard(
-      padding: const EdgeInsets.all(_padding),
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: _paddingHorizontal, vertical: _paddingVertical),
       borderColor: accentColor.withValues(alpha: 0.45),
       accentStripeColor: accentColor,
       child: Column(
