@@ -35,6 +35,8 @@ class CafeJudgeService {
   static Map<String, dynamic>? _cachedReviewsByCity;
 
   /// Evaluates the selected tray ingredients for the active [cityEdition].
+  /// Enforces prank detection first (`salty_sabotage` / `spicy_chaos`), then verifies
+  /// that all 3 cafe stations (Drink + Pastry + Sweet Sugar) are represented on the tray.
   Future<CafeReview> evaluateOrder({
     required List<CafeIngredient> selectedIngredients,
     required CityEditionConfig cityEdition,
@@ -42,6 +44,36 @@ class CafeJudgeService {
   }) async {
     final containsSaltPrank = selectedIngredients.any((item) => item.prankKind == 'salt');
     final containsChiliPrank = selectedIngredients.any((item) => item.prankKind == 'chili');
+    final hasDrinkCourse = selectedIngredients.any((item) => item.category == IngredientCategory.drink);
+    final hasFoodCourse = selectedIngredients.any((item) => item.category == IngredientCategory.food);
+    final hasSweetCondiment = selectedIngredients.any(
+      (item) => item.category == IngredientCategory.toppingOrPrank && !item.isPrankItem,
+    );
+    final isCompleteThreeCourseTray = hasDrinkCourse && hasFoodCourse && hasSweetCondiment;
+
+    if (!containsSaltPrank && !containsChiliPrank && !isCompleteThreeCourseTray) {
+      final isEnglish = cityEdition.defaultLanguage == 'en';
+      final missingStations = <String>[
+        if (!hasDrinkCourse) isEnglish ? 'Coffee/Drink' : 'Kahve/İçecek',
+        if (!hasFoodCourse) isEnglish ? 'Pastry' : 'Tatlı',
+        if (!hasSweetCondiment) isEnglish ? 'Sweet Sugar' : 'Tatlı Şeker',
+      ].join(' + ');
+
+      return CafeReview(
+        ratingStars: 3,
+        tasteVerdict: 'incomplete_tray',
+        customerFace: CustomerFaceState.shocked,
+        headline: isEnglish
+            ? '${cityEdition.flagEmoji} ${cityEdition.cityName}: Incomplete Tray!'
+            : '${cityEdition.flagEmoji} ${cityEdition.cityName}: Tepside Eksik Var!',
+        customerReaction: isEnglish
+            ? 'Wait a second! You forgot ($missingStations) on the tray. Plate all 3 stations for 5 stars!'
+            : 'Usta tepside ($missingStations) eksik kalmış! 5 yıldız için içecek, tatlı ve şekeri birlikte dizin!',
+        cityBonusTip: 0,
+        evaluatedAt: _clock(),
+        isFromLiveGemini: false,
+      );
+    }
 
     if (!forceOfflineMode && geminiApiKey.trim().isNotEmpty) {
       final liveReview = await _tryCallGeminiStructuredJson(

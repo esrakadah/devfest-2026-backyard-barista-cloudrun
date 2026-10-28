@@ -39,6 +39,13 @@ class BackyardBaristaApp extends StatelessWidget {
   final CityEditionController cityController;
   final CafeJudgeService judgeService;
 
+  static const List<String> _emojiFontFallbacks = <String>[
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Noto Color Emoji',
+    'sans-serif',
+  ];
+
   @override
   Widget build(BuildContext context) {
     final baseColorScheme = ColorScheme.fromSeed(
@@ -48,14 +55,22 @@ class BackyardBaristaApp extends StatelessWidget {
       surface: const Color(0xFFFFF8EE),
     );
 
+    final baseTheme = ThemeData(
+      fontFamily: 'GoogleSans',
+      fontFamilyFallback: _emojiFontFallbacks,
+      colorScheme: baseColorScheme,
+      scaffoldBackgroundColor: const Color(0xFFFFF8EE),
+      useMaterial3: true,
+    );
+
     return MaterialApp(
       title: 'Backyard Barista on Cloud Run',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'GoogleSans',
-        colorScheme: baseColorScheme,
-        scaffoldBackgroundColor: const Color(0xFFFFF8EE),
-        useMaterial3: true,
+      theme: baseTheme.copyWith(
+        textTheme: baseTheme.textTheme.apply(
+          fontFamily: 'GoogleSans',
+          fontFamilyFallback: _emojiFontFallbacks,
+        ),
       ),
       home: CafeCounterScreen(
         cityController: cityController,

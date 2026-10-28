@@ -74,6 +74,8 @@ class CafeReview {
   bool get isPrankCaught =>
       tasteVerdict == 'salty_sabotage' || tasteVerdict == 'spicy_chaos' || ratingStars == minCafeRatingStars;
 
+  bool get isIncompleteTray => tasteVerdict == 'incomplete_tray';
+
   /// Human-friendly badge label replacing raw snake_case enum tokens (`sweet_perfection` -> `Tatlı Mükemmellik ✨`).
   String localizedVerdictLabel(String languageCode) {
     final isEnglish = languageCode == 'en';
@@ -82,6 +84,8 @@ class CafeReview {
         return isEnglish ? 'Salty Sabotage 🧂' : 'Tuzlu Sabotaj 🧂';
       case 'spicy_chaos':
         return isEnglish ? 'Spicy Chaos 🌶️' : 'Acı Biber Şoku 🌶️';
+      case 'incomplete_tray':
+        return isEnglish ? 'Incomplete Tray 🧩' : 'Eksik Tepsi 🧩';
       case 'sweet_perfection':
       default:
         return isEnglish ? 'Sweet Perfection ✨' : 'Tatlı Mükemmellik ✨';

@@ -41,7 +41,29 @@ class CustomerOrderTicket {
 
   String localizedRole(String languageCode) => languageCode == 'en' ? customerRoleEn : customerRoleTr;
 
-  String localizedBubble(String languageCode) => languageCode == 'en' ? orderBubbleEn : orderBubbleTr;
+  String localizedBubble(
+    String languageCode, {
+    bool includeRoundTwoItems = true,
+  }) {
+    final rawText = languageCode == 'en' ? orderBubbleEn : orderBubbleTr;
+    if (includeRoundTwoItems) {
+      return rawText;
+    }
+    return rawText
+        .replaceAll('AI Custom Katmer Roll', 'Pistachio Baklava')
+        .replaceAll('AI Özel Katmer Sarma', 'Fıstıklı Baklava');
+  }
+
+  /// Resolves requested ingredient IDs, gracefully substituting `baklava` for `custom_katmer_roll`
+  /// when the Round-2 custom items toggle is turned off so tickets are never soft-locked.
+  List<String> effectiveRequestedIngredientIds({
+    required bool includeRoundTwoItems,
+  }) {
+    if (includeRoundTwoItems) {
+      return requestedIngredientIds;
+    }
+    return requestedIngredientIds.map((id) => id == 'custom_katmer_roll' ? 'baklava' : id).toList(growable: false);
+  }
 
   static List<CustomerOrderTicket> ticketsForCity(CityEditionId cityId) {
     switch (cityId) {

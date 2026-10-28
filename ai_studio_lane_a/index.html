@@ -480,10 +480,26 @@
       gaziantep: {
         title: '🇹🇷 DevFest Gaziantep 2026 Edition',
         sub: 'Şehitkamil Baklava & Menengiç Kahve Evi · Fıstıklı Baklava & Menengiç Kahvesi',
-        customer: 'Müşteri #1/3 · Ayşe Usta (Şehitkamil Gurme Jüri)',
-        avatar: 'characters/customer_ayse_usta.png',
-        quote: 'Menengiç Kahvesi + Fıstıklı Baklava + Tatlı Şeker (Sakın tuz şakası yapmayın!)',
-        reqs: ['menengic_coffee', 'baklava', 'sugar_jar'],
+        customers: [
+          {
+            title: 'Müşteri #1/3 · Ayşe Usta (Şehitkamil Gurme Jüri)',
+            avatar: 'characters/customer_ayse_usta.png',
+            quote: 'Menengiç Kahvesi + Fıstıklı Baklava + Tatlı Şeker (Sakın tuz şakası yapmayın!)',
+            reqs: ['menengic_coffee', 'baklava', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #2/3 · Mustafa (GDG Gaziantep Organizatörü)',
+            avatar: 'characters/customer_mustafa.png',
+            quote: 'Çift Shot Espresso + AI Özel Katmer Sarma + Tatlı Şeker, yeni seans başlıyor!',
+            reqs: ['espresso', 'custom_katmer_roll', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #3/3 · Zeynep (Flutter Öğrenci Geliştirici)',
+            avatar: 'customers/customer_happy.png',
+            quote: 'Köpüklü Süt + San Sebastian Cheesecake + Tatlı Şeker lütfen!',
+            reqs: ['milk', 'san_sebastian', 'sugar_jar']
+          }
+        ],
         sweetHeadline: 'Ayşe Usta: "İşte Gerçek Antep Usulü Ziyafet!"',
         sweetReaction: 'Menengiç kahvesinin kavrulmuş aroması ve 40 kat çıtır baklava şerbetiyle tam 5 yıldız!',
         saltyHeadline: 'Ayşe Usta: "Baklavaya ve Kahveye Tuz mu Bastınız?!"',
@@ -492,10 +508,26 @@
       berlin: {
         title: '🇩🇪 DevFest Berlin 2026 Edition',
         sub: 'Kreuzberg Späti & Kiez Roasters · Flat White & Berliner Pfannkuchen',
-        customer: 'Customer #1/3 · Lukas (Kreuzberg Specialty Roaster)',
-        avatar: 'characters/customer_lukas.png',
-        quote: 'Double Espresso + Butter Croissant + Sweet Sugar (Zero salt pranks please!)',
-        reqs: ['espresso', 'croissant', 'sugar_jar'],
+        customers: [
+          {
+            title: 'Customer #1/3 · Lukas (Kreuzberg Indie Dev)',
+            avatar: 'characters/customer_lukas.png',
+            quote: 'One Double Espresso, a flaky Butter Croissant, and Sweet Sugar please!',
+            reqs: ['espresso', 'croissant', 'sugar_jar']
+          },
+          {
+            title: 'Customer #2/3 · Hannah (Cloud Run Architect)',
+            avatar: 'characters/customer_deniz.png',
+            quote: 'Steamed Milk with San Sebastian Cheesecake and a touch of Sweet Sugar!',
+            reqs: ['milk', 'san_sebastian', 'sugar_jar']
+          },
+          {
+            title: 'Customer #3/3 · Max (DevFest Stage Host)',
+            avatar: 'characters/customer_mustafa.png',
+            quote: 'Surprise me with Menengiç Coffee, AI Custom Katmer Roll, and Sweet Sugar!',
+            reqs: ['menengic_coffee', 'custom_katmer_roll', 'sugar_jar']
+          }
+        ],
         sweetHeadline: 'Lukas: "Perfekter Kiez-Espresso & Croissant!"',
         sweetReaction: 'Silky crema and flaky butter layers: 5/5 Sweet Perfection in Berlin!',
         saltyHeadline: 'Lukas: "Das ist Salz, kein Zucker! 1 Stern!"',
@@ -504,22 +536,54 @@
       adana: {
         title: '🇹🇷 DevFest Adana 2026 Edition',
         sub: 'Seyhan Gar Kahvesi & Tatlı Durağı · Köpüklü Kahve & Bici Bici',
-        customer: 'Müşteri #1/3 · Mustafa (Adana Gurme Eleştirmen)',
-        avatar: 'characters/customer_mustafa.png',
-        quote: 'Çift Shot Espresso + Fıstıklı Katmer Sarma + Tatlı Şeker',
-        reqs: ['espresso', 'katmer_roll', 'sugar_jar'],
-        sweetHeadline: 'Mustafa: "Adana Sıcağında Tam Kıvamında Keyif!"',
-        sweetReaction: 'Kaymaklı katmer sarma ve espresso ikilisi efsane olmuş, 5 yıldız!',
-        saltyHeadline: 'Mustafa: "Şalgam Suyu mu Sandınız Bunu?!"',
+        customers: [
+          {
+            title: 'Müşteri #1/3 · Emre (Seyhan Bulut Mühendisi)',
+            avatar: 'characters/customer_mustafa.png',
+            quote: 'Gar Kahvesi niyetine Çift Shot Espresso + Fıstıklı Baklava + Tatlı Şeker!',
+            reqs: ['espresso', 'baklava', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #2/3 · Selin (AI Studio Geliştiricisi)',
+            avatar: 'customers/customer_happy.png',
+            quote: 'Buz gibi Köpüklü Süt + Tereyağlı Kruvasan + Tatlı Şeker!',
+            reqs: ['milk', 'croissant', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #3/3 · Burak (DevFest Konuşmacısı)',
+            avatar: 'characters/customer_lukas.png',
+            quote: 'Menengiç Kahvesi + AI Özel Katmer Sarma + Tatlı Şeker lütfen!',
+            reqs: ['menengic_coffee', 'custom_katmer_roll', 'sugar_jar']
+          }
+        ],
+        sweetHeadline: 'Emre: "Adana Sıcağında Tam Kıvamında Keyif!"',
+        sweetReaction: 'Kaymaklı tatlı ve espresso ikilisi efsane olmuş, 5 yıldız!',
+        saltyHeadline: 'Emre: "Şalgam Suyu mu Sandınız Bunu?!"',
         saltyReaction: 'Tatlı siparişe tuz/isot basmışsınız, ağzımız yandı! 1 Yıldız!'
       },
       istanbul: {
         title: '🇹🇷 DevFest Istanbul 2026 Edition',
         sub: 'Galata & Vapur Kafe · San Sebastian Cheesecake & Espresso',
-        customer: 'Müşteri #1/3 · Deniz (Galata Kahve Küratörü)',
-        avatar: 'characters/customer_deniz.png',
-        quote: 'Çift Shot Espresso + San Sebastian Cheesecake + Tatlı Şeker',
-        reqs: ['espresso', 'san_sebastian', 'sugar_jar'],
+        customers: [
+          {
+            title: 'Müşteri #1/3 · Deniz (Galata Ürün Tasarımcısı)',
+            avatar: 'characters/customer_deniz.png',
+            quote: 'Çift Shot Espresso + Galata San Sebastian Cheesecake + Tatlı Şeker!',
+            reqs: ['espresso', 'san_sebastian', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #2/3 · Kaan (Boğaz Vapur Kaptanı)',
+            avatar: 'characters/customer_lukas.png',
+            quote: 'Menengiç Kahvesi + Fıstıklı Baklava + Tatlı Şeker lütfen!',
+            reqs: ['menengic_coffee', 'baklava', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #3/3 · Elif (GDE Mentor)',
+            avatar: 'characters/customer_ayse_usta.png',
+            quote: 'Köpüklü Süt + AI Özel Katmer Sarma + Tatlı Şeker!',
+            reqs: ['milk', 'custom_katmer_roll', 'sugar_jar']
+          }
+        ],
         sweetHeadline: 'Deniz: "Boğaz Vapurunda 5 Yıldızlı Lezzet!"',
         sweetReaction: 'Akışkan San Sebastian ve kadife kremalı espresso kusursuz!',
         saltyHeadline: 'Deniz: "Galata\'da Turist Şakası Gibi Tuzlu Kahve!"',
@@ -534,14 +598,15 @@
       { id: 'croissant', category: 'food', name: 'Tereyağlı Kruvasan', nameEn: 'Butter Croissant', subtitle: 'Çıtır Katmanlı Hamur', subtitleEn: 'Flaky Golden Layers', imagePath: 'foods/croissant.png', isPrank: false, isRound2: false },
       { id: 'san_sebastian', category: 'food', name: 'San Sebastian', nameEn: 'San Sebastian Cheesecake', subtitle: 'Karamelize Yanık Üst', subtitleEn: 'Caramelized Basque Crust', imagePath: 'foods/san_sebastian.png', isPrank: false, isRound2: false },
       { id: 'baklava', category: 'food', name: 'Fıstıklı Baklava', nameEn: 'Pistachio Baklava', subtitle: '40 Kat Yufka · Boz Fıstık', subtitleEn: '40 Filo Layers · Antep Pistachio', imagePath: 'foods/baklava.png', isPrank: false, isRound2: false },
-      { id: 'katmer_roll', category: 'food', name: 'AI Özel: Katmer Sarma', nameEn: 'AI Custom: Pistachio Katmer', subtitle: 'Kaymak & Boz Fıstık', subtitleEn: 'Clotted Cream & Pistachio', imagePath: 'foods/katmer_roll.png', isPrank: false, isRound2: true },
+      { id: 'custom_katmer_roll', category: 'food', name: 'AI Özel: Katmer Sarma', nameEn: 'AI Custom: Pistachio Katmer', subtitle: 'Kaymak & Boz Fıstık', subtitleEn: 'Clotted Cream & Pistachio', imagePath: 'foods/katmer_roll.png', isPrank: false, isRound2: true },
       { id: 'sugar_jar', category: 'prank', name: 'Tatlı Şeker Kavanozu', nameEn: 'Sweet Sugar Jar', subtitle: '2 Delikli Kapak · Beyaz Kristal', subtitleEn: '2-Hole Lid · Sweet Crystals', imagePath: 'toppings_pranks/sugar_jar.png', isPrank: false, isRound2: false },
       { id: 'salt_shaker', category: 'prank', name: 'Tuzluk (Şeker İkizi)', nameEn: 'Salt Shaker (Twin Jar)', subtitle: '3 Delikli Kapak · Beyaz Kristal', subtitleEn: '3-Hole Lid · Salty Prank!', imagePath: 'toppings_pranks/salt_shaker.png', isPrank: true, isRound2: false },
       { id: 'chili_sauce', category: 'prank', name: 'Kırmızı Sos (Acı Biber)', nameEn: 'Chili Sauce (Berry Twin)', subtitle: 'Çilek Sosu Görünümlü · Acı!', subtitleEn: 'Looks Like Berry Syrup · Spicy!', imagePath: 'toppings_pranks/chili_sauce.png', isPrank: true, isRound2: false },
-      { id: 'isot_pepper', category: 'prank', name: 'AI Özel: İsot Biberi', nameEn: 'AI Custom: Urfa Isot Pepper', subtitle: 'İsli Urfa & Antep İsotu', subtitleEn: 'Smoky Spicy Pepper Flakes', imagePath: 'toppings_pranks/isot_pepper.png', isPrank: true, isRound2: true }
+      { id: 'custom_isot_pepper', category: 'prank', name: 'AI Özel: İsot Biberi', nameEn: 'AI Custom: Urfa Isot Pepper', subtitle: 'İsli Urfa & Antep İsotu', subtitleEn: 'Smoky Spicy Pepper Flakes', imagePath: 'toppings_pranks/isot_pepper.png', isPrank: true, isRound2: true }
     ];
 
     let activeCity = 'gaziantep';
+    let activeCustomerIndex = 0;
     let showRound2CustomItems = true;
     let tray = [];
     let playerOneScore = 0;
@@ -758,6 +823,16 @@
       } catch (_error) {}
     }
 
+    function getCurrentCustomer() {
+      const cityEdition = CITY_EDITIONS[activeCity];
+      const list = cityEdition.customers;
+      return list[activeCustomerIndex % list.length];
+    }
+
+    function getEffectiveReqs(customer) {
+      return customer.reqs.map(id => (!showRound2CustomItems && id === 'custom_katmer_roll') ? 'baklava' : id);
+    }
+
     function triggerTeaSip5Seconds() {
       playBaristaCue('teaSipSlurp');
       const en = isEnglishUi();
@@ -768,10 +843,6 @@
       const pillElements = document.querySelectorAll('[data-sip-pill]');
       const sipButton = document.getElementById('sipTeaBtn');
       sipButton.textContent = en ? '🫖 Sipping Tea (5s)...' : '🫖 Çay Yudumluyor (5sn)...';
-      document.getElementById('customerQuote').textContent = en
-        ? '"🫖 Slurp... Sipping hot Turkish tulip-glass tea for 5 seconds at the counter! ✨"'
-        : '"🫖 Hüüüp... İnce belli bardakta tavşan kanı çayımı 5 saniye keyifle yudumluyorum! Ohhh! ✨"';
-      document.getElementById('customerQuote').style.color = '#B71C1C';
 
       sipInterval = setInterval(() => {
         const elapsedSeconds = (Date.now() - startTimestampMs) / 1000;
@@ -785,9 +856,6 @@
           clearInterval(sipInterval);
           rootElement.classList.remove('sipping-active');
           sipButton.textContent = isEnglishUi() ? '🫖 Sip Tea (5s)' : '🫖 5sn Çay Yudumlat';
-          const cityEdition = CITY_EDITIONS[activeCity];
-          document.getElementById('customerQuote').textContent = `"${cityEdition.quote}"`;
-          document.getElementById('customerQuote').style.color = '#4E342E';
         }
       }, 100);
     }
@@ -809,18 +877,20 @@
 
     function changeCity(cityKey) {
       activeCity = cityKey;
+      activeCustomerIndex = 0;
+      tray = [];
       document.getElementById('priorityLayerText').textContent = 'Priority 1: Manual UI Override (Settings Switcher)';
       document.getElementById('reviewCard').classList.remove('visible');
       renderAll();
-      triggerTeaSip5Seconds();
     }
 
     function nextCustomer() {
       playBaristaCue('nextChime');
-      const cityKeys = Object.keys(CITY_EDITIONS);
-      const nextCityIndex = (cityKeys.indexOf(activeCity) + 1) % cityKeys.length;
-      document.getElementById('citySelect').value = cityKeys[nextCityIndex];
-      changeCity(cityKeys[nextCityIndex]);
+      const customers = CITY_EDITIONS[activeCity].customers;
+      activeCustomerIndex = (activeCustomerIndex + 1) % customers.length;
+      tray = [];
+      document.getElementById('reviewCard').classList.remove('visible');
+      renderAll();
     }
 
     function toggleItem(itemId) {
@@ -830,14 +900,13 @@
         tray.splice(itemIndex, 1);
         playBaristaCue('tapPop');
       } else {
+        tray = tray.filter(existingId => ITEMS.find(candidate => candidate.id === existingId)?.category !== selectedItem.category);
         tray.push(itemId);
         if (selectedItem.isPrank) {
           playBaristaCue('prankSprinkle');
         } else if (selectedItem.id === 'espresso' || selectedItem.id === 'menengic_coffee') {
-          triggerTeaSip5Seconds();
           playBaristaCue('coffeeGrinder');
         } else if (selectedItem.id === 'milk') {
-          triggerTeaSip5Seconds();
           playBaristaCue('espressoSteam');
         } else {
           playBaristaCue('tapPop');
@@ -857,6 +926,9 @@
       const en = isEnglishUi();
       const previousCrewLevel = getCrewLevel();
       const hasPrank = tray.some(trayItemId => ITEMS.find(item => item.id === trayItemId)?.isPrank);
+      const hasDrink = tray.some(trayItemId => ITEMS.find(item => item.id === trayItemId)?.category === 'drink');
+      const hasFood = tray.some(trayItemId => ITEMS.find(item => item.id === trayItemId)?.category === 'food');
+      const hasSweetSugar = tray.includes('sugar_jar');
       const cityEdition = CITY_EDITIONS[activeCity];
       const reviewCard = document.getElementById('reviewCard');
       reviewCard.classList.add('visible');
@@ -870,12 +942,24 @@
         document.getElementById('reviewBadge').style.color = '#B71C1C';
         document.getElementById('reviewHeadline').textContent = cityEdition.saltyHeadline;
         document.getElementById('reviewBody').textContent = cityEdition.saltyReaction;
+      } else if (!hasDrink || !hasFood || !hasSweetSugar) {
+        playBaristaCue('tapPop');
+        playerOneScore += 15;
+        playerTwoScore += 15;
+        reviewCard.classList.remove('sabotage');
+        setAssetWithFallback(faceImg, 'customers/customer_shocked.png');
+        document.getElementById('reviewBadge').textContent = en ? '3/5 · Incomplete Tray 🧩' : '3/5 · Eksik Tepsi 🧩';
+        document.getElementById('reviewBadge').style.color = '#E65100';
+        document.getElementById('reviewHeadline').textContent = en ? 'Incomplete Tray!' : 'Tepside Eksik Var!';
+        document.getElementById('reviewBody').textContent = en
+          ? 'Please plate 1 Drink + 1 Pastry + Sweet Sugar for a full 5-star order!'
+          : '5 yıldız için tepsiye 1 İçecek + 1 Tatlı + Tatlı Şeker dizin!';
       } else {
         playBaristaCue('serveBell');
         setTimeout(() => playBaristaCue('sweetFanfare'), 180);
         playerOneScore += 50;
         playerTwoScore += 50;
-        tipPoints += 25;
+        tipPoints += 40;
         reviewCard.classList.remove('sabotage');
         setAssetWithFallback(faceImg, 'customers/customer_happy.png');
         document.getElementById('reviewBadge').textContent = en ? '5/5 · Sweet Perfection ✨' : '5/5 · Tatlı Mükemmellik ✨';
@@ -910,13 +994,17 @@
     function renderAll() {
       const en = isEnglishUi();
       const cityEdition = CITY_EDITIONS[activeCity];
+      const currentCustomer = getCurrentCustomer();
+      const effectiveReqs = getEffectiveReqs(currentCustomer);
       document.getElementById('editionHeader').textContent = cityEdition.title;
       document.getElementById('citySubtitle').textContent = cityEdition.sub;
-      document.getElementById('customerTitle').textContent = cityEdition.customer;
+      document.getElementById('customerTitle').textContent = currentCustomer.title;
+      document.getElementById('customerQuote').textContent = `"${currentCustomer.quote}"`;
+      document.getElementById('customerQuote').style.color = '#4E342E';
       const customerAvatarElement = document.getElementById('customerAvatar');
-      setAssetWithFallback(customerAvatarElement, cityEdition.avatar);
+      setAssetWithFallback(customerAvatarElement, currentCustomer.avatar);
 
-      document.getElementById('round2Btn').textContent = `✨ Round 2 AI SVGs: ${showRound2CustomItems ? 'ON' : 'OFF'}`;
+      document.getElementById('round2Btn').textContent = `✨ Round 2 AI Menu: ${showRound2CustomItems ? 'ON' : 'OFF'}`;
       document.getElementById('muteBtn').textContent = isMuted ? (en ? '🔇 Sound Off' : '🔇 Ses Kapalı') : (en ? '🔊 Sound On' : '🔊 Ses Açık');
       document.getElementById('soundboardTitle').textContent = en ? '🎛️ Barista Soundboard (10 Web Audio API SFX)' : '🎛️ Barista Ses Efektleri (10 Web Audio API SFX)';
       document.getElementById('sfxCoffeeGrinderBtn').textContent = en ? '⚙️ Coffee Grinder' : '⚙️ Kahve Değirmeni';
@@ -927,14 +1015,14 @@
       document.getElementById('p1RoleTitle').textContent = en ? 'Player 1 · Head Barista Esra' : 'Oyuncu 1 · Baş Barista Esra';
       document.getElementById('p1RoleSub').textContent = en ? 'Espresso & Copper Pot Station' : 'Espresso & Bakır Cezve İstasyonu';
       document.getElementById('p1Speech').textContent = en
-        ? '🫖 Slurp... Nothing beats a 5-second Turkish tulip-glass tea break behind the bar!'
-        : '🫖 Hüüüp... Ohhh! Tezgah başında 5 saniye ince belli demli çay keyfi gibisi yok!';
+        ? '☕ Tap a coffee on my bar (or tap me for a 5s tea break!)'
+        : '☕ Kahve barından içeceği seç (veya bana tıklayıp 5sn çay yudumlat!)';
 
       document.getElementById('p2RoleTitle').textContent = en ? 'Player 2 · Pastry & Prank Chef Can' : 'Oyuncu 2 · Tatlı & Şaka Şefi Can';
       document.getElementById('p2RoleSub').textContent = en ? 'Pastry Showcase & Twin Jars' : 'Tatlı Vitrini & İkiz Kavanozlar';
       document.getElementById('p2Speech').textContent = en
-        ? '🫖 Slurp... Crispy pistachio pastry paired with a 5-second crimson tea break! ✨'
-        : '🫖 Hüüüp... Çıtır fıstıklı baklava yanında 5 saniye tavşan kanı çay molası! ✨';
+        ? '🥐 Pick a signature dessert from the vitrine (or sneak a twin jar!)'
+        : '🥐 Vitrinden taze tatlıyı seç (istersen ikiz tuzlukla şaka yap!)';
 
       document.getElementById('nextCustomerBtn').textContent = en ? '⏭ Next Customer' : '⏭ Sıradaki Müşteri';
       document.getElementById('drinkShelfTitle').textContent = en ? '☕ Player 1: Coffee & Drink Bar' : '☕ Oyuncu 1: Kahve & İçecek Barı';
@@ -950,7 +1038,7 @@
       document.getElementById('p2ScoreBadge').textContent = `🥐 P2 Pastry: ${playerTwoScore}`;
       document.getElementById('tipsBadge').textContent = `🪙 Tips: +${tipPoints} pts`;
 
-      document.getElementById('reqChips').innerHTML = cityEdition.reqs.map(requestedIngredientId => {
+      document.getElementById('reqChips').innerHTML = effectiveReqs.map(requestedIngredientId => {
         const item = ITEMS.find(candidate => candidate.id === requestedIngredientId);
         const doneClass = tray.includes(requestedIngredientId) ? 'done' : '';
         return `<span class="req-chip ${doneClass}">${doneClass ? '✓ ' : '○ '}${item ? itemTitle(item) : requestedIngredientId}</span>`;
@@ -975,8 +1063,8 @@
       updateActiveCueBadge(null);
     }
 
+    document.getElementById('appRoot').classList.remove('sipping-active');
     renderAll();
-    triggerTeaSip5Seconds();
   </script>
 </body>
 </html>

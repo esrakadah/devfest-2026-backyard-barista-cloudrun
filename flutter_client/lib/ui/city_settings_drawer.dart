@@ -28,106 +28,108 @@ class CitySettingsSheet extends StatelessWidget {
           padding: const EdgeInsets.all(_sheetPadding),
           child: SafeArea(
             top: false,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    const Icon(Icons.cloud_sync_rounded, color: Color(0xFF6D4C41)),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        'DevFest City Edition Switcher (3-Layer Config)',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      const Icon(Icons.cloud_sync_rounded, color: Color(0xFF6D4C41)),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          'DevFest City Edition Switcher (3-Layer Config)',
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      icon: const Icon(Icons.close),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'Active Layer: ${controller.activeSourceLayer.displayLabel}',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: const Color(0xFF5D4037),
-                        fontWeight: FontWeight.w600,
+                      IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: const Icon(Icons.close),
                       ),
-                ),
-                const SizedBox(height: 12),
-                for (final edition in controller.allEditions)
-                  Card(
-                    elevation: edition.editionId == activeEdition.editionId ? 3 : 0,
-                    color: edition.editionId == activeEdition.editionId
-                        ? const Color(0xFFFFEFE0)
-                        : const Color(0xFFF5EFEA),
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: ListTile(
-                      key: Key('city_option_${edition.editionId.code}'),
-                      leading: Text(
-                        edition.flagEmoji,
-                        style: const TextStyle(fontSize: 26),
-                      ),
-                      title: Text(
-                        '${edition.cityName} (${edition.eventTitle})',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        '${edition.cafeSubtitle} · ${edition.signatureSpecialty}',
-                      ),
-                      trailing: edition.editionId == activeEdition.editionId
-                          ? const Icon(Icons.check_circle, color: Color(0xFF2E7D32))
-                          : const Icon(Icons.radio_button_unchecked),
-                      onTap: () {
-                        controller.selectManualOverride(edition.editionId);
-                        Navigator.of(context).pop();
-                      },
-                    ),
+                    ],
                   ),
-                const SizedBox(height: 8),
-                Text(
-                  'Simulate Live Firebase Remote Config Push (Priority 2: active_city_id):',
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: const Color(0xFF5D4037),
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
-                const SizedBox(height: 6),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 6,
-                  children: <Widget>[
-                    for (final edition in controller.allEditions)
-                      ActionChip(
-                        key: Key('remote_config_chip_${edition.editionId.code}'),
-                        avatar: Text(edition.flagEmoji),
-                        label: Text('RC: ${edition.editionId.code}'),
-                        onPressed: () {
-                          controller
-                            ..clearManualOverride()
-                            ..applyRemoteConfigCity(edition.editionId);
+                  const SizedBox(height: 6),
+                  Text(
+                    'Active Layer: ${controller.activeSourceLayer.displayLabel}',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: const Color(0xFF5D4037),
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  const SizedBox(height: 12),
+                  for (final edition in controller.allEditions)
+                    Card(
+                      elevation: edition.editionId == activeEdition.editionId ? 3 : 0,
+                      color: edition.editionId == activeEdition.editionId
+                          ? const Color(0xFFFFEFE0)
+                          : const Color(0xFFF5EFEA),
+                      margin: const EdgeInsets.only(bottom: 8),
+                      child: ListTile(
+                        key: Key('city_option_${edition.editionId.code}'),
+                        leading: Text(
+                          edition.flagEmoji,
+                          style: const TextStyle(fontSize: 26),
+                        ),
+                        title: Text(
+                          '${edition.cityName} (${edition.eventTitle})',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          '${edition.cafeSubtitle} · ${edition.signatureSpecialty}',
+                        ),
+                        trailing: edition.editionId == activeEdition.editionId
+                            ? const Icon(Icons.check_circle, color: Color(0xFF2E7D32))
+                            : const Icon(Icons.radio_button_unchecked),
+                        onTap: () {
+                          controller.selectManualOverride(edition.editionId);
                           Navigator.of(context).pop();
                         },
                       ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton.icon(
-                    onPressed: () {
-                      controller.clearManualOverride();
-                      Navigator.of(context).pop();
-                    },
-                    icon: const Icon(Icons.restore),
-                    label: const Text('Reset to Firebase Remote Config Default'),
+                    ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Simulate Live Firebase Remote Config Push (Priority 2: active_city_id):',
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: const Color(0xFF5D4037),
+                          fontWeight: FontWeight.w700,
+                        ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 6),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 6,
+                    children: <Widget>[
+                      for (final edition in controller.allEditions)
+                        ActionChip(
+                          key: Key('remote_config_chip_${edition.editionId.code}'),
+                          avatar: Text(edition.flagEmoji),
+                          label: Text('RC: ${edition.editionId.code}'),
+                          onPressed: () {
+                            controller
+                              ..clearManualOverride()
+                              ..applyRemoteConfigCity(edition.editionId);
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton.icon(
+                      onPressed: () {
+                        controller.clearManualOverride();
+                        Navigator.of(context).pop();
+                      },
+                      icon: const Icon(Icons.restore),
+                      label: const Text('Reset to Firebase Remote Config Default'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );

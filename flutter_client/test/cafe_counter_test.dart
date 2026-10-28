@@ -326,4 +326,62 @@ void main() {
       expect(find.text('Seviye Atlama · Level Up!'), findsOneWidget);
     },
   );
+
+  testWidgets(
+    'Desktop 2-column layout enforces 3-station completeness, 1-item-per-category slot replacement, and Round-2 ticket fallback',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1280, 900));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      final cityController = CityEditionController(remoteConfigCityCode: 'gaziantep');
+      final judgeService = CafeJudgeService(
+        clock: fixedClock,
+        forceOfflineMode: true,
+      );
+
+      await tester.pumpWidget(
+        BackyardBaristaApp(
+          cityController: cityController,
+          judgeService: judgeService,
+        ),
+      );
+
+      // 1. Serving only 1 drink without pastry or sugar returns 3/5 Eksik Tepsi (not 5/5)
+      await tester.ensureVisible(find.byKey(const Key('ingredient_card_espresso')));
+      await tester.tap(find.byKey(const Key('ingredient_card_espresso')));
+      await tester.pumpAndSettle();
+
+      final serveButton = find.byKey(const Key('serve_order_button'));
+      await tester.ensureVisible(serveButton);
+      await tester.tap(serveButton);
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('3/5 · Eksik Tepsi 🧩'), findsOneWidget);
+
+      // 2. Selecting another drink replaces the previous drink in the 3-slot tray
+      await tester.ensureVisible(find.byKey(const Key('ingredient_card_menengic_coffee')));
+      await tester.tap(find.byKey(const Key('ingredient_card_menengic_coffee')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Ahşap Tepsi (1/3): Menengiç Kahvesi'), findsOneWidget);
+
+      // 3. Advance to Customer #2 (Mustafa, who requests custom_katmer_roll in Round 2)
+      await tester.ensureVisible(find.byKey(const Key('next_customer_button')));
+      await tester.tap(find.byKey(const Key('next_customer_button')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Mustafa'), findsOneWidget);
+
+      // Add Round-2 custom_katmer_roll to tray, then toggle Round-2 switch OFF:
+      // verify custom_katmer_roll is purged from the tray and ticket falls back to Fıstıklı Baklava.
+      await tester.ensureVisible(find.byKey(const Key('ingredient_card_custom_katmer_roll')));
+      await tester.tap(find.byKey(const Key('ingredient_card_custom_katmer_roll')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Ahşap Tepsi (1/3):'), findsOneWidget);
+
+      await tester.ensureVisible(find.byKey(const Key('round_two_custom_items_switch')));
+      await tester.tap(find.byKey(const Key('round_two_custom_items_switch')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Canlı Ahşap Tepsi (0/3 Ürün Dizildi)'), findsOneWidget);
+      expect(find.byKey(const Key('ingredient_card_custom_katmer_roll')), findsNothing);
+    },
+  );
 }

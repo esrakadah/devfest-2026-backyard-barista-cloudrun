@@ -2,14 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 
-/// Plays bundled `.wav` assets on macOS (`afplay`) and triggers native system sound on mobile/IO,
-/// while remaining a clean no-op inside `flutter test`.
+Process? _activeMacOsAudioProcess;
+
+/// Plays bundled `.wav` assets on macOS (`afplay`, killing any prior overlapping process) and
+/// falls back to native system click on mobile/IO, while remaining a clean no-op inside `flutter test`.
 Future<void> playPlatformCafeCue(String cueName, String assetPath) async {
   if (Platform.environment.containsKey('FLUTTER_TEST')) {
     return;
   }
   try {
-    await SystemSound.play(SystemSoundType.click);
     if (Platform.isMacOS) {
       final candidatePaths = <String>[
         assetPath,
@@ -18,11 +19,13 @@ Future<void> playPlatformCafeCue(String cueName, String assetPath) async {
       for (final path in candidatePaths) {
         final candidateFile = File(path);
         if (candidateFile.existsSync()) {
-          await Process.start('afplay', <String>[candidateFile.path]);
+          _activeMacOsAudioProcess?.kill();
+          _activeMacOsAudioProcess = await Process.start('afplay', <String>[candidateFile.path]);
           return;
         }
       }
     }
+    await SystemSound.play(SystemSoundType.click);
   } on Object {
     // Ignore audio errors on headless runners.
   }

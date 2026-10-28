@@ -31,6 +31,8 @@ enum CafeSoundCue {
 class CafeSoundController {
   CafeSoundController({bool initialMuted = false}) : _isMuted = initialMuted;
 
+  static const int _maxCueHistoryLength = 25;
+
   bool _isMuted;
   CafeSoundCue? _lastPlayedCue;
   final List<CafeSoundCue> _playedCues = <CafeSoundCue>[];
@@ -40,7 +42,7 @@ class CafeSoundController {
   /// Most recently played sound cue (when unmuted), displayed on the Web Audio soundboard badge.
   CafeSoundCue? get lastPlayedCue => _lastPlayedCue;
 
-  /// Unmodifiable history of played sound cues during the session.
+  /// Unmodifiable history of played sound cues during the session (capped at 25 entries).
   List<CafeSoundCue> get playedCues => List<CafeSoundCue>.unmodifiable(_playedCues);
 
   void toggleMute() {
@@ -52,6 +54,9 @@ class CafeSoundController {
       return;
     }
     _lastPlayedCue = cue;
+    if (_playedCues.length >= _maxCueHistoryLength) {
+      _playedCues.removeAt(0);
+    }
     _playedCues.add(cue);
     unawaited(playPlatformCafeCue(cue.name, cue.assetPath));
   }
