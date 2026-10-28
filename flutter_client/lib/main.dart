@@ -49,17 +49,18 @@ class BackyardBaristaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseColorScheme = ColorScheme.fromSeed(
-      seedColor: const Color(0xFFB84A24),
-      primary: const Color(0xFF3A2218),
-      secondary: const Color(0xFFC85A32),
-      surface: const Color(0xFFFFF8EE),
+      brightness: Brightness.dark,
+      seedColor: const Color(0xFFC59B27),
+      primary: const Color(0xFFC59B27),
+      secondary: const Color(0xFF7A1C1C),
+      surface: const Color(0xFF1F1711),
     );
 
     final baseTheme = ThemeData(
       fontFamily: 'GoogleSans',
       fontFamilyFallback: _emojiFontFallbacks,
       colorScheme: baseColorScheme,
-      scaffoldBackgroundColor: const Color(0xFFFFF8EE),
+      scaffoldBackgroundColor: const Color(0xFF14100C),
       useMaterial3: true,
     );
 

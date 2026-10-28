@@ -9,17 +9,17 @@ import 'package:lottie/lottie.dart';
 /// Total duration of the choreographed Turkish tea sipping animation (5.0 seconds).
 const Duration kTeaSipAnimationDuration = Duration(seconds: 5);
 
-const Duration _characterCycleDuration = Duration(milliseconds: 520);
-const double _crewAvatarSize = 68;
+const Duration _characterCycleDuration = Duration(milliseconds: 420);
+const double _crewAvatarSize = 64;
 const double _crewCardCornerRadius = 18;
 const double _characterArchTopRadius = 38;
 const double _characterArchBottomRadius = 14;
-const double _jumpPeakPixels = 7;
-const double _breathingAmplitudePixels = 3.5;
-const double _shakeAmplitudePixels = 5.5;
-const double _maxTiltRadians = 0.06;
-const double _celebrationScaleBoost = 0.08;
-const double _brewingScaleBoost = 0.05;
+const double _jumpPeakPixels = 10;
+const double _breathingAmplitudePixels = 4.5;
+const double _shakeAmplitudePixels = 7;
+const double _maxTiltRadians = 0.08;
+const double _celebrationScaleBoost = 0.11;
+const double _brewingScaleBoost = 0.07;
 const double _lottieOverlayScaleFactor = 1.28;
 const double _sipLiftPhaseEnd = 0.20;
 const double _sipDrinkingPhaseEnd = 0.82;
@@ -802,14 +802,15 @@ class CafeCrewCharacterStage extends StatelessWidget {
         final baristaCard = _CrewCharacterCard(
           key: const Key('crew_character_barista_p1'),
           portraitAssetPath: CafeCharacterAssets.baristaPlayerOne,
-          characterTitle: isEnglish ? 'P1 · Master Barista Esra' : 'Oyuncu 1 · Baş Barista Esra',
-          roleSubtitle: isEnglish ? 'Espresso & Copper Cezve Station' : 'Espresso & Bakır Cezve İstasyonu',
+          characterTitle: isEnglish ? 'P1 · Master Barista Esra' : 'P1 · Barista Esra',
+          roleSubtitle: isEnglish ? 'Station 1 · Copper Cauldron & Cezve Bar' : 'İstasyon 1 · Bakır Cezve & İksir Barı',
           speechText: _baristaSpeechLine(isEnglish),
           scoreLabel: '${playerOneScore}p',
           mood: _baristaMood,
           badgeEmoji: _hasHotDrinkOnTray ? '☕🔥' : '☕✨',
-          cardBackgroundColor: const Color(0xFFFFF4E8),
-          borderColor: const Color(0xFFC85A32),
+          cardBackgroundColor: const Color(0xFF231710),
+          borderColor: const Color(0xFFC59B27),
+          houseAccentColor: const Color(0xFF7A1C1C),
           languageCode: languageCode,
           isSippingTea: isCrewSippingTea,
           onTapCharacter: onTriggerFiveSecondTeaSip ?? onTapCharacterEmote,
@@ -819,14 +820,16 @@ class CafeCrewCharacterStage extends StatelessWidget {
         final pastryChefCard = _CrewCharacterCard(
           key: const Key('crew_character_pastry_p2'),
           portraitAssetPath: CafeCharacterAssets.pastryChefPlayerTwo,
-          characterTitle: isEnglish ? 'P2 · Pastry & Prank Chef Can' : 'Oyuncu 2 · Tatlı & Şaka Şefi Can',
-          roleSubtitle: isEnglish ? 'Baklava Vitrine & Twin Jars' : 'Tatlı Vitrini & İkiz Kavanozlar',
+          characterTitle: isEnglish ? 'P2 · Apothecary & Pastry Can' : 'P2 · Tatlı & Şaka Can',
+          roleSubtitle:
+              isEnglish ? 'Station 2 & 3 · Honeydukes & Twin Jars' : 'İstasyon 2 & 3 · Tatlı Vitrini & İkiz Kavanoz',
           speechText: _pastryChefSpeechLine(isEnglish),
           scoreLabel: '${playerTwoScore}p',
           mood: _pastryChefMood,
           badgeEmoji: _hasPrankOnTray ? '🤫🧂' : '🥐😉',
-          cardBackgroundColor: const Color(0xFFFAF0F6),
-          borderColor: const Color(0xFF8D3218),
+          cardBackgroundColor: const Color(0xFF19221B),
+          borderColor: const Color(0xFFC59B27),
+          houseAccentColor: const Color(0xFF2B5B44),
           languageCode: languageCode,
           isSippingTea: isCrewSippingTea,
           onTapCharacter: onTriggerFiveSecondTeaSip ?? onTapCharacterEmote,
@@ -870,6 +873,7 @@ class _CrewCharacterCard extends StatelessWidget {
     required this.badgeEmoji,
     required this.cardBackgroundColor,
     required this.borderColor,
+    required this.houseAccentColor,
     required this.languageCode,
     required this.isSippingTea,
     required this.onTapCharacter,
@@ -886,6 +890,7 @@ class _CrewCharacterCard extends StatelessWidget {
   final String badgeEmoji;
   final Color cardBackgroundColor;
   final Color borderColor;
+  final Color houseAccentColor;
   final String languageCode;
   final bool isSippingTea;
   final VoidCallback onTapCharacter;
@@ -894,21 +899,24 @@ class _CrewCharacterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: cardBackgroundColor,
         borderRadius: BorderRadius.circular(_crewCardCornerRadius),
-        border: Border.all(color: borderColor.withValues(alpha: 0.45), width: 1.6),
+        border: Border.all(color: borderColor.withValues(alpha: 0.82), width: 2),
         boxShadow: const <BoxShadow>[
           BoxShadow(
-            color: Color(0x14000000),
-            blurRadius: 8,
-            offset: Offset(0, 3),
+            color: Color(0xFF0E0906),
+            offset: Offset(0, 4),
+          ),
+          BoxShadow(
+            color: Color(0x44000000),
+            blurRadius: 10,
+            offset: Offset(0, 5),
           ),
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           AnimatedCafeCharacterAvatar(
             portraitAssetPath: portraitAssetPath,
@@ -921,7 +929,7 @@ class _CrewCharacterCard extends StatelessWidget {
             onTapCharacter: onTapCharacter,
             onSipTeaCompleted: onSipTeaCompleted,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -934,25 +942,26 @@ class _CrewCharacterCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w800,
                           fontSize: 13,
-                          color: Color(0xFF2C1A12),
+                          color: Color(0xFFF3E5C8),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 6),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
-                        color: borderColor.withValues(alpha: 0.14),
+                        color: houseAccentColor,
                         borderRadius: BorderRadius.circular(999),
+                        border: Border.all(color: borderColor, width: 1.2),
                       ),
                       child: Text(
                         scoreLabel,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                          color: borderColor,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFFF3E5C8),
                         ),
                       ),
                     ),
@@ -962,26 +971,28 @@ class _CrewCharacterCard extends StatelessWidget {
                   roleSubtitle,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF6D4C41),
+                  style: TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.w600,
+                    color: borderColor,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 5),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.9),
+                    color: const Color(0xFFEAD8B8),
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: borderColor.withValues(alpha: 0.25)),
+                    border: Border.all(color: const Color(0xFF8C6B32), width: 1.2),
                   ),
                   child: Text(
                     speechText,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 11.5,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF3E2723),
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF2B1B10),
                     ),
                   ),
                 ),

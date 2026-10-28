@@ -384,4 +384,42 @@ void main() {
       expect(find.byKey(const Key('ingredient_card_custom_katmer_roll')), findsNothing);
     },
   );
+
+  testWidgets(
+    'Subway Surfers Flame Engine 3-lane stage renders and lane pills dash-cycle Drinks, Pastries, and Twin Jars',
+    (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1280, 1000));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      final cityController = CityEditionController(remoteConfigCityCode: 'gaziantep');
+      final judgeService = CafeJudgeService(
+        clock: fixedClock,
+        forceOfflineMode: true,
+      );
+
+      await tester.pumpWidget(
+        BackyardBaristaApp(
+          cityController: cityController,
+          judgeService: judgeService,
+        ),
+      );
+
+      expect(find.byKey(const Key('subway_barista_flame_stage')), findsOneWidget);
+      expect(find.byKey(const Key('flame_lane_pill_0')), findsOneWidget);
+      expect(find.byKey(const Key('flame_lane_pill_1')), findsOneWidget);
+      expect(find.byKey(const Key('flame_lane_pill_2')), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('flame_lane_pill_0')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Ahşap Tepsi (1/3):'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('flame_lane_pill_1')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Ahşap Tepsi (2/3):'), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('flame_lane_pill_2')));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('Ahşap Tepsi (3/3):'), findsOneWidget);
+    },
+  );
 }
