@@ -1,14 +1,22 @@
 # Backyard Barista on Cloud Run: Tatlı mı Tuzlu mu? ☕🥐🧂☁️
 
+[![Cloud Run Live](https://img.shields.io/badge/Cloud_Run_Live-europe--west3-4285F4?logo=googlecloud&logoColor=white)](https://backyard-barista-389486729482.europe-west3.run.app)
+[![Flutter & Deck CI](https://github.com/esrakadah/devfest-2026-backyard-barista-cloudrun/actions/workflows/ci.yml/badge.svg)](https://github.com/esrakadah/devfest-2026-backyard-barista-cloudrun/actions/workflows/ci.yml)
+[![Gemini 3.5 Flash-Lite](https://img.shields.io/badge/Gemini-3.5_Flash--Lite-8E75B2?logo=googlegemini&logoColor=white)](https://ai.google.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-34A853.svg)](LICENSE)
+
 **DevFest 2026 Hands-On Workshop & Vibe Lounge Starter Repository**
 - **Author:** Esra Kadah (Tech Lead, Senior Flutter & AI Engineer at Antigua Mobile Berlin · Flutter & Dart GDE)
-- **Live Cloud Run Reference App (`europe-west3` · 3D Characters + Lottie + 10 Web Audio SFX):** `https://backyard-barista-389486729482.europe-west3.run.app` (`devfest-backyard-barista-2026`)
-- **Live Cloud Run Mirror (`europe-west1`):** `https://backyard-barista-870328613866.europe-west1.run.app` (`soundstage-dea29`)
+- **Live Cloud Run Reference App (`europe-west3` · 3D Characters + Lottie + 10 Web Audio SFX):** [https://backyard-barista-389486729482.europe-west3.run.app](https://backyard-barista-389486729482.europe-west3.run.app) (`devfest-backyard-barista-2026`)
+- **Live Cloud Run Mirror (`europe-west1`):** [https://backyard-barista-870328613866.europe-west1.run.app](https://backyard-barista-870328613866.europe-west1.run.app) (`soundstage-dea29`)
+- **Technical Deep-Dive Article (Medium / `esra.tech`):** [`docs/articles/backyard-barista-cloud-run-medium.md`](docs/articles/backyard-barista-cloud-run-medium.md)
 - **City Editions Included:**
   - `berlin` (🇩🇪 DevFest Berlin, 14 Nov 2026)
   - `gaziantep` (🇹🇷 DevFest Gaziantep, 15 Nov 2026)
   - `adana` (🇹🇷 DevFest Adana, 11 Dec 2026)
   - `istanbul` (🇹🇷 DevFest Istanbul, 19 Dec 2026)
+
+![Backyard Barista 2x2 Desktop Counter](docs/visuals/game-counter-desktop.png)
 
 ---
 
@@ -56,17 +64,21 @@ The talk follows a 5-act arc shown on every slide (Hook, Tools, Gerçek Rakamlar
 
 ```text
 devfest-2026-backyard-barista-cloudrun/
+├── LICENSE                    # MIT License (Copyright 2026 Esra Kadah)
 ├── README.md
+├── .github/workflows/ci.yml   # GitHub Actions CI (flutter analyze & flutter test for client + slides)
 ├── ai_studio_lane_a/
 │   └── index.html             # Self-contained Lane A reference web game (HTML/CSS/JS + 5s tea sip + Web Audio)
 ├── docs/
+│   ├── articles/
+│   │   └── backyard-barista-cloud-run-medium.md # Technical deep-dive article (Medium / esra.tech / dev.to + social pack)
 │   ├── benchmark-report-2026-10-24.md # 50-request Cloud Run & offline fallback latency report (53.8ms p50)
 │   ├── challenge-landing-page.md      # Bilingual (TR + EN) Vibe Lounge & Workshop challenge sheet
 │   ├── rehearsal-3g-report-2026-10-24.md # Section 4.6 Slow 3G (750 Kbps / 150ms RTT) & HTTP 429 chaos report
 │   ├── speaker-drill-cards-tr.md      # Stage drill scripts (Drills 1-4: 60s open, 90s close, 5m cut, 20m recovery)
 │   ├── stage-runbook.md               # T-24h / T-2h / T-15m checklist, 5-act timing table, failure playbook
 │   ├── companion-deck/                # Source of the attendee Workshop Companion deck (16 slides, Claude Slides format)
-│   ├── visuals/                       # architecture.png, social-card.png, deck-overview.jpg (+ src/ to re-render)
+│   ├── visuals/                       # game-counter-desktop.png, architecture.png, social-card.png, deck-overview.jpg
 │   └── vibe-lounge-poster.html        # Print-ready A4 Vibe Lounge table poster with live Cloud Run QR
 ├── prompts/
 │   ├── step-1-base-cafe.md    # AI Studio Build mode seed prompt (Base Cafe + 4-City Switcher + 5s Tea Sip)

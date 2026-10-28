@@ -258,7 +258,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const Text(
-                  'Backyard Barista on Cloud Run ☕🥐🧂',
+                  'Backyard Barista on Cloud Run',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -307,9 +307,16 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                   ),
                   onPressed: _openCityEditionSheet,
                   icon: _CityFlagBadge(editionId: activeEdition.editionId),
-                  label: Text(
-                    '${activeEdition.cityName} Edition ▾',
-                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
+                  label: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        '${activeEdition.cityName} Edition',
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
+                      ),
+                      const SizedBox(width: 2),
+                      const Icon(Icons.keyboard_arrow_down_rounded, size: 16),
+                    ],
                   ),
                 ),
               ),
@@ -1355,8 +1362,29 @@ class _CafeStationShelf extends StatelessWidget {
                   spacing: 8,
                   runSpacing: 4,
                   children: <Widget>[
-                    Text(
-                      category.localizedTitle(languageCode),
+                    Text.rich(
+                      TextSpan(
+                        children: <InlineSpan>[
+                          WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 6),
+                              child: Icon(
+                                category == IngredientCategory.drink
+                                    ? Icons.local_cafe_rounded
+                                    : (category == IngredientCategory.food
+                                        ? Icons.bakery_dining_rounded
+                                        : Icons.kitchen_rounded),
+                                size: 17,
+                                color: const Color(0xFF8D3218),
+                              ),
+                            ),
+                          ),
+                          TextSpan(
+                            text: category.localizedTitle(languageCode),
+                          ),
+                        ],
+                      ),
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 15,
@@ -1372,15 +1400,28 @@ class _CafeStationShelf extends StatelessWidget {
                           color: selectedInShelf != null ? const Color(0xFF34A853) : _shelfBorderColor,
                         ),
                       ),
-                      child: Text(
-                        selectedInShelf != null
-                            ? '✓ ${selectedInShelf.localizedTitle(languageCode)}'
-                            : (isEnglish ? 'Pick 1 item' : '1 ürün seçin'),
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                          color: selectedInShelf != null ? const Color(0xFF137333) : const Color(0xFF5D4037),
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          if (selectedInShelf != null) ...<Widget>[
+                            const Icon(
+                              Icons.check_circle_rounded,
+                              size: 13,
+                              color: Color(0xFF137333),
+                            ),
+                            const SizedBox(width: 4),
+                          ],
+                          Text(
+                            selectedInShelf != null
+                                ? selectedInShelf.localizedTitle(languageCode)
+                                : (isEnglish ? 'Pick 1 item' : '1 ürün seçin'),
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: selectedInShelf != null ? const Color(0xFF137333) : const Color(0xFF5D4037),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

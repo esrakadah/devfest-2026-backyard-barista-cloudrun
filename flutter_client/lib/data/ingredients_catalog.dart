@@ -4,16 +4,16 @@ import 'package:flutter/foundation.dart';
 /// Station category on the 2-player cafe counter.
 enum IngredientCategory {
   drink(
-    '☕ Player 1: Espresso & Coffee Bar',
-    '☕ Oyuncu 1: Kahve & İçecek Barı',
+    'Player 1: Espresso & Coffee Bar',
+    'Oyuncu 1: Kahve & İçecek Barı',
   ),
   food(
-    '🥐 Player 2: Glass Pastry Vitrine',
-    '🥐 Oyuncu 2: Cam Tatlı Vitrini',
+    'Player 2: Glass Pastry Vitrine',
+    'Oyuncu 2: Cam Tatlı Vitrini',
   ),
   toppingOrPrank(
-    '🧂 Sweet or Salty? Twin Condiment Jars',
-    '🧂 Tatlı mı Tuzlu mu? İkiz Kavanozlar',
+    'Sweet or Salty? Twin Condiment Jars',
+    'Tatlı mı Tuzlu mu? İkiz Kavanozlar',
   );
 
   const IngredientCategory(this.titleEn, this.titleTr);

@@ -361,7 +361,7 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
                     right: -2,
                     bottom: -2,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFF8EE),
                         borderRadius: BorderRadius.circular(999),
@@ -374,9 +374,17 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
                           ),
                         ],
                       ),
-                      child: Text(
-                        _effectiveSipping ? '🫖✨' : badgeEmoji,
-                        style: const TextStyle(fontSize: 11),
+                      child: Icon(
+                        _effectiveSipping
+                            ? Icons.emoji_food_beverage_rounded
+                            : (activeMood == CafeCharacterMood.stealthPrankWink ||
+                                    activeMood == CafeCharacterMood.saltySabotageShock
+                                ? Icons.whatshot_rounded
+                                : (activeMood == CafeCharacterMood.tastingPastryFiveSeconds
+                                    ? Icons.bakery_dining_rounded
+                                    : Icons.auto_awesome_rounded)),
+                        size: 13,
+                        color: widget.borderColor,
                       ),
                     ),
                   ),
@@ -744,12 +752,12 @@ class CafeCrewCharacterStage extends StatelessWidget {
     }
     if (_hasHotDrinkOnTray) {
       return isEnglish
-          ? '☕ Steaming hot coffee is on the tray! Ready to serve!'
-          : '☕ Sıcak kahve tepside tütüyor! Tatlı ve şekerle servise hazır!';
+          ? 'Steaming hot coffee is on the tray! Ready to serve!'
+          : 'Sıcak kahve tepside tütüyor! Tatlı ve şekerle servise hazır!';
     }
     return isEnglish
-        ? '☕ Tap a coffee on my bar (or tap me for a 5s tea sip break!)'
-        : '☕ Kahve barından içeceği seç (veya bana tıklayıp 5sn çay yudumlat!)';
+        ? 'Tap a coffee on my bar (or tap me for a 5s tea sip break!)'
+        : 'Kahve barından içeceği seç (veya bana tıklayıp 5sn çay yudumlat!)';
   }
 
   String _pastryChefSpeechLine(bool isEnglish) {
@@ -762,26 +770,26 @@ class CafeCrewCharacterStage extends StatelessWidget {
     if (currentReview != null) {
       if (currentReview.isPrankCaught) {
         return isEnglish
-            ? '😈 Hehehe! Twin jar prank worked! +30 Sabotage points for P2!'
-            : '😈 Hehehe! İkiz kavanoz şakası tuttu! +30 Sabotaj puanı kaptım!';
+            ? 'Hehehe! Twin jar prank worked! +30 Sabotage points for P2!'
+            : 'Hehehe! İkiz kavanoz şakası tuttu! +30 Sabotaj puanı kaptım!';
       }
       return isEnglish
-          ? '✨ Golden flaky pastry + sweet sugar = happy customer! +50 pts!'
-          : '✨ Çıtır tatlı ve gerçek şeker ile müşteri mest oldu! +50 puan!';
+          ? 'Golden flaky pastry + sweet sugar = happy customer! +50 pts!'
+          : 'Çıtır tatlı ve gerçek şeker ile müşteri mest oldu! +50 puan!';
     }
     if (_hasPrankOnTray) {
       return isEnglish
-          ? '🤫 Shhh! I swapped in the twin prank jar... Watch their face! 😉'
-          : '🤫 Şşşt! Çaktırmadan ikiz şaka kavanozunu tepsiye koydum 😉';
+          ? 'Shhh! I swapped in the twin prank jar... Watch their face!'
+          : 'Şşşt! Çaktırmadan ikiz şaka kavanozunu tepsiye koydum!';
     }
     if (_hasPastryOnTray) {
       return isEnglish
-          ? '🥐 Fresh pastry plated! Will we add Sweet Sugar or a salty surprise?'
-          : '🥐 Taze tatlı tepside! Şimdi Tatlı Şeker mi yoksa gizli tuz şakası mı?';
+          ? 'Fresh pastry plated! Will we add Sweet Sugar or a salty surprise?'
+          : 'Taze tatlı tepside! Şimdi Tatlı Şeker mi yoksa gizli tuz şakası mı?';
     }
     return isEnglish
-        ? '🥐 Pick a signature dessert from the vitrine (or sneak a twin jar!)'
-        : '🥐 Vitrinden taze tatlıyı seç (istersen ikiz tuzlukla şaka yap!)';
+        ? 'Pick a signature dessert from the vitrine (or sneak a twin jar!)'
+        : 'Vitrinden taze tatlıyı seç (istersen ikiz tuzlukla şaka yap!)';
   }
 
   @override
