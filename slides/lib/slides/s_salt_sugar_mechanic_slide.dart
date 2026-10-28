@@ -22,18 +22,18 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
   static const double _thumbGap = 14;
 
   static const String _schemaSnippet = '''
-// flutter_client/lib/services/cafe_judge_service.dart (Lines 95-116)
+// flutter_client/lib/services/cafe_judge_service.dart (Lines 115-136)
 'generationConfig': {
   'responseMimeType': 'application/json',
   'responseSchema': {
     'type': 'OBJECT',
     'properties': {
-      'ratingStars': {'type': 'INTEGER'},       // 1 (Sabotage!) to 5 (Sweet!)
-      'tasteVerdict': {'type': 'STRING'},       // "salty_sabotage" | "spicy_chaos" | "sweet_perfection"
+      'ratingStars': {'type': 'INTEGER'},       // 1 (Sabotage!) | 3 (Incomplete) | 5 (Sweet!)
+      'tasteVerdict': {'type': 'STRING'},       // "salty_sabotage" | "incomplete_tray" | "sweet_perfection"
       'customerFace': {'type': 'STRING'},       // "salty_disgusted" | "shocked" | "happy"
       'headline': {'type': 'STRING'},           // City-branded review headline
       'customerReaction': {'type': 'STRING'},   // Witty Turkish/English roast!
-      'cityBonusTip': {'type': 'INTEGER'},      // 0 on sabotage, +40 on 5-star order
+      'cityBonusTip': {'type': 'INTEGER'},      // 0 on sabotage/partial, +40 on 5-star order
     },
   },
 }''';

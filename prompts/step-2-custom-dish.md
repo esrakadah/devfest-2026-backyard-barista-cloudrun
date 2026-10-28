@@ -19,7 +19,7 @@ Add a toggle chip so players can switch Round-2 custom items on/off and add them
 When the players click "Serve Order! / Servis Et!", call `gemini-3.5-flash-lite` once with a strict JSON response schema:
 {
   "ratingStars": number (1 to 5),
-  "tasteVerdict": "sweet_perfection" | "salty_sabotage" | "spicy_chaos" | "creative_mix",
+  "tasteVerdict": "sweet_perfection" | "salty_sabotage" | "spicy_chaos" | "incomplete_tray",
   "customerFace": "happy" | "shocked" | "salty_disgusted",
   "headline": string,
   "customerReaction": string,
@@ -27,7 +27,8 @@ When the players click "Serve Order! / Servis Et!", call `gemini-3.5-flash-lite`
 }
 
 Rules for the Gemini Judge:
-- If the tray contains "salt_shaker" (Tuz), "chili_sauce" (Acı Sos), or "isot_pepper" (İsot Biberi) inside a sweet drink or pastry order, MUST return `ratingStars: 1`, `tasteVerdict: "salty_sabotage"` (or `"spicy_chaos"`), `customerFace: "salty_disgusted"`, and a hilarious roast referencing the active City Edition (`berlin`, `gaziantep`, `adana`, or `istanbul`).
-- If the tray has a balanced drink + pastry + sugar (and zero prank items), return `ratingStars: 5`, `tasteVerdict: "sweet_perfection"`, `customerFace: "happy"`, and a warm local compliment.
+- If the tray contains "salt_shaker" (Tuz), "chili_sauce" (Acı Sos), or "custom_isot_pepper" (İsot Biberi) inside a sweet drink or pastry order, MUST return `ratingStars: 1`, `tasteVerdict: "salty_sabotage"` (or `"spicy_chaos"`), `customerFace: "salty_disgusted"`, `cityBonusTip: 0`, and a hilarious roast referencing the active City Edition (`berlin`, `gaziantep`, `adana`, or `istanbul`).
+- If no prank is present but any of the 3 courses (Drink + Pastry + Sweet Sugar) is missing from the 3-slot tray, return `ratingStars: 3`, `tasteVerdict: "incomplete_tray"`, `customerFace: "shocked"`, and `cityBonusTip: 0`.
+- If the tray has all 3 courses (Drink + Pastry + Sweet Sugar) and zero prank items, return `ratingStars: 5`, `tasteVerdict: "sweet_perfection"`, `customerFace: "happy"`, `cityBonusTip: 40`, and a warm local compliment.
 - Include an instant offline fallback generator (`mock_responses.json`) if the API key is missing or returns HTTP 429 so the game never crashes on stage.
 ```

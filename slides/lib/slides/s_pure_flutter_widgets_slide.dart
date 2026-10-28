@@ -38,9 +38,9 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
                   accentColor: DeckColors.googleGreen,
                   bullets: [
                     '100% LLM Codegen Reliability: Gemini & Antigravity generate rock-solid Row, Column, Wrap, and Stack layouts on the first try.',
-                    'Responsive out of the box: LayoutBuilder scales our cafe counter cleanly from 360x780 mobile phones to 1280x1200 desktops.',
+                    'Responsive out of the box: LayoutBuilder scales our 2x2 cafe counter cleanly from 360x780 mobile phones to 1280x900 desktops.',
                     '1:1 Parity with Lane A: Matches the declarative component mental model of AI Studio Build mode.',
-                    'Built-in Accessibility & Testing: Standard Semantics and WidgetTester finders (7/7 tests passing in cafe_counter_test.dart).',
+                    'Built-in Accessibility & Testing: Standard Semantics and WidgetTester finders (8/8 tests passing in cafe_counter_test.dart).',
                   ],
                   footerText: 'flutter_client/lib/ui/cafe_counter_screen.dart',
                 ),

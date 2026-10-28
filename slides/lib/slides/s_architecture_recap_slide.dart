@@ -41,7 +41,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                     '20 PNGs',
                     '5 Lottie',
                     '10 WAV SFX',
-                    '<620px responsive',
+                    '2x2 Desktop + 3-Slot Tray',
                   ],
                   outcome: '0 game engines',
                 ),

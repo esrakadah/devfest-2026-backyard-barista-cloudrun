@@ -77,8 +77,8 @@ Her slaytın sağ üstündeki hikaye şeridi salona nerede olduğumuzu gösterir
 | Wi-Fi tamamen koptu | Slayt 16 (`/demo-hiccup`), "tam da bunun için tasarladık" | `flutter run -d chrome --dart-define=OFFLINE_MODE=true` |
 | HTTP 429 | Slayt 9'a atıf, uygulama zaten çevrimdışı jüriye düştü | Eylem gerekmez |
 | Deck çöktü veya laptop dondu | PDF yedeğine geç | `build/slides/backyard_barista_deck.pdf` |
-| AI Studio yavaş | Lane A referans oyununu aç | `ai_studio_lane_a/index.html` |
-| Katılımcı geride kaldı | Bir sonraki kontrol noktasına atla, eski turu bitirmeye çalışma | `prompts/step-N-*.md` veya `git checkout step-N` |
+| AI Studio yavaş | Lane A referans oyununu aç (`49.5 KB`, 3 yuvalı tepsi + 3 müşteri kuyruğu) | `ai_studio_lane_a/index.html` |
+| Katılımcı geride kaldı | Bir sonraki kontrol noktasına atla, eski turu bitirmeye çalışma | `prompts/step-N-*.md` veya `git checkout step-N` (veya `Tur 2 Özel Menü: ON`) |
 | Lane B deploy fatura istiyor | Bugün için Lane A deploy'una yönlendir | AI Studio'da "Deploy to Cloud Run" |
 
 ## Sonrası
