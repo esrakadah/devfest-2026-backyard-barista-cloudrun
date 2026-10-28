@@ -53,10 +53,13 @@ class CafeJudgeService {
 
     if (!containsSaltPrank && !containsChiliPrank && !isCompleteThreeCourseTray) {
       final isEnglish = cityEdition.defaultLanguage == 'en';
+      final drinkCourseLabel = isEnglish ? 'Coffee/Drink' : 'Kahve/İçecek';
+      final foodCourseLabel = isEnglish ? 'Pastry' : 'Tatlı';
+      final sweetCondimentLabel = isEnglish ? 'Sweet Sugar' : 'Tatlı Şeker';
       final missingStations = <String>[
-        if (!hasDrinkCourse) isEnglish ? 'Coffee/Drink' : 'Kahve/İçecek',
-        if (!hasFoodCourse) isEnglish ? 'Pastry' : 'Tatlı',
-        if (!hasSweetCondiment) isEnglish ? 'Sweet Sugar' : 'Tatlı Şeker',
+        if (!hasDrinkCourse) drinkCourseLabel,
+        if (!hasFoodCourse) foodCourseLabel,
+        if (!hasSweetCondiment) sweetCondimentLabel,
       ].join(' + ');
 
       return CafeReview(
