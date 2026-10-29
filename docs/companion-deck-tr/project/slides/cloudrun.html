@@ -1,0 +1,26 @@
+<section id="cloudrun" data-transition="fade" style="background:#0E1824;color:#F2F6FC;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#57CAFF">Desen 5 · Sunucusuz yayın</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">Herkese açık adreste durumsuz bir konteyner</h2>
+<div style="display:flex;gap:48px">
+<div style="flex:1;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:36px;font-weight:700">Aşama 1 · Derleme</h3>
+<p style="font-size:28px;color:#BFD0E4">Flutter imajı, şehir ve modeli içine gömerek release web build’i üretir.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:36px;font-weight:700">Aşama 2 · Sunma</h3>
+<p style="font-size:28px;color:#BFD0E4">nginx:alpine dosyaları Cloud Run’ın beklediği 8080 portundan sunar.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:36px;font-weight:700">Sıfıra ölçeklenme</h3>
+<p style="font-size:28px;color:#BFD0E4">Sunucuda durum yok; Cloud Run örnekleri serbestçe ekleyip kaldırabilir.</p>
+</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#0B141F;border:2px solid #284162;border-radius:20px;padding:36px">
+<p style="font-size:24px;font-weight:700;color:#57CAFF">KULVAR B · flutter_client/ İÇİNDEN</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;white-space:nowrap">gcloud run deploy backyard-barista \<br>  --source . \<br>  --region europe-west1 \<br>  --allow-unauthenticated</p>
+<p style="font-size:26px;color:#9EB1C9">Kulvar A: bunun yerine AI Studio’da “Deploy to Cloud Run”a bas.</p>
+</div>
+</div>
+<aside>Kaynak: flutter_client/Dockerfile ve prompts/step-3-deploy.md. Reponun canlı europe-west3 servisine karşı yaptığı ısınmış ölçüm, uygulamayı sunmak için p50 53,81 ms çıktı; bu statik dosya sunumu, Gemini çağrısı değil. Kulvar A, anahtarı sunucu tarafında tutan AI Studio üzerinden yayına alır.</aside>
+</section>

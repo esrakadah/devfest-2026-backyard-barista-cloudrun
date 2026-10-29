@@ -1,0 +1,24 @@
+<section id="schema" data-transition="fade" style="background:#0E1824;color:#F2F6FC;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#8AB4F8">Desen 1 · Yapılandırılmış çıktı</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">Paragraf değil, alan iste</h2>
+<div style="display:flex;gap:48px">
+<div style="flex:6;display:flex;flex-direction:column;background:#0B141F;border:2px solid #284162;border-radius:20px;padding:36px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;color:#F2F6FC;white-space:nowrap">'responseMimeType': 'application/json',<br>'responseSchema': {<br>  'type': 'OBJECT',<br>  'properties': {<br>    <span style="color:#FDD663">'ratingStars'</span>: INTEGER,<br>    <span style="color:#FDD663">'tasteVerdict'</span>: STRING,<br>    <span style="color:#FDD663">'customerFace'</span>: STRING,<br>    <span style="color:#FDD663">'headline'</span>: STRING,<br>    <span style="color:#FDD663">'customerReaction'</span>: STRING,<br>    <span style="color:#FDD663">'cityBonusTip'</span>: INTEGER,<br>  },<br>  'required': [ altısı da ],<br>}</p>
+</div>
+<div style="flex:5;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:36px;font-weight:700">Arayüz alanlara bağlanır</h3>
+<p style="font-size:28px;color:#BFD0E4">customerFace görseli seçer, ratingStars yıldızları doldurur. Serbest metin ayrıştırma yok.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:36px;font-weight:700">Kural istemde yaşar</h3>
+<p style="font-size:28px;color:#BFD0E4">Tatlı siparişte tuz varsa 1 yıldız ve “salty_sabotage” dönmek zorunda.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:36px;font-weight:700">Kişilik tek bir alanda</h3>
+<p style="font-size:28px;color:#BFD0E4">Yaratıcı olmasına izin verilen tek metin customerReaction: şehir laf sokması.</p>
+</div>
+</div>
+</div>
+<aside>Kaynak: flutter_client/lib/services/cafe_judge_service.dart. Sorumluluk ayrımına dikkat et: şema biçimi garanti eder, istem iş kuralını koyar ve yalnızca bir alan yaratıcı olabilir. 2. Turda kendin dene: yedinci bir alan ekle, örneğin recommendedPairing adında bir string, ve onu yorum kartında göster.</aside>
+</section>

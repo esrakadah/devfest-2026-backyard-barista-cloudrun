@@ -78,6 +78,7 @@ devfest-2026-backyard-barista-cloudrun/
 │   ├── speaker-drill-cards-tr.md      # Stage drill scripts (Drills 1-4: 60s open, 90s close, 5m cut, 20m recovery)
 │   ├── stage-runbook.md               # T-24h / T-2h / T-15m checklist, 5-act timing table, failure playbook
 │   ├── companion-deck/                # Source of the attendee Workshop Companion deck (16 slides, Claude Slides format)
+│   ├── companion-deck-tr/             # Turkish attendee guide (Atölye Rehberi), same 16 slides
 │   ├── visuals/                       # game-counter-desktop.png, architecture.png, social-card.png, deck-overview.jpg
 │   └── vibe-lounge-poster.html        # Print-ready A4 Vibe Lounge table poster with live Cloud Run QR
 ├── prompts/

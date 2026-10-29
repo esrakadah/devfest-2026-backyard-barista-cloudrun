@@ -1,0 +1,8 @@
+<section id="cheatsheet" data-transition="fade" style="background:#0E1824;color:#F2F6FC;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:40px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#FDD663">Kulvar B komut kartı</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">Gerçekten yazacağın beş komut</h2>
+<div style="display:flex;flex-direction:column;gap:20px;background:#0B141F;border:2px solid #284162;border-radius:20px;padding:40px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;line-height:1.6;white-space:nowrap"><span style="color:#9EB1C9"># kendi anahtarınla yerelde çalıştır</span><br>flutter run -d chrome --dart-define=GEMINI_API_KEY=<span style="color:#FDD663">anahtarin</span><br><span style="color:#9EB1C9"># hiç ağ olmadan çalıştır</span><br>flutter run -d chrome --dart-define=OFFLINE_MODE=true<br><span style="color:#9EB1C9"># şehir seç</span><br>flutter run -d chrome --dart-define=DEFAULT_CITY=<span style="color:#81C995">gaziantep</span><br><span style="color:#9EB1C9"># yayına almadan önce kontrol et</span><br>flutter analyze &amp;&amp; flutter test<br><span style="color:#9EB1C9"># canlıya al (anahtar gömülmez)</span><br>gcloud run deploy backyard-barista --source . --region europe-west1 --allow-unauthenticated</p>
+</div>
+<aside>Tüm komutlar flutter_client/ klasöründe çalışır. Şehir kimlikleri: berlin, gaziantep, adana ve istanbul. Yayındaki bir build’de adresin sonuna ?remote_city=adana ekleyerek ayar zincirinin 2. katmanını yeniden deploy etmeden deneyebilirsin.</aside>
+</section>

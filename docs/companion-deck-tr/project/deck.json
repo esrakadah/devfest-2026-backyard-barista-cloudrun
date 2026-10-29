@@ -1,0 +1,18 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-29T09:00:00Z"},
+  "lists": "css",
+  "title": "Backyard Barista Atölye Rehberi",
+  "order": ["cover", "hook", "learn", "lanes", "orderflow", "schema", "guardrails", "quota", "config", "cloudrun", "rounds", "keysafety", "troubleshoot", "cheatsheet", "further", "closing"],
+  "sections": {
+    "s1": {"description": "Neden bu oyun, ne öğreneceksin ve hangi kulvar sana uygun", "start": "cover"},
+    "s2": {"description": "Bir kafe oyununun içine saklanmış beş üretim deseni", "start": "orderflow"},
+    "s3": {"description": "Üç inşa turu, güvenlik kuralları ve sık karşılaşılan hataların çözümleri", "start": "rounds"},
+    "s4": {"description": "Komutlar, sonraki adımlar ve saklanacak linkler", "start": "cheatsheet"}
+  },
+  "faces": {
+    "dm-sans": {"family": "DM Sans", "href": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"},
+    "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap"}
+  },
+  "designSystems": []
+}
