@@ -11,7 +11,10 @@ external JSBoolean? _playBackyardBaristaWebAudio(JSString cueName);
 /// and plays bundled `.wav` assets inside Chrome, Mobile Safari, and WebViews.
 Future<void> playPlatformCafeCue(String cueName, String assetPath) async {
   try {
-    _playBackyardBaristaWebAudio(cueName.toJS);
+    final didPlaySynth = _playBackyardBaristaWebAudio(cueName.toJS)?.toDart ?? false;
+    if (didPlaySynth) {
+      return;
+    }
   } on Object {
     // Continue to HTMLAudioElement fallback if Web Audio synth is unavailable.
   }

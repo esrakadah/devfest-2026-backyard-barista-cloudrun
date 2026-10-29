@@ -1,6 +1,7 @@
 import 'package:backyard_barista_deck/slides/s_ai_studio_pipeline_slide.dart';
 import 'package:backyard_barista_deck/slides/s_architecture_recap_slide.dart';
 import 'package:backyard_barista_deck/slides/s_demo_hiccup_slide.dart';
+import 'package:backyard_barista_deck/slides/s_gde_artifacts_tour_slide.dart';
 import 'package:backyard_barista_deck/slides/s_hybrid_asset_pipeline_slide.dart';
 import 'package:backyard_barista_deck/slides/s_live_build_dashboard_slide.dart';
 import 'package:backyard_barista_deck/slides/s_meet_antigravity_slide.dart';
@@ -19,6 +20,7 @@ import 'package:flutter_deck/flutter_deck.dart';
 export 's_ai_studio_pipeline_slide.dart';
 export 's_architecture_recap_slide.dart';
 export 's_demo_hiccup_slide.dart';
+export 's_gde_artifacts_tour_slide.dart';
 export 's_hybrid_asset_pipeline_slide.dart';
 export 's_live_build_dashboard_slide.dart';
 export 's_meet_antigravity_slide.dart';
@@ -33,7 +35,7 @@ export 's_title_slide.dart';
 export 's_winner_podium_closing_slide.dart';
 export 's_workshop_contract_slide.dart';
 
-/// Main 15-slide workshop & Vibe Lounge presentation order.
+/// Main 16-slide workshop & Vibe Lounge presentation order.
 const List<FlutterDeckSlideWidget> mainSlides = [
   TitleSlide(),
   SweetOrSaltySlide(),
@@ -49,6 +51,7 @@ const List<FlutterDeckSlideWidget> mainSlides = [
   HybridAssetPipelineSlide(),
   LiveBuildDashboardSlide(),
   ArchitectureRecapSlide(),
+  GdeArtifactsTourSlide(),
   WinnerPodiumClosingSlide(),
 ];
 
@@ -57,7 +60,7 @@ const List<FlutterDeckSlideWidget> backupSlides = [
   DemoHiccupSlide(),
 ];
 
-/// Full running order (15 main slides + 1 backup slide).
+/// Full running order (16 main slides + 1 backup slide).
 const List<FlutterDeckSlideWidget> deckSlides = [
   ...mainSlides,
   ...backupSlides,

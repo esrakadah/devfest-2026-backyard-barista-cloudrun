@@ -66,9 +66,8 @@ class CafeJudgeService {
         ratingStars: 3,
         tasteVerdict: 'incomplete_tray',
         customerFace: CustomerFaceState.shocked,
-        headline: isEnglish
-            ? '${cityEdition.flagEmoji} ${cityEdition.cityName}: Incomplete Tray!'
-            : '${cityEdition.flagEmoji} ${cityEdition.cityName}: Tepside Eksik Var!',
+        headline:
+            isEnglish ? '${cityEdition.cityName}: Incomplete Tray!' : '${cityEdition.cityName}: Tepside Eksik Var!',
         customerReaction: isEnglish
             ? 'Wait a second! You forgot ($missingStations) on the tray. Plate all 3 stations for 5 stars!'
             : 'Usta tepside ($missingStations) eksik kalmış! 5 yıldız için içecek, tatlı ve şekeri birlikte dizin!',
@@ -255,7 +254,7 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
         ratingStars: minCafeRatingStars,
         tasteVerdict: 'salty_sabotage',
         customerFace: CustomerFaceState.saltyDisgusted,
-        headline: '${cityEdition.flagEmoji} ${cityEdition.cityName}: Salt Prank Caught!',
+        headline: '${cityEdition.cityName}: Salt Prank Caught!',
         customerReaction: cityEdition.saltPrankRoast,
         cityBonusTip: 0,
         evaluatedAt: _clock(),
@@ -268,7 +267,7 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
         ratingStars: minCafeRatingStars,
         tasteVerdict: 'spicy_chaos',
         customerFace: CustomerFaceState.shocked,
-        headline: '${cityEdition.flagEmoji} ${cityEdition.cityName}: Chili Prank Caught!',
+        headline: '${cityEdition.cityName}: Chili Prank Caught!',
         customerReaction: cityEdition.chiliPrankRoast,
         cityBonusTip: 0,
         evaluatedAt: _clock(),
@@ -280,7 +279,7 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       ratingStars: maxCafeRatingStars,
       tasteVerdict: 'sweet_perfection',
       customerFace: CustomerFaceState.happy,
-      headline: '${cityEdition.flagEmoji} ${cityEdition.cityName}: 5-Star Sweet Perfection!',
+      headline: '${cityEdition.cityName}: 5-Star Sweet Perfection!',
       customerReaction: cityEdition.sweetCompliment,
       cityBonusTip: _sweetBonusTipAmount,
       evaluatedAt: _clock(),

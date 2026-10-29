@@ -5,11 +5,13 @@ import 'package:flutter/foundation.dart';
 class CafeCharacterAssets {
   const CafeCharacterAssets._();
 
+  static const String hogsmeadeUniversalStage = 'assets/base/characters/hogsmeade_universal_stage.png';
+  static const String harryPotterStageRunner = 'assets/base/characters/customer_lukas.png';
   static const String baristaPlayerOne = 'assets/base/characters/barista_p1.png';
   static const String pastryChefPlayerTwo = 'assets/base/characters/pastry_chef_p2.png';
   static const String customerAyseUsta = 'assets/base/characters/customer_ayse_usta.png';
   static const String customerMustafa = 'assets/base/characters/customer_mustafa.png';
-  static const String customerLukas = 'assets/base/characters/customer_lukas.png';
+  static const String customerLukas = 'assets/base/characters/customer_mustafa.png';
   static const String customerDeniz = 'assets/base/characters/customer_deniz.png';
   static const String customerZeynepHappy = 'assets/base/customers/customer_happy.png';
 }

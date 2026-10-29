@@ -2,6 +2,7 @@ import 'package:backyard_barista_cloudrun/config/city_edition_controller.dart';
 import 'package:backyard_barista_cloudrun/data/ingredients_catalog.dart';
 import 'package:backyard_barista_cloudrun/main.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
+import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -102,6 +103,20 @@ void main() {
 
       expect(find.textContaining('1/5 · Tuzlu Sabotaj 🧂'), findsOneWidget);
       expect(find.textContaining('sınır dışı ederler'), findsOneWidget);
+
+      // 2b. Sneak Chili Sauce (Acı Biber) onto the tray: verify spicy_chaos 1-star verdict
+      final chiliCard = find.byKey(const Key('ingredient_card_chili_sauce'));
+      await tester.ensureVisible(chiliCard);
+      await tester.pumpAndSettle();
+      await tester.tap(chiliCard);
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(serveButton);
+      await tester.pumpAndSettle();
+      await tester.tap(serveButton);
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('1/5 · Acı Biber Şoku 🌶️'), findsOneWidget);
 
       // 3. Advance to Next Customer (#2 Mustafa)
       final nextCustomerButton = find.byKey(const Key('next_customer_button'));
@@ -208,8 +223,8 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 2));
 
-    expect(find.byKey(const Key('tea_sip_countdown_badge')), findsWidgets);
-    expect(find.byKey(const Key('turkish_tea_sip_canvas')), findsWidgets);
+    expect(find.byKey(const Key('tea_sip_countdown_badge')), findsOneWidget);
+    expect(find.byKey(const Key('turkish_tea_sip_canvas')), findsOneWidget);
     expect(find.textContaining('tavşan kanı çayımı 5 saniye keyifle yudumluyorum'), findsOneWidget);
 
     // Advance past the remaining 3 seconds of the 5-second animation
@@ -324,6 +339,17 @@ void main() {
 
       expect(find.text('Lv.2 Barista'), findsOneWidget);
       expect(find.text('Seviye Atlama · Level Up!'), findsOneWidget);
+
+      final soundController = CafeSoundController()
+        ..play(CafeSoundCue.coffeeGrinder)
+        ..play(CafeSoundCue.serveBell);
+      expect(
+        soundController.playedCues,
+        <CafeSoundCue>[CafeSoundCue.coffeeGrinder, CafeSoundCue.serveBell],
+      );
+      soundController.toggleMute();
+      soundController.play(CafeSoundCue.saltyBuzzer);
+      expect(soundController.playedCues, hasLength(2));
     },
   );
 
@@ -357,6 +383,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.textContaining('3/5 · Eksik Tepsi 🧩'), findsOneWidget);
+      expect(find.textContaining('🧩 Tepside eksik istasyon var!'), findsOneWidget);
+      expect(find.textContaining('🎉 5 Yıldız Tatlı Mükemmellik!'), findsNothing);
 
       // 2. Selecting another drink replaces the previous drink in the 3-slot tray
       await tester.ensureVisible(find.byKey(const Key('ingredient_card_menengic_coffee')));
@@ -405,6 +433,8 @@ void main() {
       );
 
       expect(find.byKey(const Key('subway_barista_flame_stage')), findsOneWidget);
+      expect(find.byKey(const Key('magical_hogsmeade_atmosphere_overlay')), findsOneWidget);
+      expect(find.text('🪄 Lumos'), findsOneWidget);
       expect(find.byKey(const Key('flame_lane_pill_0')), findsOneWidget);
       expect(find.byKey(const Key('flame_lane_pill_1')), findsOneWidget);
       expect(find.byKey(const Key('flame_lane_pill_2')), findsOneWidget);
@@ -420,6 +450,7 @@ void main() {
       await tester.tap(find.byKey(const Key('flame_lane_pill_2')));
       await tester.pumpAndSettle();
       expect(find.textContaining('Ahşap Tepsi (3/3):'), findsOneWidget);
+      expect(find.text('✨ Wingardium!'), findsOneWidget);
     },
   );
 }

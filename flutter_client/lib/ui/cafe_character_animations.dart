@@ -175,8 +175,40 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
   }
 
   void _handleTap() {
+    final tapCallback = widget.onTapCharacter;
+    if (tapCallback != null) {
+      tapCallback();
+      return;
+    }
     _triggerFiveSecondTeaSip();
-    widget.onTapCharacter?.call();
+  }
+
+  IconData _resolveBadgeIcon(String badgeText, CafeCharacterMood activeMood) {
+    if (_effectiveSipping) {
+      return Icons.emoji_food_beverage_rounded;
+    }
+    if (activeMood == CafeCharacterMood.stealthPrankWink ||
+        activeMood == CafeCharacterMood.saltySabotageShock ||
+        badgeText.contains('🧂') ||
+        badgeText.contains('🤫')) {
+      return Icons.whatshot_rounded;
+    }
+    if (activeMood == CafeCharacterMood.tastingPastryFiveSeconds || badgeText.contains('🥐')) {
+      return Icons.bakery_dining_rounded;
+    }
+    if (badgeText.contains('☕')) {
+      return Icons.coffee_rounded;
+    }
+    if (badgeText.contains('🎤') || badgeText.contains('🎙️')) {
+      return Icons.mic_rounded;
+    }
+    if (badgeText.contains('💻') || badgeText.contains('🤖')) {
+      return Icons.terminal_rounded;
+    }
+    if (badgeText.contains('👓') || badgeText.contains('🌟')) {
+      return Icons.workspace_premium_rounded;
+    }
+    return Icons.auto_awesome_rounded;
   }
 
   @override
@@ -200,226 +232,231 @@ class _AnimatedCafeCharacterAvatarState extends State<AnimatedCafeCharacterAvata
     final lottieDimension = widget.avatarSize * _lottieOverlayScaleFactor;
     final activeMood = _effectiveSipping ? CafeCharacterMood.sippingTeaFiveSeconds : widget.mood;
 
-    return GestureDetector(
-      onTap: _handleTap,
-      child: AnimatedBuilder(
-        animation: Listenable.merge(<Listenable>[_motionController, _teaSipController]),
-        builder: (context, child) {
-          final progress = _motionController.value;
-          final sipProgress = _teaSipController.value;
-          final sineWave = math.sin(progress * math.pi * 2);
-          final halfWave = math.sin(progress * math.pi);
+    return Semantics(
+      button: true,
+      label: widget.languageCode == 'en'
+          ? 'Character avatar, tap for 5-second Turkish tea sip'
+          : 'Karakter portresi, 5 saniye çay yudumlatmak için dokunun',
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: _handleTap,
+          child: AnimatedBuilder(
+            animation: Listenable.merge(<Listenable>[_motionController, _teaSipController]),
+            builder: (context, child) {
+              final progress = _motionController.value;
+              final sipProgress = _teaSipController.value;
+              final sineWave = math.sin(progress * math.pi * 2);
+              final halfWave = math.sin(progress * math.pi);
 
-          var offsetX = 0.0;
-          var offsetY = 0.0;
-          var rotationRadians = 0.0;
-          var scaleValue = 1.0;
+              var offsetX = 0.0;
+              var offsetY = 0.0;
+              var rotationRadians = 0.0;
+              var scaleValue = 1.0;
 
-          switch (activeMood) {
-            case CafeCharacterMood.idleBreathing:
-              offsetY = -halfWave * _breathingAmplitudePixels;
-              scaleValue = 1.0 + (halfWave * 0.025);
-            case CafeCharacterMood.talkingOrder:
-              offsetY = -halfWave * (_breathingAmplitudePixels + 2.0);
-              rotationRadians = sineWave * (_maxTiltRadians * 0.5);
-              scaleValue = 1.0 + (halfWave * 0.04);
-            case CafeCharacterMood.brewingActive:
-              offsetY = -halfWave * 4.5;
-              rotationRadians = sineWave * (_maxTiltRadians * 0.7);
-              scaleValue = 1.0 + (halfWave * _brewingScaleBoost);
-            case CafeCharacterMood.sippingTeaFiveSeconds:
-              // 3-phase 5-second sipping head & body choreography
-              if (sipProgress < _sipLiftPhaseEnd) {
-                final liftRatio = sipProgress / _sipLiftPhaseEnd;
-                offsetY = -3.5 * liftRatio;
-                rotationRadians = 0.05 * liftRatio;
-                scaleValue = 1.0 + (0.04 * liftRatio);
-              } else if (sipProgress < _sipDrinkingPhaseEnd) {
-                final drinkPhase = (sipProgress - _sipLiftPhaseEnd) / (_sipDrinkingPhaseEnd - _sipLiftPhaseEnd);
-                // 3 distinct sips across the drinking window
-                final sipPulse = math.sin(drinkPhase * math.pi * 3).abs();
-                offsetY = -3.5 - (4.0 * sipPulse);
-                rotationRadians = -0.09 * sipPulse;
-                scaleValue = 1.03 + (0.05 * sipPulse);
-              } else {
-                final finishRatio = (sipProgress - _sipDrinkingPhaseEnd) / (1.0 - _sipDrinkingPhaseEnd);
-                final happyNod = math.sin(finishRatio * math.pi * 2);
-                offsetY = -4.5 * (1.0 - finishRatio);
-                rotationRadians = 0.06 * happyNod;
-                scaleValue = 1.0 + (0.05 * (1.0 - finishRatio));
+              switch (activeMood) {
+                case CafeCharacterMood.idleBreathing:
+                  offsetY = -halfWave * _breathingAmplitudePixels;
+                  scaleValue = 1.0 + (halfWave * 0.025);
+                case CafeCharacterMood.talkingOrder:
+                  offsetY = -halfWave * (_breathingAmplitudePixels + 2.0);
+                  rotationRadians = sineWave * (_maxTiltRadians * 0.5);
+                  scaleValue = 1.0 + (halfWave * 0.04);
+                case CafeCharacterMood.brewingActive:
+                  offsetY = -halfWave * 4.5;
+                  rotationRadians = sineWave * (_maxTiltRadians * 0.7);
+                  scaleValue = 1.0 + (halfWave * _brewingScaleBoost);
+                case CafeCharacterMood.sippingTeaFiveSeconds:
+                  // 3-phase 5-second sipping head & body choreography
+                  if (sipProgress < _sipLiftPhaseEnd) {
+                    final liftRatio = sipProgress / _sipLiftPhaseEnd;
+                    offsetY = -3.5 * liftRatio;
+                    rotationRadians = 0.05 * liftRatio;
+                    scaleValue = 1.0 + (0.04 * liftRatio);
+                  } else if (sipProgress < _sipDrinkingPhaseEnd) {
+                    final drinkPhase = (sipProgress - _sipLiftPhaseEnd) / (_sipDrinkingPhaseEnd - _sipLiftPhaseEnd);
+                    // 3 distinct sips across the drinking window
+                    final sipPulse = math.sin(drinkPhase * math.pi * 3).abs();
+                    offsetY = -3.5 - (4.0 * sipPulse);
+                    rotationRadians = -0.09 * sipPulse;
+                    scaleValue = 1.03 + (0.05 * sipPulse);
+                  } else {
+                    final finishRatio = (sipProgress - _sipDrinkingPhaseEnd) / (1.0 - _sipDrinkingPhaseEnd);
+                    final happyNod = math.sin(finishRatio * math.pi * 2);
+                    offsetY = -4.5 * (1.0 - finishRatio);
+                    rotationRadians = 0.06 * happyNod;
+                    scaleValue = 1.0 + (0.05 * (1.0 - finishRatio));
+                  }
+                case CafeCharacterMood.tastingPastryFiveSeconds:
+                  offsetY = -halfWave * 6.0;
+                  rotationRadians = sineWave * (_maxTiltRadians * 0.9);
+                  scaleValue = 1.0 + (halfWave * 0.07);
+                case CafeCharacterMood.stealthPrankWink:
+                  offsetX = sineWave * 3.0;
+                  rotationRadians = sineWave * _maxTiltRadians;
+                  scaleValue = 1.0 + (halfWave * 0.045);
+                case CafeCharacterMood.sweetCelebration:
+                  offsetY = -halfWave * _jumpPeakPixels;
+                  rotationRadians = sineWave * (_maxTiltRadians * 0.8);
+                  scaleValue = 1.0 + (halfWave * _celebrationScaleBoost);
+                case CafeCharacterMood.saltySabotageShock:
+                  offsetX = sineWave * _shakeAmplitudePixels;
+                  rotationRadians = -sineWave * (_maxTiltRadians * 1.35);
+                  scaleValue = 1.0 + (halfWave * 0.05);
               }
-            case CafeCharacterMood.tastingPastryFiveSeconds:
-              offsetY = -halfWave * 6.0;
-              rotationRadians = sineWave * (_maxTiltRadians * 0.9);
-              scaleValue = 1.0 + (halfWave * 0.07);
-            case CafeCharacterMood.stealthPrankWink:
-              offsetX = sineWave * 3.0;
-              rotationRadians = sineWave * _maxTiltRadians;
-              scaleValue = 1.0 + (halfWave * 0.045);
-            case CafeCharacterMood.sweetCelebration:
-              offsetY = -halfWave * _jumpPeakPixels;
-              rotationRadians = sineWave * (_maxTiltRadians * 0.8);
-              scaleValue = 1.0 + (halfWave * _celebrationScaleBoost);
-            case CafeCharacterMood.saltySabotageShock:
-              offsetX = sineWave * _shakeAmplitudePixels;
-              rotationRadians = -sineWave * (_maxTiltRadians * 1.35);
-              scaleValue = 1.0 + (halfWave * 0.05);
-          }
 
-          final remainingSeconds = (_totalSipSeconds * (1.0 - sipProgress)).clamp(0.0, _totalSipSeconds);
-          final badgeEmoji = widget.badgeEmoji;
+              final remainingSeconds = (_totalSipSeconds * (1.0 - sipProgress)).clamp(0.0, _totalSipSeconds);
+              final badgeEmoji = widget.badgeEmoji;
 
-          return SizedBox(
-            width: widget.avatarSize + 18,
-            height: widget.avatarSize + 24,
-            child: Stack(
-              alignment: Alignment.center,
-              clipBehavior: Clip.none,
-              children: <Widget>[
-                // Layer 1: Ready-made Lottie JSON aura / burst behind & over the character
-                IgnorePointer(
-                  child: SizedBox(
-                    width: lottieDimension,
-                    height: lottieDimension,
-                    child: Lottie.asset(
-                      activeMood.lottieAssetPath,
-                      repeat: !isRunningInAutomatedWidgetTest,
-                      animate: !isRunningInAutomatedWidgetTest,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
-                    ),
-                  ),
-                ),
-                // Layer 2: 60fps Animated Character Portrait
-                Transform.translate(
-                  offset: Offset(offsetX, offsetY),
-                  child: Transform.rotate(
-                    angle: rotationRadians,
-                    child: Transform.scale(
-                      scale: scaleValue,
-                      child: child,
-                    ),
-                  ),
-                ),
-                // Layer 3: Expressive Particle Overlay (Floating Hearts, Sparkles, or Spicy Steam)
-                IgnorePointer(
-                  child: CustomPaint(
-                    size: Size(widget.avatarSize + 18, widget.avatarSize + 18),
-                    painter: _CharacterMoodParticlePainter(
-                      mood: activeMood,
-                      progress: _effectiveSipping ? sipProgress : progress,
-                    ),
-                  ),
-                ),
-                // Layer 4: 5-Second Turkish Tulip Tea Glass (İnce Belli Çay Bardağı) Sipping Animation
-                if (_effectiveSipping)
-                  IgnorePointer(
-                    child: CustomPaint(
-                      key: const Key('turkish_tea_sip_canvas'),
-                      size: Size(widget.avatarSize + 28, widget.avatarSize + 28),
-                      painter: _TurkishTeaGlassSipPainter(
-                        sipProgress: sipProgress,
-                      ),
-                    ),
-                  ),
-                // Layer 5: Live 5-Second Tea Sipping Countdown Pill ("🫖 Hüüüp! · 3.8s")
-                if (_effectiveSipping)
-                  Positioned(
-                    top: -12,
-                    child: Container(
-                      key: const Key('tea_sip_countdown_badge'),
-                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: <Color>[Color(0xFFB71C1C), Color(0xFFD84315)],
-                        ),
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(color: const Color(0xFFFFF8EE), width: 1.5),
-                        boxShadow: const <BoxShadow>[
-                          BoxShadow(
-                            color: Color(0x33000000),
-                            blurRadius: 6,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Text(
-                        widget.languageCode == 'en'
-                            ? '🫖 Sipping · ${remainingSeconds.toStringAsFixed(1)}s'
-                            : '🫖 Hüüüp! · ${remainingSeconds.toStringAsFixed(1)}sn',
-                        style: const TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800,
-                          color: Colors.white,
+              return SizedBox(
+                width: widget.avatarSize + 18,
+                height: widget.avatarSize + 24,
+                child: Stack(
+                  alignment: Alignment.center,
+                  clipBehavior: Clip.none,
+                  children: <Widget>[
+                    // Layer 1: Ready-made Lottie JSON aura / burst behind & over the character
+                    IgnorePointer(
+                      child: SizedBox(
+                        width: lottieDimension,
+                        height: lottieDimension,
+                        child: Lottie.asset(
+                          activeMood.lottieAssetPath,
+                          repeat: !isRunningInAutomatedWidgetTest,
+                          animate: !isRunningInAutomatedWidgetTest,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
                         ),
                       ),
                     ),
-                  ),
-                // Layer 6: Character Persona / Mood Badge Pill
-                if (badgeEmoji != null)
-                  Positioned(
-                    right: -2,
-                    bottom: -2,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFF8EE),
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(color: widget.borderColor, width: 1.5),
-                        boxShadow: const <BoxShadow>[
-                          BoxShadow(
-                            color: Color(0x26000000),
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        _effectiveSipping
-                            ? Icons.emoji_food_beverage_rounded
-                            : (activeMood == CafeCharacterMood.stealthPrankWink ||
-                                    activeMood == CafeCharacterMood.saltySabotageShock
-                                ? Icons.whatshot_rounded
-                                : (activeMood == CafeCharacterMood.tastingPastryFiveSeconds
-                                    ? Icons.bakery_dining_rounded
-                                    : Icons.auto_awesome_rounded)),
-                        size: 13,
-                        color: widget.borderColor,
+                    // Layer 2: 60fps Animated Character Portrait
+                    Transform.translate(
+                      offset: Offset(offsetX, offsetY),
+                      child: Transform.rotate(
+                        angle: rotationRadians,
+                        child: Transform.scale(
+                          scale: scaleValue,
+                          child: child,
+                        ),
                       ),
                     ),
+                    // Layer 3: Expressive Particle Overlay (Floating Hearts, Sparkles, or Spicy Steam)
+                    IgnorePointer(
+                      child: CustomPaint(
+                        size: Size(widget.avatarSize + 18, widget.avatarSize + 18),
+                        painter: _CharacterMoodParticlePainter(
+                          mood: activeMood,
+                          progress: _effectiveSipping ? sipProgress : progress,
+                        ),
+                      ),
+                    ),
+                    // Layer 4: 5-Second Turkish Tulip Tea Glass (İnce Belli Çay Bardağı) Sipping Animation
+                    if (_effectiveSipping)
+                      IgnorePointer(
+                        child: CustomPaint(
+                          key: const Key('turkish_tea_sip_canvas'),
+                          size: Size(widget.avatarSize + 28, widget.avatarSize + 28),
+                          painter: _TurkishTeaGlassSipPainter(
+                            sipProgress: sipProgress,
+                          ),
+                        ),
+                      ),
+                    // Layer 5: Live 5-Second Tea Sipping Countdown Pill ("🫖 Hüüüp! · 3.8s")
+                    if (_effectiveSipping)
+                      Positioned(
+                        top: -12,
+                        child: Container(
+                          key: const Key('tea_sip_countdown_badge'),
+                          padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: <Color>[Color(0xFFB71C1C), Color(0xFFD84315)],
+                            ),
+                            borderRadius: BorderRadius.circular(999),
+                            border: Border.all(color: const Color(0xFFFFF8EE), width: 1.5),
+                            boxShadow: const <BoxShadow>[
+                              BoxShadow(
+                                color: Color(0x33000000),
+                                blurRadius: 6,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            widget.languageCode == 'en'
+                                ? '🫖 Sipping · ${remainingSeconds.toStringAsFixed(1)}s'
+                                : '🫖 Hüüüp! · ${remainingSeconds.toStringAsFixed(1)}sn',
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w800,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    // Layer 6: Character Persona / Mood Badge Pill
+                    if (badgeEmoji != null)
+                      Positioned(
+                        right: -2,
+                        bottom: -2,
+                        child: Tooltip(
+                          message: badgeEmoji,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFFF8EE),
+                              borderRadius: BorderRadius.circular(999),
+                              border: Border.all(color: widget.borderColor, width: 1.5),
+                              boxShadow: const <BoxShadow>[
+                                BoxShadow(
+                                  color: Color(0x26000000),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: Icon(
+                              _resolveBadgeIcon(badgeEmoji, activeMood),
+                              size: 13,
+                              color: widget.borderColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFF8EE),
+                borderRadius: borderRadius,
+                border: Border.all(color: widget.borderColor, width: 2.5),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: widget.borderColor.withValues(alpha: 0.28),
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
                   ),
-              ],
-            ),
-          );
-        },
-        child: Container(
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: const Color(0xFFFFF8EE),
-            borderRadius: borderRadius,
-            border: Border.all(color: widget.borderColor, width: 2.5),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: widget.borderColor.withValues(alpha: 0.28),
-                blurRadius: 10,
-                offset: const Offset(0, 3),
+                ],
               ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: borderRadius,
-            child: Image.asset(
-              widget.portraitAssetPath,
-              width: widget.avatarSize,
-              height: widget.avatarSize,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  Icons.face_retouching_natural,
-                  size: widget.avatarSize * 0.75,
-                  color: const Color(0xFF6D4C41),
-                );
-              },
+              child: ClipRRect(
+                borderRadius: borderRadius,
+                child: Image.asset(
+                  widget.portraitAssetPath,
+                  width: widget.avatarSize,
+                  height: widget.avatarSize,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(
+                      Icons.face_retouching_natural,
+                      size: widget.avatarSize * 0.75,
+                      color: const Color(0xFFC59B27),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ),
@@ -582,83 +619,94 @@ class _CharacterMoodParticlePainter extends CustomPainter {
   final CafeCharacterMood mood;
   final double progress;
 
+  void _drawStarSparkle(Canvas canvas, Offset center, double radius, Color color) {
+    final inner = radius * 0.28;
+    final path = Path()
+      ..moveTo(center.dx, center.dy - radius)
+      ..lineTo(center.dx + inner, center.dy - inner)
+      ..lineTo(center.dx + radius, center.dy)
+      ..lineTo(center.dx + inner, center.dy + inner)
+      ..lineTo(center.dx, center.dy + radius)
+      ..lineTo(center.dx - inner, center.dy + inner)
+      ..lineTo(center.dx - radius, center.dy)
+      ..lineTo(center.dx - inner, center.dy - inner)
+      ..close();
+    canvas.drawPath(path, Paint()..color = color);
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
+    // Orbiting Lumos wand sparkles around every character window
+    final orbitAngle = progress * math.pi * 2;
+    final leftSparkCenter = Offset(
+      6 + math.sin(orbitAngle) * 3,
+      size.height * 0.30 - (progress * 8),
+    );
+    final rightSparkCenter = Offset(
+      size.width - 6 - math.cos(orbitAngle) * 3,
+      size.height * 0.24 - (progress * 7),
+    );
+    _drawStarSparkle(canvas, leftSparkCenter, 4.8, const Color(0xFFFFD54F));
+    _drawStarSparkle(canvas, rightSparkCenter, 4.2, const Color(0xFFFFF8E1));
+
     switch (mood) {
       case CafeCharacterMood.sweetCelebration:
       case CafeCharacterMood.tastingPastryFiveSeconds:
-        final sparklePaint = Paint()
-          ..color = const Color(0xFFFFB300)
-          ..style = PaintingStyle.fill;
-        final emeraldPaint = Paint()
-          ..color = const Color(0xFF2E7D32)
-          ..style = PaintingStyle.fill;
-        canvas.drawCircle(
-          Offset(8, size.height * 0.22 - (progress * 8)),
-          4.2,
-          sparklePaint,
+        _drawStarSparkle(
+          canvas,
+          Offset(10, size.height * 0.16 - (progress * 8)),
+          5.8,
+          const Color(0xFFFFB300),
         );
-        canvas.drawCircle(
-          Offset(size.width - 8, size.height * 0.26 - (progress * 9)),
-          3.8,
-          emeraldPaint,
+        _drawStarSparkle(
+          canvas,
+          Offset(size.width - 10, size.height * 0.18 - (progress * 9)),
+          5.2,
+          const Color(0xFF4E9F6E),
         );
       case CafeCharacterMood.sippingTeaFiveSeconds:
-        // Warm ruby & golden aroma bubbles rising during the 5s tea sip
-        final rubyAromaPaint = Paint()
-          ..color = const Color(0xFFD84315).withValues(alpha: 0.85)
-          ..style = PaintingStyle.fill;
-        final goldAromaPaint = Paint()
-          ..color = const Color(0xFFFFB300).withValues(alpha: 0.9)
-          ..style = PaintingStyle.fill;
+        // Warm ruby & golden aroma sparkles rising during the 5s tea sip
         final floatOffset = (progress * 24) % 16;
-        canvas
-          ..drawCircle(
-            Offset(10, size.height * 0.28 - floatOffset),
-            4.2,
-            rubyAromaPaint,
-          )
-          ..drawCircle(
-            Offset(size.width - 10, size.height * 0.24 - floatOffset * 0.8),
-            4.6,
-            goldAromaPaint,
-          );
-      case CafeCharacterMood.saltySabotageShock:
-        final flamePaint = Paint()
-          ..color = const Color(0xFFD32F2F)
-          ..style = PaintingStyle.fill;
-        final smokePaint = Paint()
-          ..color = const Color(0xFFFF7043)
-          ..style = PaintingStyle.fill;
-        canvas.drawCircle(
-          Offset(6, size.height * 0.20 - (progress * 7)),
-          4.8,
-          flamePaint,
+        _drawStarSparkle(
+          canvas,
+          Offset(10, size.height * 0.26 - floatOffset),
+          5.2,
+          const Color(0xFFFFB300),
         );
-        canvas.drawCircle(
-          Offset(size.width - 6, size.height * 0.18 - (progress * 7)),
-          4.5,
-          smokePaint,
+        _drawStarSparkle(
+          canvas,
+          Offset(size.width - 10, size.height * 0.22 - floatOffset * 0.8),
+          5.5,
+          const Color(0xFFFFCCBC),
+        );
+      case CafeCharacterMood.saltySabotageShock:
+        _drawStarSparkle(
+          canvas,
+          Offset(6, size.height * 0.18 - (progress * 7)),
+          5.8,
+          const Color(0xFFD32F2F),
+        );
+        _drawStarSparkle(
+          canvas,
+          Offset(size.width - 6, size.height * 0.16 - (progress * 7)),
+          5.4,
+          const Color(0xFFFF7043),
         );
       case CafeCharacterMood.stealthPrankWink:
-        final winkPaint = Paint()
-          ..color = const Color(0xFFFF8F00)
-          ..style = PaintingStyle.fill;
-        canvas.drawCircle(
+        _drawStarSparkle(
+          canvas,
           Offset(size.width - 8, 10 - (progress * 4)),
-          3.5,
-          winkPaint,
+          4.8,
+          const Color(0xFFFF8F00),
         );
       case CafeCharacterMood.idleBreathing:
       case CafeCharacterMood.talkingOrder:
       case CafeCharacterMood.brewingActive:
-        final steamPaint = Paint()
-          ..color = const Color(0x99FFF3E0)
-          ..style = PaintingStyle.fill;
-        canvas.drawCircle(
-          Offset(size.width * 0.25, 6 - (progress * 4)),
-          3,
-          steamPaint,
+        _drawStarSparkle(
+          canvas,
+          Offset(size.width * 0.24, 6 - (progress * 4)),
+          4.2,
+          const Color(0xCCFFF3E0),
         );
     }
   }
@@ -696,7 +744,8 @@ class CafeCrewCharacterStage extends StatelessWidget {
   final VoidCallback? onTriggerFiveSecondTeaSip;
   final VoidCallback? onSipTeaCompleted;
 
-  bool get _hasHotDrinkOnTray => selectedTray.any((ingredient) => ingredient.category == IngredientCategory.drink);
+  bool get _hasHotDrinkOnTray =>
+      selectedTray.any((ingredient) => ingredient.category == IngredientCategory.drink && ingredient.isHotDrink);
 
   bool get _hasPastryOnTray => selectedTray.any((ingredient) => ingredient.category == IngredientCategory.food);
 
@@ -708,7 +757,13 @@ class CafeCrewCharacterStage extends StatelessWidget {
     }
     final currentReview = latestReview;
     if (currentReview != null) {
-      return currentReview.isPrankCaught ? CafeCharacterMood.saltySabotageShock : CafeCharacterMood.sweetCelebration;
+      if (currentReview.isPrankCaught) {
+        return CafeCharacterMood.saltySabotageShock;
+      }
+      if (currentReview.isIncompleteTray) {
+        return CafeCharacterMood.idleBreathing;
+      }
+      return CafeCharacterMood.sweetCelebration;
     }
     if (_hasHotDrinkOnTray) {
       return CafeCharacterMood.brewingActive;
@@ -722,6 +777,12 @@ class CafeCrewCharacterStage extends StatelessWidget {
     }
     final currentReview = latestReview;
     if (currentReview != null) {
+      if (currentReview.isPrankCaught) {
+        return CafeCharacterMood.stealthPrankWink;
+      }
+      if (currentReview.isIncompleteTray) {
+        return CafeCharacterMood.idleBreathing;
+      }
       return CafeCharacterMood.sweetCelebration;
     }
     if (_hasPrankOnTray) {
@@ -745,6 +806,11 @@ class CafeCrewCharacterStage extends StatelessWidget {
         return isEnglish
             ? '😱 Hey! Who sneaked salt or chili into my specialty coffee?!'
             : '😱 Eyvah! Özenle demlediğim kahveye kim tuz/biber karıştırdı?!';
+      }
+      if (currentReview.isIncompleteTray) {
+        return isEnglish
+            ? '🧩 Hold on! Plate all 3 stations (Drink + Pastry + Sugar) for 5 stars! (+15 pts)'
+            : '🧩 Tepside eksik istasyon var! 5 yıldız için içecek, tatlı ve şekeri birlikte dizelim! (+15p)';
       }
       return isEnglish
           ? '🎉 5-Star Sweet Perfection! Our espresso crema is unbeatable!'
@@ -772,6 +838,11 @@ class CafeCrewCharacterStage extends StatelessWidget {
         return isEnglish
             ? 'Hehehe! Twin jar prank worked! +30 Sabotage points for P2!'
             : 'Hehehe! İkiz kavanoz şakası tuttu! +30 Sabotaj puanı kaptım!';
+      }
+      if (currentReview.isIncompleteTray) {
+        return isEnglish
+            ? '🧩 Missing a course on the wooden tray! Add the missing station for 5 stars! (+15 pts)'
+            : '🧩 Tepsideki 3 istasyondan biri eksik kaldı! Tam tepsiyle 5 yıldızı kapalım! (+15p)';
       }
       return isEnglish
           ? 'Golden flaky pastry + sweet sugar = happy customer! +50 pts!'
@@ -803,13 +874,14 @@ class CafeCrewCharacterStage extends StatelessWidget {
           key: const Key('crew_character_barista_p1'),
           portraitAssetPath: CafeCharacterAssets.baristaPlayerOne,
           characterTitle: isEnglish ? 'P1 · Master Barista Esra' : 'P1 · Barista Esra',
-          roleSubtitle: isEnglish ? 'Station 1 · Copper Cauldron & Cezve Bar' : 'İstasyon 1 · Bakır Cezve & İksir Barı',
+          roleSubtitle:
+              isEnglish ? 'Station 1 · Three Broomsticks Espresso Bar' : 'İstasyon 1 · Üç Süpürge Kahve & İksir Barı',
           speechText: _baristaSpeechLine(isEnglish),
           scoreLabel: '${playerOneScore}p',
           mood: _baristaMood,
           badgeEmoji: _hasHotDrinkOnTray ? '☕🔥' : '☕✨',
-          cardBackgroundColor: const Color(0xFF231710),
-          borderColor: const Color(0xFFC59B27),
+          cardBackgroundColor: const Color(0xCC141B2D),
+          borderColor: const Color(0xFFD4AF37),
           houseAccentColor: const Color(0xFF7A1C1C),
           languageCode: languageCode,
           isSippingTea: isCrewSippingTea,
@@ -822,14 +894,14 @@ class CafeCrewCharacterStage extends StatelessWidget {
           portraitAssetPath: CafeCharacterAssets.pastryChefPlayerTwo,
           characterTitle: isEnglish ? 'P2 · Apothecary & Pastry Can' : 'P2 · Tatlı & Şaka Can',
           roleSubtitle:
-              isEnglish ? 'Station 2 & 3 · Honeydukes & Twin Jars' : 'İstasyon 2 & 3 · Tatlı Vitrini & İkiz Kavanoz',
+              isEnglish ? 'Station 2 & 3 · Honeydukes & Twin Jars' : 'İstasyon 2 & 3 · Honeydukes Tatlı & İkiz Kavanoz',
           speechText: _pastryChefSpeechLine(isEnglish),
           scoreLabel: '${playerTwoScore}p',
           mood: _pastryChefMood,
           badgeEmoji: _hasPrankOnTray ? '🤫🧂' : '🥐😉',
-          cardBackgroundColor: const Color(0xFF19221B),
-          borderColor: const Color(0xFFC59B27),
-          houseAccentColor: const Color(0xFF2B5B44),
+          cardBackgroundColor: const Color(0xCC12221D),
+          borderColor: const Color(0xFFD4AF37),
+          houseAccentColor: const Color(0xFF28593E),
           languageCode: languageCode,
           isSippingTea: isCrewSippingTea,
           onTapCharacter: onTriggerFiveSecondTeaSip ?? onTapCharacterEmote,
@@ -981,9 +1053,9 @@ class _CrewCharacterCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEAD8B8),
+                    color: const Color(0xD90E1525),
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: const Color(0xFF8C6B32), width: 1.2),
+                    border: Border.all(color: const Color(0xFF9C7A2E), width: 1.2),
                   ),
                   child: Text(
                     speechText,
@@ -992,7 +1064,7 @@ class _CrewCharacterCard extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF2B1B10),
+                      color: Color(0xFFF3E5C8),
                     ),
                   ),
                 ),
@@ -1002,5 +1074,175 @@ class _CrewCharacterCard extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+/// Full-viewport 60fps Universal Studios Hogsmeade & Hogwarts Castle Magical Atmosphere Overlay.
+///
+/// Renders drifting Hogsmeade snow-starlight motes, golden Lumos wand fireflies,
+/// and interactive spell-cast aura waves across the full screen without blocking pointer events.
+class MagicalHogsmeadeAtmosphereOverlay extends StatefulWidget {
+  const MagicalHogsmeadeAtmosphereOverlay({
+    required this.platedItemCount,
+    required this.isSippingTea,
+    required this.hasActiveReview,
+    required this.isSabotageReview,
+    super.key,
+  });
+
+  final int platedItemCount;
+  final bool isSippingTea;
+  final bool hasActiveReview;
+  final bool isSabotageReview;
+
+  @override
+  State<MagicalHogsmeadeAtmosphereOverlay> createState() => _MagicalHogsmeadeAtmosphereOverlayState();
+}
+
+class _MagicalHogsmeadeAtmosphereOverlayState extends State<MagicalHogsmeadeAtmosphereOverlay>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _atmosphereController;
+
+  @override
+  void initState() {
+    super.initState();
+    _atmosphereController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    );
+    if (isRunningInAutomatedWidgetTest) {
+      _atmosphereController.value = 0.42;
+    } else {
+      _atmosphereController.repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _atmosphereController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: RepaintBoundary(
+        child: AnimatedBuilder(
+          animation: _atmosphereController,
+          builder: (context, _) {
+            return CustomPaint(
+              key: const Key('magical_hogsmeade_atmosphere_overlay'),
+              size: Size.infinite,
+              painter: _MagicalHogsmeadeAtmospherePainter(
+                phase: _atmosphereController.value * math.pi * 2,
+                platedItemCount: widget.platedItemCount,
+                isSippingTea: widget.isSippingTea,
+                hasActiveReview: widget.hasActiveReview,
+                isSabotageReview: widget.isSabotageReview,
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _MagicalHogsmeadeAtmospherePainter extends CustomPainter {
+  const _MagicalHogsmeadeAtmospherePainter({
+    required this.phase,
+    required this.platedItemCount,
+    required this.isSippingTea,
+    required this.hasActiveReview,
+    required this.isSabotageReview,
+  });
+
+  final double phase;
+  final int platedItemCount;
+  final bool isSippingTea;
+  final bool hasActiveReview;
+  final bool isSabotageReview;
+
+  static const int _starlightFireflyCount = 28;
+
+  void _drawStar(Canvas canvas, Offset center, double radius, Color color) {
+    final inner = radius * 0.26;
+    final path = Path()
+      ..moveTo(center.dx, center.dy - radius)
+      ..lineTo(center.dx + inner, center.dy - inner)
+      ..lineTo(center.dx + radius, center.dy)
+      ..lineTo(center.dx + inner, center.dy + inner)
+      ..lineTo(center.dx, center.dy + radius)
+      ..lineTo(center.dx - inner, center.dy + inner)
+      ..lineTo(center.dx - radius, center.dy)
+      ..lineTo(center.dx - inner, center.dy - inner)
+      ..close();
+    canvas.drawPath(path, Paint()..color = color);
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.width <= 0 || size.height <= 0) {
+      return;
+    }
+
+    // 1. Drifting Hogsmeade Snow-Starlight & Golden Lumos Fireflies across the full viewport
+    for (var index = 0; index < _starlightFireflyCount; index++) {
+      final seed = index * 1.6180339;
+      final normalizedX = ((seed * 0.37) + math.sin(phase * 0.5 + index) * 0.03) % 1.0;
+      final normalizedY = ((seed * 0.53) + (phase / (math.pi * 2)) * (0.35 + (index % 3) * 0.15)) % 1.0;
+      final x = normalizedX * size.width;
+      final y = normalizedY * size.height;
+      final twinkle = 0.45 + 0.55 * math.sin(phase * 2.0 + index * 1.3).abs();
+      final isGoldenLumos = index % 3 != 0;
+      final baseColor = isSabotageReview && index.isEven
+          ? const Color(0xFFFF7043)
+          : isGoldenLumos
+              ? const Color(0xFFFFD54F)
+              : const Color(0xFFE0F2FE);
+
+      canvas.drawCircle(
+        Offset(x, y),
+        (isGoldenLumos ? 7.5 : 5.5) * twinkle,
+        Paint()..color = baseColor.withValues(alpha: 0.16 * twinkle),
+      );
+      _drawStar(
+        canvas,
+        Offset(x, y),
+        (isGoldenLumos ? 4.4 : 3.2) * twinkle,
+        baseColor.withValues(alpha: 0.72 * twinkle),
+      );
+    }
+
+    // 2. Interactive Spell Resonance Rings when tray items are plated, tea is sipped, or verdict is active
+    if (platedItemCount > 0 || isSippingTea || hasActiveReview) {
+      final spellColor = isSabotageReview
+          ? const Color(0xFFD96852)
+          : isSippingTea
+              ? const Color(0xFFFFB300)
+              : const Color(0xFFD4AF37);
+      final ringPulse = (phase / (math.pi * 2)) % 1.0;
+      final maxRadius = math.min(size.width, size.height) * 0.42;
+      final currentRadius = 40.0 + (ringPulse * maxRadius);
+      final ringAlpha = (1.0 - ringPulse) * 0.24;
+
+      canvas.drawCircle(
+        Offset(size.width * 0.5, size.height * 0.48),
+        currentRadius,
+        Paint()
+          ..color = spellColor.withValues(alpha: ringAlpha)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2.2,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _MagicalHogsmeadeAtmospherePainter oldDelegate) {
+    return oldDelegate.phase != phase ||
+        oldDelegate.platedItemCount != platedItemCount ||
+        oldDelegate.isSippingTea != isSippingTea ||
+        oldDelegate.hasActiveReview != hasActiveReview ||
+        oldDelegate.isSabotageReview != isSabotageReview;
   }
 }

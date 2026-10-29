@@ -33,7 +33,8 @@ const List<PresenterSection> presenterSections = [
   PresenterSection(icon: Icons.restaurant_menu, label: '11. Salt vs Sugar & Assets', route: '/salt-sugar-mechanic'),
   PresenterSection(icon: Icons.timer, label: '13. Live Build Dashboard', route: '/live-build-dashboard'),
   PresenterSection(icon: Icons.layers, label: '14. Architecture Recap', route: '/architecture-recap'),
-  PresenterSection(icon: Icons.celebration, label: '15. Winner Podium & Badge', route: '/winner-podium-closing'),
+  PresenterSection(icon: Icons.flight_takeoff, label: '15. GDE Artifacts & Tour', route: '/gde-artifacts-tour'),
+  PresenterSection(icon: Icons.celebration, label: '16. Winner Podium & Badge', route: '/winner-podium-closing'),
   PresenterSection(
     icon: Icons.wifi_tethering_error,
     label: 'Demo Hiccup (Offline Backup)',

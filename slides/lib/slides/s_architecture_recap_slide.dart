@@ -11,9 +11,9 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
             route: '/architecture-recap',
             title: '14. En Son Mimaride Ne Yaptık? (Architecture Recap)',
             speakerNotes: 'BEAT  [60:00 - 65:00] "En Son Mimaride Ne Yaptık?" (Ödül Töreni Öncesi Tam Mimari Özeti).\n'
-                'SAY   "Ödüllerimizi dağıtmadan önce herkesin ekrana bakmasını istiyorum: bugün eğlenceli bir kafe oyunu yaptık ama aslında arkada dört katmanlı, gerçek bir prodüksiyon bulut mimarisi kurduk! 1. Katmanda saf Flutter widget\'ları ile 20 hazır stüdyo PNG görselini ve yolda ürettiğimiz CustomPaint AI vektörlerini birleştirdik. 2. Katmanda 3 öncelikli CityEditionController ve Firebase Remote Config şablonu ile uygulamamızı yeniden derlemeden 4 farklı DevFest şehrine (Berlin, Gaziantep, Adana, İstanbul) uyarladık. 3. Katmanda gemini-3.5-flash-lite ve yapılandırılmış JSON şeması (CafeReview) ile deterministik bir jüri kurup çevrimdışı yedeklemeyle koruduk. 4. Katmanda ise durumsuz konteynerimizi Google Cloud Run üzerinde canlı bir .run.app adresine ve GitHub\'a taşıdık!"\n'
-                'HOLD  4 katmanı yukarıdan aşağıya, her bant için bir nefes vererek say; sağdaki sonuç sütununu (0 motor, 0 yeniden derleme, 1 çağrı, 0 sunucu durumu) ritim olarak kullan; salondaki herkesin ne öğrendiğini içselleştirmesini sağla.\n'
-                'NEXT  "Şimdi sahne sizin: canlı linkini yayınlayanları 60 saniyelik demoları ve Google piksel gözlük ödülleri için sahneye alıyoruz!"',
+                'SAY   "Ödüllerimizi dağıtmadan önce herkesin ekrana bakmasını istiyorum: bugün eğlenceli bir kafe oyunu yaptık ama aslında arkada dört katmanlı, gerçek bir prodüksiyon bulut mimarisi kurduk! 1. Katmanda BaristaFlameGame 60fps 3-koridorlu sahnemizi, 2x2 Flutter Overlay HUD tezgahımızı ve Lukas Klingsbo\'nun badge_hack projesinden ilham alan WebNfcService (NDEFReader + simulateTap) sahne tetikleyicimizi birleştirdik. 2. Katmanda 3 öncelikli CityEditionController ve Firebase Remote Config şablonu ile uygulamamızı yeniden derlemeden farklı DevFest şehirlerine uyarladık. 3. Katmanda gemini-3.5-flash-lite ve yapılandırılmış JSON şeması (CafeReview) ile deterministik bir jüri kurup çevrimdışı yedeklemeyle koruduk. 4. Katmanda ise durumsuz konteynerimizi Google Cloud Run üzerinde canlı bir .run.app adresine ve GitHub\'a taşıdık!"\n'
+                'HOLD  4 katmanı yukarıdan aşağıya, her bant için bir nefes vererek say; sağdaki sonuç sütununu (60fps + Web NFC, 0 yeniden derleme, 1 çağrı, 0 sunucu durumu) ritim olarak kullan.\n'
+                'NEXT  "Şimdi sonbahar 2026 GDE turumuza ve Claude Artifact koleksiyonumuza göz atıp sahneyi size bırakıyoruz!"',
           ),
         );
 
@@ -34,16 +34,16 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
               Expanded(
                 child: _LayerBand(
                   number: 1,
-                  name: 'PRESENTATION',
+                  name: 'STAGE & WEB NFC',
                   color: DeckColors.googleBlue,
                   chips: [
-                    'Stack · AnimatedScale · CustomPaint',
-                    '20 PNGs',
-                    '5 Lottie',
-                    '10 WAV SFX',
-                    '2x2 Desktop + 3-Slot Tray',
+                    'BaristaFlameGame 60fps 3-Lane',
+                    '2x2 HUD + 3-Slot Tray',
+                    'WebNfcService (NDEFReader)',
+                    'simulateTap() Fallback',
+                    '20 PNGs · 5 Lottie · 10 WAV',
                   ],
-                  outcome: '0 game engines',
+                  outcome: '60fps + Web NFC',
                 ),
               ),
               SizedBox(height: _gap),
