@@ -1,0 +1,35 @@
+# Rendered by the nginx image's envsubst entrypoint at container start (only defined env vars are substituted).
+# GEMINI_API_KEY comes from Secret Manager via `gcloud run deploy --set-secrets`, so it never enters the web build.
+# Every attendee shares one venue NAT, so the limit is one bucket for the whole instance, not per IP.
+map "" $gemini_bucket {
+  default "all";
+}
+
+limit_req_zone $gemini_bucket zone=gemini_all:1m rate=${GEMINI_RATE_LIMIT};
+
+server {
+  listen 8080;
+  server_name _;
+  root /usr/share/nginx/html;
+  index index.html;
+
+  location = /api/gemini/generate {
+    limit_except POST {
+      deny all;
+    }
+    limit_req zone=gemini_all burst=20 nodelay;
+    limit_req_status 429;
+    client_max_body_size 16k;
+
+    proxy_pass https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent;
+    proxy_ssl_server_name on;
+    proxy_set_header Host generativelanguage.googleapis.com;
+    proxy_set_header x-goog-api-key "${GEMINI_API_KEY}";
+    proxy_set_header Cookie "";
+    proxy_read_timeout 10s;
+  }
+
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+}

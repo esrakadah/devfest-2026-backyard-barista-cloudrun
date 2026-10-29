@@ -1,0 +1,19 @@
+#!/bin/sh
+# Sourced by the nginx image entrypoint before 20-envsubst-on-templates.sh renders the template.
+# Whitespace is trimmed. A quote, `;`, brace, `$` or backslash would break the rendered config and nginx would refuse
+# to start, so such a value is dropped and the game serves its offline roasts. Any other value goes to Google, which
+# answers an invalid key with an error that also falls back offline. The key itself is never logged.
+GEMINI_API_KEY=$(printf '%s' "${GEMINI_API_KEY:-}" | tr -d '[:space:]')
+case "$GEMINI_API_KEY" in
+  "")
+    echo "gemini-key: GEMINI_API_KEY is not set; serving offline roasts" >&2
+    ;;
+  *[\"\'\;{}\$\\]*)
+    echo "gemini-key: GEMINI_API_KEY contains a quote, ';', brace, '\$' or backslash (length ${#GEMINI_API_KEY}); serving offline roasts" >&2
+    GEMINI_API_KEY=""
+    ;;
+  *)
+    echo "gemini-key: GEMINI_API_KEY accepted (length ${#GEMINI_API_KEY})" >&2
+    ;;
+esac
+export GEMINI_API_KEY

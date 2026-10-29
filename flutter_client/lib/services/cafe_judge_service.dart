@@ -13,6 +13,9 @@ const Duration _offlineBundleLoadTimeout = Duration(milliseconds: 250);
 
 /// Evaluates an assembled 2-player cafe tray using Gemini (`gemini-3.5-flash-lite`) structured JSON output,
 /// with automatic fallback to `assets/offline_fallback/mock_responses.json` when conference Wi-Fi drops.
+///
+/// When [geminiProxyPath] is set (the Cloud Run image sets `/api/gemini/generate`), requests go to that
+/// same-origin nginx route, which adds the API key server-side, so the web build never contains the key.
 class CafeJudgeService {
   CafeJudgeService({
     required DateTime Function() clock,
@@ -22,6 +25,7 @@ class CafeJudgeService {
       'GEMINI_MODEL',
       defaultValue: 'gemini-3.5-flash-lite',
     ),
+    this.geminiProxyPath = const String.fromEnvironment('GEMINI_PROXY_PATH'),
     this.forceOfflineMode = const bool.fromEnvironment('OFFLINE_MODE'),
   })  : _clock = clock,
         _httpClient = httpClient;
@@ -30,7 +34,10 @@ class CafeJudgeService {
   final http.Client? _httpClient;
   final String geminiApiKey;
   final String geminiModel;
+  final String geminiProxyPath;
   final bool forceOfflineMode;
+
+  bool get _usesServerSideProxy => geminiProxyPath.trim().isNotEmpty;
 
   static Map<String, dynamic>? _cachedReviewsByCity;
 
@@ -77,7 +84,7 @@ class CafeJudgeService {
       );
     }
 
-    if (!forceOfflineMode && geminiApiKey.trim().isNotEmpty) {
+    if (!forceOfflineMode && (_usesServerSideProxy || geminiApiKey.trim().isNotEmpty)) {
       final liveReview = await _tryCallGeminiStructuredJson(
         selectedIngredients: selectedIngredients,
         cityEdition: cityEdition,
@@ -103,9 +110,11 @@ class CafeJudgeService {
     required bool containsSaltPrank,
     required bool containsChiliPrank,
   }) async {
-    final endpointUri = Uri.parse(
-      'https://generativelanguage.googleapis.com/v1beta/models/$geminiModel:generateContent',
-    );
+    final endpointUri = _usesServerSideProxy
+        ? Uri.base.resolve(geminiProxyPath.trim())
+        : Uri.parse(
+            'https://generativelanguage.googleapis.com/v1beta/models/$geminiModel:generateContent',
+          );
     final itemDescriptions =
         selectedIngredients.map((item) => '${item.id} (${item.titleEn} / prank=${item.prankKind})').join(', ');
 
@@ -156,8 +165,11 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       final response = await client
           .post(
             endpointUri,
-            // The key travels in a header, not the URL, so it never lands in proxy or server access logs.
-            headers: <String, String>{'Content-Type': 'application/json', 'x-goog-api-key': geminiApiKey},
+            // The key travels in a header when calling Gemini directly, and is injected server-side in proxy mode.
+            headers: <String, String>{
+              'Content-Type': 'application/json',
+              if (!_usesServerSideProxy && geminiApiKey.trim().isNotEmpty) 'x-goog-api-key': geminiApiKey,
+            },
             body: jsonEncode(requestBody),
           )
           .timeout(_geminiRequestTimeout);
