@@ -7,8 +7,10 @@ import 'package:backyard_barista_cloudrun/models/cafe_review.dart';
 import 'package:backyard_barista_cloudrun/models/customer_order_ticket.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
+import 'package:backyard_barista_cloudrun/services/nfc_tag_controller.dart';
 import 'package:backyard_barista_cloudrun/ui/cafe_character_animations.dart';
 import 'package:backyard_barista_cloudrun/ui/city_settings_drawer.dart';
+import 'package:backyard_barista_cloudrun/ui/nfc_tag_writer_sheet.dart';
 import 'package:backyard_barista_cloudrun/ui/subway_barista_flame_game.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +40,15 @@ class CafeCounterScreen extends StatefulWidget {
   const CafeCounterScreen({
     required this.cityController,
     required this.judgeService,
+    this.nfcController,
     super.key,
   });
 
   final CityEditionController cityController;
   final CafeJudgeService judgeService;
+
+  /// Injected in tests; the screen creates and owns a Web NFC controller otherwise.
+  final NfcTagController? nfcController;
 
   @override
   State<CafeCounterScreen> createState() => _CafeCounterScreenState();
@@ -61,6 +67,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   int _playerTwoPastryScore = 0;
   int _tipJarTotal = 0;
   CafeReview? _latestReview;
+  late final NfcTagController _nfcController = widget.nfcController ?? NfcTagController();
 
   @override
   void initState() {
@@ -71,11 +78,16 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       onSwipeServeRequested: _serveOrder,
     )..paused = isRunningInAutomatedWidgetTest;
     widget.cityController.addListener(_handleCityChanged);
+    _nfcController.onIngredientTapped = _placeIngredientFromTag;
   }
 
   @override
   void dispose() {
     widget.cityController.removeListener(_handleCityChanged);
+    _nfcController.onIngredientTapped = null;
+    if (widget.nfcController == null) {
+      _nfcController.dispose();
+    }
     super.dispose();
   }
 
@@ -181,6 +193,50 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
         _soundController.play(CafeSoundCue.tapPop);
       }
     });
+  }
+
+  /// A tag tap only ever adds: holding the salt sticker twice must not take the salt back off.
+  void _placeIngredientFromTag(CafeIngredient ingredient) {
+    if (!mounted) {
+      return;
+    }
+    final languageCode = widget.cityController.activeEdition.defaultLanguage;
+    final ingredientTitle = ingredient.localizedTitle(languageCode);
+    final isRoundTwoItem = IngredientsCatalog.roundTwoCustomItems.any((item) => item.id == ingredient.id);
+    final isEnglish = languageCode == 'en';
+    final String tapMessage;
+    if (isRoundTwoItem && !_includeRoundTwoCustomItems) {
+      tapMessage = isEnglish
+          ? 'NFC: $ingredientTitle is a Round 2 item, switch Round 2 on first.'
+          : 'NFC: $ingredientTitle 2. tur ürünü, önce 2. turu aç.';
+    } else if (_selectedTray.any((existing) => existing.id == ingredient.id)) {
+      tapMessage = isEnglish ? 'NFC: $ingredientTitle is already on the tray.' : 'NFC: $ingredientTitle zaten tepside.';
+    } else {
+      _toggleIngredient(ingredient);
+      tapMessage = isEnglish ? 'NFC: $ingredientTitle added.' : 'NFC: $ingredientTitle eklendi.';
+    }
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          key: const Key('nfc_tap_snackbar'),
+          content: Text(tapMessage),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+  }
+
+  void _openNfcTagWriterSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      constraints: const BoxConstraints(maxWidth: 560),
+      builder: (sheetContext) => NfcTagWriterSheet(
+        nfcController: _nfcController,
+        languageCode: widget.cityController.activeEdition.defaultLanguage,
+        appBaseUri: Uri.base,
+      ),
+    );
   }
 
   void _clearTray() {
@@ -341,6 +397,11 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
               ],
             ),
             actions: <Widget>[
+              _NfcCounterMenuButton(
+                nfcController: _nfcController,
+                languageCode: languageCode,
+                onOpenTagWriter: _openNfcTagWriterSheet,
+              ),
               IconButton(
                 key: const Key('sound_mute_toggle_button'),
                 visualDensity: VisualDensity.compact,
@@ -567,6 +628,63 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+}
+
+/// Hidden where Web NFC does not exist (desktop, iPhone), so the stage laptop UI is unchanged.
+class _NfcCounterMenuButton extends StatelessWidget {
+  const _NfcCounterMenuButton({
+    required this.nfcController,
+    required this.languageCode,
+    required this.onOpenTagWriter,
+  });
+
+  final NfcTagController nfcController;
+  final String languageCode;
+  final VoidCallback onOpenTagWriter;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: nfcController,
+      builder: (context, _) {
+        if (!nfcController.isSupported) {
+          return const SizedBox.shrink();
+        }
+        final status = nfcController.status;
+        final isScanning = status == NfcScanStatus.scanning;
+        final errorMessage = nfcController.lastErrorMessage;
+        final isEnglish = languageCode == 'en';
+        final listeningLabel = isEnglish ? 'NFC counter is listening' : 'NFC tezgâhı dinliyor';
+        return PopupMenuButton<VoidCallback>(
+          key: const Key('nfc_counter_menu_button'),
+          tooltip: errorMessage ?? (isScanning ? listeningLabel : (isEnglish ? 'NFC counter' : 'NFC tezgâhı')),
+          onSelected: (action) => action(),
+          icon: Icon(
+            status == NfcScanStatus.failed ? Icons.nfc_rounded : Icons.contactless_rounded,
+            size: 20,
+            color: switch (status) {
+              NfcScanStatus.scanning => const Color(0xFF8BE28B),
+              NfcScanStatus.failed => const Color(0xFFFF8A80),
+              NfcScanStatus.idle || NfcScanStatus.unsupported => const Color(0xFFFFCCBC),
+            },
+          ),
+          itemBuilder: (context) => <PopupMenuEntry<VoidCallback>>[
+            PopupMenuItem<VoidCallback>(
+              key: const Key('nfc_start_scanning_item'),
+              enabled: !isScanning,
+              value: nfcController.startScanning,
+              child: Text(isScanning ? listeningLabel : (isEnglish ? 'Start NFC counter' : 'NFC tezgâhını başlat')),
+            ),
+            PopupMenuItem<VoidCallback>(
+              key: const Key('nfc_open_writer_item'),
+              value: onOpenTagWriter,
+              child: Text(isEnglish ? 'Write ingredient tags' : 'Malzeme etiketlerini yaz'),
+            ),
+          ],
         );
       },
     );
