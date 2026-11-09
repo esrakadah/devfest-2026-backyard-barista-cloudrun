@@ -1,0 +1,14 @@
+<section id="config" data-transition="fade" style="background:#0E1824;color:#F2F6FC;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:44px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#FDD663">Pattern 4 · Layered config</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">One codebase, four cities, zero rebuilds</h2>
+<div style="display:flex;flex-direction:column;background:#0B141F;border:2px solid #284162;border-radius:20px;padding:36px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;line-height:1.5;white-space:nowrap">activeCityId =<br>  <span style="color:#FDD663">_manualOverrideCityId</span>   // 1 · in-app settings<br>  ?? <span style="color:#8AB4F8">_remoteConfigCityId</span>  // 2 · active_city_id / ?remote_city=<br>  ?? <span style="color:#81C995">_fallbackCityId</span>;     // 3 · bundled city_editions.json</p>
+</div>
+<div style="display:flex;gap:24px">
+<p style="flex:1;font-size:28px;background:#16273A;border-radius:16px;padding:20px 28px">Berlin · Späti &amp; Club-Mate</p>
+<p style="flex:1;font-size:28px;background:#16273A;border-radius:16px;padding:20px 28px">Gaziantep · Baklava &amp; Menengiç</p>
+<p style="flex:1;font-size:28px;background:#16273A;border-radius:16px;padding:20px 28px">Adana · Bici Bici</p>
+<p style="flex:1;font-size:28px;background:#16273A;border-radius:16px;padding:20px 28px">Istanbul · Vapur Çayı</p>
+</div>
+<aside>Source: flutter_client/lib/config/city_edition_controller.dart. The ?? chain reads top to bottom: a person’s choice beats a remote push, and a remote push beats the bundled default. The app still works with no network because layer 3 ships inside the build. Try it on a deployed Lane B app by adding ?remote_city=berlin to the URL.</aside>
+</section>

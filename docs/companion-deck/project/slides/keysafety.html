@@ -1,0 +1,7 @@
+<section id="keysafety" data-transition="fade" style="background:#FDD663;color:#0E1824;font-family:'DM Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:48px">
+<p style="font-size:28px;font-weight:700;letter-spacing:4px;text-transform:uppercase">Before you deploy</p>
+<h2 style="font-size:96px;font-weight:700;line-height:1.05;width:1600px">A key baked into a web build is a public key.</h2>
+<p style="font-size:36px;width:1500px;line-height:1.4">Anything passed with --dart-define ends up in the JavaScript your browser downloads. For a public Lane B deploy, leave GEMINI_API_KEY out: the app runs on the offline judge. Use your key locally, or use AI Studio’s deploy, which keeps it server-side.</p>
+<p style="font-size:32px;font-weight:700">Production path: firebase_ai with App Check, or a small server proxy.</p>
+<aside>This is the one rule that protects your Google account after the workshop. The starter Dockerfile deliberately has no GEMINI_API_KEY build argument, so a plain gcloud run deploy from flutter_client never embeds a key. If you did embed one by accident, delete that key in AI Studio and create a new one.</aside>
+</section>

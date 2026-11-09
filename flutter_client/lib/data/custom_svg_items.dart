@@ -45,12 +45,12 @@ class _CustomVectorIngredientPainter extends CustomPainter {
 
     switch (artworkKind) {
       case CustomVectorArtworkKind.pistachioKatmerRoll:
-        final bgPaint = Paint()..color = const Color(0xFFE8F5E9);
+        final backgroundPaint = Paint()..color = const Color(0xFFE8F5E9);
         final rimPaint = Paint()
           ..color = const Color(0xFF43A047)
           ..style = PaintingStyle.stroke
           ..strokeWidth = _customStrokeWidth;
-        canvas.drawCircle(center, radius - 2, bgPaint);
+        canvas.drawCircle(center, radius - 2, backgroundPaint);
         canvas.drawCircle(center, radius - 2, rimPaint);
 
         final pastryPaint = Paint()..color = const Color(0xFFD49B35);
@@ -67,12 +67,12 @@ class _CustomVectorIngredientPainter extends CustomPainter {
         canvas.drawCircle(center, 7, pistachioPaint);
 
       case CustomVectorArtworkKind.isotPepperShaker:
-        final bgPaint = Paint()..color = const Color(0xFFFFEBEE);
+        final backgroundPaint = Paint()..color = const Color(0xFFFFEBEE);
         final rimPaint = Paint()
           ..color = const Color(0xFFC62828)
           ..style = PaintingStyle.stroke
           ..strokeWidth = _customStrokeWidth;
-        canvas.drawCircle(center, radius - 2, bgPaint);
+        canvas.drawCircle(center, radius - 2, backgroundPaint);
         canvas.drawCircle(center, radius - 2, rimPaint);
 
         final bottlePaint = Paint()..color = const Color(0xFF6A1B1A);

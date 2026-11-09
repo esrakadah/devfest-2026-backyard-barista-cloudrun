@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 const int _httpOkStatus = 200;
 const int _sweetBonusTipAmount = 40;
 const Duration _geminiRequestTimeout = Duration(seconds: 8);
+const Duration _offlineBundleLoadTimeout = Duration(milliseconds: 250);
 
 /// Evaluates an assembled 2-player cafe tray using Gemini (`gemini-3.5-flash-lite`) structured JSON output,
 /// with automatic fallback to `assets/offline_fallback/mock_responses.json` when conference Wi-Fi drops.
@@ -31,7 +32,11 @@ class CafeJudgeService {
   final String geminiModel;
   final bool forceOfflineMode;
 
+  static Map<String, dynamic>? _cachedReviewsByCity;
+
   /// Evaluates the selected tray ingredients for the active [cityEdition].
+  /// Enforces prank detection first (`salty_sabotage` / `spicy_chaos`), then verifies
+  /// that all 3 cafe stations (Drink + Pastry + Sweet Sugar) are represented on the tray.
   Future<CafeReview> evaluateOrder({
     required List<CafeIngredient> selectedIngredients,
     required CityEditionConfig cityEdition,
@@ -39,6 +44,36 @@ class CafeJudgeService {
   }) async {
     final containsSaltPrank = selectedIngredients.any((item) => item.prankKind == 'salt');
     final containsChiliPrank = selectedIngredients.any((item) => item.prankKind == 'chili');
+    final hasDrinkCourse = selectedIngredients.any((item) => item.category == IngredientCategory.drink);
+    final hasFoodCourse = selectedIngredients.any((item) => item.category == IngredientCategory.food);
+    final hasSweetCondiment = selectedIngredients.any(
+      (item) => item.category == IngredientCategory.toppingOrPrank && !item.isPrankItem,
+    );
+    final isCompleteThreeCourseTray = hasDrinkCourse && hasFoodCourse && hasSweetCondiment;
+
+    if (!containsSaltPrank && !containsChiliPrank && !isCompleteThreeCourseTray) {
+      final isEnglish = cityEdition.defaultLanguage == 'en';
+      final missingStations = <String>[
+        if (!hasDrinkCourse) isEnglish ? 'Coffee/Drink' : 'Kahve/İçecek',
+        if (!hasFoodCourse) isEnglish ? 'Pastry' : 'Tatlı',
+        if (!hasSweetCondiment) isEnglish ? 'Sweet Sugar' : 'Tatlı Şeker',
+      ].join(' + ');
+
+      return CafeReview(
+        ratingStars: 3,
+        tasteVerdict: 'incomplete_tray',
+        customerFace: CustomerFaceState.shocked,
+        headline: isEnglish
+            ? '${cityEdition.flagEmoji} ${cityEdition.cityName}: Incomplete Tray!'
+            : '${cityEdition.flagEmoji} ${cityEdition.cityName}: Tepside Eksik Var!',
+        customerReaction: isEnglish
+            ? 'Wait a second! You forgot ($missingStations) on the tray. Plate all 3 stations for 5 stars!'
+            : 'Usta tepside ($missingStations) eksik kalmış! 5 yıldız için içecek, tatlı ve şekeri birlikte dizin!',
+        cityBonusTip: 0,
+        evaluatedAt: _clock(),
+        isFromLiveGemini: false,
+      );
+    }
 
     if (!forceOfflineMode && geminiApiKey.trim().isNotEmpty) {
       final liveReview = await _tryCallGeminiStructuredJson(
@@ -67,7 +102,7 @@ class CafeJudgeService {
     required bool containsChiliPrank,
   }) async {
     final endpointUri = Uri.parse(
-      'https://generativelanguage.googleapis.com/v1beta/models/$geminiModel:generateContent?key=$geminiApiKey',
+      'https://generativelanguage.googleapis.com/v1beta/models/$geminiModel:generateContent',
     );
     final itemDescriptions =
         selectedIngredients.map((item) => '${item.id} (${item.titleEn} / prank=${item.prankKind})').join(', ');
@@ -113,12 +148,14 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       },
     };
 
+    final shouldCloseClient = _httpClient == null;
+    final client = _httpClient ?? http.Client();
     try {
-      final client = _httpClient ?? http.Client();
       final response = await client
           .post(
             endpointUri,
-            headers: const <String, String>{'Content-Type': 'application/json'},
+            // The key travels in a header, not the URL, so it never lands in proxy or server access logs.
+            headers: <String, String>{'Content-Type': 'application/json', 'x-goog-api-key': geminiApiKey},
             body: jsonEncode(requestBody),
           )
           .timeout(_geminiRequestTimeout);
@@ -160,6 +197,10 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       );
     } on Object {
       return null;
+    } finally {
+      if (shouldCloseClient) {
+        client.close();
+      }
     }
   }
 
@@ -177,12 +218,19 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
 
     final effectiveBundle = bundle ?? rootBundle;
     try {
-      final rawMockString = await effectiveBundle.loadString(
-        'assets/offline_fallback/mock_responses.json',
-      );
-      final decodedRoot = jsonDecode(rawMockString) as Map<String, dynamic>;
-      final reviewsByCity = decodedRoot['reviewsByCity'];
-      if (reviewsByCity is Map<String, dynamic>) {
+      var reviewsByCity = _cachedReviewsByCity;
+      if (reviewsByCity == null) {
+        final rawMockString = await effectiveBundle
+            .loadString('assets/offline_fallback/mock_responses.json')
+            .timeout(_offlineBundleLoadTimeout);
+        final decodedRoot = jsonDecode(rawMockString) as Map<String, dynamic>;
+        final parsedNode = decodedRoot['reviewsByCity'];
+        if (parsedNode is Map<String, dynamic>) {
+          reviewsByCity = parsedNode;
+          _cachedReviewsByCity = parsedNode;
+        }
+      }
+      if (reviewsByCity != null) {
         final cityNode = reviewsByCity[cityEdition.editionId.code];
         if (cityNode is Map<String, dynamic>) {
           final verdictNode = cityNode[verdictKey];

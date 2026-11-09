@@ -24,7 +24,14 @@ Players never type text. They assemble an order on a tray by tapping ingredient 
 3. HYBRID ASSET PACK (GitHub Raw PNGs with Crisp Inline SVG Fallbacks):
 Load item illustrations from `https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/{category}/{file}.png` (`drinks/espresso.png`, `drinks/milk.png`, `drinks/menengic_coffee.png`, `foods/croissant.png`, `foods/san_sebastian.png`, `foods/baklava.png`, `toppings_pranks/sugar_jar.png`, `toppings_pranks/salt_shaker.png`, `toppings_pranks/chili_sauce.png`, `customers/customer_happy.png`, `customers/customer_shocked.png`, `customers/customer_salty_disgusted.png`), and attach an `onerror` fallback that renders a colorful inline SVG illustration for each item so the game renders offline or when the repo is private.
 
-4. 2-PLAYER TRAY & SERVE BUTTON:
-- Player 1 ("Barista") taps Drinks, Player 2 ("Pastry Chef & Prankster") taps Foods and Toppings/Pranks.
-- Show the assembled Tray with animated badges and a big "Serve Order! / Servis Et!" button.
+4. 2-PLAYER TRAY, 5-SECOND TURKISH TEA SIPPING ANIMATION & SERVE BUTTON:
+- Player 1 ("Barista Esra") taps Drinks, Player 2 ("Pastry Chef Can") taps Foods and Toppings/Pranks.
+- Include a "🫖 5sn Çay Yudumlat / 5s Sip Tea" button and character tap action that animates a Turkish tulip tea glass (`İnce Belli Çay Bardağı`) lifting to the character's lips for 5.0 seconds with a live `5.0s -> 0.0s` countdown badge!
+- Show the assembled Wooden Tray with a subtle `🤫 😉` stealth prank wink badge (zero red spoiler badges on the shelf!) and a big "Serve Order! / Siparişi Servis Et!" button.
+
+5. WEB AUDIO API BARISTA SOUNDBOARD & CREW LEVEL BADGE:
+- Display a `🏆 Lv.1 Barista` crew level badge in the score bar that advances (`Lv.1 -> Lv.2 -> Lv.3`) every 100 combined points and triggers a procedural 4-note ascending fanfare (`C5-E5-G5-C6`).
+- Include a 4-button Web Audio API Barista Soundboard bar (`⚙️ Kahve Değirmeni`, `💨 Espresso Buharı`, `🔔 Sipariş Zili`, `🏆 Seviye Atlama`) with a live active cue badge (`🎵 Web Audio Hazır`) and real-time procedural synthesis (`AudioContext` + `BiquadFilterNode` + `OscillatorNode`).
 ```
+
+> **Reference Implementation:** Open [`../ai_studio_lane_a/index.html`](../ai_studio_lane_a/index.html) directly in any browser to play the complete single-file HTML/JS reference build.

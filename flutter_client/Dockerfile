@@ -9,6 +9,7 @@ ARG GEMINI_MODEL=gemini-3.5-flash-lite
 
 RUN flutter pub get && \
     flutter build web --release \
+      --no-web-resources-cdn \
       --dart-define=DEFAULT_CITY=${DEFAULT_CITY} \
       --dart-define=GEMINI_MODEL=${GEMINI_MODEL}
 

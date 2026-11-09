@@ -215,4 +215,14 @@ class CityEditionController extends ChangeNotifier {
     _remoteConfigCityId = cityId;
     notifyListeners();
   }
+
+  /// Synchronizes Priority 2 (`active_city_id`) from a live URL query parameter
+  /// (`?remote_city=berlin` or `?active_city_id=adana`) or environment value on startup.
+  void syncRemoteConfigFromUri({Uri? uri}) {
+    final effectiveUri = uri ?? Uri.base;
+    final queryCity = effectiveUri.queryParameters['remote_city'] ?? effectiveUri.queryParameters['active_city_id'];
+    if (queryCity != null && queryCity.trim().isNotEmpty) {
+      applyRemoteConfigCity(CityEditionId.fromCode(queryCity));
+    }
+  }
 }

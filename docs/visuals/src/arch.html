@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:GSF;src:url(../../../slides/assets/fonts/GoogleSansFlex.ttf)}@font-face{font-family:RM;src:url(../../../slides/assets/fonts/RobotoMono.ttf)}
+body{margin:0;width:1600px;height:760px;background:#0E1824;font-family:GSF;color:#F2F6FC;padding:56px 64px;box-sizing:border-box}
+.e{font-family:RM;font-size:18px;font-weight:700;color:#57CAFF;letter-spacing:2px}h1{font-size:46px;margin:10px 0 28px}
+.flow{display:flex;align-items:stretch;gap:0;margin-bottom:34px}
+.s{flex:1;background:#16273A;border:2px solid;border-radius:18px;padding:18px 20px}.s b{font-family:RM;font-size:15px;display:block;margin-bottom:6px}.s div{font-size:24px;font-weight:700}.s p{margin:6px 0 0;font-size:17px;color:#BFD0E4}
+.a{width:46px;display:flex;align-items:center;justify-content:center;color:#9EB1C9;font-size:30px}
+.layer{display:flex;align-items:center;background:#16273A;border-radius:16px;margin-bottom:12px;border-left:8px solid;height:84px}
+.n{width:280px;padding-left:22px}.n small{font-family:RM;font-size:14px;font-weight:700}.n div{font-size:23px;font-weight:700}
+.chips{flex:1;display:flex;gap:10px;flex-wrap:wrap}.chips span{font-family:RM;font-size:16px;background:#0B141F;border:1.5px solid #3A5C88;border-radius:10px;padding:7px 12px}
+.o{width:260px;text-align:right;padding-right:24px;font-size:24px;font-weight:700}
+</style></head><body>
+<div class="e">BACKYARD BARISTA ON CLOUD RUN · ARCHITECTURE</div><h1>One order, one call, four layers</h1>
+<div class="flow">
+<div class="s" style="border-color:#81C995"><b style="color:#81C995">LOCAL · 0 TOKENS</b><div>Tap items</div><p>Espresso, baklava, sugar or salt</p></div><div class="a">→</div>
+<div class="s" style="border-color:#8AB4F8"><b style="color:#8AB4F8">1 REQUEST · ~150 IN</b><div>Serve order</div><p>generateContent, 8 s timeout</p></div><div class="a">→</div>
+<div class="s" style="border-color:#FDD663"><b style="color:#FDD663">JSON · ~120 OUT</b><div>CafeReview</div><p>6 required schema fields</p></div><div class="a">→</div>
+<div class="s" style="border-color:#F28B82"><b style="color:#F28B82">UI REACTS</b><div>Face, stars, roast</div><p>or offline fallback in 250 ms</p></div>
+</div>
+<div class="layer" style="border-color:#8AB4F8"><div class="n"><small style="color:#8AB4F8">LAYER 1</small><div>Presentation</div></div><div class="chips"><span>Stack · AnimatedScale · CustomPaint</span><span>20 PNGs</span><span>5 Lottie</span><span>10 WAV</span><span>&lt;620px responsive</span></div><div class="o" style="color:#8AB4F8">0 game engines</div></div>
+<div class="layer" style="border-color:#FDD663"><div class="n"><small style="color:#FDD663">LAYER 2</small><div>Config</div></div><div class="chips"><span>1 · in-app override</span><span>2 · Remote Config active_city_id</span><span>3 · city_editions.json</span></div><div class="o" style="color:#FDD663">4 cities, 0 rebuilds</div></div>
+<div class="layer" style="border-color:#81C995"><div class="n"><small style="color:#81C995">LAYER 3</small><div>AI &amp; guardrails</div></div><div class="chips"><span>gemini-3.5-flash-lite</span><span>responseSchema</span><span>8 s timeout</span><span>mock_responses.json</span></div><div class="o" style="color:#81C995">≈ 270 tokens/order</div></div>
+<div class="layer" style="border-color:#F28B82"><div class="n"><small style="color:#F28B82">LAYER 4</small><div>Serverless cloud</div></div><div class="chips"><span>multi-stage Dockerfile</span><span>nginx:alpine :8080</span><span>Cloud Run *.run.app</span><span>GitHub</span></div><div class="o" style="color:#F28B82">0 server state</div></div>
+</body></html>

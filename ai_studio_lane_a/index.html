@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backyard Barista on Cloud Run · Lane A Reference App (AI Studio Build Mode)</title>
+  <style>
+    :root {
+      --espresso-dark: #2C1A12;
+      --espresso-mid: #43281C;
+      --terracotta: #C85A32;
+      --cream-bg: #FFF8EE;
+      --card-bg: #FFFFFF;
+      --wood-dark: #4E2F1E;
+      --wood-mid: #6D432A;
+      --emerald: #2E7D32;
+      --crimson: #B71C1C;
+      --gold: #FFB300;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--cream-bg);
+      color: var(--espresso-dark);
+      min-height: 100vh;
+    }
+    header {
+      background: var(--espresso-dark);
+      color: var(--cream-bg);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand-title { font-size: 18px; font-weight: 800; letter-spacing: -0.2px; }
+    .brand-sub { font-size: 12px; color: #FFCCBC; font-weight: 500; }
+    .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .btn-pill {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+    .btn-pill:active { transform: scale(0.96); }
+    .btn-city { background: var(--terracotta); color: #fff; }
+    .btn-mute { background: rgba(255,255,255,0.14); color: #FFCCBC; }
+    .awning {
+      height: 18px;
+      background: repeating-linear-gradient(
+        90deg,
+        #C85A32 0px,
+        #C85A32 28px,
+        #FFF3E0 28px,
+        #FFF3E0 56px
+      );
+      border-bottom: 3px solid #8D3218;
+    }
+    main { max-width: 1180px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+    .score-bar {
+      background: #FFFDF9;
+      border: 1.5px solid #E6CCB2;
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .score-badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge-p1 { background: #EFEBE9; color: #3E2723; }
+    .badge-p2 { background: #FBE9E7; color: #BF360C; }
+    .badge-tips { background: #E6F4EA; color: #137333; }
+    .badge-level { background: #FFF8E1; color: #E65100; border: 1px solid #FFB300; }
+    .soundboard-bar {
+      background: linear-gradient(90deg, #3E2418, #5A3522);
+      border-radius: 16px;
+      padding: 10px 14px;
+      border: 1.5px solid rgba(255, 179, 0, 0.55);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: #FFF8EE;
+    }
+    .soundboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .soundboard-title {
+      font-size: 12px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .soundboard-status {
+      background: rgba(255, 179, 0, 0.18);
+      border: 1px solid rgba(255, 213, 79, 0.65);
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #FFE082;
+    }
+    .soundboard-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .btn-sfx {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 204, 188, 0.40);
+      border-radius: 999px;
+      padding: 5px 11px;
+      color: #FFF8EE;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: transform 0.14s ease, background 0.14s ease;
+    }
+    .btn-sfx:hover { background: rgba(255, 255, 255, 0.18); }
+    .btn-sfx:active { transform: scale(0.96); }
+    .crew-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 12px;
+    }
+    .crew-card {
+      background: #FFF4E8;
+      border: 1.6px solid rgba(200,90,50,0.45);
+      border-radius: 18px;
+      padding: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .crew-card.p2 { background: #FAF0F6; border-color: rgba(141,50,24,0.45); }
+    .avatar-wrap {
+      position: relative;
+      width: 78px;
+      height: 78px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 2.5px solid var(--terracotta);
+      background: #FFF8EE;
+      transition: transform 0.25s ease;
+    }
+    .sipping-active .avatar-wrap img {
+      animation: sipNod 0.9s ease-in-out infinite alternate;
+    }
+    @keyframes sipNod {
+      0% { transform: translateY(0) rotate(2deg) scale(1.01); }
+      100% { transform: translateY(-5px) rotate(-5deg) scale(1.06); }
+    }
+    .sip-countdown-pill {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #B71C1C, #D84315);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1.5px solid #FFF8EE;
+      white-space: nowrap;
+      display: none;
+      z-index: 4;
+    }
+    .sipping-active .sip-countdown-pill { display: inline-block; }
+    .tea-glass-svg {
+      position: absolute;
+      right: -8px;
+      bottom: -4px;
+      width: 42px;
+      height: 42px;
+      pointer-events: none;
+      display: none;
+      z-index: 3;
+      animation: cupTilt 0.9s ease-in-out infinite alternate;
+    }
+    .sipping-active .tea-glass-svg { display: block; }
+    @keyframes cupTilt {
+      0% { transform: translate(0, 0) rotate(-8deg); }
+      100% { transform: translate(-6px, -10px) rotate(-28deg) scale(1.1); }
+    }
+    .customer-stage {
+      background: linear-gradient(135deg, var(--espresso-mid), var(--espresso-dark));
+      border-radius: 20px;
+      padding: 14px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      color: #fff;
+    }
+    .customer-bubble {
+      flex: 1;
+      background: #FFFDF9;
+      color: var(--espresso-dark);
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid #E6CCB2;
+    }
+    .bubble-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .req-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .req-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: #F3ECE6;
+      border: 1px solid #D7CCC8;
+      color: #4E342E;
+    }
+    .req-chip.done { background: #E6F4EA; border-color: #34A853; color: #137333; }
+    .shelf {
+      background: #F5EBE1;
+      border: 1.5px solid #DFCBB8;
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .shelf.food { background: #EDF6EE; border-color: #C3DEC7; }
+    .shelf.prank { background: #F6EDF8; border-color: #DFC5E6; }
+    .shelf-title { font-size: 14px; font-weight: 800; margin-bottom: 10px; }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+      gap: 10px;
+    }
+    .item-card {
+      background: var(--card-bg);
+      border: 2px solid #E6D7C3;
+      border-radius: 16px;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+    }
+    .item-card:hover { transform: translateY(-2px); }
+    .item-card.selected {
+      border-color: var(--terracotta);
+      background: #FFF3E0;
+      box-shadow: 0 4px 12px rgba(200,90,50,0.2);
+    }
+    .item-card img {
+      width: 78px;
+      height: 78px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 6px;
+      background: #3E2723;
+    }
+    .item-name { font-size: 12.5px; font-weight: 700; color: #2C1A12; }
+    .item-sub { font-size: 10.5px; color: #6D4C41; margin-top: 2px; }
+    .wooden-tray {
+      background: linear-gradient(180deg, var(--wood-mid), var(--wood-dark));
+      border-radius: 22px;
+      padding: 16px;
+      color: #FFF8EE;
+      border: 3px solid #8D5B3E;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .tray-items { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .tray-chip {
+      background: #FFFDF9;
+      color: #2C1A12;
+      padding: 6px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .btn-serve {
+      background: linear-gradient(135deg, #2E7D32, #1B5E20);
+      color: #fff;
+      font-size: 14px;
+      padding: 10px 20px;
+    }
+    .review-card {
+      background: #FFFDF9;
+      border: 2.5px solid var(--emerald);
+      border-radius: 18px;
+      padding: 16px;
+      display: none;
+      gap: 14px;
+      align-items: center;
+    }
+    .review-card.sabotage { border-color: var(--crimson); background: #FFF5F5; }
+    .review-card.visible { display: flex; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="brand-title">Backyard Barista on Cloud Run ☕🥐🧂</div>
+      <div class="brand-sub" id="citySubtitle">Şehitkamil Baklava &amp; Menengiç Kahve Evi · Fıstıklı Baklava &amp; Menengiç Kahvesi</div>
+    </div>
+    <div class="header-controls">
+      <button class="btn-pill btn-mute" id="round2Btn" onclick="toggleRound2Items()" style="background:#FFF8E1;color:#E65100;border-color:#FFB300;">✨ Round 2 AI SVGs: ON</button>
+      <button class="btn-pill btn-mute" id="muteBtn" onclick="toggleMute()">🔊 Ses Açık</button>
+      <select class="btn-pill btn-city" id="citySelect" onchange="changeCity(this.value)" aria-label="City Edition">
+        <option value="gaziantep">🇹🇷 Gaziantep Edition</option>
+        <option value="berlin">🇩🇪 Berlin Edition</option>
+        <option value="adana">🇹🇷 Adana Edition</option>
+        <option value="istanbul">🇹🇷 Istanbul Edition</option>
+      </select>
+    </div>
+  </header>
+  <div class="awning"></div>
+
+  <main id="appRoot" class="sipping-active">
+    <section class="score-bar">
+      <div>
+        <strong id="editionHeader">🇹🇷 DevFest Gaziantep 2026 Edition</strong>
+        <div style="font-size:11px;color:#6D4C41;" id="priorityLayerText">Priority 2: Firebase Remote Config (active_city_id)</div>
+      </div>
+      <div class="score-badges">
+        <span class="badge badge-level" id="crewLevelBadge">🏆 Lv.1 Barista</span>
+        <span class="badge badge-p1" id="p1ScoreBadge">☕ P1 Barista: 0</span>
+        <span class="badge badge-p2" id="p2ScoreBadge">🥐 P2 Pastry: 0</span>
+        <span class="badge badge-tips" id="tipsBadge">🪙 Tips: +0 pts</span>
+      </div>
+    </section>
+
+    <section class="soundboard-bar" id="baristaSoundboard">
+      <div class="soundboard-header">
+        <span class="soundboard-title" id="soundboardTitle">🎛️ Barista Ses Efektleri (10 Web Audio API SFX)</span>
+        <span class="soundboard-status" id="activeWebAudioCueBadge">🎵 Web Audio Hazır</span>
+      </div>
+      <div class="soundboard-buttons">
+        <button class="btn-sfx" id="sfxCoffeeGrinderBtn" onclick="playBaristaCue('coffeeGrinder')">⚙️ Kahve Değirmeni</button>
+        <button class="btn-sfx" id="sfxEspressoSteamBtn" onclick="playBaristaCue('espressoSteam')">💨 Espresso Buharı</button>
+        <button class="btn-sfx" id="sfxServeBellBtn" onclick="playBaristaCue('serveBell')">🔔 Sipariş Zili</button>
+        <button class="btn-sfx" id="sfxLevelUpBtn" onclick="playBaristaCue('levelUpFanfare')">🏆 Seviye Atlama</button>
+      </div>
+    </section>
+
+    <section class="crew-grid">
+      <div class="crew-card" onclick="triggerTeaSip5Seconds()">
+        <div class="avatar-wrap">
+          <span class="sip-countdown-pill" data-sip-pill>🫖 Hüüüp! · 5.0sn</span>
+          <img src="../flutter_client/assets/base/characters/barista_p1.png" alt="P1 Barista Esra" onerror="this.src='https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/characters/barista_p1.png'" />
+          <svg class="tea-glass-svg" viewBox="0 0 64 64">
+            <ellipse cx="32" cy="54" rx="22" ry="6" fill="#FFF8EE" stroke="#C62828" stroke-width="3"/>
+            <path d="M20,16 C18,28 24,34 22,44 C20,49 20,52 24,52 L40,52 C44,52 44,49 42,44 C40,34 46,28 44,16 Z" fill="#D84315" stroke="#FFECB3" stroke-width="2.5"/>
+            <path d="M26,12 Q22,5 27,1 M36,12 Q40,5 35,1" stroke="#FFF8E1" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-weight:800;font-size:13px;" id="p1RoleTitle">Oyuncu 1 · Baş Barista Esra</div>
+          <div style="font-size:11px;color:#6D4C41;margin-bottom:6px;" id="p1RoleSub">Espresso &amp; Bakır Cezve İstasyonu</div>
+          <div style="background:#fff;padding:6px 10px;border-radius:10px;font-size:11.5px;font-weight:600;" id="p1Speech">
+            🫖 Hüüüp... Ohhh! Tezgah başında 5 saniye ince belli demli çay keyfi gibisi yok!
+          </div>
+        </div>
+      </div>
+
+      <div class="crew-card p2" onclick="triggerTeaSip5Seconds()">
+        <div class="avatar-wrap">
+          <span class="sip-countdown-pill" data-sip-pill>🫖 Hüüüp! · 5.0sn</span>
+          <img src="../flutter_client/assets/base/characters/pastry_chef_p2.png" alt="P2 Pastry Chef Can" onerror="this.src='https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/characters/pastry_chef_p2.png'" />
+          <svg class="tea-glass-svg" viewBox="0 0 64 64">
+            <ellipse cx="32" cy="54" rx="22" ry="6" fill="#FFF8EE" stroke="#C62828" stroke-width="3"/>
+            <path d="M20,16 C18,28 24,34 22,44 C20,49 20,52 24,52 L40,52 C44,52 44,49 42,44 C40,34 46,28 44,16 Z" fill="#D84315" stroke="#FFECB3" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-weight:800;font-size:13px;" id="p2RoleTitle">Oyuncu 2 · Tatlı &amp; Şaka Şefi Can</div>
+          <div style="font-size:11px;color:#6D4C41;margin-bottom:6px;" id="p2RoleSub">Tatlı Vitrini &amp; İkiz Kavanozlar</div>
+          <div style="background:#fff;padding:6px 10px;border-radius:10px;font-size:11.5px;font-weight:600;" id="p2Speech">
+            🫖 Hüüüp... Çıtır fıstıklı baklava yanında 5 saniye tavşan kanı çay molası! ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="customer-stage">
+      <div class="avatar-wrap" onclick="triggerTeaSip5Seconds()" style="width:86px;height:86px;">
+        <span class="sip-countdown-pill" data-sip-pill>🫖 Hüüüp! · 5.0sn</span>
+        <img id="customerAvatar" src="../flutter_client/assets/base/characters/customer_ayse_usta.png" alt="Customer" onerror="this.src='https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/characters/customer_ayse_usta.png'" />
+        <svg class="tea-glass-svg" viewBox="0 0 64 64">
+          <ellipse cx="32" cy="54" rx="22" ry="6" fill="#FFF8EE" stroke="#C62828" stroke-width="3"/>
+          <path d="M20,16 C18,28 24,34 22,44 C20,49 20,52 24,52 L40,52 C44,52 44,49 42,44 C40,34 46,28 44,16 Z" fill="#D84315" stroke="#FFECB3" stroke-width="2.5"/>
+        </svg>
+      </div>
+      <div class="customer-bubble">
+        <div class="bubble-header">
+          <strong id="customerTitle">Müşteri #1/3 · Ayşe Usta (Şehitkamil Gurme Jüri)</strong>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <button class="btn-pill" id="sipTeaBtn" style="background:#B71C1C;color:#fff;" onclick="triggerTeaSip5Seconds()">🫖 5sn Çay Yudumlat</button>
+            <button class="btn-pill" id="nextCustomerBtn" style="background:#FFF3E0;color:#C85A32;" onclick="nextCustomer()">⏭ Sıradaki Müşteri</button>
+          </div>
+        </div>
+        <div id="customerQuote" style="font-size:13px;font-weight:600;color:#B71C1C;">
+          "🫖 Hüüüp... İnce belli bardakta tavşan kanı çayımı 5 saniye keyifle yudumluyorum! Ohhh! ✨"
+        </div>
+        <div class="req-chips" id="reqChips"></div>
+      </div>
+    </section>
+
+    <section class="shelf" id="drinkShelf">
+      <div class="shelf-title" id="drinkShelfTitle">☕ Oyuncu 1: Kahve &amp; İçecek Barı</div>
+      <div class="cards-grid" id="drinkGrid"></div>
+    </section>
+
+    <section class="shelf food" id="foodShelf">
+      <div class="shelf-title" id="foodShelfTitle">🥐 Oyuncu 2: Cam Tatlı Vitrini</div>
+      <div class="cards-grid" id="foodGrid"></div>
+    </section>
+
+    <section class="shelf prank" id="prankShelf">
+      <div class="shelf-title" id="prankShelfTitle">🧂 Tatlı mı Tuzlu mu? İkiz Kavanozlar (Sürpriz Şaka!)</div>
+      <div class="cards-grid" id="prankGrid"></div>
+    </section>
+
+    <section class="wooden-tray">
+      <div>
+        <div style="font-weight:800;font-size:14px;"><span id="trayHeaderTitle">🪵 Ahşap Servis Tepsisi</span> <span id="stealthWinkBadge" style="display:none;background:#3E2723;color:#FFD54F;padding:2px 8px;border-radius:999px;font-size:11px;">🤫 😉 Şaka Eklendi!</span></div>
+        <div class="tray-items" id="trayItems" style="margin-top:6px;"></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-pill" id="clearTrayBtn" style="background:rgba(255,255,255,0.16);color:#fff;" onclick="clearTray()">Temizle</button>
+        <button class="btn-pill btn-serve" id="serveOrderBtn" onclick="serveOrder()">🔔 Siparişi Servis Et!</button>
+      </div>
+    </section>
+
+    <section class="review-card" id="reviewCard">
+      <img id="reviewFaceImg" src="../flutter_client/assets/base/customers/customer_happy.png" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/customers/customer_happy.png'" alt="Reaction" style="width:76px;height:76px;border-radius:16px;object-fit:cover;" />
+      <div>
+        <div id="reviewBadge" style="font-weight:800;font-size:12px;color:#2E7D32;">5/5 · Tatlı Mükemmellik ✨</div>
+        <div id="reviewHeadline" style="font-weight:800;font-size:15px;margin:3px 0;"></div>
+        <div id="reviewBody" style="font-size:13px;color:#4E342E;"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const CITY_EDITIONS = {
+      gaziantep: {
+        title: '🇹🇷 DevFest Gaziantep 2026 Edition',
+        sub: 'Şehitkamil Baklava & Menengiç Kahve Evi · Fıstıklı Baklava & Menengiç Kahvesi',
+        customers: [
+          {
+            title: 'Müşteri #1/3 · Ayşe Usta (Şehitkamil Gurme Jüri)',
+            avatar: 'characters/customer_ayse_usta.png',
+            quote: 'Menengiç Kahvesi + Fıstıklı Baklava + Tatlı Şeker (Sakın tuz şakası yapmayın!)',
+            reqs: ['menengic_coffee', 'baklava', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #2/3 · Mustafa (GDG Gaziantep Organizatörü)',
+            avatar: 'characters/customer_mustafa.png',
+            quote: 'Çift Shot Espresso + AI Özel Katmer Sarma + Tatlı Şeker, yeni seans başlıyor!',
+            reqs: ['espresso', 'custom_katmer_roll', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #3/3 · Zeynep (Flutter Öğrenci Geliştirici)',
+            avatar: 'customers/customer_happy.png',
+            quote: 'Köpüklü Süt + San Sebastian Cheesecake + Tatlı Şeker lütfen!',
+            reqs: ['milk', 'san_sebastian', 'sugar_jar']
+          }
+        ],
+        sweetHeadline: 'Ayşe Usta: "İşte Gerçek Antep Usulü Ziyafet!"',
+        sweetReaction: 'Menengiç kahvesinin kavrulmuş aroması ve 40 kat çıtır baklava şerbetiyle tam 5 yıldız!',
+        saltyHeadline: 'Ayşe Usta: "Baklavaya ve Kahveye Tuz mu Bastınız?!"',
+        saltyReaction: 'Şehitkamil\'de tatlıya tuz atanı çarşıdan sınır dışı ederler! 1 Yıldız · Tuzlu Sabotaj!'
+      },
+      berlin: {
+        title: '🇩🇪 DevFest Berlin 2026 Edition',
+        sub: 'Kreuzberg Späti & Kiez Roasters · Flat White & Berliner Pfannkuchen',
+        customers: [
+          {
+            title: 'Customer #1/3 · Lukas (Kreuzberg Indie Dev)',
+            avatar: 'characters/customer_lukas.png',
+            quote: 'One Double Espresso, a flaky Butter Croissant, and Sweet Sugar please!',
+            reqs: ['espresso', 'croissant', 'sugar_jar']
+          },
+          {
+            title: 'Customer #2/3 · Hannah (Cloud Run Architect)',
+            avatar: 'characters/customer_deniz.png',
+            quote: 'Steamed Milk with San Sebastian Cheesecake and a touch of Sweet Sugar!',
+            reqs: ['milk', 'san_sebastian', 'sugar_jar']
+          },
+          {
+            title: 'Customer #3/3 · Max (DevFest Stage Host)',
+            avatar: 'characters/customer_mustafa.png',
+            quote: 'Surprise me with Menengiç Coffee, AI Custom Katmer Roll, and Sweet Sugar!',
+            reqs: ['menengic_coffee', 'custom_katmer_roll', 'sugar_jar']
+          }
+        ],
+        sweetHeadline: 'Lukas: "Perfekter Kiez-Espresso & Croissant!"',
+        sweetReaction: 'Silky crema and flaky butter layers: 5/5 Sweet Perfection in Berlin!',
+        saltyHeadline: 'Lukas: "Das ist Salz, kein Zucker! 1 Stern!"',
+        saltyReaction: 'Tougher than the Berghain bouncer! Who swapped the sugar jar with salt?!'
+      },
+      adana: {
+        title: '🇹🇷 DevFest Adana 2026 Edition',
+        sub: 'Seyhan Gar Kahvesi & Tatlı Durağı · Köpüklü Kahve & Bici Bici',
+        customers: [
+          {
+            title: 'Müşteri #1/3 · Emre (Seyhan Bulut Mühendisi)',
+            avatar: 'characters/customer_mustafa.png',
+            quote: 'Gar Kahvesi niyetine Çift Shot Espresso + Fıstıklı Baklava + Tatlı Şeker!',
+            reqs: ['espresso', 'baklava', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #2/3 · Selin (AI Studio Geliştiricisi)',
+            avatar: 'customers/customer_happy.png',
+            quote: 'Buz gibi Köpüklü Süt + Tereyağlı Kruvasan + Tatlı Şeker!',
+            reqs: ['milk', 'croissant', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #3/3 · Burak (DevFest Konuşmacısı)',
+            avatar: 'characters/customer_lukas.png',
+            quote: 'Menengiç Kahvesi + AI Özel Katmer Sarma + Tatlı Şeker lütfen!',
+            reqs: ['menengic_coffee', 'custom_katmer_roll', 'sugar_jar']
+          }
+        ],
+        sweetHeadline: 'Emre: "Adana Sıcağında Tam Kıvamında Keyif!"',
+        sweetReaction: 'Kaymaklı tatlı ve espresso ikilisi efsane olmuş, 5 yıldız!',
+        saltyHeadline: 'Emre: "Şalgam Suyu mu Sandınız Bunu?!"',
+        saltyReaction: 'Tatlı siparişe tuz/isot basmışsınız, ağzımız yandı! 1 Yıldız!'
+      },
+      istanbul: {
+        title: '🇹🇷 DevFest Istanbul 2026 Edition',
+        sub: 'Galata & Vapur Kafe · San Sebastian Cheesecake & Espresso',
+        customers: [
+          {
+            title: 'Müşteri #1/3 · Deniz (Galata Ürün Tasarımcısı)',
+            avatar: 'characters/customer_deniz.png',
+            quote: 'Çift Shot Espresso + Galata San Sebastian Cheesecake + Tatlı Şeker!',
+            reqs: ['espresso', 'san_sebastian', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #2/3 · Kaan (Boğaz Vapur Kaptanı)',
+            avatar: 'characters/customer_lukas.png',
+            quote: 'Menengiç Kahvesi + Fıstıklı Baklava + Tatlı Şeker lütfen!',
+            reqs: ['menengic_coffee', 'baklava', 'sugar_jar']
+          },
+          {
+            title: 'Müşteri #3/3 · Elif (GDE Mentor)',
+            avatar: 'characters/customer_ayse_usta.png',
+            quote: 'Köpüklü Süt + AI Özel Katmer Sarma + Tatlı Şeker!',
+            reqs: ['milk', 'custom_katmer_roll', 'sugar_jar']
+          }
+        ],
+        sweetHeadline: 'Deniz: "Boğaz Vapurunda 5 Yıldızlı Lezzet!"',
+        sweetReaction: 'Akışkan San Sebastian ve kadife kremalı espresso kusursuz!',
+        saltyHeadline: 'Deniz: "Galata\'da Turist Şakası Gibi Tuzlu Kahve!"',
+        saltyReaction: 'Şeker yerine tuz kavanozunu boşaltmışsınız! 1 Yıldız!'
+      }
+    };
+
+    const ITEMS = [
+      { id: 'espresso', category: 'drink', name: 'Çift Shot Espresso', nameEn: 'Double Shot Espresso', subtitle: 'Kadife Krema · 92°C', subtitleEn: 'Velvet Crema · 92°C', imagePath: 'drinks/espresso.png', isPrank: false, isRound2: false },
+      { id: 'milk', category: 'drink', name: 'Köpüklü Süt', nameEn: 'Steamed Milk Foam', subtitle: 'İpeksi Süt Köpüğü · 65°C', subtitleEn: 'Silky Microfoam · 65°C', imagePath: 'drinks/milk.png', isPrank: false, isRound2: false },
+      { id: 'menengic_coffee', category: 'drink', name: 'Menengiç Kahvesi', nameEn: 'Pistachio Menengic Coffee', subtitle: 'Kavrulmuş Menengiç · Cezve', subtitleEn: 'Roasted Pistachio · Copper Pot', imagePath: 'drinks/menengic_coffee.png', isPrank: false, isRound2: false },
+      { id: 'croissant', category: 'food', name: 'Tereyağlı Kruvasan', nameEn: 'Butter Croissant', subtitle: 'Çıtır Katmanlı Hamur', subtitleEn: 'Flaky Golden Layers', imagePath: 'foods/croissant.png', isPrank: false, isRound2: false },
+      { id: 'san_sebastian', category: 'food', name: 'San Sebastian', nameEn: 'San Sebastian Cheesecake', subtitle: 'Karamelize Yanık Üst', subtitleEn: 'Caramelized Basque Crust', imagePath: 'foods/san_sebastian.png', isPrank: false, isRound2: false },
+      { id: 'baklava', category: 'food', name: 'Fıstıklı Baklava', nameEn: 'Pistachio Baklava', subtitle: '40 Kat Yufka · Boz Fıstık', subtitleEn: '40 Filo Layers · Antep Pistachio', imagePath: 'foods/baklava.png', isPrank: false, isRound2: false },
+      { id: 'custom_katmer_roll', category: 'food', name: 'AI Özel: Katmer Sarma', nameEn: 'AI Custom: Pistachio Katmer', subtitle: 'Kaymak & Boz Fıstık', subtitleEn: 'Clotted Cream & Pistachio', imagePath: 'foods/katmer_roll.png', isPrank: false, isRound2: true },
+      { id: 'sugar_jar', category: 'prank', name: 'Tatlı Şeker Kavanozu', nameEn: 'Sweet Sugar Jar', subtitle: '2 Delikli Kapak · Beyaz Kristal', subtitleEn: '2-Hole Lid · Sweet Crystals', imagePath: 'toppings_pranks/sugar_jar.png', isPrank: false, isRound2: false },
+      { id: 'salt_shaker', category: 'prank', name: 'Tuzluk (Şeker İkizi)', nameEn: 'Salt Shaker (Twin Jar)', subtitle: '3 Delikli Kapak · Beyaz Kristal', subtitleEn: '3-Hole Lid · Salty Prank!', imagePath: 'toppings_pranks/salt_shaker.png', isPrank: true, isRound2: false },
+      { id: 'chili_sauce', category: 'prank', name: 'Kırmızı Sos (Acı Biber)', nameEn: 'Chili Sauce (Berry Twin)', subtitle: 'Çilek Sosu Görünümlü · Acı!', subtitleEn: 'Looks Like Berry Syrup · Spicy!', imagePath: 'toppings_pranks/chili_sauce.png', isPrank: true, isRound2: false },
+      { id: 'custom_isot_pepper', category: 'prank', name: 'AI Özel: İsot Biberi', nameEn: 'AI Custom: Urfa Isot Pepper', subtitle: 'İsli Urfa & Antep İsotu', subtitleEn: 'Smoky Spicy Pepper Flakes', imagePath: 'toppings_pranks/isot_pepper.png', isPrank: true, isRound2: true }
+    ];
+
+    let activeCity = 'gaziantep';
+    let activeCustomerIndex = 0;
+    let showRound2CustomItems = true;
+    let tray = [];
+    let playerOneScore = 0;
+    let playerTwoScore = 0;
+    let tipPoints = 0;
+    let isMuted = false;
+    let sipInterval = null;
+    let sharedAudioContext = null;
+
+    const CUE_LABELS = {
+      coffeeGrinder: { tr: '⚙️ Kahve Değirmeni Sesi', en: '⚙️ Burr Coffee Grinder' },
+      espressoSteam: { tr: '💨 Espresso Buhar Çubuğu', en: '💨 Espresso Steam Wand' },
+      serveBell: { tr: '🔔 Servis Zili', en: '🔔 Order Counter Bell' },
+      levelUpFanfare: { tr: '🏆 Seviye Atlama Fanfarı', en: '🏆 Level-Up Fanfare' },
+      teaSipSlurp: { tr: '🫖 İnce Belli Çay Hüplemesi', en: '🫖 Turkish Tea Sip' },
+      saltySabotage: { tr: '🧂 Tuzlu Sabotaj Alarmı', en: '🧂 Salty Sabotage Buzzer' },
+      prankSprinkle: { tr: '🤫 Gizli Şaka Serpintisi', en: '🤫 Stealth Prank Wink' },
+      tapPop: { tr: '🫧 Tezgah Seçim Sesi', en: '🫧 Counter Tap Pop' },
+      sweetFanfare: { tr: '✨ 5 Yıldız Tatlı Kutlaması', en: '✨ 5-Star Sweet Fanfare' },
+      nextChime: { tr: '⏭ Sıradaki Müşteri Zili', en: '⏭ Next Customer Chime' }
+    };
+
+    function isEnglishUi() {
+      return activeCity === 'berlin';
+    }
+
+    function itemTitle(item) {
+      return isEnglishUi() ? item.nameEn : item.name;
+    }
+
+    function itemSubtitle(item) {
+      return isEnglishUi() ? item.subtitleEn : item.subtitle;
+    }
+
+    function setAssetWithFallback(imgElement, relativePath) {
+      if (!imgElement) return;
+      imgElement.onerror = function () {
+        this.onerror = null;
+        this.src = `https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/${relativePath}`;
+      };
+      imgElement.src = `../flutter_client/assets/base/${relativePath}`;
+    }
+
+    function getCrewLevel() {
+      return 1 + Math.floor((playerOneScore + playerTwoScore) / 100);
+    }
+
+    function updateActiveCueBadge(cueName) {
+      const badgeEl = document.getElementById('activeWebAudioCueBadge');
+      if (!badgeEl) return;
+      const en = isEnglishUi();
+      if (isMuted) {
+        badgeEl.textContent = en ? '🔇 Muted' : '🔇 Sessiz Mod';
+        return;
+      }
+      const labelObj = CUE_LABELS[cueName];
+      badgeEl.textContent = labelObj ? (en ? labelObj.en : labelObj.tr) : (en ? '🎵 10 Web Audio SFX Ready' : '🎵 Web Audio Hazır');
+    }
+
+    function ensureAudioContext() {
+      if (!sharedAudioContext) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        sharedAudioContext = new AudioContextClass();
+      }
+      if (sharedAudioContext.state === 'suspended') {
+        sharedAudioContext.resume();
+      }
+      return sharedAudioContext;
+    }
+
+    function playNoiseBurst(audioCtx, startTime, durationSec, filterType, frequencyHz, qFactor, peakGain) {
+      const sampleRate = audioCtx.sampleRate;
+      const frameCount = Math.max(1, Math.floor(sampleRate * durationSec));
+      const buffer = audioCtx.createBuffer(1, frameCount, sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < frameCount; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      const source = audioCtx.createBufferSource();
+      source.buffer = buffer;
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = filterType;
+      filter.frequency.setValueAtTime(frequencyHz, startTime);
+      filter.Q.setValueAtTime(qFactor, startTime);
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0.001, startTime);
+      gain.gain.linearRampToValueAtTime(peakGain, startTime + Math.min(0.04, durationSec * 0.2));
+      gain.gain.exponentialRampToValueAtTime(0.0008, startTime + durationSec);
+      source.connect(filter);
+      filter.connect(gain);
+      gain.connect(audioCtx.destination);
+      source.start(startTime);
+      source.stop(startTime + durationSec);
+    }
+
+    function playBaristaCue(cueName) {
+      updateActiveCueBadge(cueName);
+      if (isMuted) return;
+      try {
+        const audioCtx = ensureAudioContext();
+        const now = audioCtx.currentTime;
+        if (cueName === 'coffeeGrinder') {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(92, now);
+          osc.frequency.linearRampToValueAtTime(118, now + 0.45);
+          osc.frequency.linearRampToValueAtTime(96, now + 0.9);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.14, now + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.92);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.93);
+          playNoiseBurst(audioCtx, now, 0.9, 'bandpass', 1450, 2.4, 0.16);
+        } else if (cueName === 'espressoSteam') {
+          playNoiseBurst(audioCtx, now, 0.78, 'bandpass', 2800, 1.4, 0.2);
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(175, now);
+          osc.frequency.exponentialRampToValueAtTime(125, now + 0.72);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.74);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.75);
+        } else if (cueName === 'serveBell') {
+          [1046.5, 1318.5, 1567.98].forEach((freq, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.055);
+            gain.gain.setValueAtTime(0.16 / (idx + 1), now + idx * 0.055);
+            gain.gain.exponentialRampToValueAtTime(0.0008, now + idx * 0.055 + 0.55);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now + idx * 0.055);
+            osc.stop(now + idx * 0.055 + 0.56);
+          });
+        } else if (cueName === 'levelUpFanfare') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+            const start = now + idx * 0.095;
+            const dur = idx === 3 ? 0.42 : 0.16;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, start);
+            gain.gain.setValueAtTime(0.18, start);
+            gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + dur + 0.01);
+          });
+        } else if (cueName === 'teaSipSlurp') {
+          playNoiseBurst(audioCtx, now, 0.36, 'bandpass', 1800, 3.0, 0.14);
+          playTone(587, 320, 'triangle');
+        } else if (cueName === 'saltySabotage') {
+          [293.66, 233.08, 185.0].forEach((freq, idx) => {
+            const start = now + idx * 0.13;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(freq, start);
+            gain.gain.setValueAtTime(0.15, start);
+            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.18);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + 0.19);
+          });
+        } else if (cueName === 'prankSprinkle') {
+          playNoiseBurst(audioCtx, now, 0.22, 'highpass', 3200, 1.8, 0.14);
+          playTone(310, 180, 'sawtooth');
+        } else if (cueName === 'tapPop') {
+          playTone(540, 95, 'sine');
+        } else if (cueName === 'sweetFanfare') {
+          [523.25, 659.25, 783.99].forEach((freq, idx) => {
+            const start = now + idx * 0.08;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, start);
+            gain.gain.setValueAtTime(0.15, start);
+            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.24);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + 0.25);
+          });
+        } else if (cueName === 'nextChime') {
+          playTone(660, 140, 'triangle');
+        }
+      } catch (_error) {}
+    }
+
+    function playTone(frequencyHz, durationMilliseconds, waveType = 'sine') {
+      if (isMuted) return;
+      try {
+        const audioCtx = ensureAudioContext();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.type = waveType;
+        oscillator.frequency.value = frequencyHz;
+        gainNode.gain.setValueAtTime(0.18, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + durationMilliseconds / 1000);
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + durationMilliseconds / 1000);
+      } catch (_error) {}
+    }
+
+    function getCurrentCustomer() {
+      const cityEdition = CITY_EDITIONS[activeCity];
+      const list = cityEdition.customers;
+      return list[activeCustomerIndex % list.length];
+    }
+
+    function getEffectiveReqs(customer) {
+      return customer.reqs.map(id => (!showRound2CustomItems && id === 'custom_katmer_roll') ? 'baklava' : id);
+    }
+
+    function triggerTeaSip5Seconds() {
+      playBaristaCue('teaSipSlurp');
+      const en = isEnglishUi();
+      const rootElement = document.getElementById('appRoot');
+      rootElement.classList.add('sipping-active');
+      const startTimestampMs = Date.now();
+      if (sipInterval) clearInterval(sipInterval);
+      const pillElements = document.querySelectorAll('[data-sip-pill]');
+      const sipButton = document.getElementById('sipTeaBtn');
+      sipButton.textContent = en ? '🫖 Sipping Tea (5s)...' : '🫖 Çay Yudumluyor (5sn)...';
+
+      sipInterval = setInterval(() => {
+        const elapsedSeconds = (Date.now() - startTimestampMs) / 1000;
+        const remainingSeconds = Math.max(0, 5.0 - elapsedSeconds);
+        const unit = isEnglishUi() ? 's' : 'sn';
+        const prefix = isEnglishUi() ? '🫖 Sip!' : '🫖 Hüüüp!';
+        pillElements.forEach(pillElement => {
+          pillElement.textContent = `${prefix} · ${remainingSeconds.toFixed(1)}${unit}`;
+        });
+        if (remainingSeconds <= 0) {
+          clearInterval(sipInterval);
+          rootElement.classList.remove('sipping-active');
+          sipButton.textContent = isEnglishUi() ? '🫖 Sip Tea (5s)' : '🫖 5sn Çay Yudumlat';
+        }
+      }, 100);
+    }
+
+    function toggleRound2Items() {
+      showRound2CustomItems = !showRound2CustomItems;
+      if (!showRound2CustomItems) {
+        tray = tray.filter(id => !ITEMS.find(item => item.id === id)?.isRound2);
+      }
+      playBaristaCue('tapPop');
+      renderAll();
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      renderAll();
+      updateActiveCueBadge(null);
+    }
+
+    function changeCity(cityKey) {
+      activeCity = cityKey;
+      activeCustomerIndex = 0;
+      tray = [];
+      document.getElementById('priorityLayerText').textContent = 'Priority 1: Manual UI Override (Settings Switcher)';
+      document.getElementById('reviewCard').classList.remove('visible');
+      renderAll();
+    }
+
+    function nextCustomer() {
+      playBaristaCue('nextChime');
+      const customers = CITY_EDITIONS[activeCity].customers;
+      activeCustomerIndex = (activeCustomerIndex + 1) % customers.length;
+      tray = [];
+      document.getElementById('reviewCard').classList.remove('visible');
+      renderAll();
+    }
+
+    function toggleItem(itemId) {
+      const selectedItem = ITEMS.find(item => item.id === itemId);
+      const itemIndex = tray.indexOf(itemId);
+      if (itemIndex >= 0) {
+        tray.splice(itemIndex, 1);
+        playBaristaCue('tapPop');
+      } else {
+        tray = tray.filter(existingId => ITEMS.find(candidate => candidate.id === existingId)?.category !== selectedItem.category);
+        tray.push(itemId);
+        if (selectedItem.isPrank) {
+          playBaristaCue('prankSprinkle');
+        } else if (selectedItem.id === 'espresso' || selectedItem.id === 'menengic_coffee') {
+          playBaristaCue('coffeeGrinder');
+        } else if (selectedItem.id === 'milk') {
+          playBaristaCue('espressoSteam');
+        } else {
+          playBaristaCue('tapPop');
+        }
+      }
+      renderAll();
+    }
+
+    function clearTray() {
+      tray = [];
+      document.getElementById('reviewCard').classList.remove('visible');
+      renderAll();
+    }
+
+    function serveOrder() {
+      if (tray.length === 0) return;
+      const en = isEnglishUi();
+      const previousCrewLevel = getCrewLevel();
+      const hasPrank = tray.some(trayItemId => ITEMS.find(item => item.id === trayItemId)?.isPrank);
+      const hasDrink = tray.some(trayItemId => ITEMS.find(item => item.id === trayItemId)?.category === 'drink');
+      const hasFood = tray.some(trayItemId => ITEMS.find(item => item.id === trayItemId)?.category === 'food');
+      const hasSweetSugar = tray.includes('sugar_jar');
+      const cityEdition = CITY_EDITIONS[activeCity];
+      const reviewCard = document.getElementById('reviewCard');
+      reviewCard.classList.add('visible');
+      const faceImg = document.getElementById('reviewFaceImg');
+      if (hasPrank) {
+        playBaristaCue('saltySabotage');
+        playerTwoScore += 30;
+        reviewCard.classList.add('sabotage');
+        setAssetWithFallback(faceImg, 'customers/customer_salty_disgusted.png');
+        document.getElementById('reviewBadge').textContent = en ? '1/5 · Salty Sabotage 🧂' : '1/5 · Tuzlu Sabotaj 🧂';
+        document.getElementById('reviewBadge').style.color = '#B71C1C';
+        document.getElementById('reviewHeadline').textContent = cityEdition.saltyHeadline;
+        document.getElementById('reviewBody').textContent = cityEdition.saltyReaction;
+      } else if (!hasDrink || !hasFood || !hasSweetSugar) {
+        playBaristaCue('tapPop');
+        playerOneScore += 15;
+        playerTwoScore += 15;
+        reviewCard.classList.remove('sabotage');
+        setAssetWithFallback(faceImg, 'customers/customer_shocked.png');
+        document.getElementById('reviewBadge').textContent = en ? '3/5 · Incomplete Tray 🧩' : '3/5 · Eksik Tepsi 🧩';
+        document.getElementById('reviewBadge').style.color = '#E65100';
+        document.getElementById('reviewHeadline').textContent = en ? 'Incomplete Tray!' : 'Tepside Eksik Var!';
+        document.getElementById('reviewBody').textContent = en
+          ? 'Please plate 1 Drink + 1 Pastry + Sweet Sugar for a full 5-star order!'
+          : '5 yıldız için tepsiye 1 İçecek + 1 Tatlı + Tatlı Şeker dizin!';
+      } else {
+        playBaristaCue('serveBell');
+        setTimeout(() => playBaristaCue('sweetFanfare'), 180);
+        playerOneScore += 50;
+        playerTwoScore += 50;
+        tipPoints += 40;
+        reviewCard.classList.remove('sabotage');
+        setAssetWithFallback(faceImg, 'customers/customer_happy.png');
+        document.getElementById('reviewBadge').textContent = en ? '5/5 · Sweet Perfection ✨' : '5/5 · Tatlı Mükemmellik ✨';
+        document.getElementById('reviewBadge').style.color = '#2E7D32';
+        document.getElementById('reviewHeadline').textContent = cityEdition.sweetHeadline;
+        document.getElementById('reviewBody').textContent = cityEdition.sweetReaction;
+      }
+      if (getCrewLevel() > previousCrewLevel) {
+        playBaristaCue('levelUpFanfare');
+      }
+      renderAll();
+    }
+
+    function renderShelf(category, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = ITEMS.filter(item => item.category === category && (showRound2CustomItems || !item.isRound2)).map(item => {
+        const selectedClass = tray.includes(item.id) ? 'selected' : '';
+        const localSource = `../flutter_client/assets/base/${item.imagePath}`;
+        const rawSource = `https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/main/flutter_client/assets/base/${item.imagePath}`;
+        const titleText = itemTitle(item);
+        const subText = itemSubtitle(item);
+        return `
+          <div class="item-card ${selectedClass}" onclick="toggleItem('${item.id}')">
+            <img src="${localSource}" alt="${titleText}" onerror="this.onerror=null;this.src='${rawSource}'" />
+            <div class="item-name">${titleText}</div>
+            <div class="item-sub">${subText}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAll() {
+      const en = isEnglishUi();
+      const cityEdition = CITY_EDITIONS[activeCity];
+      const currentCustomer = getCurrentCustomer();
+      const effectiveReqs = getEffectiveReqs(currentCustomer);
+      document.getElementById('editionHeader').textContent = cityEdition.title;
+      document.getElementById('citySubtitle').textContent = cityEdition.sub;
+      document.getElementById('customerTitle').textContent = currentCustomer.title;
+      document.getElementById('customerQuote').textContent = `"${currentCustomer.quote}"`;
+      document.getElementById('customerQuote').style.color = '#4E342E';
+      const customerAvatarElement = document.getElementById('customerAvatar');
+      setAssetWithFallback(customerAvatarElement, currentCustomer.avatar);
+
+      document.getElementById('round2Btn').textContent = `✨ Round 2 AI Menu: ${showRound2CustomItems ? 'ON' : 'OFF'}`;
+      document.getElementById('muteBtn').textContent = isMuted ? (en ? '🔇 Sound Off' : '🔇 Ses Kapalı') : (en ? '🔊 Sound On' : '🔊 Ses Açık');
+      document.getElementById('soundboardTitle').textContent = en ? '🎛️ Barista Soundboard (10 Web Audio API SFX)' : '🎛️ Barista Ses Efektleri (10 Web Audio API SFX)';
+      document.getElementById('sfxCoffeeGrinderBtn').textContent = en ? '⚙️ Coffee Grinder' : '⚙️ Kahve Değirmeni';
+      document.getElementById('sfxEspressoSteamBtn').textContent = en ? '💨 Espresso Steam' : '💨 Espresso Buharı';
+      document.getElementById('sfxServeBellBtn').textContent = en ? '🔔 Order Bell' : '🔔 Sipariş Zili';
+      document.getElementById('sfxLevelUpBtn').textContent = en ? '🏆 Level Up' : '🏆 Seviye Atlama';
+
+      document.getElementById('p1RoleTitle').textContent = en ? 'Player 1 · Head Barista Esra' : 'Oyuncu 1 · Baş Barista Esra';
+      document.getElementById('p1RoleSub').textContent = en ? 'Espresso & Copper Pot Station' : 'Espresso & Bakır Cezve İstasyonu';
+      document.getElementById('p1Speech').textContent = en
+        ? '☕ Tap a coffee on my bar (or tap me for a 5s tea break!)'
+        : '☕ Kahve barından içeceği seç (veya bana tıklayıp 5sn çay yudumlat!)';
+
+      document.getElementById('p2RoleTitle').textContent = en ? 'Player 2 · Pastry & Prank Chef Can' : 'Oyuncu 2 · Tatlı & Şaka Şefi Can';
+      document.getElementById('p2RoleSub').textContent = en ? 'Pastry Showcase & Twin Jars' : 'Tatlı Vitrini & İkiz Kavanozlar';
+      document.getElementById('p2Speech').textContent = en
+        ? '🥐 Pick a signature dessert from the vitrine (or sneak a twin jar!)'
+        : '🥐 Vitrinden taze tatlıyı seç (istersen ikiz tuzlukla şaka yap!)';
+
+      document.getElementById('nextCustomerBtn').textContent = en ? '⏭ Next Customer' : '⏭ Sıradaki Müşteri';
+      document.getElementById('drinkShelfTitle').textContent = en ? '☕ Player 1: Coffee & Drink Bar' : '☕ Oyuncu 1: Kahve & İçecek Barı';
+      document.getElementById('foodShelfTitle').textContent = en ? '🥐 Player 2: Glass Pastry Showcase' : '🥐 Oyuncu 2: Cam Tatlı Vitrini';
+      document.getElementById('prankShelfTitle').textContent = en ? '🧂 Sweet or Salty? Twin Jars (Stealth Prank!)' : '🧂 Tatlı mı Tuzlu mu? İkiz Kavanozlar (Sürpriz Şaka!)';
+      document.getElementById('trayHeaderTitle').textContent = en ? '🪵 Wooden Serving Tray' : '🪵 Ahşap Servis Tepsisi';
+      document.getElementById('stealthWinkBadge').textContent = en ? '🤫 😉 Prank Added!' : '🤫 😉 Şaka Eklendi!';
+      document.getElementById('clearTrayBtn').textContent = en ? 'Clear' : 'Temizle';
+      document.getElementById('serveOrderBtn').textContent = en ? '🔔 Serve Order!' : '🔔 Siparişi Servis Et!';
+
+      document.getElementById('crewLevelBadge').textContent = `🏆 Lv.${getCrewLevel()} Barista`;
+      document.getElementById('p1ScoreBadge').textContent = `☕ P1 Barista: ${playerOneScore}`;
+      document.getElementById('p2ScoreBadge').textContent = `🥐 P2 Pastry: ${playerTwoScore}`;
+      document.getElementById('tipsBadge').textContent = `🪙 Tips: +${tipPoints} pts`;
+
+      document.getElementById('reqChips').innerHTML = effectiveReqs.map(requestedIngredientId => {
+        const item = ITEMS.find(candidate => candidate.id === requestedIngredientId);
+        const doneClass = tray.includes(requestedIngredientId) ? 'done' : '';
+        return `<span class="req-chip ${doneClass}">${doneClass ? '✓ ' : '○ '}${item ? itemTitle(item) : requestedIngredientId}</span>`;
+      }).join('');
+
+      renderShelf('drink', 'drinkGrid');
+      renderShelf('food', 'foodGrid');
+      renderShelf('prank', 'prankGrid');
+
+      const hasPrank = tray.some(trayItemId => ITEMS.find(item => item.id === trayItemId)?.isPrank);
+      document.getElementById('stealthWinkBadge').style.display = hasPrank ? 'inline-block' : 'none';
+
+      const trayElement = document.getElementById('trayItems');
+      if (tray.length === 0) {
+        trayElement.innerHTML = `<span style="font-size:12px;color:#D7CCC8;">${en ? 'Tray is empty: tap drinks, pastries, and sugar (or stealth salt!) above.' : 'Tepsi boş: raflardan içecek, tatlı ve şeker (veya gizli tuz!) seçin.'}</span>`;
+      } else {
+        trayElement.innerHTML = tray.map(trayItemId => {
+          const item = ITEMS.find(candidate => candidate.id === trayItemId);
+          return `<span class="tray-chip" onclick="toggleItem('${trayItemId}')">${itemTitle(item)} ✕</span>`;
+        }).join('');
+      }
+      updateActiveCueBadge(null);
+    }
+
+    document.getElementById('appRoot').classList.remove('sipping-active');
+    renderAll();
+  </script>
+</body>
+</html>

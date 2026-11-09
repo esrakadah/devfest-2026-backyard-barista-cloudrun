@@ -1,0 +1,23 @@
+include: package:very_good_analysis/analysis_options.yaml
+
+formatter:
+  page_width: 120
+  trailing_commas: preserve
+
+analyzer:
+  exclude:
+    - build/**
+  errors:
+    unnecessary_unawaited: ignore
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+
+linter:
+  rules:
+    cascade_invocations: false
+    public_member_api_docs: false
+    lines_longer_than_80_chars: false
+    flutter_style_todos: false
+    implicit_call_tearoffs: false

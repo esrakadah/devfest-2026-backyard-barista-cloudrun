@@ -3,27 +3,43 @@ import 'package:flutter/foundation.dart';
 
 /// Station category on the 2-player cafe counter.
 enum IngredientCategory {
-  drink('Drinks / İçecekler (Player 1)'),
-  food('Simple Foods / Tatlılar (Player 2)'),
-  toppingOrPrank('Sugar vs. Salt & Pranks / Şeker & Tuzak Malzemeler');
+  drink(
+    '☕ Player 1: Espresso & Coffee Bar',
+    '☕ Oyuncu 1: Kahve & İçecek Barı',
+  ),
+  food(
+    '🥐 Player 2: Glass Pastry Vitrine',
+    '🥐 Oyuncu 2: Cam Tatlı Vitrini',
+  ),
+  toppingOrPrank(
+    '🧂 Sweet or Salty? Twin Condiment Jars',
+    '🧂 Tatlı mı Tuzlu mu? İkiz Kavanozlar',
+  );
 
-  const IngredientCategory(this.sectionTitle);
+  const IngredientCategory(this.titleEn, this.titleTr);
 
-  final String sectionTitle;
+  final String titleEn;
+  final String titleTr;
+
+  String localizedTitle(String languageCode) => languageCode == 'en' ? titleEn : titleTr;
 }
 
 /// Represents a single tap-to-add item on the Backyard Barista counter.
-/// Uses either one of the 12 pre-generated GitHub PNGs (`assetPath`) or an on-the-fly
-/// Gemini/Antigravity generated vector graphic (`customVectorKind`).
+/// Uses one of the 20 pre-generated 9D studio PNGs in `assets/base/` (12 Round-1 base PNGs +
+/// 2 Round-2 custom PNGs + 6 3D character portraits) or an on-the-fly Gemini/Antigravity
+/// generated `CustomPaint` vector graphic (`customVectorKind`).
 @immutable
 class CafeIngredient {
   const CafeIngredient({
     required this.id,
     required this.titleEn,
     required this.titleTr,
+    required this.subtitleEn,
+    required this.subtitleTr,
     required this.category,
     required this.isPrankItem,
     required this.prankKind,
+    this.isHotDrink = false,
     this.assetPath,
     this.customVectorKind,
   });
@@ -31,19 +47,27 @@ class CafeIngredient {
   final String id;
   final String titleEn;
   final String titleTr;
+  final String subtitleEn;
+  final String subtitleTr;
   final IngredientCategory category;
   final bool isPrankItem;
   final String prankKind;
+  final bool isHotDrink;
   final String? assetPath;
   final CustomVectorArtworkKind? customVectorKind;
 
   String localizedTitle(String languageCode) {
     return languageCode == 'en' ? titleEn : titleTr;
   }
+
+  String localizedSubtitle(String languageCode) {
+    return languageCode == 'en' ? subtitleEn : subtitleTr;
+  }
 }
 
-/// Pre-wired catalog of the 9 counter PNG items (plus 3 customer face PNGs = 12 base PNGs total)
-/// and the 2 Round-2 custom vector items generated on the fly with Antigravity.
+/// Pre-wired catalog of the 9 Round-1 counter PNG items (plus 3 customer reaction PNGs,
+/// 2 Round-2 custom PNGs, and 6 3D character portraits = 20 studio 9D PNGs total in `assets/base/`)
+/// with on-the-fly `CustomPaint` vector graphic fallbacks generated with Antigravity.
 class IngredientsCatalog {
   const IngredientsCatalog._();
 
@@ -53,27 +77,36 @@ class IngredientsCatalog {
       id: 'espresso',
       titleEn: 'Double Espresso',
       titleTr: 'Çift Shot Espresso',
+      subtitleEn: 'Velvety Crema · 92°C',
+      subtitleTr: 'Kadife Krema · 92°C',
       category: IngredientCategory.drink,
       isPrankItem: false,
       prankKind: 'none',
+      isHotDrink: true,
       assetPath: 'assets/base/drinks/espresso.png',
     ),
     CafeIngredient(
       id: 'milk',
       titleEn: 'Steamed Milk',
       titleTr: 'Köpüklü Süt',
+      subtitleEn: 'Silky Microfoam · 65°C',
+      subtitleTr: 'İpeksi Süt Köpüğü · 65°C',
       category: IngredientCategory.drink,
       isPrankItem: false,
       prankKind: 'none',
+      isHotDrink: true,
       assetPath: 'assets/base/drinks/milk.png',
     ),
     CafeIngredient(
       id: 'menengic_coffee',
       titleEn: 'Menengiç Pistachio Coffee',
       titleTr: 'Menengiç Kahvesi',
+      subtitleEn: 'Roasted Terebinth · Copper Cup',
+      subtitleTr: 'Kavrulmuş Menengiç · Bakır Fincan',
       category: IngredientCategory.drink,
       isPrankItem: false,
       prankKind: 'none',
+      isHotDrink: true,
       assetPath: 'assets/base/drinks/menengic_coffee.png',
     ),
 
@@ -82,6 +115,8 @@ class IngredientsCatalog {
       id: 'croissant',
       titleEn: 'Butter Croissant',
       titleTr: 'Tereyağlı Kruvasan',
+      subtitleEn: 'Flaky Golden Layers',
+      subtitleTr: 'Çıtır Katmanlı Hamur',
       category: IngredientCategory.food,
       isPrankItem: false,
       prankKind: 'none',
@@ -91,6 +126,8 @@ class IngredientsCatalog {
       id: 'san_sebastian',
       titleEn: 'San Sebastian Cheesecake',
       titleTr: 'San Sebastian Cheesecake',
+      subtitleEn: 'Caramelized Basque Crust',
+      subtitleTr: 'Karamelize Yanık Üst Katman',
       category: IngredientCategory.food,
       isPrankItem: false,
       prankKind: 'none',
@@ -100,17 +137,21 @@ class IngredientsCatalog {
       id: 'baklava',
       titleEn: 'Pistachio Baklava',
       titleTr: 'Fıstıklı Baklava',
+      subtitleEn: '40 Phyllo Layers · Boz Pistachio',
+      subtitleTr: '40 Kat Yufka · Boz Fıstık',
       category: IngredientCategory.food,
       isPrankItem: false,
       prankKind: 'none',
       assetPath: 'assets/base/foods/baklava.png',
     ),
 
-    // 3. Toppings & Pranks (3 base PNGs: Sugar sits right next to Salt and Chili!)
+    // 3. Toppings & Stealth Pranks (Twin glass jars with zero red spoiler badges!)
     CafeIngredient(
       id: 'sugar_jar',
       titleEn: 'Sweet Sugar (Şeker)',
       titleTr: 'Tatlı Şeker Kavanozu',
+      subtitleEn: '2-Hole Rose Lid · Fine Crystals',
+      subtitleTr: '2 Delikli Kapak · Beyaz Kristal',
       category: IngredientCategory.toppingOrPrank,
       isPrankItem: false,
       prankKind: 'none',
@@ -119,7 +160,9 @@ class IngredientsCatalog {
     CafeIngredient(
       id: 'salt_shaker',
       titleEn: 'Salt Shaker (Tuz!)',
-      titleTr: 'Tuzluk (Şeker Tuzağı!)',
+      titleTr: 'Tuzluk (Şeker İkizi)',
+      subtitleEn: '3-Hole Silver Lid · White Crystals',
+      subtitleTr: '3 Delikli Kapak · Beyaz Kristal',
       category: IngredientCategory.toppingOrPrank,
       isPrankItem: true,
       prankKind: 'salt',
@@ -127,8 +170,10 @@ class IngredientsCatalog {
     ),
     CafeIngredient(
       id: 'chili_sauce',
-      titleEn: 'Hot Chili Sauce (Acı Sos!)',
-      titleTr: 'Acı Biber Sosu (Tuzak!)',
+      titleEn: 'Red Glaze / Chili Sauce',
+      titleTr: 'Kırmızı Sos (Acı Biber)',
+      subtitleEn: 'Looks Like Berry Glaze · Scoville!',
+      subtitleTr: 'Çilek Sosu Görünümlü · Acı!',
       category: IngredientCategory.toppingOrPrank,
       isPrankItem: true,
       prankKind: 'chili',
@@ -136,27 +181,42 @@ class IngredientsCatalog {
     ),
   ];
 
-  /// Round 2 items generated on the fly as inline vector widgets (zero external file dependency).
+  /// Round 2 items generated with 9D photorealistic studio photography + vector fallback.
   static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
     CafeIngredient(
       id: 'custom_katmer_roll',
       titleEn: 'AI Custom: Katmer Roll',
       titleTr: 'AI Özel: Fıstıklı Katmer Sarma',
+      subtitleEn: 'Crispy Phyllo · Kaymak & Pistachio',
+      subtitleTr: 'Çıtır Yufka · Kaymak & Boz Fıstık',
       category: IngredientCategory.food,
       isPrankItem: false,
       prankKind: 'none',
+      assetPath: 'assets/base/foods/katmer_roll.png',
       customVectorKind: CustomVectorArtworkKind.pistachioKatmerRoll,
     ),
     CafeIngredient(
       id: 'custom_isot_pepper',
-      titleEn: 'AI Prank: İsot Pepper',
-      titleTr: 'AI Tuzak: İsot Biberi',
+      titleEn: 'AI Flakes: İsot Pepper',
+      titleTr: 'AI Özel: İsot Biberi',
+      subtitleEn: 'Smoky Urfa Chili Flakes',
+      subtitleTr: 'İsli Urfa & Antep İsotu',
       category: IngredientCategory.toppingOrPrank,
       isPrankItem: true,
       prankKind: 'chili',
+      assetPath: 'assets/base/toppings_pranks/isot_pepper.png',
       customVectorKind: CustomVectorArtworkKind.isotPepperShaker,
     ),
   ];
+
+  static CafeIngredient? findById(String id) {
+    for (final item in <CafeIngredient>[...baseItems, ...roundTwoCustomItems]) {
+      if (item.id == id) {
+        return item;
+      }
+    }
+    return null;
+  }
 
   static List<CafeIngredient> itemsForCategory(
     IngredientCategory category, {

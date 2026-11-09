@@ -15,6 +15,7 @@ Future<void> main() async {
     remoteConfigCityCode: _defaultCityFromEnv,
   );
   await cityController.loadBundledEditions();
+  cityController.syncRemoteConfigFromUri();
 
   final judgeService = CafeJudgeService(
     clock: DateTime.now,
@@ -38,14 +39,38 @@ class BackyardBaristaApp extends StatelessWidget {
   final CityEditionController cityController;
   final CafeJudgeService judgeService;
 
+  static const List<String> _emojiFontFallbacks = <String>[
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Noto Color Emoji',
+    'sans-serif',
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final baseColorScheme = ColorScheme.fromSeed(
+      seedColor: const Color(0xFFB84A24),
+      primary: const Color(0xFF3A2218),
+      secondary: const Color(0xFFC85A32),
+      surface: const Color(0xFFFFF8EE),
+    );
+
+    final baseTheme = ThemeData(
+      fontFamily: 'GoogleSans',
+      fontFamilyFallback: _emojiFontFallbacks,
+      colorScheme: baseColorScheme,
+      scaffoldBackgroundColor: const Color(0xFFFFF8EE),
+      useMaterial3: true,
+    );
+
     return MaterialApp(
       title: 'Backyard Barista on Cloud Run',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF6D4C41)),
-        useMaterial3: true,
+      theme: baseTheme.copyWith(
+        textTheme: baseTheme.textTheme.apply(
+          fontFamily: 'GoogleSans',
+          fontFamilyFallback: _emojiFontFallbacks,
+        ),
       ),
       home: CafeCounterScreen(
         cityController: cityController,
