@@ -1,0 +1,53 @@
+{
+  "defaultCityId": "gaziantep",
+  "editions": {
+    "berlin": {
+      "id": "berlin",
+      "cityName": "Berlin",
+      "flagEmoji": "🇩🇪",
+      "eventTitle": "DevFest Berlin 2026 Edition",
+      "cafeSubtitle": "Kreuzberg Späti & Kiez Roasters",
+      "defaultLanguage": "en",
+      "signatureSpecialty": "Berliner Pfannkuchen & Späti Club-Mate",
+      "saltPrankRoast": "Das ist Salz, kein Zucker! Tougher than the Berghain bouncer: 1 Star!",
+      "chiliPrankRoast": "Curry-Chili in my cappuccino?! Not even at Kotti at 4 AM: 1 Star!",
+      "sweetCompliment": "Wunderbar! Crispy pastry, silky crema, and real sugar: 5 Stars in Berlin!"
+    },
+    "gaziantep": {
+      "id": "gaziantep",
+      "cityName": "Gaziantep",
+      "flagEmoji": "🇹🇷",
+      "eventTitle": "DevFest Gaziantep 2026 Edition",
+      "cafeSubtitle": "Şehitkamil Baklava & Menengiç Kahve Evi",
+      "defaultLanguage": "tr",
+      "signatureSpecialty": "Fıstıklı Baklava & Menengiç Kahvesi",
+      "saltPrankRoast": "Baklavaya ve kahveye tuz atanı Şehitkamil'den sınır dışı ederler! 1 Yıldız!",
+      "chiliPrankRoast": "Tatlı tabağına acı sos ve isot basmışsın, ağzımızdan ateş çıkıyor! 1 Yıldız!",
+      "sweetCompliment": "Ellerine sağlık usta! Fıstığı bol, şerbeti tam kıvamında, 5 Yıldız!"
+    },
+    "adana": {
+      "id": "adana",
+      "cityName": "Adana",
+      "flagEmoji": "🇹🇷",
+      "eventTitle": "DevFest Adana 2026 Edition",
+      "cafeSubtitle": "Gar Kahvesi & Bici Bici Durağı",
+      "defaultLanguage": "tr",
+      "signatureSpecialty": "Bici Bici & Gar Kahvesi",
+      "saltPrankRoast": "Şalgam suyu mu sandın bunu? Tatlıya tuz basmışsın, 1 Yıldız!",
+      "chiliPrankRoast": "Adana sıcağı yetmedi bir de kahveye acı sos dökmüşsün, 1 Yıldız!",
+      "sweetCompliment": "Buz gibi ferah, tam Adana usulü tatlı keyfi, 5 Yıldız!"
+    },
+    "istanbul": {
+      "id": "istanbul",
+      "cityName": "Istanbul",
+      "flagEmoji": "🇹🇷",
+      "eventTitle": "DevFest Istanbul 2026 Edition",
+      "cafeSubtitle": "Galata & Vapur Kafe",
+      "defaultLanguage": "tr",
+      "signatureSpecialty": "Galata San Sebastian & Vapur Çayı",
+      "saltPrankRoast": "Galata Kulesi'nde turist kazıklar gibi kahveye tuz basmışsınız, 1 Yıldız!",
+      "chiliPrankRoast": "San Sebastian'ın üstüne çilek sosu diye acı sos dökmüşsünüz, martılar bile yemez! 1 Yıldız!",
+      "sweetCompliment": "Boğaz havasında bundan güzel kahve ve tatlı ikilisi olamaz, 5 Yıldız!"
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "reviewsByCity": {
+    "berlin": {
+      "salty_sabotage": {
+        "ratingStars": 1,
+        "tasteVerdict": "salty_sabotage",
+        "customerFace": "salty_disgusted",
+        "headline": "Salz Alarm in Kreuzberg!",
+        "customerReaction": "Das ist Salz, kein Zucker! Tougher than the Berghain bouncer: 1 Star!",
+        "cityBonusTip": 0
+      },
+      "spicy_chaos": {
+        "ratingStars": 1,
+        "tasteVerdict": "spicy_chaos",
+        "customerFace": "shocked",
+        "headline": "Feuerwehr im Späti!",
+        "customerReaction": "Chili sauce in a sweet order?! My tongue just filed a bug report: 1 Star!",
+        "cityBonusTip": 0
+      },
+      "sweet_perfection": {
+        "ratingStars": 5,
+        "tasteVerdict": "sweet_perfection",
+        "customerFace": "happy",
+        "headline": "5-Sterne Kiez Barista!",
+        "customerReaction": "Wunderbar! Balanced coffee, flaky pastry, and real sugar: 5 Stars in Berlin!",
+        "cityBonusTip": 25
+      }
+    },
+    "gaziantep": {
+      "salty_sabotage": {
+        "ratingStars": 1,
+        "tasteVerdict": "salty_sabotage",
+        "customerFace": "salty_disgusted",
+        "headline": "Tuz Şakası Yakalandı!",
+        "customerReaction": "Baklavaya ve kahveye tuz atanı Şehitkamil'den sınır dışı ederler! 1 Yıldız!",
+        "cityBonusTip": 0
+      },
+      "spicy_chaos": {
+        "ratingStars": 1,
+        "tasteVerdict": "spicy_chaos",
+        "customerFace": "shocked",
+        "headline": "Tatlıda Acı Biber Şoku!",
+        "customerReaction": "Tatlı tabağına acı sos ve isot basmışsın, ağzımızdan ateş çıkıyor! 1 Yıldız!",
+        "cityBonusTip": 0
+      },
+      "sweet_perfection": {
+        "ratingStars": 5,
+        "tasteVerdict": "sweet_perfection",
+        "customerFace": "happy",
+        "headline": "Gaziantep Ustası Onayladı!",
+        "customerReaction": "Ellerine sağlık usta! Fıstığı bol, şekeri tam kıvamında, 5 Yıldız!",
+        "cityBonusTip": 50
+      }
+    },
+    "adana": {
+      "salty_sabotage": {
+        "ratingStars": 1,
+        "tasteVerdict": "salty_sabotage",
+        "customerFace": "salty_disgusted",
+        "headline": "Şalgam Değil Bu Usta!",
+        "customerReaction": "Şalgam suyu mu sandın bunu? Tatlıya tuz basmışsın, 1 Yıldız!",
+        "cityBonusTip": 0
+      },
+      "spicy_chaos": {
+        "ratingStars": 1,
+        "tasteVerdict": "spicy_chaos",
+        "customerFace": "shocked",
+        "headline": "Adana Sıcağında Acı Kahve!",
+        "customerReaction": "Adana sıcağı yetmedi bir de kahveye acı sos dökmüşsün, 1 Yıldız!",
+        "cityBonusTip": 0
+      },
+      "sweet_perfection": {
+        "ratingStars": 5,
+        "tasteVerdict": "sweet_perfection",
+        "customerFace": "happy",
+        "headline": "5 Yıldızlı Adana Keyfi!",
+        "customerReaction": "Buz gibi ferah, tam Adana usulü tatlı ve kahve keyfi, 5 Yıldız!",
+        "cityBonusTip": 40
+      }
+    },
+    "istanbul": {
+      "salty_sabotage": {
+        "ratingStars": 1,
+        "tasteVerdict": "salty_sabotage",
+        "customerFace": "salty_disgusted",
+        "headline": "Galata'da Tuzlu Sürpriz!",
+        "customerReaction": "Galata Kulesi'nde turist kazıklar gibi kahveye tuz basmışsınız, 1 Yıldız!",
+        "cityBonusTip": 0
+      },
+      "spicy_chaos": {
+        "ratingStars": 1,
+        "tasteVerdict": "spicy_chaos",
+        "customerFace": "shocked",
+        "headline": "Boğaz'da Acı Sos Vakası!",
+        "customerReaction": "San Sebastian'ın üstüne çilek sosu diye acı sos dökmüşsünüz, martılar bile yemez! 1 Yıldız!",
+        "cityBonusTip": 0
+      },
+      "sweet_perfection": {
+        "ratingStars": 5,
+        "tasteVerdict": "sweet_perfection",
+        "customerFace": "happy",
+        "headline": "Boğaz'ın En İyi Baristası!",
+        "customerReaction": "Boğaz havasında bundan güzel kahve ve tatlı ikilisi olamaz, 5 Yıldız!",
+        "cityBonusTip": 35
+      }
+    }
+  }
+}
