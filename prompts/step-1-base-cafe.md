@@ -12,13 +12,13 @@ Include a top-right dropdown selector and state controller with 4 City Editions 
 - "adana" (🇹🇷 DevFest Adana Edition): Subtitle "Gar Kahvesi & Tatlı Durağı", Local Dish: "Bici Bici", Salt Prank Joke: "Şalgam suyu mu sandın bunu? Tatlıya tuz basmışsın, 1 Yıldız!"
 - "istanbul" (🇹🇷 DevFest Istanbul Edition): Subtitle "Galata & Vapur Kafe", Local Dish: "San Sebastian Cheesecake", Salt Prank Joke: "Galata Kulesi'nde turist kazıklar gibi kahveye tuz basmışsınız, 1 Yıldız!"
 
-2. ZERO-TYPING 2-STATION CAFE COUNTER:
-Players never type text. They assemble an order on a tray by tapping ingredient cards across 3 shelves:
-- Drinks (pick 1+): Espresso, Steamed Milk (Süt), Menengiç Coffee (Menengiç Kahvesi)
-- Simple Foods (pick 1+): Butter Croissant (Kruvasan), San Sebastian Cheesecake, Pistachio Baklava (Fıstıklı Baklava)
-- Toppings & Pranks (placed right next to each other!):
-  - Sugar Jar (Şeker - sweet)
-  - Salt Shaker (Tuz - PRANK ingredient, looks nearly identical to Sugar!)
+2. ZERO-TYPING 2x2 CAFE COUNTER & 3-SLOT COASTER TRAY:
+Players never type text. They assemble a 3-course order on a wooden tray (1 item per shelf, 3 visual coaster slots) across a 2x2 desktop counter grid:
+- Slot 1 · Drinks (pick 1): Espresso, Steamed Milk (Süt), Menengiç Coffee (Menengiç Kahvesi)
+- Slot 2 · Pastries (pick 1): Butter Croissant (Kruvasan), San Sebastian Cheesecake, Pistachio Baklava (Fıstıklı Baklava)
+- Slot 3 · Twin Jars: Sugar vs. Prank (pick 1, placed right next to each other with zero spoiler borders!):
+  - Sugar Jar (Şeker - sweet, required for 5 stars)
+  - Salt Shaker (Tuz - PRANK ingredient, looks identical to Sugar on the shelf!)
   - Hot Chili Sauce (Acı Sos - PRANK ingredient, sits next to sweet toppings!)
 
 3. HYBRID ASSET PACK (GitHub Raw PNGs with Crisp Inline SVG Fallbacks):

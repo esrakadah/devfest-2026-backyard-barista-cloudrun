@@ -663,73 +663,169 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(_counterCardRadius),
         border: Border.all(color: const Color(0xFFE0C3A8), width: 1.5),
       ),
-      child: Wrap(
-        alignment: WrapAlignment.spaceBetween,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: 12,
-        runSpacing: 8,
-        children: <Widget>[
-          InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: onOpenCitySettings,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                _CityFlagBadge(editionId: cityEdition.editionId),
-                const SizedBox(width: 10),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Flexible(
-                            child: Text(
-                              cityEdition.eventTitle,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14,
-                                color: Color(0xFF2C1A12),
+      child: SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 12,
+          runSpacing: 8,
+          children: <Widget>[
+            InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: onOpenCitySettings,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _CityFlagBadge(editionId: cityEdition.editionId),
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Flexible(
+                              child: Text(
+                                cityEdition.eventTitle,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                  color: Color(0xFF2C1A12),
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFEFE2D3),
-                              borderRadius: BorderRadius.circular(999),
-                              border: Border.all(color: const Color(0xFFD2B49C)),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                const Icon(Icons.cloud_done_rounded, size: 12, color: Color(0xFF6D4C41)),
-                                const SizedBox(width: 4),
-                                Text(
-                                  _friendlySourceBadgeLabel(isEnglish),
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xFF5D4037),
+                            const SizedBox(width: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFEFE2D3),
+                                borderRadius: BorderRadius.circular(999),
+                                border: Border.all(color: const Color(0xFFD2B49C)),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Icon(Icons.cloud_done_rounded, size: 12, color: Color(0xFF6D4C41)),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    _friendlySourceBadgeLabel(isEnglish),
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xFF5D4037),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+                          ],
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          '${cityEdition.cafeSubtitle} · ${cityEdition.signatureSpecialty}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF6D4C41),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 2),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Wrap(
+              spacing: 8,
+              runSpacing: 6,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: <Widget>[
+                Container(
+                  key: const Key('cafe_crew_level_badge'),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFF4CC),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: const Color(0xFFE5B84B)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Icon(Icons.emoji_events_rounded, size: 15, color: Color(0xFF8C5800)),
+                      const SizedBox(width: 5),
                       Text(
-                        '${cityEdition.cafeSubtitle} · ${cityEdition.signatureSpecialty}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        'Lv.$crewLevel Barista',
                         style: const TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF6D4C41),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                          color: Color(0xFF6E4300),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                _ScorePill(
+                  icon: Icons.coffee_rounded,
+                  label: isEnglish ? 'P1 Barista: $playerOneScore' : 'O1 Barista: $playerOneScore',
+                  backgroundColor: const Color(0xFFEFE5DC),
+                  textColor: const Color(0xFF3E2723),
+                ),
+                _ScorePill(
+                  icon: Icons.bakery_dining_rounded,
+                  label: isEnglish ? 'P2 Pastry: $playerTwoScore' : 'O2 Tatlı: $playerTwoScore',
+                  backgroundColor: const Color(0xFFFCE8E0),
+                  textColor: const Color(0xFF8D3218),
+                ),
+                _ScorePill(
+                  icon: Icons.savings_rounded,
+                  label: isEnglish ? 'Tips: +$tipJarTotal pts' : 'Bahşiş: +${tipJarTotal}p',
+                  backgroundColor: const Color(0xFFE6F4EA),
+                  textColor: const Color(0xFF137333),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 10, right: 4, top: 2, bottom: 2),
+                  decoration: BoxDecoration(
+                    color: includeRoundTwoItems ? const Color(0xFFE6F4EA) : const Color(0xFFF3ECE6),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(
+                      color: includeRoundTwoItems ? const Color(0xFF34A853) : const Color(0xFFD7CCC8),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Icon(
+                        Icons.auto_awesome_rounded,
+                        size: 14,
+                        color: includeRoundTwoItems ? const Color(0xFF137333) : const Color(0xFF6D4C41),
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        isEnglish ? 'Round 2 AI Menu:' : 'Tur 2 Özel Menü:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 11.5,
+                          color: includeRoundTwoItems ? const Color(0xFF137333) : const Color(0xFF4E342E),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      SizedBox(
+                        height: 28,
+                        child: FittedBox(
+                          child: Switch(
+                            key: const Key('round_two_custom_items_switch'),
+                            value: includeRoundTwoItems,
+                            activeThumbColor: Colors.white,
+                            activeTrackColor: const Color(0xFF1E8E3E),
+                            inactiveThumbColor: const Color(0xFF5D4037),
+                            inactiveTrackColor: const Color(0xFFD7CCC8),
+                            onChanged: onToggleRoundTwoItems,
+                          ),
                         ),
                       ),
                     ],
@@ -737,101 +833,8 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          Wrap(
-            spacing: 8,
-            runSpacing: 6,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: <Widget>[
-              Container(
-                key: const Key('cafe_crew_level_badge'),
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFF4CC),
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: const Color(0xFFE5B84B)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Icon(Icons.emoji_events_rounded, size: 15, color: Color(0xFF8C5800)),
-                    const SizedBox(width: 5),
-                    Text(
-                      'Lv.$crewLevel Barista',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12,
-                        color: Color(0xFF6E4300),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              _ScorePill(
-                icon: Icons.coffee_rounded,
-                label: isEnglish ? 'P1 Barista: $playerOneScore' : 'O1 Barista: $playerOneScore',
-                backgroundColor: const Color(0xFFEFE5DC),
-                textColor: const Color(0xFF3E2723),
-              ),
-              _ScorePill(
-                icon: Icons.bakery_dining_rounded,
-                label: isEnglish ? 'P2 Pastry: $playerTwoScore' : 'O2 Tatlı: $playerTwoScore',
-                backgroundColor: const Color(0xFFFCE8E0),
-                textColor: const Color(0xFF8D3218),
-              ),
-              _ScorePill(
-                icon: Icons.savings_rounded,
-                label: isEnglish ? 'Tips: +$tipJarTotal pts' : 'Bahşiş: +${tipJarTotal}p',
-                backgroundColor: const Color(0xFFE6F4EA),
-                textColor: const Color(0xFF137333),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 10, right: 4, top: 2, bottom: 2),
-                decoration: BoxDecoration(
-                  color: includeRoundTwoItems ? const Color(0xFFE6F4EA) : const Color(0xFFF3ECE6),
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(
-                    color: includeRoundTwoItems ? const Color(0xFF34A853) : const Color(0xFFD7CCC8),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Icon(
-                      Icons.auto_awesome_rounded,
-                      size: 14,
-                      color: includeRoundTwoItems ? const Color(0xFF137333) : const Color(0xFF6D4C41),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      isEnglish ? 'Round 2 AI Menu:' : 'Tur 2 Özel Menü:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 11.5,
-                        color: includeRoundTwoItems ? const Color(0xFF137333) : const Color(0xFF4E342E),
-                      ),
-                    ),
-                    const SizedBox(width: 4),
-                    SizedBox(
-                      height: 28,
-                      child: FittedBox(
-                        child: Switch(
-                          key: const Key('round_two_custom_items_switch'),
-                          value: includeRoundTwoItems,
-                          activeThumbColor: Colors.white,
-                          activeTrackColor: const Color(0xFF1E8E3E),
-                          inactiveThumbColor: const Color(0xFF5D4037),
-                          inactiveTrackColor: const Color(0xFFD7CCC8),
-                          onChanged: onToggleRoundTwoItems,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -859,82 +862,85 @@ class _BaristaWebAudioSoundboardBar extends StatelessWidget {
 
     return Container(
       key: const Key('barista_web_audio_soundboard'),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
       decoration: BoxDecoration(
-        color: const Color(0xFF3A2319),
+        color: const Color(0xFFF6ECE0),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFF6D4C41)),
+        border: Border.all(color: const Color(0xFFE0C3A8)),
       ),
-      child: Wrap(
-        alignment: WrapAlignment.spaceBetween,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: 10,
-        runSpacing: 6,
-        children: <Widget>[
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 8,
-            runSpacing: 4,
-            children: <Widget>[
-              const Icon(Icons.graphic_eq_rounded, size: 16, color: Color(0xFFFFCCBC)),
-              Text(
-                isTurkish ? 'Kafe Ses Efektleri:' : 'Barista Soundboard:',
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFFFFF8EE),
-                ),
-              ),
-              Container(
-                key: const Key('active_web_audio_cue_badge'),
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF563527),
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: const Color(0xFF8D6E63)),
-                ),
-                child: Text(
-                  statusText,
+      child: SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 10,
+          runSpacing: 6,
+          children: <Widget>[
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 8,
+              runSpacing: 4,
+              children: <Widget>[
+                const Icon(Icons.graphic_eq_rounded, size: 16, color: Color(0xFF8D3218)),
+                Text(
+                  isTurkish ? 'Kafe Ses Efektleri:' : 'Barista Soundboard:',
                   style: const TextStyle(
-                    fontSize: 10.5,
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFFFFD54F),
+                    color: Color(0xFF3E2723),
                   ),
                 ),
-              ),
-            ],
-          ),
-          Wrap(
-            spacing: 6,
-            runSpacing: 6,
-            children: <Widget>[
-              _SoundboardActionChip(
-                buttonKey: const Key('sound_fx_coffee_grinder_button'),
-                icon: Icons.settings_suggest_rounded,
-                label: isTurkish ? 'Kahve Değirmeni' : 'Coffee Grinder',
-                onTap: () => onPlayCue(CafeSoundCue.coffeeGrinder),
-              ),
-              _SoundboardActionChip(
-                buttonKey: const Key('sound_fx_espresso_steam_button'),
-                icon: Icons.air_rounded,
-                label: isTurkish ? 'Espresso Buharı' : 'Espresso Steam',
-                onTap: () => onPlayCue(CafeSoundCue.espressoSteam),
-              ),
-              _SoundboardActionChip(
-                buttonKey: const Key('sound_fx_serve_bell_button'),
-                icon: Icons.notifications_active_rounded,
-                label: isTurkish ? 'Sipariş Zili' : 'Order Bell',
-                onTap: () => onPlayCue(CafeSoundCue.serveBell),
-              ),
-              _SoundboardActionChip(
-                buttonKey: const Key('sound_fx_level_up_button'),
-                icon: Icons.emoji_events_rounded,
-                label: isTurkish ? 'Seviye Atlama' : 'Level Up',
-                onTap: () => onPlayCue(CafeSoundCue.levelUpFanfare),
-              ),
-            ],
-          ),
-        ],
+                Container(
+                  key: const Key('active_web_audio_cue_badge'),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFF8EE),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: const Color(0xFFD7B89C)),
+                  ),
+                  child: Text(
+                    statusText,
+                    style: const TextStyle(
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF8D3218),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: <Widget>[
+                _SoundboardActionChip(
+                  buttonKey: const Key('sound_fx_coffee_grinder_button'),
+                  icon: Icons.settings_suggest_rounded,
+                  label: isTurkish ? 'Kahve Değirmeni' : 'Coffee Grinder',
+                  onTap: () => onPlayCue(CafeSoundCue.coffeeGrinder),
+                ),
+                _SoundboardActionChip(
+                  buttonKey: const Key('sound_fx_espresso_steam_button'),
+                  icon: Icons.air_rounded,
+                  label: isTurkish ? 'Espresso Buharı' : 'Espresso Steam',
+                  onTap: () => onPlayCue(CafeSoundCue.espressoSteam),
+                ),
+                _SoundboardActionChip(
+                  buttonKey: const Key('sound_fx_serve_bell_button'),
+                  icon: Icons.notifications_active_rounded,
+                  label: isTurkish ? 'Sipariş Zili' : 'Order Bell',
+                  onTap: () => onPlayCue(CafeSoundCue.serveBell),
+                ),
+                _SoundboardActionChip(
+                  buttonKey: const Key('sound_fx_level_up_button'),
+                  icon: Icons.emoji_events_rounded,
+                  label: isTurkish ? 'Seviye Atlama' : 'Level Up',
+                  onTap: () => onPlayCue(CafeSoundCue.levelUpFanfare),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -956,25 +962,29 @@ class _SoundboardActionChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFF513224),
+      color: const Color(0xFFFFFBF6),
       borderRadius: BorderRadius.circular(999),
       child: InkWell(
         key: buttonKey,
         borderRadius: BorderRadius.circular(999),
         onTap: onTap,
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(color: const Color(0xFFD7B89C)),
+          ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(icon, size: 13, color: const Color(0xFFFFCCBC)),
+              Icon(icon, size: 13, color: const Color(0xFF8D3218)),
               const SizedBox(width: 5),
               Text(
                 label,
                 style: const TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFFFFF8EE),
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF3E2723),
                 ),
               ),
             ],

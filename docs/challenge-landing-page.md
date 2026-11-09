@@ -26,7 +26,7 @@ Hoş geldin! Bugün klavyeyle uzun mesajlar yazılan klasik bir sohbet botu değ
 
 #### Seviye 2: Kendi Özel Tabağını Üret & "Tuz mu Şeker mi?" AI Jürisini Bağla (2. Tur · 15 Dakika)
 1. **Kendi İmza Tabağını Üret:** [`prompts/step-2-custom-dish.md`](../prompts/step-2-custom-dish.md) ile Gemini veya Antigravity'den senin kafene özel **1 yeni tatlı (`Fıstıklı Katmer Sarma` vb.)** ve **1 yeni şaka malzemesi (`İsot Biberi` vb.)** üretmesini iste ve tezgaha ekle.
-2. **JSON Kafe Eleştirmeni (`CafeReview`):** Oyuncu **"Siparişi Servis Et!"** butonuna bastığında `gemini-3.5-flash-lite` seçilen malzemeleri kontrol etsin; eğer tatlı siparişe **Tuz** veya **Acı Sos** karıştıysa `1/5 · Tuzlu Sabotaj 🧂` (veya `Acı Biber Şoku 🌶️`) ve şehre özel esprili bir yorum döndürsün!
+2. **JSON Kafe Eleştirmeni (`CafeReview`):** Oyuncu 3 yuvalı ahşap tepsiyi (`1. İçecek + 2. Tatlı + 3. Kavanoz`) dizip **"Siparişi Servis Et!"** butonuna bastığında `gemini-3.5-flash-lite` seçilen malzemeleri kontrol etsin; eğer tatlı siparişe **Tuz** veya **İsot** karıştıysa `1/5 · Tuzlu Sabotaj 🧂`, eksik istasyon varsa `3/5 · Eksik Tepsi 🧩`, 3 istasyon da tatlıysa `5/5 · Tatlı Mükemmellik ✨` ve `+40` bahşiş döndürsün!
 
 #### Seviye 3: Google Cloud Run (`.run.app`) ve GitHub'da Canlıya Al! (3. Tur · 10 Dakika)
 1. [`prompts/step-3-deploy.md`](../prompts/step-3-deploy.md) adımlarını izleyerek AI Studio sağ üst köşedeki **Deploy to Cloud Run** butonuna bas (kredi kartsız Starter Tier) veya Flutter'da `gcloud run deploy backyard-barista --source .` çalıştırarak `.run.app` canlı oyun linkini oluştur.
