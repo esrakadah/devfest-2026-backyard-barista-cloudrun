@@ -9,10 +9,11 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/pure-flutter-widgets',
-            title: '6. Why Pure Flutter Widgets Beat Flame Here',
-            speakerNotes: 'BEAT  [09:30 - 11:30] Mimari Karar: Neden Flame değil de saf Flutter widget ağacı?\n'
-                'SAY   "Bir oyun yapıyoruz dediğimizde akla ilk Flame motoru gelebilir. Ama 40 dakikalık bir atölyede, tezgaha tıklayarak kahve ve tatlı hazırladığımız bir oyunda Flame kullanmak büyük bir tuzak olurdu. Neden? Çünkü dil modelleri Flame içinde Vector2 koordinatlarını sık sık yanlış hesaplıyor ve ekran dışına taşırıyor. Oysa saf Flutter widget\'ları, yani Stack, AnimatedScale, AnimatedSwitcher ve LayoutBuilder kullandığımızda hem 360 piksel mobil ekranda hem masaüstünde sıfır taşmayla çalışıyor, hem de AI Studio\'nun ürettiği web arayüzüyle birebir aynı mantığı paylaşıyor."\n'
-                'HOLD  Sol karttaki yeşil avantajları ve sağ karttaki kırmızı riskleri karşılaştır.\n'
+            title: '6. Hybrid Flame Engine + Flutter HUD Architecture',
+            speakerNotes:
+                'BEAT  [09:30 - 11:30] Mimari Karar: BaristaFlameGame 60fps 3-Koridorlu Sahne + Reaktif Flutter HUD.\n'
+                'SAY   "Bir kafe oyunu yaparken sahne atmosferi için Flame motorunun 60fps gücünü, sipariş tezgahı için ise Flutter\'ın reaktif widget ağacını birleştirdik. Arka planda BaristaFlameGame, sıcak ceviz paleti (#1E130C ve #F4E4CE) ve Hogsmeade sahne dekoruyla 3 koridorlu 60fps arcade sahnesini çiziyor. Ön planda ise Flutter Overlay HUD kartlarımız (2x2 tezgah ızgarası ve 3 yuvalı ahşap tepsi) hem 360 piksel mobilde hem masaüstünde sıfır taşmayla çalışıyor."\n'
+                'HOLD  Sol karttaki BaristaFlameGame 60fps 3-koridorlu arcade sahnesini ve sağ karttaki 2x2 Flutter Overlay HUD mimarisini karşılaştır.\n'
                 'NEXT  "Şimdi söz verdiğimiz en kritik bölüme geliyoruz: Gerçek Rakamlar! Prodüksiyonda gecikme, soğuk başlangıç ve maliyet ne durumda?"',
           ),
         );
@@ -24,40 +25,41 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'ARCHITECTURAL DECISION (flutter/one-codebase)',
-          title: 'Why Pure Flutter Declarative Widgets Beat Flame Here',
+          eyebrow: 'ARCHITECTURAL DECISION (flutter/one-codebase · package:flame)',
+          title: 'Hybrid Flame Engine + Flutter HUD Architecture',
           act: StoryAct.tools,
-          subtitle: 'Designing for 40-minute beginner ergonomics and LLM code-generation accuracy',
+          subtitle:
+              'BaristaFlameGame 60fps 3-lane arcade stage (#1E130C / #F4E4CE) paired with reactive 2x2 Flutter HUD cards',
           accentColor: DeckColors.googleGreen,
           child: Row(
             children: [
               Expanded(
                 child: DeckFeatureCard(
-                  badge: 'CHOSEN · PURE FLUTTER WIDGETS',
-                  title: 'Stack + AnimatedScale + AnimatedSwitcher',
-                  accentColor: DeckColors.googleGreen,
+                  badge: 'STAGE · BARISTAFLAMEGAME (60FPS)',
+                  title: 'FlameGame 3-Lane Arcade Stage + Hogsmeade Backdrop',
+                  accentColor: DeckColors.googleYellow,
                   bullets: [
-                    '100% LLM Codegen Reliability: Gemini & Antigravity generate rock-solid Row, Column, Wrap, and Stack layouts on the first try.',
-                    'Responsive out of the box: LayoutBuilder scales our 2x2 cafe counter cleanly from 360x780 mobile phones to 1280x900 desktops.',
-                    '1:1 Parity with Lane A: Matches the declarative component mental model of AI Studio Build mode.',
-                    'Built-in Accessibility & Testing: Standard Semantics and WidgetTester finders (8/8 tests passing in cafe_counter_test.dart).',
+                    '60fps 3-Lane Arcade Stage: BaristaFlameGame renders Beverage, Sweet, and Prank lanes with smooth animations.',
+                    'Warm Walnut Palette (#1E130C / #F4E4CE): Rich timber stage paired with the Hogsmeade cafe backdrop.',
+                    'Reactive Stage Avatars: Barista and customer sprites react live to tray drops, steam particles, and verdicts.',
+                    'Deterministic Layout: Scene coordinates stay locked to the 3-lane stage while UI controls live in Flutter.',
                   ],
-                  footerText: 'flutter_client/lib/ui/cafe_counter_screen.dart',
+                  footerText: 'flutter_client/lib/game/barista_flame_game.dart (commit e5d905e)',
                 ),
               ),
               SizedBox(width: _columnGap),
               Expanded(
                 child: DeckFeatureCard(
-                  badge: 'REJECTED FOR THIS SLOT · PACKAGE:FLAME',
-                  title: 'Why a 2D Physics Loop Hurts a 40-Min Cafe Game',
-                  accentColor: DeckColors.googleRed,
+                  badge: 'HUD · REACTIVE FLUTTER OVERLAY WIDGETS',
+                  title: '2x2 Counter Grid + 3-Slot Wooden Tray HUD',
+                  accentColor: DeckColors.googleGreen,
                   bullets: [
-                    'Vector2 Coordinate Hallucinations: LLMs frequently misplace absolute canvas coordinates across different aspect ratios.',
-                    'Cognitive Overhead: Teaching FlameGame, PositionComponent, and sprite asset loaders eats 25 of our 40 build minutes.',
-                    'Zero Physics Needed: Backyard Barista is a turn-based, tap-to-assemble tray game judged by structured JSON.',
-                    'Harder Web/DOM Parity: Diverges from the HTML/React output that Lane A builders see in AI Studio.',
+                    '2x2 Counter HUD Grid: Beverages, Sweet Treats, Prank Shelf, and 3-Slot Wooden Tray in clean Flutter cards.',
+                    'Responsive Out of the Box: LayoutBuilder scales the 2x2 counter cleanly from 360x780 mobile to 1280x900 desktop.',
+                    '100% LLM Codegen Reliability: Gemini & Antigravity generate rock-solid Row, Column, Wrap, and Stack HUDs.',
+                    'Built-in Accessibility & Testing: Standard Semantics and WidgetTester finders (cafe_counter_test.dart).',
                   ],
-                  footerText: 'Rule: Pick the simplest architecture that ships in 40 minutes.',
+                  footerText: 'flutter_client/lib/ui/cafe_counter_screen.dart',
                 ),
               ),
             ],

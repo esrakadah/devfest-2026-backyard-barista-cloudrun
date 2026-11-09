@@ -94,6 +94,7 @@ void main() {
 
     test('slideNumberForRoute is one-based and agrees with the order', () {
       expect(slideNumberForRoute('/title'), 1);
+      expect(slideNumberForRoute('/architecture-recap'), 14);
       expect(slideNumberForRoute('/winner-podium-closing'), 15);
       expect(slideNumberForRoute('/demo-hiccup'), 16);
       expect(slideNumberForRoute('/does-not-exist'), isNull);

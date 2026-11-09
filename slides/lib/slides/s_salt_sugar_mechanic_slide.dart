@@ -9,11 +9,11 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/salt-sugar-mechanic',
-            title: "11. Today's Game Mechanic: Tatlı mı Tuzlu mu?",
+            title: "11. Today's Game Mechanic: Tatlı mı Tuzlu mu? + Web NFC",
             speakerNotes:
-                'BEAT  [20:30 - 22:30] Oyun Mekaniği ("Tatlı mı Tuzlu mu?") ve Yapılandırılmış JSON Şeması (CafeReview).\n'
-                'SAY   "Oyunumuzun kalbinde çok basit ama çok komik bir mekanik var: iki oyuncu tezgahtaki içecek ve tatlılara tıklayarak sipariş tepsisini hazırlıyor. Ancak tezgahta Şeker kavanozunun hemen yanında ikizi gibi duran Tuzluk ve Acı Sos var! Üstelik arayüzde kırmızı bir ŞAKA uyarısı göstermiyoruz; sadece tepsiye gizlice tuz eklendiğinde küçük bir göz kırpma ikonu beliriyor. Servis Et butonuna bastığınızda Gemini yapılandırılmış JSON şemamız üzerinden siparişi denetliyor ve tatlıya tuz atıldıysa ratingStars: 1, tasteVerdict: salty_sabotage ve şehre özel komik bir müşteri tepkisi döndürüyor."\n'
-                'HOLD  Sol taraftaki gerçek görselleri (Baklava, Şeker, Tuz, 1 Yıldızlı Müşteri) ve sağdaki JSON şemasını göster.\n'
+                'BEAT  [20:30 - 22:30] Oyun Mekaniği ("Tatlı mı Tuzlu mu?"), Web NFC Sahne Tetikleyicisi ve Yapılandırılmış JSON Şeması (CafeReview).\n'
+                'SAY   "Oyunumuzun kalbinde çok eğlenceli bir mekanik var: iki oyuncu tezgahtaki içecek ve tatlılara tıklayarak 3 yuvalı ahşap tepsiyi hazırlıyor. Ancak Şeker kavanozunun yanında ikizi gibi duran Tuzluk var! Üstelik Lukas Klingsbo\'nun badge_hack projesinden ilham alarak dart:js_interop ve Chrome Android NDEFReader ile gerçek bir WebNfcService ekledik: sahnede fiziksel bir NFC etikete dokunduğunuzda salt_shaker doğrudan tepsiye düşüyor; masaüstü ve iOS içinse tek tıkla simulateTap() yedeği hazır. Servis Et butonuna bastığınızda Gemini, CafeReview JSON şemamız üzerinden siparişi denetliyor ve tatlıya tuz atıldıysa ratingStars: 1, tasteVerdict: salty_sabotage döndürüyor."\n'
+                'HOLD  Sol taraftaki görselleri (Baklava, Şeker, Web NFC Tuzluk, 1 Yıldızlı Müşteri) ve sağdaki WebNfcService + CafeReview JSON kodunu göster.\n'
                 'NEXT  "Peki bu yüksek kaliteli 9D görselleri 300 kişinin bilgisayarında sıfır yükleme hatasıyla nasıl birleştiriyoruz?"',
           ),
         );
@@ -22,7 +22,12 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
   static const double _thumbGap = 14;
 
   static const String _schemaSnippet = '''
-// flutter_client/lib/services/cafe_judge_service.dart (Lines 115-136)
+// 1. Web NFC Stage Trigger (web_nfc_service.dart · PR #2 · 3973acb)
+// dart:js_interop + Chrome Android NDEFReader (inspired by Lukas Klingsbo badge_hack)
+await webNfcService.startScanning(onSaltPrankTag: () => tray.drop('salt_shaker'));
+webNfcService.simulateTap(); // 1-tap fallback on Desktop / iOS
+
+// 2. Structured Verdict Schema (cafe_judge_service.dart)
 'generationConfig': {
   'responseMimeType': 'application/json',
   'responseSchema': {
@@ -43,10 +48,11 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'GAME MECHANIC & STRUCTURED JSON SCHEMA',
-          title: 'Tatlı mı Tuzlu mu? Stealth Pranks Meets Structured JSON',
+          eyebrow: 'GAME MECHANIC · WEB NFC (NDEFREADER) & STRUCTURED JSON SCHEMA',
+          title: 'Tatlı mı Tuzlu mu? Web NFC Stage Pranks Meet Structured JSON',
           act: StoryAct.underTheHood,
-          subtitle: 'Sneaking Salt (Tuz) next to Sugar (Şeker) triggers a deterministic 1-star Gemini roast',
+          subtitle:
+              'Physical NFC sticker tap (WebNfcService + simulateTap fallback) drops salt_shaker onto the 3-slot tray',
           child: Row(
             children: [
               Expanded(
@@ -83,8 +89,8 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
                         Expanded(
                           child: CafeAssetThumb(
                             assetFileName: 'salt_shaker.png',
-                            label: 'Tuz (Salt Prank!)',
-                            badgeText: 'Stealth Twin (Wink)',
+                            label: 'Tuz (Web NFC Tap!)',
+                            badgeText: 'NDEFReader + simulateTap()',
                             borderColor: DeckColors.googleYellow,
                           ),
                         ),
@@ -106,10 +112,10 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
               Expanded(
                 flex: 6,
                 child: DeckCodeCard(
-                  filePathLabel: 'flutter_client/lib/services/cafe_judge_service.dart',
+                  filePathLabel: 'web_nfc_service.dart + cafe_judge_service.dart',
                   code: _schemaSnippet,
                   accentColor: DeckColors.googleYellow,
-                  badgeLabel: 'CAFEREVIEW SCHEMA',
+                  badgeLabel: 'WEB NFC + CAFEREVIEW',
                 ),
               ),
             ],

@@ -99,13 +99,13 @@ class TitleSlide extends FlutterDeckSlideWidget {
                           label: '1 JSON Call / Order',
                         ),
                         StatChip(
-                          value: '20 PNGs + SFX',
-                          label: '3D Crew · Lottie · Web Audio',
+                          value: '60fps + NFC',
+                          label: 'Flame 3-Lane · NDEFReader',
                           accentColor: DeckColors.googleYellow,
                         ),
                         StatChip(
-                          value: '4 Cities',
-                          label: 'Remote Config Editions',
+                          value: '8 Tour Stops',
+                          label: 'Remote Config + GDE Tour',
                           accentColor: DeckColors.halftonePink,
                         ),
                       ],

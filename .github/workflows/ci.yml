@@ -1,0 +1,36 @@
+name: Flutter & Deck CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    name: Analyze & Test (Game + Slides)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Verify flutter_client (Analyze & 8 Widget Tests)
+        working-directory: flutter_client
+        run: |
+          flutter pub get
+          dart format --output=none --set-exit-if-changed --line-length 120 lib test
+          flutter analyze
+          flutter test
+
+      - name: Verify slides (Analyze & 29 Deck Render Tests)
+        working-directory: slides
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test

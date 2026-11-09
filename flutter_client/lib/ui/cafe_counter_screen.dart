@@ -7,39 +7,48 @@ import 'package:backyard_barista_cloudrun/models/cafe_review.dart';
 import 'package:backyard_barista_cloudrun/models/customer_order_ticket.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
+import 'package:backyard_barista_cloudrun/services/nfc_tag_controller.dart';
 import 'package:backyard_barista_cloudrun/ui/cafe_character_animations.dart';
 import 'package:backyard_barista_cloudrun/ui/city_settings_drawer.dart';
+import 'package:backyard_barista_cloudrun/ui/nfc_tag_writer_sheet.dart';
+import 'package:backyard_barista_cloudrun/ui/subway_barista_flame_game.dart';
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
-const double _counterCardRadius = 18;
-const double _ingredientImageSize = 70;
+const double _counterCardRadius = 20;
 const double _trayItemImageSize = 42;
 const double _customerAvatarSize = 76;
-const double _mobileShelfBreakpointWidth = 420;
-const double _desktopSplitBreakpointWidth = 980;
 const double _maxDesktopContentWidth = 1360;
-const double _gridSpacing = 12;
-const double _uniformCounterCardHeight = 166;
-const double _awningScallopHeight = 14;
+const double _awningScallopHeight = 12;
 const double _awningTopBandHeightRatio = 0.55;
 const double _photoCornerRadius = 14;
+const double _wideArenaBreakpoint = 700;
+const double _wideRunwayStageHeight = 264;
+const double _compactRunwayStageHeight = 200;
+const double _wideRunnerAvatarSize = 98;
+const double _compactRunnerAvatarSize = 74;
+const int _pointsPerCrewLevel = 100;
 const int _pranksterRoundPoints = 30;
 const int _incompleteRoundPoints = 15;
 const int _baristaRoundPoints = 50;
-const Duration _cardScaleDuration = Duration(milliseconds: 180);
+const Duration _cardScaleDuration = Duration(milliseconds: 160);
 
-/// Cozy DevFest Arcade Cafe Scene built with pure Flutter declarative widgets
-/// (`LayoutBuilder`, `Stack`, `AnimatedScale`, `AnimatedSwitcher`, `CustomPaint`, and `Image.asset`)
-/// and `GoogleSans` typography.
+/// Subway Surfers-inspired 3-Lane Arcade Cafe Scene powered by Flame (`SubwayBaristaFlameGame`),
+/// Lottie animations, and `GoogleSans` typography.
 class CafeCounterScreen extends StatefulWidget {
   const CafeCounterScreen({
     required this.cityController,
     required this.judgeService,
+    this.nfcController,
     super.key,
   });
 
   final CityEditionController cityController;
   final CafeJudgeService judgeService;
+
+  /// Injected in tests; the screen creates and owns a Web NFC controller otherwise.
+  final NfcTagController? nfcController;
 
   @override
   State<CafeCounterScreen> createState() => _CafeCounterScreenState();
@@ -48,6 +57,7 @@ class CafeCounterScreen extends StatefulWidget {
 class _CafeCounterScreenState extends State<CafeCounterScreen> {
   final List<CafeIngredient> _selectedTray = <CafeIngredient>[];
   final CafeSoundController _soundController = CafeSoundController();
+  late final SubwayBaristaFlameGame _flameGame;
   bool _includeRoundTwoCustomItems = true;
   bool _isEvaluatingOrder = false;
   bool _isCrewSippingTea = false;
@@ -57,17 +67,61 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   int _playerTwoPastryScore = 0;
   int _tipJarTotal = 0;
   CafeReview? _latestReview;
+  late final NfcTagController _nfcController = widget.nfcController ?? NfcTagController();
 
   @override
   void initState() {
     super.initState();
+    _flameGame = SubwayBaristaFlameGame(
+      initialCityId: widget.cityController.activeCityId,
+      onLaneTapped: _handleFlameLaneTapped,
+      onSwipeServeRequested: _serveOrder,
+    )..paused = isRunningInAutomatedWidgetTest;
     widget.cityController.addListener(_handleCityChanged);
+    _nfcController.onIngredientTapped = _placeIngredientFromTag;
   }
 
   @override
   void dispose() {
     widget.cityController.removeListener(_handleCityChanged);
+    _nfcController.onIngredientTapped = null;
+    if (widget.nfcController == null) {
+      _nfcController.dispose();
+    }
     super.dispose();
+  }
+
+  void _syncFlameStage() {
+    _flameGame.syncArcadeState(
+      cityId: widget.cityController.activeCityId,
+      selectedTray: _selectedTray,
+      latestReview: _latestReview,
+      isSippingTea: _isCrewSippingTea || _isCustomerSippingTea,
+    );
+  }
+
+  void _handleFlameLaneTapped(int laneIndex) {
+    final targetCategory = switch (laneIndex) {
+      0 => IngredientCategory.drink,
+      1 => IngredientCategory.food,
+      _ => IngredientCategory.toppingOrPrank,
+    };
+    final itemsInLane = IngredientsCatalog.itemsForCategory(
+      targetCategory,
+      includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
+    );
+    if (itemsInLane.isEmpty) {
+      setState(() {});
+      return;
+    }
+    final currentInLane = _selectedTray.where((item) => item.category == targetCategory).firstOrNull;
+    if (currentInLane == null) {
+      _toggleIngredient(itemsInLane.first);
+      return;
+    }
+    final currentIndex = itemsInLane.indexWhere((item) => item.id == currentInLane.id);
+    final nextItem = itemsInLane[(currentIndex + 1) % itemsInLane.length];
+    _toggleIngredient(nextItem);
   }
 
   void _handleCityChanged() {
@@ -80,6 +134,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       _latestReview = null;
       _isCrewSippingTea = false;
       _isCustomerSippingTea = false;
+      _syncFlameStage();
     });
   }
 
@@ -91,14 +146,11 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
     return tickets[_activeTicketIndex % tickets.length];
   }
 
-  int get _crewLevel => 1 + ((_playerOneBaristaScore + _playerTwoPastryScore) ~/ 100);
+  int get _crewLevel => 1 + ((_playerOneBaristaScore + _playerTwoPastryScore) ~/ _pointsPerCrewLevel);
 
   static const Set<String> _coffeeGrindIds = <String>{
     'espresso',
-    'turkish_coffee',
     'menengic_coffee',
-    'dibek_coffee',
-    'oat_flat_white',
   };
 
   void _triggerManualSoundCue(CafeSoundCue cue) {
@@ -114,6 +166,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
         final roundTwoIds = IngredientsCatalog.roundTwoCustomItems.map((item) => item.id).toSet();
         _selectedTray.removeWhere((item) => roundTwoIds.contains(item.id));
       }
+      _syncFlameStage();
     });
     _soundController.play(CafeSoundCue.tapPop);
   }
@@ -129,6 +182,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
           ..removeWhere((existing) => existing.category == ingredient.category)
           ..add(ingredient);
       }
+      _syncFlameStage();
       if (!isRemoving && ingredient.isPrankItem) {
         _soundController.play(CafeSoundCue.stealthWink);
       } else if (!isRemoving && _coffeeGrindIds.contains(ingredient.id)) {
@@ -141,10 +195,55 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
     });
   }
 
+  /// A tag tap only ever adds: holding the salt sticker twice must not take the salt back off.
+  void _placeIngredientFromTag(CafeIngredient ingredient) {
+    if (!mounted) {
+      return;
+    }
+    final languageCode = widget.cityController.activeEdition.defaultLanguage;
+    final ingredientTitle = ingredient.localizedTitle(languageCode);
+    final isRoundTwoItem = IngredientsCatalog.roundTwoCustomItems.any((item) => item.id == ingredient.id);
+    final isEnglish = languageCode == 'en';
+    final String tapMessage;
+    if (isRoundTwoItem && !_includeRoundTwoCustomItems) {
+      tapMessage = isEnglish
+          ? 'NFC: $ingredientTitle is a Round 2 item, switch Round 2 on first.'
+          : 'NFC: $ingredientTitle 2. tur ürünü, önce 2. turu aç.';
+    } else if (_selectedTray.any((existing) => existing.id == ingredient.id)) {
+      tapMessage = isEnglish ? 'NFC: $ingredientTitle is already on the tray.' : 'NFC: $ingredientTitle zaten tepside.';
+    } else {
+      _toggleIngredient(ingredient);
+      tapMessage = isEnglish ? 'NFC: $ingredientTitle added.' : 'NFC: $ingredientTitle eklendi.';
+    }
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          key: const Key('nfc_tap_snackbar'),
+          content: Text(tapMessage),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+  }
+
+  void _openNfcTagWriterSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      constraints: const BoxConstraints(maxWidth: 560),
+      builder: (sheetContext) => NfcTagWriterSheet(
+        nfcController: _nfcController,
+        languageCode: widget.cityController.activeEdition.defaultLanguage,
+        appBaseUri: Uri.base,
+      ),
+    );
+  }
+
   void _clearTray() {
     setState(() {
       _selectedTray.clear();
       _latestReview = null;
+      _syncFlameStage();
     });
     _soundController.play(CafeSoundCue.tapPop);
   }
@@ -157,25 +256,44 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       _latestReview = null;
       _isCrewSippingTea = false;
       _isCustomerSippingTea = false;
+      _syncFlameStage();
     });
     _soundController.play(CafeSoundCue.nextChime);
   }
 
-  void _triggerFiveSecondTeaSip() {
+  void _triggerCustomerTeaSip() {
     setState(() {
-      _isCrewSippingTea = true;
       _isCustomerSippingTea = true;
+      _syncFlameStage();
     });
     _soundController.play(CafeSoundCue.teaSip);
   }
 
-  void _handleTeaSipCompleted() {
-    if (!mounted || (!_isCrewSippingTea && !_isCustomerSippingTea)) {
+  void _handleCustomerTeaSipCompleted() {
+    if (!mounted || !_isCustomerSippingTea) {
+      return;
+    }
+    setState(() {
+      _isCustomerSippingTea = false;
+      _syncFlameStage();
+    });
+  }
+
+  void _triggerCrewTeaSip() {
+    setState(() {
+      _isCrewSippingTea = true;
+      _syncFlameStage();
+    });
+    _soundController.play(CafeSoundCue.teaSip);
+  }
+
+  void _handleCrewTeaSipCompleted() {
+    if (!mounted || !_isCrewSippingTea) {
       return;
     }
     setState(() {
       _isCrewSippingTea = false;
-      _isCustomerSippingTea = false;
+      _syncFlameStage();
     });
   }
 
@@ -210,6 +328,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
         _playerOneBaristaScore += _baristaRoundPoints;
         _playerTwoPastryScore += _baristaRoundPoints;
       }
+      _syncFlameStage();
       final didLevelUp = _crewLevel > previousLevel;
       if (review.isPrankCaught) {
         _soundController.play(CafeSoundCue.saltyBuzzer);
@@ -243,28 +362,26 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
         final currentTicket = _currentOrderTicket;
         final totalTickets = _ticketsForActiveCity.length;
         final latestReview = _latestReview;
-        final effectiveRequestedIds = currentTicket.effectiveRequestedIngredientIds(
-          includeRoundTwoItems: _includeRoundTwoCustomItems,
-        );
 
         return Scaffold(
-          backgroundColor: const Color(0xFFFFF8EE),
+          backgroundColor: const Color(0xFF0B101B),
           appBar: AppBar(
-            backgroundColor: const Color(0xFF2C1A12),
-            foregroundColor: const Color(0xFFFFF8EE),
+            backgroundColor: const Color(0xFF0E1525),
+            foregroundColor: const Color(0xFFF3E5C8),
             elevation: 0,
             titleSpacing: 16,
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const Text(
-                  'Backyard Barista on Cloud Run ☕🥐🧂',
+                  'Backyard Barista on Cloud Run',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w800,
                     fontSize: 16,
                     letterSpacing: -0.2,
+                    color: Color(0xFFF3E5C8),
                   ),
                 ),
                 Text(
@@ -273,13 +390,18 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFFFFCCBC),
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFFD4AF37),
                   ),
                 ),
               ],
             ),
             actions: <Widget>[
+              _NfcCounterMenuButton(
+                nfcController: _nfcController,
+                languageCode: languageCode,
+                onOpenTagWriter: _openNfcTagWriterSheet,
+              ),
               IconButton(
                 key: const Key('sound_mute_toggle_button'),
                 visualDensity: VisualDensity.compact,
@@ -292,7 +414,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                 icon: Icon(
                   _soundController.isMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
                   size: 20,
-                  color: const Color(0xFFFFCCBC),
+                  color: const Color(0xFFD4AF37),
                 ),
               ),
               Padding(
@@ -302,197 +424,207 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                   style: FilledButton.styleFrom(
                     visualDensity: VisualDensity.compact,
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    backgroundColor: const Color(0xFFC85A32),
-                    foregroundColor: Colors.white,
+                    backgroundColor: const Color(0xFF7A1C1C),
+                    foregroundColor: const Color(0xFFF3E5C8),
+                    side: const BorderSide(color: Color(0xFFC59B27), width: 1.2),
                   ),
                   onPressed: _openCityEditionSheet,
-                  icon: _CityFlagBadge(editionId: activeEdition.editionId),
-                  label: Text(
-                    '${activeEdition.cityName} Edition ▾',
-                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
+                  icon: CityFlagBadge(editionId: activeEdition.editionId),
+                  label: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Text(
+                        '${activeEdition.cityName} Edition',
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800),
+                      ),
+                      const SizedBox(width: 2),
+                      const Icon(Icons.keyboard_arrow_down_rounded, size: 16),
+                    ],
                   ),
                 ),
               ),
             ],
           ),
-          body: Column(
+          body: Stack(
+            fit: StackFit.expand,
             children: <Widget>[
-              const _ScallopedAwningEdge(),
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final isDesktopSplit = constraints.maxWidth >= _desktopSplitBreakpointWidth;
-
-                    final scoreboardWidget = _ScoreboardAndConfigBar(
-                      cityEdition: activeEdition,
-                      sourceLayer: widget.cityController.activeSourceLayer,
-                      languageCode: languageCode,
-                      playerOneScore: _playerOneBaristaScore,
-                      playerTwoScore: _playerTwoPastryScore,
-                      crewLevel: _crewLevel,
-                      tipJarTotal: _tipJarTotal,
-                      includeRoundTwoItems: _includeRoundTwoCustomItems,
-                      onToggleRoundTwoItems: _handleRoundTwoToggle,
-                      onOpenCitySettings: _openCityEditionSheet,
-                    );
-
-                    final soundboardWidget = _BaristaWebAudioSoundboardBar(
-                      languageCode: languageCode,
-                      isMuted: _soundController.isMuted,
-                      lastPlayedCue: _soundController.lastPlayedCue,
-                      onPlayCue: _triggerManualSoundCue,
-                    );
-
-                    final crewStageWidget = CafeCrewCharacterStage(
-                      languageCode: languageCode,
-                      selectedTray: _selectedTray,
-                      latestReview: latestReview,
-                      playerOneScore: _playerOneBaristaScore,
-                      playerTwoScore: _playerTwoPastryScore,
-                      isCrewSippingTea: _isCrewSippingTea,
-                      onTriggerFiveSecondTeaSip: _triggerFiveSecondTeaSip,
-                      onSipTeaCompleted: _handleTeaSipCompleted,
-                      onTapCharacterEmote: _triggerFiveSecondTeaSip,
-                    );
-
-                    final customerStageWidget = _CustomerOrderStage(
-                      ticket: currentTicket,
-                      totalTickets: totalTickets,
-                      languageCode: languageCode,
-                      includeRoundTwoItems: _includeRoundTwoCustomItems,
-                      selectedTray: _selectedTray,
-                      latestReview: latestReview,
-                      isCustomerSippingTea: _isCustomerSippingTea,
-                      onNextCustomer: _advanceToNextCustomer,
-                      onTriggerFiveSecondTeaSip: _triggerFiveSecondTeaSip,
-                      onSipTeaCompleted: _handleTeaSipCompleted,
-                      onTapCustomerCharacter: _triggerFiveSecondTeaSip,
-                    );
-
-                    final woodenTrayWidget = _InteractiveWoodenTray(
-                      selectedTray: _selectedTray,
-                      languageCode: languageCode,
-                      isEvaluating: _isEvaluatingOrder,
-                      onRemoveIngredient: _toggleIngredient,
-                      onServeOrder: _serveOrder,
-                      onClearTray: _clearTray,
-                    );
-
-                    final reviewSwitcherWidget = AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 260),
-                      child: latestReview != null
-                          ? _CustomerReviewCard(
-                              key: ValueKey<DateTime>(latestReview.evaluatedAt),
-                              review: latestReview,
-                              cityEdition: activeEdition,
-                              languageCode: languageCode,
-                              onNextCustomer: _advanceToNextCustomer,
-                            )
-                          : const SizedBox.shrink(),
-                    );
-
-                    final drinkShelfWidget = _CafeStationShelf(
-                      category: IngredientCategory.drink,
-                      languageCode: languageCode,
-                      ingredients: IngredientsCatalog.itemsForCategory(
-                        IngredientCategory.drink,
-                        includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
-                      ),
-                      selectedTray: _selectedTray,
-                      requestedIngredientIds: effectiveRequestedIds,
-                      onToggleIngredient: _toggleIngredient,
-                    );
-
-                    final foodShelfWidget = _CafeStationShelf(
-                      category: IngredientCategory.food,
-                      languageCode: languageCode,
-                      ingredients: IngredientsCatalog.itemsForCategory(
-                        IngredientCategory.food,
-                        includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
-                      ),
-                      selectedTray: _selectedTray,
-                      requestedIngredientIds: effectiveRequestedIds,
-                      onToggleIngredient: _toggleIngredient,
-                    );
-
-                    final prankShelfWidget = _CafeStationShelf(
-                      category: IngredientCategory.toppingOrPrank,
-                      languageCode: languageCode,
-                      ingredients: IngredientsCatalog.itemsForCategory(
-                        IngredientCategory.toppingOrPrank,
-                        includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
-                      ),
-                      selectedTray: _selectedTray,
-                      requestedIngredientIds: effectiveRequestedIds,
-                      onToggleIngredient: _toggleIngredient,
-                    );
-
-                    return Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: _maxDesktopContentWidth),
-                        child: SingleChildScrollView(
-                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              scoreboardWidget,
-                              const SizedBox(height: 10),
-                              soundboardWidget,
-                              const SizedBox(height: 12),
-                              crewStageWidget,
-                              const SizedBox(height: 12),
-                              customerStageWidget,
-                              const SizedBox(height: 14),
-                              if (isDesktopSplit) ...<Widget>[
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 3,
-                                      child: drinkShelfWidget,
-                                    ),
-                                    const SizedBox(width: 14),
-                                    Expanded(
-                                      flex: 4,
-                                      child: foodShelfWidget,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 14),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Expanded(
-                                      flex: 4,
-                                      child: prankShelfWidget,
-                                    ),
-                                    const SizedBox(width: 14),
-                                    Expanded(
-                                      flex: 3,
-                                      child: woodenTrayWidget,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 14),
-                                reviewSwitcherWidget,
-                              ] else ...<Widget>[
-                                drinkShelfWidget,
-                                const SizedBox(height: 12),
-                                foodShelfWidget,
-                                const SizedBox(height: 12),
-                                prankShelfWidget,
-                                const SizedBox(height: 14),
-                                woodenTrayWidget,
-                                const SizedBox(height: 14),
-                                reviewSwitcherWidget,
-                              ],
-                            ],
-                          ),
+              // Full-bleed Universal Studios Hogsmeade Village, Hogwarts Express 5972 & Hogwarts Castle World Backdrop
+              Positioned.fill(
+                child: Image.asset(
+                  CafeCharacterAssets.hogsmeadeUniversalStage,
+                  fit: BoxFit.cover,
+                  alignment: const Alignment(0, -0.15),
+                  errorBuilder: (context, error, stackTrace) {
+                    return const DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: <Color>[Color(0xFF0B101B), Color(0xFF151E30)],
                         ),
                       ),
                     );
                   },
                 ),
+              ),
+              // Subtle atmospheric Hogsmeade twilight vignette so HUD glass panels and golden text pop cleanly
+              const Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: <Color>[
+                        Color(0xB8090E1A),
+                        Color(0x4D0B1220),
+                        Color(0x330B1220),
+                        Color(0xCC090E1A),
+                      ],
+                      stops: <double>[0, 0.28, 0.65, 1],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: MagicalHogsmeadeAtmosphereOverlay(
+                  platedItemCount: _selectedTray.length,
+                  isSippingTea: _isCrewSippingTea || _isCustomerSippingTea,
+                  hasActiveReview: latestReview != null,
+                  isSabotageReview: latestReview?.isPrankCaught ?? false,
+                ),
+              ),
+              Column(
+                children: <Widget>[
+                  const _ScallopedAwningEdge(),
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        final scoreboardWidget = _ScoreboardAndConfigBar(
+                          cityEdition: activeEdition,
+                          sourceLayer: widget.cityController.activeSourceLayer,
+                          languageCode: languageCode,
+                          playerOneScore: _playerOneBaristaScore,
+                          playerTwoScore: _playerTwoPastryScore,
+                          crewLevel: _crewLevel,
+                          tipJarTotal: _tipJarTotal,
+                          includeRoundTwoItems: _includeRoundTwoCustomItems,
+                          onToggleRoundTwoItems: _handleRoundTwoToggle,
+                          onOpenCitySettings: _openCityEditionSheet,
+                        );
+
+                        final soundboardWidget = _BaristaWebAudioSoundboardBar(
+                          languageCode: languageCode,
+                          isMuted: _soundController.isMuted,
+                          lastPlayedCue: _soundController.lastPlayedCue,
+                          onPlayCue: _triggerManualSoundCue,
+                        );
+
+                        final crewStageWidget = CafeCrewCharacterStage(
+                          languageCode: languageCode,
+                          selectedTray: _selectedTray,
+                          latestReview: latestReview,
+                          playerOneScore: _playerOneBaristaScore,
+                          playerTwoScore: _playerTwoPastryScore,
+                          isCrewSippingTea: _isCrewSippingTea,
+                          onTriggerFiveSecondTeaSip: _triggerCrewTeaSip,
+                          onSipTeaCompleted: _handleCrewTeaSipCompleted,
+                          onTapCharacterEmote: _triggerCrewTeaSip,
+                        );
+
+                        final customerStageWidget = _CustomerOrderStage(
+                          ticket: currentTicket,
+                          totalTickets: totalTickets,
+                          languageCode: languageCode,
+                          includeRoundTwoItems: _includeRoundTwoCustomItems,
+                          selectedTray: _selectedTray,
+                          latestReview: latestReview,
+                          isCustomerSippingTea: _isCustomerSippingTea,
+                          onNextCustomer: _advanceToNextCustomer,
+                          onTriggerFiveSecondTeaSip: _triggerCustomerTeaSip,
+                          onSipTeaCompleted: _handleCustomerTeaSipCompleted,
+                          onTapCustomerCharacter: _triggerCustomerTeaSip,
+                        );
+
+                        final drinkItems = IngredientsCatalog.itemsForCategory(
+                          IngredientCategory.drink,
+                          includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
+                        );
+                        final foodItems = IngredientsCatalog.itemsForCategory(
+                          IngredientCategory.food,
+                          includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
+                        );
+                        final prankItems = IngredientsCatalog.itemsForCategory(
+                          IngredientCategory.toppingOrPrank,
+                          includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
+                        );
+
+                        final flameRunwayStageWidget = _SubwayFlameRunwayStage(
+                          flameGame: _flameGame,
+                          languageCode: languageCode,
+                          selectedTray: _selectedTray,
+                          drinkItems: drinkItems,
+                          foodItems: foodItems,
+                          prankItems: prankItems,
+                          onQuickDashLane: (int laneIndex) => _flameGame.dashToLane(laneIndex),
+                          onSelectLaneIngredient: (int laneIndex, CafeIngredient ingredient) {
+                            _flameGame.dashToLane(laneIndex, triggerCallback: false);
+                            _toggleIngredient(ingredient);
+                          },
+                        );
+
+                        final woodenTrayWidget = _InteractiveWoodenTray(
+                          selectedTray: _selectedTray,
+                          languageCode: languageCode,
+                          isEvaluating: _isEvaluatingOrder,
+                          onRemoveIngredient: _toggleIngredient,
+                          onServeOrder: _serveOrder,
+                          onClearTray: _clearTray,
+                        );
+
+                        final reviewSwitcherWidget = AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 260),
+                          child: latestReview != null
+                              ? _CustomerReviewCard(
+                                  key: ValueKey<DateTime>(latestReview.evaluatedAt),
+                                  review: latestReview,
+                                  cityEdition: activeEdition,
+                                  languageCode: languageCode,
+                                  onNextCustomer: _advanceToNextCustomer,
+                                )
+                              : const SizedBox.shrink(),
+                        );
+
+                        return Align(
+                          alignment: Alignment.topCenter,
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: _maxDesktopContentWidth),
+                            child: SingleChildScrollView(
+                              padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: <Widget>[
+                                  scoreboardWidget,
+                                  const SizedBox(height: 6),
+                                  soundboardWidget,
+                                  const SizedBox(height: 8),
+                                  customerStageWidget,
+                                  const SizedBox(height: 8),
+                                  flameRunwayStageWidget,
+                                  const SizedBox(height: 8),
+                                  woodenTrayWidget,
+                                  const SizedBox(height: 8),
+                                  reviewSwitcherWidget,
+                                  const SizedBox(height: 8),
+                                  crewStageWidget,
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -502,74 +634,720 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   }
 }
 
-/// Custom-painted vector flag pill (`🇹🇷` crimson crescent / `🇩🇪` German tricolor) so desktop
-/// platforms where `GoogleSans` lacks regional-indicator flag glyphs never render raw `"TR"` letters.
-class _CityFlagBadge extends StatelessWidget {
-  const _CityFlagBadge({required this.editionId});
+/// Hidden where Web NFC does not exist (desktop, iPhone), so the stage laptop UI is unchanged.
+class _NfcCounterMenuButton extends StatelessWidget {
+  const _NfcCounterMenuButton({
+    required this.nfcController,
+    required this.languageCode,
+    required this.onOpenTagWriter,
+  });
 
-  final CityEditionId editionId;
+  final NfcTagController nfcController;
+  final String languageCode;
+  final VoidCallback onOpenTagWriter;
 
   @override
   Widget build(BuildContext context) {
-    final isGermany = editionId == CityEditionId.berlin;
-    return Container(
-      width: 24,
-      height: 16,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.75)),
+    return ListenableBuilder(
+      listenable: nfcController,
+      builder: (context, _) {
+        if (!nfcController.isSupported) {
+          return const SizedBox.shrink();
+        }
+        final status = nfcController.status;
+        final isScanning = status == NfcScanStatus.scanning;
+        final errorMessage = nfcController.lastErrorMessage;
+        final isEnglish = languageCode == 'en';
+        final listeningLabel = isEnglish ? 'NFC counter is listening' : 'NFC tezgâhı dinliyor';
+        return PopupMenuButton<VoidCallback>(
+          key: const Key('nfc_counter_menu_button'),
+          tooltip: errorMessage ?? (isScanning ? listeningLabel : (isEnglish ? 'NFC counter' : 'NFC tezgâhı')),
+          onSelected: (action) => action(),
+          icon: Icon(
+            status == NfcScanStatus.failed ? Icons.nfc_rounded : Icons.contactless_rounded,
+            size: 20,
+            color: switch (status) {
+              NfcScanStatus.scanning => const Color(0xFF8BE28B),
+              NfcScanStatus.failed => const Color(0xFFFF8A80),
+              NfcScanStatus.idle || NfcScanStatus.unsupported => const Color(0xFFFFCCBC),
+            },
+          ),
+          itemBuilder: (context) => <PopupMenuEntry<VoidCallback>>[
+            PopupMenuItem<VoidCallback>(
+              key: const Key('nfc_start_scanning_item'),
+              enabled: !isScanning,
+              value: nfcController.startScanning,
+              child: Text(isScanning ? listeningLabel : (isEnglish ? 'Start NFC counter' : 'NFC tezgâhını başlat')),
+            ),
+            PopupMenuItem<VoidCallback>(
+              key: const Key('nfc_open_writer_item'),
+              value: onOpenTagWriter,
+              child: Text(isEnglish ? 'Write ingredient tags' : 'Malzeme etiketlerini yaz'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// Full-Stage 3-Lane Flame Courtyard Game Arena with in-lane item pickup medallions.
+class _SubwayFlameRunwayStage extends StatelessWidget {
+  const _SubwayFlameRunwayStage({
+    required this.flameGame,
+    required this.languageCode,
+    required this.selectedTray,
+    required this.drinkItems,
+    required this.foodItems,
+    required this.prankItems,
+    required this.onQuickDashLane,
+    required this.onSelectLaneIngredient,
+  });
+
+  final SubwayBaristaFlameGame flameGame;
+  final String languageCode;
+  final List<CafeIngredient> selectedTray;
+  final List<CafeIngredient> drinkItems;
+  final List<CafeIngredient> foodItems;
+  final List<CafeIngredient> prankItems;
+  final ValueChanged<int> onQuickDashLane;
+  final void Function(int laneIndex, CafeIngredient ingredient) onSelectLaneIngredient;
+
+  @override
+  Widget build(BuildContext context) {
+    final isEnglish = languageCode == 'en';
+    final selectedTrayCount = selectedTray.length;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isWideArena = constraints.maxWidth >= _wideArenaBreakpoint;
+
+        final laneZeroDock = _FlameLanePickupColumn(
+          laneIndex: 0,
+          category: IngredientCategory.drink,
+          laneTitle: isEnglish ? 'STATION 1 · PICK DRINK ☕' : '1. İSTASYON · KAHVE SEÇ ☕',
+          accentColor: const Color(0xFFE08E45),
+          ingredients: drinkItems,
+          selectedTray: selectedTray,
+          languageCode: languageCode,
+          onSelectIngredient: (item) => onSelectLaneIngredient(0, item),
+        );
+
+        final laneOneDock = _FlameLanePickupColumn(
+          laneIndex: 1,
+          category: IngredientCategory.food,
+          laneTitle: isEnglish ? 'STATION 2 · PICK PASTRY 🥮' : '2. İSTASYON · TATLI SEÇ 🥮',
+          accentColor: const Color(0xFFD4AF37),
+          ingredients: foodItems,
+          selectedTray: selectedTray,
+          languageCode: languageCode,
+          onSelectIngredient: (item) => onSelectLaneIngredient(1, item),
+        );
+
+        final laneTwoDock = _FlameLanePickupColumn(
+          laneIndex: 2,
+          category: IngredientCategory.toppingOrPrank,
+          laneTitle: isEnglish ? 'STATION 3 · SUGAR OR SALT? 🧂' : '3. İSTASYON · ŞEKER Mİ TUZ MU? 🧂',
+          accentColor: const Color(0xFF4E9F6E),
+          ingredients: prankItems,
+          selectedTray: selectedTray,
+          languageCode: languageCode,
+          onSelectIngredient: (item) => onSelectLaneIngredient(2, item),
+        );
+
+        return Container(
+          key: const Key('subway_barista_flame_stage'),
+          decoration: BoxDecoration(
+            color: const Color(0x990D1422),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: const Color(0xFFD4AF37), width: 2.2),
+            boxShadow: const <BoxShadow>[
+              BoxShadow(
+                color: Color(0x77000000),
+                blurRadius: 22,
+                offset: Offset(0, 6),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(18),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                // Interactive 3-Lane Universal Studios Hogsmeade & Hogwarts Castle Stage
+                SizedBox(
+                  height: isWideArena ? _wideRunwayStageHeight : _compactRunwayStageHeight,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: <Widget>[
+                      // Panoramic Universal Studios Hogsmeade Village + Hogwarts Express 5972 + Hogwarts Castle backdrop
+                      Image.asset(
+                        CafeCharacterAssets.hogsmeadeUniversalStage,
+                        fit: BoxFit.cover,
+                        alignment: const Alignment(0, -0.22),
+                        errorBuilder: (context, error, stackTrace) {
+                          return const DecoratedBox(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: <Color>[Color(0xFF0F172A), Color(0xFF1E150F)],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      GameWidget<SubwayBaristaFlameGame>(
+                        game: flameGame,
+                      ),
+                      // 3D Generated Harry Potter Runner Character gliding across the 3 lanes
+                      IgnorePointer(
+                        child: AnimatedAlign(
+                          duration: const Duration(milliseconds: 280),
+                          curve: Curves.easeOutBack,
+                          alignment: Alignment(
+                            (flameGame.activeRunnerLane - 1) * 0.60,
+                            0.36,
+                          ),
+                          child: _HarryPotterLaneRunnerAvatar(
+                            selectedTray: selectedTray,
+                            isWideArena: isWideArena,
+                          ),
+                        ),
+                      ),
+                      // Top HUD overlay inside the Flame Courtyard Stage: 3 interactive lane signs
+                      Positioned(
+                        top: 10,
+                        left: 10,
+                        right: 10,
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: _RunwayLaneQuickPill(
+                                laneKey: const Key('flame_lane_pill_0'),
+                                label: isEnglish ? '1 · COFFEE LANE ☕' : 'HAT 1 · KAHVE ☕',
+                                accentColor: const Color(0xFFE08E45),
+                                backgroundColor: const Color(0xCC11192B),
+                                onTap: () => onQuickDashLane(0),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: _RunwayLaneQuickPill(
+                                laneKey: const Key('flame_lane_pill_1'),
+                                label: isEnglish ? '2 · PASTRY LANE 🥮' : 'HAT 2 · TATLI 🥮',
+                                accentColor: const Color(0xFFD4AF37),
+                                backgroundColor: const Color(0xCC11192B),
+                                onTap: () => onQuickDashLane(1),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: _RunwayLaneQuickPill(
+                                laneKey: const Key('flame_lane_pill_2'),
+                                label: isEnglish ? '3 · TWIN JARS 🧂' : 'HAT 3 · KAVANOZ 🧂',
+                                accentColor: const Color(0xFF4E9F6E),
+                                backgroundColor: const Color(0xCC11192B),
+                                onTap: () => onQuickDashLane(2),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 8,
+                        right: 10,
+                        child: IgnorePointer(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xCC0F172A),
+                              borderRadius: BorderRadius.circular(999),
+                              border: Border.all(color: const Color(0xFFD4AF37)),
+                            ),
+                            child: Text(
+                              isEnglish
+                                  ? '🏃‍♀️ SWIPE / TAP LANES OR PICK TOKENS BELOW ($selectedTrayCount/3)'
+                                  : '🏃‍♀️ KULVARI KAYDIR VEYA ALTTAN ÜRÜN YAKALA ($selectedTrayCount/3)',
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFFF3E5C8),
+                                letterSpacing: 0.2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Integrated 3-Lane In-Game Pickup Medallion Dock directly at the foot of the 3 lanes
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 12),
+                  decoration: const BoxDecoration(
+                    color: Color(0xCC0E1525),
+                    border: Border(
+                      top: BorderSide(color: Color(0xFFD4AF37), width: 1.5),
+                    ),
+                  ),
+                  child: isWideArena
+                      ? IntrinsicHeight(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Expanded(child: laneZeroDock),
+                              const SizedBox(width: 10),
+                              Expanded(child: laneOneDock),
+                              const SizedBox(width: 10),
+                              Expanded(child: laneTwoDock),
+                            ],
+                          ),
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            laneZeroDock,
+                            const SizedBox(height: 8),
+                            laneOneDock,
+                            const SizedBox(height: 8),
+                            laneTwoDock,
+                          ],
+                        ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// 3D Generated Harry Potter Wizard Character token gliding across the 3 Hogwarts lanes with a carved oak tray
+/// and 60fps Wingardium Leviosa levitation + Lottie spell aura.
+class _HarryPotterLaneRunnerAvatar extends StatefulWidget {
+  const _HarryPotterLaneRunnerAvatar({
+    required this.selectedTray,
+    required this.isWideArena,
+  });
+
+  final List<CafeIngredient> selectedTray;
+  final bool isWideArena;
+
+  @override
+  State<_HarryPotterLaneRunnerAvatar> createState() => _HarryPotterLaneRunnerAvatarState();
+}
+
+class _HarryPotterLaneRunnerAvatarState extends State<_HarryPotterLaneRunnerAvatar>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _levitationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _levitationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1400),
+    );
+    if (isRunningInAutomatedWidgetTest) {
+      _levitationController.value = 0.5;
+    } else {
+      _levitationController.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _levitationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final avatarSize = widget.isWideArena ? _wideRunnerAvatarSize : _compactRunnerAvatarSize;
+    final hasDrink = widget.selectedTray.any((item) => item.category == IngredientCategory.drink);
+    final hasFood = widget.selectedTray.any((item) => item.category == IngredientCategory.food);
+    final hasTopping = widget.selectedTray.any(
+      (item) => item.category == IngredientCategory.toppingOrPrank,
+    );
+    final hasStealthPrank = widget.selectedTray.any((item) => item.isPrankItem);
+    final platedCount = widget.selectedTray.length;
+    final lottieAsset = hasStealthPrank
+        ? CafeAnimationAssets.saltySpicyExplosion
+        : platedCount >= 3
+            ? CafeAnimationAssets.sweetCelebrationBurst
+            : platedCount > 0
+                ? CafeAnimationAssets.baristaBrewingPulse
+                : CafeAnimationAssets.coffeeSteamLoop;
+
+    return AnimatedBuilder(
+      animation: _levitationController,
+      builder: (context, child) {
+        final hoverOffset = (0.5 - _levitationController.value) * 9.0;
+        final auraScale = 1.0 + (_levitationController.value * 0.06);
+        return Transform.translate(
+          offset: Offset(0, hoverOffset),
+          child: Transform.scale(
+            scale: auraScale,
+            child: child,
+          ),
+        );
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: <Widget>[
+              SizedBox(
+                width: avatarSize * 1.32,
+                height: avatarSize * 1.32,
+                child: Lottie.asset(
+                  lottieAsset,
+                  repeat: !isRunningInAutomatedWidgetTest,
+                  animate: !isRunningInAutomatedWidgetTest,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => const SizedBox.shrink(),
+                ),
+              ),
+              Container(
+                width: avatarSize,
+                height: avatarSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: platedCount >= 3 ? const Color(0xFFFFE082) : const Color(0xFFD4AF37),
+                    width: 3.2,
+                  ),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: platedCount > 0 ? const Color(0xCCD4AF37) : const Color(0x99D4AF37),
+                      blurRadius: platedCount > 0 ? 24 : 18,
+                      spreadRadius: platedCount > 0 ? 4 : 2,
+                    ),
+                    const BoxShadow(
+                      color: Color(0xAA000000),
+                      blurRadius: 10,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: ClipOval(
+                  child: Image.asset(
+                    CafeCharacterAssets.harryPotterStageRunner,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const ColoredBox(
+                        color: Color(0xFF2B1B10),
+                        child: Icon(
+                          Icons.auto_fix_high_rounded,
+                          color: Color(0xFFD4AF37),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Positioned(
+                top: -4,
+                right: -4,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: const Color(0xEE141D30),
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: const Color(0xFFD4AF37), width: 1.4),
+                  ),
+                  child: Text(
+                    platedCount >= 3 ? '✨ Wingardium!' : '🪄 Lumos',
+                    style: const TextStyle(
+                      fontSize: 9,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFFFFECB3),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Transform.translate(
+            offset: const Offset(0, -8),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xEE11192B),
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(color: const Color(0xFFD4AF37), width: 1.8),
+                boxShadow: const <BoxShadow>[
+                  BoxShadow(
+                    color: Color(0x99000000),
+                    blurRadius: 6,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text(
+                    '⚡ Harry',
+                    style: TextStyle(
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFFF3E5C8),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  _MiniTrayDot(isPlated: hasDrink, activeColor: const Color(0xFFE08E45)),
+                  const SizedBox(width: 4),
+                  _MiniTrayDot(isPlated: hasFood, activeColor: const Color(0xFFD4AF37)),
+                  const SizedBox(width: 4),
+                  _MiniTrayDot(isPlated: hasTopping, activeColor: const Color(0xFF4E9F6E)),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(3),
-        child: CustomPaint(
-          painter: _CityFlagPainter(isGermany: isGermany),
+    );
+  }
+}
+
+class _MiniTrayDot extends StatelessWidget {
+  const _MiniTrayDot({
+    required this.isPlated,
+    required this.activeColor,
+  });
+
+  final bool isPlated;
+  final Color activeColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 9,
+      height: 9,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isPlated ? activeColor : const Color(0x38FFFFFF),
+        border: Border.all(color: const Color(0xFFF3E5C8), width: 1.2),
+      ),
+    );
+  }
+}
+
+/// Compact in-lane pickup dock aligned directly beneath one of the 3 Flame Courtyard lanes.
+class _FlameLanePickupColumn extends StatelessWidget {
+  const _FlameLanePickupColumn({
+    required this.laneIndex,
+    required this.category,
+    required this.laneTitle,
+    required this.accentColor,
+    required this.ingredients,
+    required this.selectedTray,
+    required this.languageCode,
+    required this.onSelectIngredient,
+  });
+
+  final int laneIndex;
+  final IngredientCategory category;
+  final String laneTitle;
+  final Color accentColor;
+  final List<CafeIngredient> ingredients;
+  final List<CafeIngredient> selectedTray;
+  final String languageCode;
+  final ValueChanged<CafeIngredient> onSelectIngredient;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      decoration: BoxDecoration(
+        color: const Color(0xCC141D30),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: accentColor.withValues(alpha: 0.80), width: 1.4),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 2, bottom: 6),
+            child: Tooltip(
+              message: category.localizedTitle(languageCode),
+              child: Text(
+                laneTitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w800,
+                  color: accentColor,
+                  letterSpacing: 0.2,
+                ),
+              ),
+            ),
+          ),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: ingredients.map((ingredient) {
+              final isSelected = selectedTray.any((item) => item.id == ingredient.id);
+              return _InLanePickupMedallion(
+                ingredient: ingredient,
+                languageCode: languageCode,
+                isSelected: isSelected,
+                accentColor: accentColor,
+                onTap: () => onSelectIngredient(ingredient),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Compact tactile game token (`Key('ingredient_card_${ingredient.id}')`) replacing the old 166px shelf cards.
+class _InLanePickupMedallion extends StatelessWidget {
+  const _InLanePickupMedallion({
+    required this.ingredient,
+    required this.languageCode,
+    required this.isSelected,
+    required this.accentColor,
+    required this.onTap,
+  });
+
+  final CafeIngredient ingredient;
+  final String languageCode;
+  final bool isSelected;
+  final Color accentColor;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final backgroundColor = isSelected ? const Color(0xF01E4231) : const Color(0xE6182234);
+    final borderColor = isSelected ? const Color(0xFFD4AF37) : accentColor.withValues(alpha: 0.72);
+    final titleText = ingredient.localizedTitle(languageCode);
+    final subtitleText = ingredient.localizedSubtitle(languageCode);
+
+    return Tooltip(
+      message: '$titleText · $subtitleText',
+      child: AnimatedScale(
+        scale: isSelected ? 1.04 : 1.0,
+        duration: _cardScaleDuration,
+        child: Material(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(999),
+          child: InkWell(
+            key: Key('ingredient_card_${ingredient.id}'),
+            borderRadius: BorderRadius.circular(999),
+            onTap: onTap,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(999),
+                border: Border.all(
+                  color: borderColor,
+                  width: isSelected ? 2.0 : 1.3,
+                ),
+                boxShadow: const <BoxShadow>[
+                  BoxShadow(
+                    color: Color(0x44000000),
+                    blurRadius: 6,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  _IngredientArtwork(
+                    ingredient: ingredient,
+                    size: 26,
+                  ),
+                  const SizedBox(width: 6),
+                  Flexible(
+                    child: Text(
+                      titleText,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w800,
+                        color: isSelected ? const Color(0xFFFFEBA8) : const Color(0xFFF3E5C8),
+                      ),
+                    ),
+                  ),
+                  if (isSelected) ...<Widget>[
+                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.check_circle_rounded,
+                      size: 14,
+                      color: Color(0xFFD4AF37),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 }
 
-class _CityFlagPainter extends CustomPainter {
-  const _CityFlagPainter({required this.isGermany});
+class _RunwayLaneQuickPill extends StatelessWidget {
+  const _RunwayLaneQuickPill({
+    required this.laneKey,
+    required this.label,
+    required this.accentColor,
+    required this.backgroundColor,
+    required this.onTap,
+  });
 
-  final bool isGermany;
+  final Key laneKey;
+  final String label;
+  final Color accentColor;
+  final Color backgroundColor;
+  final VoidCallback onTap;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    if (isGermany) {
-      final bandHeight = size.height / 3;
-      canvas
-        ..drawRect(
-          Rect.fromLTWH(0, 0, size.width, bandHeight),
-          Paint()..color = const Color(0xFF1A1A1A),
-        )
-        ..drawRect(
-          Rect.fromLTWH(0, bandHeight, size.width, bandHeight),
-          Paint()..color = const Color(0xFFD32F2F),
-        )
-        ..drawRect(
-          Rect.fromLTWH(0, bandHeight * 2, size.width, bandHeight),
-          Paint()..color = const Color(0xFFFFCA28),
-        );
-      return;
-    }
-
-    // Turkish Crimson Flag with white crescent & star
-    final redPaint = Paint()..color = const Color(0xFFE30A17);
-    final whitePaint = Paint()..color = Colors.white;
-    canvas.drawRect(Offset.zero & size, redPaint);
-    final center = Offset(size.width * 0.44, size.height * 0.5);
-    canvas
-      ..drawCircle(center, size.height * 0.30, whitePaint)
-      ..drawCircle(Offset(center.dx + size.height * 0.08, center.dy), size.height * 0.24, redPaint)
-      ..drawCircle(Offset(size.width * 0.67, size.height * 0.5), size.height * 0.09, whitePaint);
+  Widget build(BuildContext context) {
+    return Material(
+      color: backgroundColor,
+      borderRadius: BorderRadius.circular(999),
+      child: InkWell(
+        key: laneKey,
+        borderRadius: BorderRadius.circular(999),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(color: accentColor, width: 1.3),
+          ),
+          child: Center(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w800,
+                color: accentColor,
+                letterSpacing: 0.2,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
-
-  @override
-  bool shouldRepaint(covariant _CityFlagPainter oldDelegate) => oldDelegate.isGermany != isGermany;
 }
 
-/// Decorative striped cafe awning edge painted beneath the top AppBar.
+/// Decorative Hogwarts / Gryffindor crimson velvet & antique gold banner valance beneath the AppBar.
 class _ScallopedAwningEdge extends StatelessWidget {
   const _ScallopedAwningEdge();
 
@@ -589,20 +1367,20 @@ class _AwningScallopPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const stripeWidth = 36.0;
-    final terracottaPaint = Paint()..color = const Color(0xFFC85A32);
-    final creamPaint = Paint()..color = const Color(0xFFFFEAD2);
+    final crimsonVelvetPaint = Paint()..color = const Color(0xFF6E1919);
+    final antiqueGoldPaint = Paint()..color = const Color(0xFFB5892E);
 
     var index = 0;
-    for (double x = 0; x < size.width; x += stripeWidth) {
-      final paint = index.isEven ? terracottaPaint : creamPaint;
-      final currentWidth = (x + stripeWidth > size.width) ? (size.width - x) : stripeWidth;
+    for (var stripeOffsetX = 0.0; stripeOffsetX < size.width; stripeOffsetX += stripeWidth) {
+      final paint = index.isEven ? crimsonVelvetPaint : antiqueGoldPaint;
+      final currentWidth = (stripeOffsetX + stripeWidth > size.width) ? (size.width - stripeOffsetX) : stripeWidth;
       canvas
         ..drawRect(
-          Rect.fromLTWH(x, 0, currentWidth, size.height * _awningTopBandHeightRatio),
+          Rect.fromLTWH(stripeOffsetX, 0, currentWidth, size.height * _awningTopBandHeightRatio),
           paint,
         )
         ..drawArc(
-          Rect.fromLTWH(x, 0, currentWidth, size.height),
+          Rect.fromLTWH(stripeOffsetX, 0, currentWidth, size.height),
           0,
           math.pi,
           true,
@@ -657,11 +1435,18 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
     final isEnglish = languageCode == 'en';
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF1E0),
-        borderRadius: BorderRadius.circular(_counterCardRadius),
-        border: Border.all(color: const Color(0xFFE0C3A8), width: 1.5),
+        color: const Color(0xCC0F172A),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFC59B27), width: 1.6),
+        boxShadow: const <BoxShadow>[
+          BoxShadow(
+            color: Color(0x66000000),
+            blurRadius: 12,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: SizedBox(
         width: double.infinity,
@@ -677,7 +1462,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  _CityFlagBadge(editionId: cityEdition.editionId),
+                  CityFlagBadge(editionId: cityEdition.editionId),
                   const SizedBox(width: 10),
                   Flexible(
                     child: Column(
@@ -691,9 +1476,9 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                                 cityEdition.eventTitle,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14,
-                                  color: Color(0xFF2C1A12),
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 13.5,
+                                  color: Color(0xFFF3E5C8),
                                 ),
                               ),
                             ),
@@ -701,21 +1486,21 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFEFE2D3),
+                                color: const Color(0xFF2E2016),
                                 borderRadius: BorderRadius.circular(999),
-                                border: Border.all(color: const Color(0xFFD2B49C)),
+                                border: Border.all(color: const Color(0xFFC59B27)),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                  const Icon(Icons.cloud_done_rounded, size: 12, color: Color(0xFF6D4C41)),
+                                  const Icon(Icons.cloud_done_rounded, size: 12, color: Color(0xFFD4AF37)),
                                   const SizedBox(width: 4),
                                   Text(
                                     _friendlySourceBadgeLabel(isEnglish),
                                     style: const TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xFF5D4037),
+                                      color: Color(0xFFEAD8B8),
                                     ),
                                   ),
                                 ],
@@ -731,7 +1516,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF6D4C41),
+                            color: Color(0xFFC9B086),
                           ),
                         ),
                       ],
@@ -747,23 +1532,23 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
               children: <Widget>[
                 Container(
                   key: const Key('cafe_crew_level_badge'),
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFF4CC),
+                    color: const Color(0xFF3A2912),
                     borderRadius: BorderRadius.circular(999),
-                    border: Border.all(color: const Color(0xFFE5B84B)),
+                    border: Border.all(color: const Color(0xFFD4AF37), width: 1.4),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      const Icon(Icons.emoji_events_rounded, size: 15, color: Color(0xFF8C5800)),
+                      const Icon(Icons.emoji_events_rounded, size: 15, color: Color(0xFFD4AF37)),
                       const SizedBox(width: 5),
                       Text(
                         'Lv.$crewLevel Barista',
                         style: const TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w800,
                           fontSize: 12,
-                          color: Color(0xFF6E4300),
+                          color: Color(0xFFF3E5C8),
                         ),
                       ),
                     ],
@@ -772,28 +1557,28 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                 _ScorePill(
                   icon: Icons.coffee_rounded,
                   label: isEnglish ? 'P1 Barista: $playerOneScore' : 'O1 Barista: $playerOneScore',
-                  backgroundColor: const Color(0xFFEFE5DC),
-                  textColor: const Color(0xFF3E2723),
+                  backgroundColor: const Color(0xFF381916),
+                  textColor: const Color(0xFFE8C187),
                 ),
                 _ScorePill(
                   icon: Icons.bakery_dining_rounded,
                   label: isEnglish ? 'P2 Pastry: $playerTwoScore' : 'O2 Tatlı: $playerTwoScore',
-                  backgroundColor: const Color(0xFFFCE8E0),
-                  textColor: const Color(0xFF8D3218),
+                  backgroundColor: const Color(0xFF1A2D22),
+                  textColor: const Color(0xFFA5D1B4),
                 ),
                 _ScorePill(
                   icon: Icons.savings_rounded,
                   label: isEnglish ? 'Tips: +$tipJarTotal pts' : 'Bahşiş: +${tipJarTotal}p',
-                  backgroundColor: const Color(0xFFE6F4EA),
-                  textColor: const Color(0xFF137333),
+                  backgroundColor: const Color(0xFF332512),
+                  textColor: const Color(0xFFD4AF37),
                 ),
                 Container(
                   padding: const EdgeInsets.only(left: 10, right: 4, top: 2, bottom: 2),
                   decoration: BoxDecoration(
-                    color: includeRoundTwoItems ? const Color(0xFFE6F4EA) : const Color(0xFFF3ECE6),
+                    color: includeRoundTwoItems ? const Color(0xFF1D3326) : const Color(0xFF2B1E15),
                     borderRadius: BorderRadius.circular(999),
                     border: Border.all(
-                      color: includeRoundTwoItems ? const Color(0xFF34A853) : const Color(0xFFD7CCC8),
+                      color: includeRoundTwoItems ? const Color(0xFFC59B27) : const Color(0xFF7D623C),
                     ),
                   ),
                   child: Row(
@@ -802,7 +1587,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                       Icon(
                         Icons.auto_awesome_rounded,
                         size: 14,
-                        color: includeRoundTwoItems ? const Color(0xFF137333) : const Color(0xFF6D4C41),
+                        color: includeRoundTwoItems ? const Color(0xFFD4AF37) : const Color(0xFFC9B086),
                       ),
                       const SizedBox(width: 5),
                       Text(
@@ -810,7 +1595,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 11.5,
-                          color: includeRoundTwoItems ? const Color(0xFF137333) : const Color(0xFF4E342E),
+                          color: includeRoundTwoItems ? const Color(0xFFF3E5C8) : const Color(0xFFC9B086),
                         ),
                       ),
                       const SizedBox(width: 4),
@@ -820,10 +1605,10 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                           child: Switch(
                             key: const Key('round_two_custom_items_switch'),
                             value: includeRoundTwoItems,
-                            activeThumbColor: Colors.white,
-                            activeTrackColor: const Color(0xFF1E8E3E),
-                            inactiveThumbColor: const Color(0xFF5D4037),
-                            inactiveTrackColor: const Color(0xFFD7CCC8),
+                            activeThumbColor: const Color(0xFFF3E5C8),
+                            activeTrackColor: const Color(0xFF3B7A57),
+                            inactiveThumbColor: const Color(0xFFC9B086),
+                            inactiveTrackColor: const Color(0xFF3D2B1F),
                             onChanged: onToggleRoundTwoItems,
                           ),
                         ),
@@ -862,48 +1647,48 @@ class _BaristaWebAudioSoundboardBar extends StatelessWidget {
 
     return Container(
       key: const Key('barista_web_audio_soundboard'),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: const Color(0xFFF6ECE0),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE0C3A8)),
+        color: const Color(0xB80E1525),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFF9C7A2E)),
       ),
       child: SizedBox(
         width: double.infinity,
         child: Wrap(
           alignment: WrapAlignment.spaceBetween,
           crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 10,
+          spacing: 8,
           runSpacing: 6,
           children: <Widget>[
             Wrap(
               crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: 8,
+              spacing: 6,
               runSpacing: 4,
               children: <Widget>[
-                const Icon(Icons.graphic_eq_rounded, size: 16, color: Color(0xFF8D3218)),
+                const Icon(Icons.graphic_eq_rounded, size: 15, color: Color(0xFFC59B27)),
                 Text(
                   isTurkish ? 'Kafe Ses Efektleri:' : 'Barista Soundboard:',
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 11.5,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF3E2723),
+                    color: Color(0xFFEAD8B8),
                   ),
                 ),
                 Container(
                   key: const Key('active_web_audio_cue_badge'),
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFF8EE),
+                    color: const Color(0xFF2D1F15),
                     borderRadius: BorderRadius.circular(999),
-                    border: Border.all(color: const Color(0xFFD7B89C)),
+                    border: Border.all(color: const Color(0xFF9C7A2E)),
                   ),
                   child: Text(
                     statusText,
                     style: const TextStyle(
-                      fontSize: 10.5,
+                      fontSize: 10,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF8D3218),
+                      color: Color(0xFFF3E5C8),
                     ),
                   ),
                 ),
@@ -911,7 +1696,7 @@ class _BaristaWebAudioSoundboardBar extends StatelessWidget {
             ),
             Wrap(
               spacing: 6,
-              runSpacing: 6,
+              runSpacing: 4,
               children: <Widget>[
                 _SoundboardActionChip(
                   buttonKey: const Key('sound_fx_coffee_grinder_button'),
@@ -962,29 +1747,29 @@ class _SoundboardActionChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFFFFFBF6),
+      color: const Color(0xFF2B1E14),
       borderRadius: BorderRadius.circular(999),
       child: InkWell(
         key: buttonKey,
         borderRadius: BorderRadius.circular(999),
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(999),
-            border: Border.all(color: const Color(0xFFD7B89C)),
+            border: Border.all(color: const Color(0xFF9C7A2E)),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(icon, size: 13, color: const Color(0xFF8D3218)),
-              const SizedBox(width: 5),
+              Icon(icon, size: 12, color: const Color(0xFFD4AF37)),
+              const SizedBox(width: 4),
               Text(
                 label,
                 style: const TextStyle(
-                  fontSize: 11,
+                  fontSize: 10.5,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF3E2723),
+                  color: Color(0xFFF3E5C8),
                 ),
               ),
             ],
@@ -1011,21 +1796,22 @@ class _ScorePill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: const Color(0xFF9C7A2E)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Icon(icon, size: 15, color: textColor),
+          Icon(icon, size: 14, color: textColor),
           const SizedBox(width: 5),
           Text(
             label,
             style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
+              fontSize: 11.5,
+              fontWeight: FontWeight.w800,
               color: textColor,
             ),
           ),
@@ -1035,7 +1821,7 @@ class _ScorePill extends StatelessWidget {
   }
 }
 
-/// Step 1 of the Cafe Loop: Live Customer Window + Speech-Bubble Order Ticket.
+/// Step 1 of the Cafe Loop: Gothic Arched Customer Window + Hogwarts Parchment Order Scroll.
 class _CustomerOrderStage extends StatelessWidget {
   const _CustomerOrderStage({
     required this.ticket,
@@ -1069,7 +1855,13 @@ class _CustomerOrderStage extends StatelessWidget {
     }
     final currentReview = latestReview;
     if (currentReview != null) {
-      return currentReview.isPrankCaught ? CafeCharacterMood.saltySabotageShock : CafeCharacterMood.sweetCelebration;
+      if (currentReview.isPrankCaught) {
+        return CafeCharacterMood.saltySabotageShock;
+      }
+      if (currentReview.isIncompleteTray) {
+        return CafeCharacterMood.talkingOrder;
+      }
+      return CafeCharacterMood.sweetCelebration;
     }
     if (selectedTray.isNotEmpty) {
       return CafeCharacterMood.brewingActive;
@@ -1079,7 +1871,7 @@ class _CustomerOrderStage extends StatelessWidget {
 
   String get _activeCustomerPortraitAsset {
     final currentReview = latestReview;
-    if (currentReview != null && currentReview.isPrankCaught) {
+    if (currentReview != null && (currentReview.isPrankCaught || currentReview.isIncompleteTray)) {
       return currentReview.customerFace.assetPath;
     }
     return ticket.portraitAssetPath;
@@ -1089,25 +1881,26 @@ class _CustomerOrderStage extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentReview = latestReview;
     final windowBorderColor = currentReview == null
-        ? const Color(0xFFD7A86E)
-        : (currentReview.isPrankCaught ? const Color(0xFFE53935) : const Color(0xFF43A047));
+        ? const Color(0xFFC59B27)
+        : currentReview.isPrankCaught
+            ? const Color(0xFF9E2A2B)
+            : currentReview.isIncompleteTray
+                ? const Color(0xFFC59B27)
+                : const Color(0xFF3B7A57);
     final effectiveRequestedIds = ticket.effectiveRequestedIngredientIds(
       includeRoundTwoItems: includeRoundTwoItems,
     );
 
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: <Color>[Color(0xFF43281C), Color(0xFF2C1A12)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(_counterCardRadius),
+        color: const Color(0xCC0F172A),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0xFFC59B27), width: 1.8),
         boxShadow: const <BoxShadow>[
           BoxShadow(
-            color: Color(0x22000000),
-            blurRadius: 12,
+            color: Color(0x66000000),
+            blurRadius: 14,
             offset: Offset(0, 4),
           ),
         ],
@@ -1115,7 +1908,7 @@ class _CustomerOrderStage extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Animated Arched Customer Cafe Window + Lottie Aura + 5s Turkish Tea Glass Sipping
+          // Gothic Arched Customer Tavern Window + Lottie Aura + 5s Turkish Tea Glass Sipping
           AnimatedCafeCharacterAvatar(
             key: const Key('customer_arch_character_avatar'),
             portraitAssetPath: _activeCustomerPortraitAsset,
@@ -1129,15 +1922,15 @@ class _CustomerOrderStage extends StatelessWidget {
             onTapCharacter: onTapCustomerCharacter,
             onSipTeaCompleted: onSipTeaCompleted,
           ),
-          const SizedBox(width: 14),
-          // Speech-Bubble Order Ticket
+          const SizedBox(width: 12),
+          // Hogsmeade Midnight & Gold Customer Order Scroll Overlay with Crimson Wax Seal
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(11),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFFDF9),
+                color: const Color(0xD9162032),
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: const Color(0xFFE6CCB2)),
+                border: Border.all(color: const Color(0xFFC59B27), width: 1.4),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1150,14 +1943,37 @@ class _CustomerOrderStage extends StatelessWidget {
                       spacing: 8,
                       runSpacing: 6,
                       children: <Widget>[
-                        Text(
-                          '${languageCode == 'en' ? 'Customer' : 'Müşteri'} #${ticket.ticketNumber}/$totalTickets · '
-                          '${ticket.customerName} (${ticket.localizedRole(languageCode)})',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
-                            color: Color(0xFF3E2723),
-                          ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            // Crimson Hogwarts Wax Seal emblem
+                            Container(
+                              width: 18,
+                              height: 18,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF7A1C1C),
+                                shape: BoxShape.circle,
+                                border: Border.all(color: const Color(0xFFD4AF37), width: 1.2),
+                              ),
+                              child: const Icon(
+                                Icons.auto_stories_rounded,
+                                size: 10,
+                                color: Color(0xFFF3E5C8),
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: Text(
+                                '${languageCode == 'en' ? 'Customer' : 'Müşteri'} #${ticket.ticketNumber}/$totalTickets · '
+                                '${ticket.customerName} (${ticket.localizedRole(languageCode)})',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 12.5,
+                                  color: Color(0xFFF3E5C8),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Wrap(
                           spacing: 4,
@@ -1170,29 +1986,30 @@ class _CustomerOrderStage extends StatelessWidget {
                                 visualDensity: VisualDensity.compact,
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                 backgroundColor:
-                                    isCustomerSippingTea ? const Color(0xFFB71C1C) : const Color(0xFFFFE0B2),
-                                foregroundColor: isCustomerSippingTea ? Colors.white : const Color(0xFF8D3218),
+                                    isCustomerSippingTea ? const Color(0xFF7A1C1C) : const Color(0xFF281A14),
+                                foregroundColor: const Color(0xFFF3E5C8),
+                                side: const BorderSide(color: Color(0xFFC59B27)),
                               ),
                               onPressed: onTriggerFiveSecondTeaSip,
-                              icon: const Icon(Icons.emoji_food_beverage_rounded, size: 14),
+                              icon: const Icon(Icons.emoji_food_beverage_rounded, size: 14, color: Color(0xFFD4AF37)),
                               label: Text(
                                 isCustomerSippingTea
                                     ? (languageCode == 'en' ? 'Sipping Tea (5s)...' : 'Çay Yudumluyor (5sn)...')
                                     : (languageCode == 'en' ? 'Sip Tea (5s)' : '5sn Çay Yudumlat'),
-                                style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700),
+                                style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700),
                               ),
                             ),
                             TextButton.icon(
                               key: const Key('next_customer_button'),
                               style: TextButton.styleFrom(
                                 visualDensity: VisualDensity.compact,
-                                foregroundColor: const Color(0xFFC85A32),
+                                foregroundColor: const Color(0xFFD4AF37),
                               ),
                               onPressed: onNextCustomer,
                               icon: const Icon(Icons.skip_next_rounded, size: 16),
                               label: Text(
                                 languageCode == 'en' ? 'Next Customer' : 'Sıradaki Müşteri',
-                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+                                style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w800),
                               ),
                             ),
                           ],
@@ -1204,9 +2021,9 @@ class _CustomerOrderStage extends StatelessWidget {
                   Text(
                     '"${ticket.localizedBubble(languageCode, includeRoundTwoItems: includeRoundTwoItems)}"',
                     style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF4E342E),
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFFEAD8B8),
                     ),
                   ),
                   if (isCustomerSippingTea) ...<Widget>[
@@ -1214,18 +2031,18 @@ class _CustomerOrderStage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFEBEE),
+                        color: const Color(0xE6381619),
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: const Color(0xFFEF9A9A)),
+                        border: Border.all(color: const Color(0xFFD4AF37)),
                       ),
                       child: Text(
                         languageCode == 'en'
                             ? '"🫖 Siiip... Enjoying my hot Turkish tulip-glass tea for 5 seconds! Ohhh! ✨"'
                             : '"🫖 Hüüüp... İnce belli bardakta tavşan kanı çayımı 5 saniye keyifle yudumluyorum! Ohhh! ✨"',
                         style: const TextStyle(
-                          fontSize: 11.5,
+                          fontSize: 11,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xFFB71C1C),
+                          color: Color(0xFFF3E5C8),
                         ),
                       ),
                     ),
@@ -1236,24 +2053,31 @@ class _CustomerOrderStage extends StatelessWidget {
                     runSpacing: 6,
                     children: effectiveRequestedIds.map((requestedIngredientId) {
                       final ingredient = IngredientsCatalog.findById(requestedIngredientId);
-                      final isAdded = selectedTray.any((item) => item.id == requestedIngredientId);
-                      final labelText = ingredient?.localizedTitle(languageCode) ?? requestedIngredientId;
+                      final exactMatch = selectedTray.any((item) => item.id == requestedIngredientId);
+                      final categoryMatch = ingredient != null
+                          ? selectedTray
+                              .where((item) => item.category == ingredient.category && !item.isPrankItem)
+                              .firstOrNull
+                          : null;
+                      final isStationSatisfied = exactMatch || categoryMatch != null;
+                      final displayedIngredient = exactMatch ? ingredient : (categoryMatch ?? ingredient);
+                      final labelText = displayedIngredient?.localizedTitle(languageCode) ?? requestedIngredientId;
                       return Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: isAdded ? const Color(0xFFE6F4EA) : const Color(0xFFF3ECE6),
+                          color: isStationSatisfied ? const Color(0xF01E4231) : const Color(0xE61E2B42),
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                            color: isAdded ? const Color(0xFF34A853) : const Color(0xFFD7CCC8),
+                            color: isStationSatisfied ? const Color(0xFFD4AF37) : const Color(0xFF9C7A44),
                           ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
                             Icon(
-                              isAdded ? Icons.check_circle_rounded : Icons.circle_outlined,
+                              isStationSatisfied ? Icons.check_circle_rounded : Icons.circle_outlined,
                               size: 13,
-                              color: isAdded ? const Color(0xFF137333) : const Color(0xFF8D6E63),
+                              color: isStationSatisfied ? const Color(0xFFD4AF37) : const Color(0xFFC9B086),
                             ),
                             const SizedBox(width: 4),
                             Flexible(
@@ -1262,8 +2086,8 @@ class _CustomerOrderStage extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 11,
-                                  fontWeight: FontWeight.w600,
-                                  color: isAdded ? const Color(0xFF137333) : const Color(0xFF4E342E),
+                                  fontWeight: FontWeight.w800,
+                                  color: isStationSatisfied ? const Color(0xFFFFEBA8) : const Color(0xFFF3E5C8),
                                 ),
                               ),
                             ),
@@ -1277,254 +2101,6 @@ class _CustomerOrderStage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Step 2 of the Cafe Loop: Distinct Station Shelf for Drinks, Pastries, and Twin Jars.
-class _CafeStationShelf extends StatelessWidget {
-  const _CafeStationShelf({
-    required this.category,
-    required this.languageCode,
-    required this.ingredients,
-    required this.selectedTray,
-    required this.requestedIngredientIds,
-    required this.onToggleIngredient,
-  });
-
-  final IngredientCategory category;
-  final String languageCode;
-  final List<CafeIngredient> ingredients;
-  final List<CafeIngredient> selectedTray;
-  final List<String> requestedIngredientIds;
-  final ValueChanged<CafeIngredient> onToggleIngredient;
-
-  Color get _shelfSurfaceColor {
-    switch (category) {
-      case IngredientCategory.drink:
-        return const Color(0xFFF5EBE1);
-      case IngredientCategory.food:
-        return const Color(0xFFEDF6F2);
-      case IngredientCategory.toppingOrPrank:
-        return const Color(0xFFF6F0F8);
-    }
-  }
-
-  Color get _shelfBorderColor {
-    switch (category) {
-      case IngredientCategory.drink:
-        return const Color(0xFFD7B89C);
-      case IngredientCategory.food:
-        return const Color(0xFFA8D5BA);
-      case IngredientCategory.toppingOrPrank:
-        return const Color(0xFFD1C4E9);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final selectedInShelf = selectedTray.where((item) => item.category == category).firstOrNull;
-    final isEnglish = languageCode == 'en';
-
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _shelfSurfaceColor,
-        borderRadius: BorderRadius.circular(_counterCardRadius),
-        border: Border.all(color: _shelfBorderColor, width: 1.5),
-      ),
-      child: LayoutBuilder(
-        builder: (context, shelfConstraints) {
-          final maxShelfWidth = shelfConstraints.maxWidth;
-          final itemCount = ingredients.length.clamp(1, 4);
-          final columns = maxShelfWidth < _mobileShelfBreakpointWidth ? 2 : itemCount;
-          final computedCardWidth = (((maxShelfWidth - (_gridSpacing * (columns - 1))) / columns) - 0.5).clamp(
-            108.0,
-            260.0,
-          );
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                width: double.infinity,
-                child: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 8,
-                  runSpacing: 4,
-                  children: <Widget>[
-                    Text(
-                      category.localizedTitle(languageCode),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15,
-                        color: Color(0xFF2C1A12),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: selectedInShelf != null ? const Color(0xFFE6F4EA) : Colors.white.withValues(alpha: 0.75),
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(
-                          color: selectedInShelf != null ? const Color(0xFF34A853) : _shelfBorderColor,
-                        ),
-                      ),
-                      child: Text(
-                        selectedInShelf != null
-                            ? '✓ ${selectedInShelf.localizedTitle(languageCode)}'
-                            : (isEnglish ? 'Pick 1 item' : '1 ürün seçin'),
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                          color: selectedInShelf != null ? const Color(0xFF137333) : const Color(0xFF5D4037),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              Wrap(
-                spacing: _gridSpacing,
-                runSpacing: _gridSpacing,
-                children: ingredients.map((ingredient) {
-                  final isSelected = selectedTray.any((item) => item.id == ingredient.id);
-                  return _IngredientCounterCard(
-                    ingredient: ingredient,
-                    languageCode: languageCode,
-                    isSelected: isSelected,
-                    cardWidth: computedCardWidth,
-                    onTap: () => onToggleIngredient(ingredient),
-                  );
-                }).toList(),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-/// Individual counter card with uniform fixed height (`166px`) and ZERO spoiler border so
-/// Salt and Sugar look like true twins until plated!
-class _IngredientCounterCard extends StatelessWidget {
-  const _IngredientCounterCard({
-    required this.ingredient,
-    required this.languageCode,
-    required this.isSelected,
-    required this.cardWidth,
-    required this.onTap,
-  });
-
-  final CafeIngredient ingredient;
-  final String languageCode;
-  final bool isSelected;
-  final double cardWidth;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final borderColor = isSelected ? const Color(0xFF137333) : const Color(0xFFDECBB7);
-    final backgroundColor = isSelected ? const Color(0xFFE6F4EA) : Colors.white;
-
-    return AnimatedScale(
-      scale: isSelected ? 1.03 : 1.0,
-      duration: _cardScaleDuration,
-      child: Material(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(14),
-        child: InkWell(
-          key: Key('ingredient_card_${ingredient.id}'),
-          borderRadius: BorderRadius.circular(14),
-          onTap: onTap,
-          child: Container(
-            width: cardWidth,
-            height: _uniformCounterCardHeight,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                color: borderColor,
-                width: isSelected ? 2.5 : 1.3,
-              ),
-              boxShadow: const <BoxShadow>[
-                BoxShadow(
-                  color: Color(0x12000000),
-                  blurRadius: 6,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Stack(
-                  alignment: Alignment.topRight,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2),
-                      child: _IngredientArtwork(
-                        ingredient: ingredient,
-                        size: _ingredientImageSize,
-                      ),
-                    ),
-                    if (isSelected)
-                      Container(
-                        padding: const EdgeInsets.all(3),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF137333),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.check,
-                          size: 12,
-                          color: Colors.white,
-                        ),
-                      ),
-                  ],
-                ),
-                SizedBox(
-                  height: 34,
-                  child: Center(
-                    child: Text(
-                      ingredient.localizedTitle(languageCode),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12.5,
-                        height: 1.15,
-                        color: Color(0xFF2C1A12),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 26,
-                  child: Center(
-                    child: Text(
-                      ingredient.localizedSubtitle(languageCode),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        height: 1.15,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF795548),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -1550,7 +2126,7 @@ class _IngredientArtwork extends StatelessWidget {
           borderRadius: BorderRadius.circular(_photoCornerRadius),
           boxShadow: const <BoxShadow>[
             BoxShadow(
-              color: Color(0x1F000000),
+              color: Color(0x28000000),
               blurRadius: 8,
               offset: Offset(0, 3),
             ),
@@ -1571,7 +2147,7 @@ class _IngredientArtwork extends StatelessWidget {
                   size: size,
                 );
               }
-              return Icon(Icons.local_cafe, size: size, color: const Color(0xFF6D4C41));
+              return Icon(Icons.local_cafe, size: size, color: const Color(0xFFC59B27));
             },
           ),
         ),
@@ -1586,11 +2162,11 @@ class _IngredientArtwork extends StatelessWidget {
       );
     }
 
-    return Icon(Icons.local_cafe, size: size, color: const Color(0xFF6D4C41));
+    return Icon(Icons.local_cafe, size: size, color: const Color(0xFFC59B27));
   }
 }
 
-/// Step 3 of the Cafe Loop: Interactive 3-Slot Wooden Serving Tray with lace doily & stealth wink badge.
+/// Step 3 of the Cafe Loop: Carved Oak & Brass Serving Tray with 3D Crimson-Wax & Gold Serve Button.
 class _InteractiveWoodenTray extends StatelessWidget {
   const _InteractiveWoodenTray({
     required this.selectedTray,
@@ -1627,17 +2203,13 @@ class _InteractiveWoodenTray extends StatelessWidget {
       key: const Key('wooden_serving_tray'),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: <Color>[Color(0xFF5D3A24), Color(0xFF3E2415)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        color: const Color(0xCC0F172A),
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: const Color(0xFF8D5B3C), width: 3),
+        border: Border.all(color: const Color(0xFFD4AF37), width: 2.2),
         boxShadow: const <BoxShadow>[
           BoxShadow(
-            color: Color(0x33000000),
-            blurRadius: 14,
+            color: Color(0x77000000),
+            blurRadius: 18,
             offset: Offset(0, 6),
           ),
         ],
@@ -1645,20 +2217,20 @@ class _InteractiveWoodenTray extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          // Lace Paper Doily inner tray mat with 3 dedicated station coasters
+          // Hogsmeade Dark Obsidian & Brass inner tray mat with 3 dedicated station coasters
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFFFFAF2),
+              color: const Color(0xD9162032),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFE6D5C3), width: 1.5),
+              border: Border.all(color: const Color(0xFFC59B27), width: 1.4),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    const Icon(Icons.room_service_rounded, color: Color(0xFF4E342E), size: 20),
+                    const Icon(Icons.room_service_rounded, color: Color(0xFFD4AF37), size: 20),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -1670,9 +2242,9 @@ class _InteractiveWoodenTray extends StatelessWidget {
                                 : 'Ahşap Tepsi (${selectedTray.length}/3): '
                                     '${selectedTray.map((item) => item.localizedTitle(languageCode)).join(' + ')}'),
                         style: const TextStyle(
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w800,
                           fontSize: 13,
-                          color: Color(0xFF2C1A12),
+                          color: Color(0xFFF3E5C8),
                         ),
                       ),
                     ),
@@ -1681,9 +2253,9 @@ class _InteractiveWoodenTray extends StatelessWidget {
                         key: const Key('stealth_prank_wink_badge'),
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFFF3E0),
+                          color: const Color(0xFF381916),
                           borderRadius: BorderRadius.circular(999),
-                          border: Border.all(color: const Color(0xFFFFB74D)),
+                          border: Border.all(color: const Color(0xFFD4AF37)),
                         ),
                         child: const Text(
                           '🤫 😉',
@@ -1695,12 +2267,12 @@ class _InteractiveWoodenTray extends StatelessWidget {
                         key: const Key('clear_tray_button'),
                         style: TextButton.styleFrom(
                           visualDensity: VisualDensity.compact,
-                          foregroundColor: const Color(0xFFC85A32),
+                          foregroundColor: const Color(0xFFD4AF37),
                         ),
                         onPressed: onClearTray,
                         child: Text(
                           isEnglish ? 'Clear' : 'Temizle',
-                          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                          style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
                         ),
                       ),
                   ],
@@ -1713,25 +2285,28 @@ class _InteractiveWoodenTray extends StatelessWidget {
                       _TrayStationSlotCoaster(
                         slotIcon: Icons.coffee_rounded,
                         emptyTitle: isEnglish ? '1. Drink Slot' : '1. İçecek Yeri',
-                        emptySubtitle: isEnglish ? 'Tap Coffee Bar' : 'Kahve Seçilmedi',
+                        emptySubtitle: isEnglish ? 'Tap Coffee Lane' : 'Kahve Seçilmedi',
                         ingredient: _itemForCategory(IngredientCategory.drink),
                         languageCode: languageCode,
+                        accentColor: const Color(0xFFE08E45),
                         onRemoveIngredient: onRemoveIngredient,
                       ),
                       _TrayStationSlotCoaster(
                         slotIcon: Icons.bakery_dining_rounded,
                         emptyTitle: isEnglish ? '2. Pastry Slot' : '2. Tatlı Yeri',
-                        emptySubtitle: isEnglish ? 'Tap Vitrine' : 'Tatlı Seçilmedi',
+                        emptySubtitle: isEnglish ? 'Tap Pastry Lane' : 'Tatlı Seçilmedi',
                         ingredient: _itemForCategory(IngredientCategory.food),
                         languageCode: languageCode,
+                        accentColor: const Color(0xFFD4AF37),
                         onRemoveIngredient: onRemoveIngredient,
                       ),
                       _TrayStationSlotCoaster(
-                        slotIcon: Icons.grain_rounded,
+                        slotIcon: Icons.science_rounded,
                         emptyTitle: isEnglish ? '3. Twin Jar Slot' : '3. Kavanoz Yeri',
                         emptySubtitle: isEnglish ? 'Sugar or Salt?' : 'Şeker / Tuz Seçilmedi',
                         ingredient: _itemForCategory(IngredientCategory.toppingOrPrank),
                         languageCode: languageCode,
+                        accentColor: const Color(0xFF4E9F6E),
                         onRemoveIngredient: onRemoveIngredient,
                       ),
                     ];
@@ -1767,44 +2342,56 @@ class _InteractiveWoodenTray extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          FilledButton.icon(
-            key: const Key('serve_order_button'),
-            onPressed: isTrayEmpty || isEvaluating ? null : onServeOrder,
-            style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFF1E8E3E),
-              disabledBackgroundColor: const Color(0xFF5D4037),
-              foregroundColor: Colors.white,
-              disabledForegroundColor: const Color(0xFFFFF8EE),
-              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-                side: BorderSide(
-                  color: isTrayEmpty ? const Color(0xFFA1887F) : const Color(0xFF81C995),
-                  width: 1.5,
+          // Chunky 3D Crimson-Wax & Antique Gold Game Action Button
+          DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: isTrayEmpty ? const Color(0xFF17100B) : const Color(0xFF420D0D),
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: FilledButton.icon(
+              key: const Key('serve_order_button'),
+              onPressed: isTrayEmpty || isEvaluating ? null : onServeOrder,
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF7A1C1C),
+                disabledBackgroundColor: const Color(0xFF332419),
+                foregroundColor: const Color(0xFFF3E5C8),
+                disabledForegroundColor: const Color(0xFFB8A282),
+                padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  side: BorderSide(
+                    color: isTrayEmpty ? const Color(0xFF7D623C) : const Color(0xFFD4AF37),
+                    width: 2,
+                  ),
                 ),
               ),
-            ),
-            icon: isEvaluating
-                ? const SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                  )
-                : Icon(
-                    isTrayEmpty ? Icons.touch_app_rounded : Icons.auto_awesome,
-                    color: const Color(0xFFFFF8EE),
-                  ),
-            label: Text(
-              isTrayEmpty
-                  ? (isEnglish
-                      ? 'Select Items Above to Serve & Ask Gemini Judge'
-                      : 'Önce Raflardan Ürün Seçin · Siparişi Servis Et & Gemini Jürisine Sor!')
-                  : (isEnglish ? 'Serve Order & Ask Gemini Judge!' : 'Siparişi Servis Et & Gemini Jürisine Sor!'),
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-                color: Color(0xFFFFF8EE),
+              icon: isEvaluating
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFFF3E5C8)),
+                    )
+                  : Icon(
+                      isTrayEmpty ? Icons.auto_fix_high_rounded : Icons.room_service_rounded,
+                      color: const Color(0xFFD4AF37),
+                    ),
+              label: Text(
+                isTrayEmpty
+                    ? (isEnglish
+                        ? 'Select Items Above to Serve & Ask Gemini Judge'
+                        : 'Önce Raflardan Ürün Seçin · Siparişi Servis Et & Gemini Jürisine Sor!')
+                    : (isEnglish ? 'Serve Order & Ask Gemini Judge!' : 'Siparişi Servis Et & Gemini Jürisine Sor!'),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                  color: Color(0xFFF3E5C8),
+                ),
               ),
             ),
           ),
@@ -1821,6 +2408,7 @@ class _TrayStationSlotCoaster extends StatelessWidget {
     required this.emptySubtitle,
     required this.ingredient,
     required this.languageCode,
+    required this.accentColor,
     required this.onRemoveIngredient,
   });
 
@@ -1829,6 +2417,7 @@ class _TrayStationSlotCoaster extends StatelessWidget {
   final String emptySubtitle;
   final CafeIngredient? ingredient;
   final String languageCode;
+  final Color accentColor;
   final ValueChanged<CafeIngredient> onRemoveIngredient;
 
   @override
@@ -1838,9 +2427,9 @@ class _TrayStationSlotCoaster extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: BoxDecoration(
-          color: const Color(0xFFF7EFE4),
+          color: const Color(0xE61D2A40),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFD7CCC8)),
+          border: Border.all(color: accentColor.withValues(alpha: 0.72), width: 1.3),
         ),
         child: Row(
           children: <Widget>[
@@ -1848,10 +2437,11 @@ class _TrayStationSlotCoaster extends StatelessWidget {
               width: _trayItemImageSize,
               height: _trayItemImageSize,
               decoration: BoxDecoration(
-                color: const Color(0xFFEFE5DC),
+                color: const Color(0xCC11192B),
                 borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: accentColor.withValues(alpha: 0.65)),
               ),
-              child: Icon(slotIcon, size: 20, color: const Color(0xFF8D6E63)),
+              child: Icon(slotIcon, size: 20, color: accentColor),
             ),
             const SizedBox(width: 8),
             Expanded(
@@ -1863,10 +2453,10 @@ class _TrayStationSlotCoaster extends StatelessWidget {
                     emptyTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF5D4037),
+                      fontWeight: FontWeight.w800,
+                      color: accentColor,
                     ),
                   ),
                   Text(
@@ -1875,8 +2465,8 @@ class _TrayStationSlotCoaster extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF8D6E63),
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFC9B086),
                     ),
                   ),
                 ],
@@ -1893,9 +2483,9 @@ class _TrayStationSlotCoaster extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: BoxDecoration(
-          color: const Color(0xFFE6F4EA),
+          color: const Color(0xF01E4231),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF34A853), width: 1.5),
+          border: Border.all(color: const Color(0xFFD4AF37), width: 1.8),
         ),
         child: Row(
           children: <Widget>[
@@ -1914,16 +2504,16 @@ class _TrayStationSlotCoaster extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w800,
                       fontSize: 11,
                       height: 1.15,
-                      color: Color(0xFF1B5E20),
+                      color: Color(0xFFF3E5C8),
                     ),
                   ),
                 ],
               ),
             ),
-            const Icon(Icons.close_rounded, size: 15, color: Color(0xFF1B5E20)),
+            const Icon(Icons.close_rounded, size: 15, color: Color(0xFFD4AF37)),
           ],
         ),
       ),
@@ -1931,7 +2521,7 @@ class _TrayStationSlotCoaster extends StatelessWidget {
   }
 }
 
-/// Stamped Gemini Verdict Receipt card with "Next Customer" progression.
+/// Hogwarts Wax-Sealed Gemini Verdict Scroll Card with "Next Customer" progression.
 class _CustomerReviewCard extends StatelessWidget {
   const _CustomerReviewCard({
     required this.review,
@@ -1953,15 +2543,15 @@ class _CustomerReviewCard extends StatelessWidget {
     final isIncomplete = currentReview.isIncompleteTray;
     final isEnglish = languageCode == 'en';
     final cardColor = isSabotage
-        ? const Color(0xFFFFF0F0)
+        ? const Color(0xEB2A1417)
         : isIncomplete
-            ? const Color(0xFFFFF8E1)
-            : const Color(0xFFECFDF3);
+            ? const Color(0xEB261E12)
+            : const Color(0xEB12281D);
     final borderColor = isSabotage
-        ? const Color(0xFFC5221F)
+        ? const Color(0xFF9E2A2B)
         : isIncomplete
-            ? const Color(0xFFE65100)
-            : const Color(0xFF137333);
+            ? const Color(0xFFD4AF37)
+            : const Color(0xFF3B7A57);
 
     return Container(
       key: const Key('customer_review_card'),
@@ -1972,9 +2562,9 @@ class _CustomerReviewCard extends StatelessWidget {
         border: Border.all(color: borderColor, width: 2.2),
         boxShadow: const <BoxShadow>[
           BoxShadow(
-            color: Color(0x1F000000),
-            blurRadius: 12,
-            offset: Offset(0, 4),
+            color: Color(0x77000000),
+            blurRadius: 16,
+            offset: Offset(0, 5),
           ),
         ],
       ),
@@ -1984,7 +2574,11 @@ class _CustomerReviewCard extends StatelessWidget {
           AnimatedCafeCharacterAvatar(
             key: const Key('review_verdict_character_avatar'),
             portraitAssetPath: currentReview.customerFace.assetPath,
-            mood: isSabotage ? CafeCharacterMood.saltySabotageShock : CafeCharacterMood.sweetCelebration,
+            mood: isSabotage
+                ? CafeCharacterMood.saltySabotageShock
+                : isIncomplete
+                    ? CafeCharacterMood.talkingOrder
+                    : CafeCharacterMood.sweetCelebration,
             avatarSize: _customerAvatarSize,
             borderColor: borderColor,
             badgeEmoji: isSabotage ? '🧂💥' : (isIncomplete ? '🧩☕' : '🌟😍'),
@@ -2002,37 +2596,27 @@ class _CustomerReviewCard extends StatelessWidget {
                     Text(
                       '★' * currentReview.ratingStars + '☆' * (maxCafeRatingStars - currentReview.ratingStars),
                       key: const Key('review_stars_text'),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: borderColor,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFFD4AF37),
                       ),
                     ),
                     Container(
                       key: const Key('review_verdict_badge'),
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: isSabotage
-                            ? const Color(0xFFFCE8E6)
-                            : isIncomplete
-                                ? const Color(0xFFFFECB3)
-                                : const Color(0xFFE6F4EA),
+                        color: borderColor,
                         borderRadius: BorderRadius.circular(999),
-                        border: Border.all(
-                          color: isSabotage
-                              ? const Color(0xFFF28B82)
-                              : isIncomplete
-                                  ? const Color(0xFFFFB300)
-                                  : const Color(0xFF81C995),
-                        ),
+                        border: Border.all(color: const Color(0xFFD4AF37)),
                       ),
                       child: Text(
                         '${currentReview.ratingStars}/$maxCafeRatingStars · '
                         '${currentReview.localizedVerdictLabel(languageCode)}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: borderColor,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFFF3E5C8),
                         ),
                       ),
                     ),
@@ -2041,13 +2625,13 @@ class _CustomerReviewCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   currentReview.headline,
-                  style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: Color(0xFFF3E5C8)),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   currentReview.customerReaction,
                   key: const Key('review_reaction_text'),
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFFEAD8B8)),
                 ),
                 const SizedBox(height: 10),
                 Wrap(
@@ -2062,14 +2646,18 @@ class _CustomerReviewCard extends StatelessWidget {
                               'Judge: ${currentReview.isFromLiveGemini ? "Live Gemini 3.5 Flash-Lite" : "Offline JSON Schema"}'
                           : 'Şehir: ${cityEdition.cityName} · Bahşiş: +${currentReview.cityBonusTip}p · '
                               'Jüri: ${currentReview.isFromLiveGemini ? "Canlı Gemini 3.5 Flash-Lite" : "Yerel JSON Şeması"}',
-                      style: const TextStyle(fontSize: 11, color: Color(0xFF4E342E)),
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFC9B086)),
                     ),
                     FilledButton.tonalIcon(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: borderColor,
+                        foregroundColor: const Color(0xFFF3E5C8),
+                      ),
                       onPressed: onNextCustomer,
                       icon: const Icon(Icons.arrow_forward_rounded, size: 16),
                       label: Text(
                         isEnglish ? 'Serve Next Customer' : 'Sıradaki Müşteriye Geç',
-                        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                        style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 12),
                       ),
                     ),
                   ],
