@@ -12,8 +12,8 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
             title: '7. Gerçek Rakamlar #1: Latency & Cold Starts',
             speakerNotes:
                 'BEAT  [11:30 - 14:00] Gerçek Rakamlar #1: Gecikme, zaman aşımı koruyucuları ve Cloud Run soğuk başlangıçları.\n'
-                'SAY   "Başlığımızda gerçek rakamlar sözü verdik; şimdi kodumuzdaki gerçek sınırları ve hedef bütçelerimizi açıkça konuşalım. CafeJudgeService içinde canlı Gemini çağrımız için tam 8 saniyelik bir zaman aşımı sınırı ve çevrimdışı JSON paketimiz için 250 milisaniyelik bir yükleme sınırı tanımlı. 150 token girdi ve 120 token yapılandırılmış JSON çıktı için hedefimiz gemini-3.5-flash-lite üzerinde p50 gecikmeyi 1 saniyenin altında tutmak ve Cloud Run konteynerimizin soğuk başlangıcını 500 milisaniyenin altında tamamlamak."\n'
-                'HOLD  "Fact" (cafe_judge_service.dart:11-12: 8s / 250ms; Dockerfile:1-20: nginx:alpine on PORT 8080) ve "Target" (<1s p50, <500ms cold start) rozetlerini özellikle vurgula; kesinleşmiş kod sabitleri ile sahne öncesi ölçüm hedeflerini birbirine karıştırma.\n'
+                'SAY   "Başlığımızda gerçek rakamlar sözü verdik; şimdi kodumuzdaki gerçek sınırları ve hedef bütçelerimizi açıkça konuşalım. CafeJudgeService içinde canlı Gemini çağrımız için tam 8 saniyelik bir zaman aşımı sınırı ve çevrimdışı JSON paketimiz için 250 milisaniyelik bir yükleme sınırı tanımlı. 150 token girdi ve 120 token yapılandırılmış JSON çıktı için hedefimiz gemini-3.5-flash-lite üzerinde p50 gecikmeyi 1 saniyenin altında tutmak. Cloud Run tarafını ise ölçtük: ısınmış isteklerde p50 53,81 milisaniye, TLS dahil ilk çağrı 528,95 milisaniye."\n'
+                'HOLD  "Fact" (cafe_judge_service.dart:11-12: 8s / 250ms; Dockerfile:1-25: nginx:alpine on PORT 8080), "Measured" (53.81 ms p50, 528.95 ms ilk çağrı, 24 Ekim) ve "Target" (<1s Gemini p50) rozetlerini özellikle vurgula; kesinleşmiş kod sabitleri ile sahne öncesi ölçüm hedeflerini birbirine karıştırma.\n'
                 'NEXT  "Peki 1.000 kafe siparişi değerlendirildiğinde bu çağrıların maliyeti ve model sınırları ne oluyor?"',
           ),
         );
@@ -61,7 +61,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                           'Measured 50-Req Warm Latency (europe-west3): 53.81 ms p50 / 75.52 ms p95 (initial TLS + cold call: 528.95 ms).',
                           'Zero server state: every order evaluation is self-contained.',
                         ],
-                        footerText: 'Evidence: Dockerfile:1-20 · tool/benchmark_gaziantep.dart',
+                        footerText: 'Evidence: Dockerfile:1-25 · tool/benchmark_gaziantep.dart',
                       ),
                     ),
                     SizedBox(width: _gap),

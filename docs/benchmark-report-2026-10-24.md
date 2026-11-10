@@ -13,7 +13,7 @@
 |---|---:|---:|---:|---:|---:|---:|
 | **Cloud Run Index HTML (`europe-west3`)** | `528.95 ms` | **`53.81 ms`** | **`75.52 ms`** | `96.55 ms` | `0.5 KB` | `50/50` (`100%`) |
 | **Cloud Run 9D Studio PNG (`espresso.png`)** | `260.02 ms` | **`139.03 ms`** | **`187.70 ms`** | `191.26 ms` | `372.6 KB` | `15/15` (`100%`) |
-| **Cloud Run Audio Cue (`tea_sip.wav`)** | `121.26 ms` | **`52.20 ms`** | **`57.06 ms`** | `62.76 ms` | `145.6 KB` | `15/15` (`100%`) |
+| **Cloud Run Audio Cue (`tea_sip.wav`)** | `121.26 ms` | **`52.20 ms`** | **`57.06 ms`** | `62.76 ms` | `142.2 KB` | `15/15` (`100%`) |
 | **Offline Conference Fallback (`mock_responses.json`)** | `6.79 ms` | **`0.09 ms`** | **`0.43 ms`** | `0.46 ms` | `3.9 KB` | `50/50` (`100%`) |
 
 ### Key Takeaways for Stage ("Gerçek Rakamlar" Block, Minutes 10 - 18)

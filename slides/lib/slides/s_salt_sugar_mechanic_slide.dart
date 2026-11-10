@@ -22,7 +22,7 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
   static const double _thumbGap = 14;
 
   static const String _schemaSnippet = '''
-// 1. Web NFC Stage Trigger (web_nfc_service.dart · PR #2 · 3973acb)
+// 1. Web NFC Stage Trigger (nfc_tag_controller.dart + nfc_platform_web.dart)
 // dart:js_interop + Chrome Android NDEFReader (inspired by Lukas Klingsbo badge_hack)
 await webNfcService.startScanning(onSaltPrankTag: () => tray.drop('salt_shaker'));
 webNfcService.simulateTap(); // 1-tap fallback on Desktop / iOS
@@ -112,7 +112,7 @@ webNfcService.simulateTap(); // 1-tap fallback on Desktop / iOS
               Expanded(
                 flex: 6,
                 child: DeckCodeCard(
-                  filePathLabel: 'web_nfc_service.dart + cafe_judge_service.dart',
+                  filePathLabel: 'nfc_tag_controller.dart + cafe_judge_service.dart',
                   code: _schemaSnippet,
                   accentColor: DeckColors.googleYellow,
                   badgeLabel: 'WEB NFC + CAFEREVIEW',

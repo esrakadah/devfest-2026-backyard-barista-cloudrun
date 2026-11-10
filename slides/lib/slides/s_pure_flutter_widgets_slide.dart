@@ -44,7 +44,7 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
                     'Reactive Stage Avatars: Barista and customer sprites react live to tray drops, steam particles, and verdicts.',
                     'Deterministic Layout: Scene coordinates stay locked to the 3-lane stage while UI controls live in Flutter.',
                   ],
-                  footerText: 'flutter_client/lib/game/barista_flame_game.dart (commit e5d905e)',
+                  footerText: 'flutter_client/lib/ui/subway_barista_flame_game.dart',
                 ),
               ),
               SizedBox(width: _columnGap),
