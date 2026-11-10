@@ -37,6 +37,11 @@ Right next to the **Sugar (`Şeker`)** jar sits a deceptive **Salt (`Tuz`)** sha
 4. Follow [`prompts/step-3-deploy.md`](prompts/step-3-deploy.md) to click **Deploy to Cloud Run** (`.run.app`, no credit card required on AI Studio Starter Tier) and **Sync to GitHub**.
 
 ### Lane B: Flutter + Gemini REST API (`package:http`) + Google Antigravity IDE -> Cloud Run + GitHub
+Before you start:
+1. Install Flutter (Dart 3.5 or newer) and check it with `flutter doctor`: [docs.flutter.dev/get-started/install](https://docs.flutter.dev/get-started/install).
+2. Get a free Gemini API key in Google AI Studio, no credit card needed: [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
+3. No key yet? Skip step 2 and run with `--dart-define=OFFLINE_MODE=true`; the game then uses the bundled offline responses.
+
 ```bash
 cd flutter_client
 flutter pub get
