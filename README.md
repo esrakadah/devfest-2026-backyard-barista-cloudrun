@@ -155,4 +155,4 @@ devfest-2026-backyard-barista-cloudrun/
    - **Priority 2:** Firebase Remote Config template / `--dart-define=DEFAULT_CITY` (`_remoteConfigCityId` via `remote_config_template.json`)
    - **Priority 3:** Bundled local fallback (`_fallbackCityId` from `assets/editions/city_editions.json`)
 3. **Layer 3 (AI & Guardrails):** Single-shot structured JSON output (`CafeReview`) evaluated by `gemini-3.5-flash-lite` over REST `generateContent` (`package:http` for zero-setup workshops; upgrade to `firebase_ai` + Firebase App Check in production) with an `8,000 ms` live timeout and a `250 ms` deterministic offline fallback (`mock_responses.json`).
-4. **Layer 4 (Serverless Cloud & Source Control):** Stateless `nginx:alpine` container (`Dockerfile`, lines 1-20) deployed via `gcloud run deploy backyard-barista --source .` to **Google Cloud Run (`*.run.app`)** and synced to **GitHub**.
+4. **Layer 4 (Serverless Cloud & Source Control):** Stateless `nginx:alpine` container (`Dockerfile`, lines 1-25) deployed via `gcloud run deploy backyard-barista --source .` to **Google Cloud Run (`*.run.app`)** and synced to **GitHub**.

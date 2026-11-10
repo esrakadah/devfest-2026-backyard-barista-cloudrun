@@ -47,7 +47,7 @@ Bu doküman sahnedeki teknik delivery'nin tek kontrol listesidir: ne zaman ne ko
 ## T-2 saat: Salon Kurulumu
 
 - Projektör çözünürlüğünü öğren. Deck 1920x1080 mantıksal kanvasta tasarlandı ve her ekrana ölçeklenir; 4:3 projektörde üst ve altta siyah bant olur, içerik kaybolmaz.
-- Sahne laptopunda: deck (`flutter run -d chrome` veya `build/web`), canlı oyun sekmesi, `ai_studio_lane_a/index.html` (29.6 KB, çevrimdışı açılır) ve PDF yedeği açık olsun.
+- Sahne laptopunda: deck (`flutter run -d chrome` veya `build/web`), canlı oyun sekmesi, `ai_studio_lane_a/index.html` (49.5 KB, çevrimdışı açılır) ve PDF yedeği açık olsun.
 - Telefon hotspot'unu hazırla; salon Wi-Fi'ına güvenme.
 - Kendi Gemini anahtarını **sadece yerel** çalıştırmada kullan. Asla `--dart-define=GEMINI_API_KEY` ile public bir web build'i Cloud Run'a deploy etme: dart-define değerleri tarayıcının indirdiği JavaScript'e gömülür.
 - Ödülleri (piksel gözlükler, Dash) sahneye koy; slayt 3'te gösterilecek.
