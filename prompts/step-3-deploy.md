@@ -9,6 +9,8 @@
 ---
 
 ## Path B: From Flutter + Google Antigravity (`flutter_client/`)
+> **Billing:** this `gcloud` path needs a Google Cloud project with billing enabled (Secret Manager and Cloud Run). No project with billing? Use Path A above, which needs no credit card, or play on a classmate's deployed `.run.app` as a Lane C tester.
+
 ```bash
 cd flutter_client
 
