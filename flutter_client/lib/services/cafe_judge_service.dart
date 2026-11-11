@@ -11,8 +11,8 @@ const int _sweetBonusTipAmount = 40;
 const Duration _geminiRequestTimeout = Duration(seconds: 8);
 const Duration _offlineBundleLoadTimeout = Duration(milliseconds: 250);
 
-/// One verdict is ~115 output tokens; a warm gemma4:12b-it-qat on an M3 Pro writes ~15 tok/s with thinking
-/// off, so ~9 s end to end (measured 11 Nov 2026).
+/// A warm gemma4:12b-it-qat on an M3 Pro writes ~15 tok/s with thinking off; with the word limits in the prompt a
+/// verdict lands in 5-8.5 s, against 7.4-15 s without them (12 trays, measured 11 Nov 2026).
 const Duration _localJudgeRequestTimeout = Duration(seconds: 15);
 
 /// Gemma 4 12B ignored a bare "tr" code in 5 of 6 Gaziantep verdicts and answered in English
@@ -182,7 +182,7 @@ Active city: ${cityEdition.cityName} (${cityEdition.flagEmoji}).
 Contains salt prank: $containsSaltPrank. Contains chili prank: $containsChiliPrank.
 If a salt or chili prank item is present in a sweet order, you MUST return ratingStars=1, tasteVerdict="salty_sabotage" (or "spicy_chaos"), customerFace="salty_disgusted" (or "shocked"), and a hilarious roast referencing ${cityEdition.cityName}.
 Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="happy", and a warm local compliment.
-Write headline and customerReaction in $languageName only.
+Write in $languageName only: headline at most 6 words, customerReaction one sentence of at most 20 words.
 ''';
   }
 

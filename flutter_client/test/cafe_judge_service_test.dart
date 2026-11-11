@@ -255,7 +255,7 @@ void main() {
 
       final sentBody = jsonDecode(localRequests.single.body) as Map<String, dynamic>;
       final prompt = ((sentBody['messages'] as List<dynamic>).single as Map<String, dynamic>)['content'] as String;
-      expect(prompt, contains('Write headline and customerReaction in Turkish (Türkçe) only.'));
+      expect(prompt, contains('Write in Turkish (Türkçe) only: headline at most 6 words'));
     });
   });
 }
