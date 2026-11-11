@@ -1,6 +1,7 @@
 import 'package:backyard_barista_cloudrun/config/city_edition_controller.dart';
 import 'package:backyard_barista_cloudrun/data/ingredients_catalog.dart';
 import 'package:backyard_barista_cloudrun/main.dart';
+import 'package:backyard_barista_cloudrun/models/cafe_review.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
 import 'package:flutter/material.dart';
@@ -263,7 +264,7 @@ void main() {
     );
     expect(review.ratingStars, 1);
     expect(review.tasteVerdict, 'salty_sabotage');
-    expect(review.isFromLiveGemini, isFalse);
+    expect(review.source, JudgeSource.offlineBundle);
 
     await tester.pumpWidget(
       BackyardBaristaApp(

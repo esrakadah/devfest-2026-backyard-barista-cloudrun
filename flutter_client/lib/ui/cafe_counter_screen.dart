@@ -2643,9 +2643,9 @@ class _CustomerReviewCard extends StatelessWidget {
                     Text(
                       isEnglish
                           ? 'City: ${cityEdition.cityName} · Tip: +${currentReview.cityBonusTip} pts · '
-                              'Judge: ${currentReview.isFromLiveGemini ? "Live Gemini 3.5 Flash-Lite" : "Offline JSON Schema"}'
+                              'Judge: ${currentReview.localizedJudgeLabel(languageCode)}'
                           : 'Şehir: ${cityEdition.cityName} · Bahşiş: +${currentReview.cityBonusTip}p · '
-                              'Jüri: ${currentReview.isFromLiveGemini ? "Canlı Gemini 3.5 Flash-Lite" : "Yerel JSON Şeması"}',
+                              'Jüri: ${currentReview.localizedJudgeLabel(languageCode)}',
                       style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFC9B086)),
                     ),
                     FilledButton.tonalIcon(

@@ -80,7 +80,7 @@ class CafeJudgeService {
             : 'Usta tepside ($missingStations) eksik kalmış! 5 yıldız için içecek, tatlı ve şekeri birlikte dizin!',
         cityBonusTip: 0,
         evaluatedAt: _clock(),
-        isFromLiveGemini: false,
+        source: JudgeSource.offlineBundle,
       );
     }
 
@@ -104,6 +104,26 @@ class CafeJudgeService {
     );
   }
 
+  /// The prank flags are decided in Dart and stated as rules, so the model only writes the roast.
+  String _buildJudgePrompt({
+    required List<CafeIngredient> selectedIngredients,
+    required CityEditionConfig cityEdition,
+    required bool containsSaltPrank,
+    required bool containsChiliPrank,
+  }) {
+    final itemDescriptions =
+        selectedIngredients.map((item) => '${item.id} (${item.titleEn} / prank=${item.prankKind})').join(', ');
+
+    return '''
+You are the witty food & coffee critic at ${cityEdition.eventTitle} (${cityEdition.cafeSubtitle}).
+The 2-player barista team just served a tray with: [$itemDescriptions].
+Active city: ${cityEdition.cityName} (${cityEdition.flagEmoji}).
+Contains salt prank: $containsSaltPrank. Contains chili prank: $containsChiliPrank.
+If a salt or chili prank item is present in a sweet order, you MUST return ratingStars=1, tasteVerdict="salty_sabotage" (or "spicy_chaos"), customerFace="salty_disgusted" (or "shocked"), and a hilarious roast in language "${cityEdition.defaultLanguage}" referencing ${cityEdition.cityName}.
+Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="happy", and a warm local compliment.
+''';
+  }
+
   Future<CafeReview?> _tryCallGeminiStructuredJson({
     required List<CafeIngredient> selectedIngredients,
     required CityEditionConfig cityEdition,
@@ -115,17 +135,12 @@ class CafeJudgeService {
         : Uri.parse(
             'https://generativelanguage.googleapis.com/v1beta/models/$geminiModel:generateContent',
           );
-    final itemDescriptions =
-        selectedIngredients.map((item) => '${item.id} (${item.titleEn} / prank=${item.prankKind})').join(', ');
-
-    final promptText = '''
-You are the witty food & coffee critic at ${cityEdition.eventTitle} (${cityEdition.cafeSubtitle}).
-The 2-player barista team just served a tray with: [$itemDescriptions].
-Active city: ${cityEdition.cityName} (${cityEdition.flagEmoji}).
-Contains salt prank: $containsSaltPrank. Contains chili prank: $containsChiliPrank.
-If a salt or chili prank item is present in a sweet order, you MUST return ratingStars=1, tasteVerdict="salty_sabotage" (or "spicy_chaos"), customerFace="salty_disgusted" (or "shocked"), and a hilarious roast in language "${cityEdition.defaultLanguage}" referencing ${cityEdition.cityName}.
-Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="happy", and a warm local compliment.
-''';
+    final promptText = _buildJudgePrompt(
+      selectedIngredients: selectedIngredients,
+      cityEdition: cityEdition,
+      containsSaltPrank: containsSaltPrank,
+      containsChiliPrank: containsChiliPrank,
+    );
 
     final requestBody = <String, dynamic>{
       'contents': <Map<String, dynamic>>[
@@ -207,7 +222,7 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       return CafeReview.fromJson(
         reviewJson,
         evaluatedAt: _clock(),
-        isFromLiveGemini: true,
+        source: JudgeSource.liveGemini,
       );
     } on Object {
       return null;
@@ -252,7 +267,7 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
             return CafeReview.fromJson(
               verdictNode,
               evaluatedAt: _clock(),
-              isFromLiveGemini: false,
+              source: JudgeSource.offlineBundle,
             );
           }
         }
@@ -270,7 +285,7 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
         customerReaction: cityEdition.saltPrankRoast,
         cityBonusTip: 0,
         evaluatedAt: _clock(),
-        isFromLiveGemini: false,
+        source: JudgeSource.offlineBundle,
       );
     }
 
@@ -283,7 +298,7 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
         customerReaction: cityEdition.chiliPrankRoast,
         cityBonusTip: 0,
         evaluatedAt: _clock(),
-        isFromLiveGemini: false,
+        source: JudgeSource.offlineBundle,
       );
     }
 
@@ -295,7 +310,7 @@ Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="h
       customerReaction: cityEdition.sweetCompliment,
       cityBonusTip: _sweetBonusTipAmount,
       evaluatedAt: _clock(),
-      isFromLiveGemini: false,
+      source: JudgeSource.offlineBundle,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:backyard_barista_cloudrun/config/city_edition_controller.dart';
 import 'package:backyard_barista_cloudrun/data/ingredients_catalog.dart';
+import 'package:backyard_barista_cloudrun/models/cafe_review.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -61,7 +62,7 @@ void main() {
 
       expect(capturedRequest.url.path, '/api/gemini/generate');
       expect(capturedRequest.url.queryParameters.containsKey('key'), isFalse);
-      expect(review.isFromLiveGemini, isTrue);
+      expect(review.source, JudgeSource.liveGemini);
       expect(review.headline, 'Live Gemini roast');
     },
   );
@@ -82,7 +83,7 @@ void main() {
         cityEdition: gaziantepEdition,
       );
 
-      expect(review.isFromLiveGemini, isFalse);
+      expect(review.source, JudgeSource.offlineBundle);
       expect(review.tasteVerdict, 'salty_sabotage');
     },
   );
