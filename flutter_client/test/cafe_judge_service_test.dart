@@ -238,5 +238,24 @@ void main() {
       expect(sentBody['stream'], isFalse);
       expect(verdictProperty['enum'], contains('salty_sabotage'));
     });
+
+    test('names the language instead of sending a bare code', () async {
+      final localRequests = <http.Request>[];
+      final judgeService = CafeJudgeService(
+        clock: fixedClock,
+        httpClient: geminiDownLocalAnswers('salty_sabotage', localRequests: localRequests),
+        geminiProxyPath: '/api/gemini/generate',
+        localJudgeUrl: localJudgeUrl,
+      );
+
+      await judgeService.evaluateOrder(
+        selectedIngredients: saltyTray,
+        cityEdition: gaziantepEdition,
+      );
+
+      final sentBody = jsonDecode(localRequests.single.body) as Map<String, dynamic>;
+      final prompt = ((sentBody['messages'] as List<dynamic>).single as Map<String, dynamic>)['content'] as String;
+      expect(prompt, contains('Write headline and customerReaction in Turkish (Türkçe) only.'));
+    });
   });
 }

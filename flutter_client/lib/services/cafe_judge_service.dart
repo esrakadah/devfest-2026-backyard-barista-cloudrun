@@ -15,6 +15,13 @@ const Duration _offlineBundleLoadTimeout = Duration(milliseconds: 250);
 /// off, so ~9 s end to end (measured 11 Nov 2026).
 const Duration _localJudgeRequestTimeout = Duration(seconds: 15);
 
+/// Gemma 4 12B ignored a bare "tr" code in 5 of 6 Gaziantep verdicts and answered in English
+/// (measured 11 Nov 2026), so the prompt names the language.
+const Map<String, String> _promptLanguageNames = <String, String>{
+  'tr': 'Turkish (Türkçe)',
+  'en': 'English',
+};
+
 const Map<String, dynamic> _localJudgeJsonSchema = <String, dynamic>{
   'type': 'object',
   'properties': <String, dynamic>{
@@ -166,14 +173,16 @@ class CafeJudgeService {
   }) {
     final itemDescriptions =
         selectedIngredients.map((item) => '${item.id} (${item.titleEn} / prank=${item.prankKind})').join(', ');
+    final languageName = _promptLanguageNames[cityEdition.defaultLanguage] ?? cityEdition.defaultLanguage;
 
     return '''
 You are the witty food & coffee critic at ${cityEdition.eventTitle} (${cityEdition.cafeSubtitle}).
 The 2-player barista team just served a tray with: [$itemDescriptions].
 Active city: ${cityEdition.cityName} (${cityEdition.flagEmoji}).
 Contains salt prank: $containsSaltPrank. Contains chili prank: $containsChiliPrank.
-If a salt or chili prank item is present in a sweet order, you MUST return ratingStars=1, tasteVerdict="salty_sabotage" (or "spicy_chaos"), customerFace="salty_disgusted" (or "shocked"), and a hilarious roast in language "${cityEdition.defaultLanguage}" referencing ${cityEdition.cityName}.
+If a salt or chili prank item is present in a sweet order, you MUST return ratingStars=1, tasteVerdict="salty_sabotage" (or "spicy_chaos"), customerFace="salty_disgusted" (or "shocked"), and a hilarious roast referencing ${cityEdition.cityName}.
 Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="happy", and a warm local compliment.
+Write headline and customerReaction in $languageName only.
 ''';
   }
 
