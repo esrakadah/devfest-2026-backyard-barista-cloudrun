@@ -42,7 +42,13 @@ Bu doküman sahnedeki teknik delivery'nin tek kontrol listesidir: ne zaman ne ko
    curl -s -o /dev/null -w '%{http_code}\n' https://backyard-barista-389486729482.europe-west3.run.app
    curl -s -o /dev/null -w '%{http_code}\n' https://backyard-barista-870328613866.europe-west1.run.app
    ```
-6. **Git tag kontrolü:** katılımcılar `git checkout step-1 / step-2 / step-3 / final` kullanacak. `final` etiketinin en güncel `main` commit'ini gösterdiğinden emin ol (`git log -1 final`); eski bir commit'i gösteriyorsa Web Audio, 3D karakterler gibi son eklemeler o kontrol noktasında yoktur.
+6. **Yerel Gemma jürisi (sadece Ollama'lı laptopta):** model indirilmiş olmalı (`ollama list` içinde `gemma4:12b-it-qat`, 7.2 GB). Yoksa evde, hızlı ağda `ollama pull gemma4:12b-it-qat`; salon Wi-Fi'ında indirme. Sonra bir prova turu:
+   ```bash
+   cd flutter_client
+   flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep --dart-define=OFFLINE_MODE=true --dart-define=LOCAL_JUDGE_URL=http://localhost:11434/api/chat
+   ```
+   Tuzlu bir tepsi gönder: karar Türkçe ve 5-8.5 s içinde gelmeli, kaynak `localGemma` olmalı. 15 s'yi geçerse karar paketlenmiş cevaplara düşer.
+7. **Git tag kontrolü:** katılımcılar `git checkout step-1 / step-2 / step-3 / final` kullanacak. `final` etiketinin en güncel `main` commit'ini gösterdiğinden emin ol (`git log -1 final`); eski bir commit'i gösteriyorsa Web Audio, 3D karakterler gibi son eklemeler o kontrol noktasında yoktur.
 
 ## T-2 saat: Salon Kurulumu
 
@@ -57,6 +63,34 @@ Bu doküman sahnedeki teknik delivery'nin tek kontrol listesidir: ne zaman ne ko
 - Stage Navigator'ı aç (deck menüsü), zamanlayıcıyı sıfırla.
 - Slayt 2 (`/sweet-or-salty`) oylaması için cevabı hatırla: **A şeker, B tuz.**
 - Canlı oyunda şehir modunu etkinliğe göre ayarla (`?remote_city=gaziantep` vb.).
+
+## T-10 dakika: Yerel Jüriyi Isıt
+
+Soğuk modelin ilk kararı 15 s'yi geçer ve paketlenmiş cevaba düşer, bu yüzden model sahneden önce belleğe yüklenir.
+
+1. Başka bir şey Ollama'yı kullanmıyor olmalı (açık bir eval her isteği kuyruğa sokar). Sadece `LISTEN` satırı görünmeli:
+   ```bash
+   lsof -nP -iTCP:11434
+   ```
+2. Modeli konuşma boyunca bellekte tut (varsayılan 5 dk; iki demo arası bunu aşabilir). Sahne günü bir kez:
+   ```bash
+   launchctl setenv OLLAMA_KEEP_ALIVE 30m
+   ```
+   ```bash
+   brew services restart ollama
+   ```
+3. Modeli yükle ve ısıt:
+   ```bash
+   curl -s http://localhost:11434/api/generate -d '{"model":"gemma4:12b-it-qat","prompt":"merhaba","think":false,"stream":false}' > /dev/null
+   ```
+   ```bash
+   ollama ps
+   ```
+   `ollama ps` modeli `UNTIL` sütununda yaklaşık 30 dakika ile göstermeli.
+4. Oyunda bir tepsi gönder, kararın `localGemma`'dan geldiğini gör.
+5. Wi-Fi'ı kapat. Gemini çağrısı düşer, karar yerel Gemma'dan gelmeye devam eder.
+
+Etkinlikten sonra varsayılana dön: `launchctl unsetenv OLLAMA_KEEP_ALIVE`, ardından `brew services restart ollama`.
 
 ## Sahnede: 5 Perdelik Akış
 
@@ -75,6 +109,7 @@ Her slaytın sağ üstündeki hikaye şeridi salona nerede olduğumuzu gösterir
 | Belirti | Sahnede yapılacak | Komut veya eylem |
 |---|---|---|
 | Wi-Fi tamamen koptu | Slayt 16 (`/demo-hiccup`), "tam da bunun için tasarladık" | `flutter run -d chrome --dart-define=OFFLINE_MODE=true` |
+| Yerel jüri yavaş veya `localGemma` gelmiyor | Paketlenmiş cevaplar devrede, oyun durmaz | `lsof -nP -iTCP:11434` ile Ollama'yı tutan süreci bul, `ollama ps` ile model yüklü mü bak, T-10 adım 3'ü tekrarla |
 | HTTP 429 | Slayt 9'a atıf, uygulama zaten çevrimdışı jüriye düştü | Eylem gerekmez |
 | Deck çöktü veya laptop dondu | PDF yedeğine geç | `build/slides/backyard_barista_deck.pdf` |
 | AI Studio yavaş | Lane A referans oyununu aç (`49.5 KB`, 3 yuvalı tepsi + 3 müşteri kuyruğu) | `ai_studio_lane_a/index.html` |

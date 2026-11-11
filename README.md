@@ -48,6 +48,12 @@ flutter pub get
 flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep --dart-define=GEMINI_API_KEY=your_key_here
 ```
 - **Offline Conference Wi-Fi Fallback:** Pass `--dart-define=OFFLINE_MODE=true` (or leave `GEMINI_API_KEY` empty) to use deterministic city-specific responses from `flutter_client/assets/offline_fallback/mock_responses.json`.
+- **Local Gemma Judge (optional, laptop only):** With [Ollama](https://ollama.com/download) running and the model pulled once (`ollama pull gemma4:12b-it-qat`, 7.2 GB), the judge can run on your own machine. The order is Gemini, then local Gemma (15 s timeout), then the bundled responses. On an M3 Pro (18 GB) a warm model returns a verdict in 5-8.5 s. Leave `LOCAL_JUDGE_URL` unset and the local tier is off, so the Cloud Run build is unchanged.
+
+  ```bash
+  flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep --dart-define=OFFLINE_MODE=true --dart-define=LOCAL_JUDGE_URL=http://localhost:11434/api/chat
+  ```
+  `OFFLINE_MODE=true` skips only the Gemini call. Use `-d chrome` or `-d macos` on the same laptop: Ollama allows `localhost` origins only, so a deployed `.run.app` page or a phone in the room cannot reach it and keeps the bundled responses. `--dart-define=LOCAL_JUDGE_MODEL=...` picks another Ollama model.
 - **Switch City Editions:** Click the flag badge in the top bar (`🇩🇪 Berlin` / `🇹🇷 Gaziantep` / `🇹🇷 Adana` / `🇹🇷 Istanbul`) to open the Settings drawer, or update `active_city_id` in Firebase Remote Config (`flutter_client/remote_config_template.json`).
 
 ### Lane C: Phone Play-Tester

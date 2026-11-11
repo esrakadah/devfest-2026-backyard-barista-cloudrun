@@ -19,5 +19,5 @@
 </div>
 </div>
 <p style="font-size:32px;color:#8AB4F8">Design rule: the fallback returns the same CafeReview type, so the UI never needs a special error screen.</p>
-<aside>Both durations are constants at the top of cafe_judge_service.dart. Force the fallback any time with --dart-define=OFFLINE_MODE=true, or simply leave GEMINI_API_KEY empty. The review object carries an isFromLiveGemini flag so you can still tell the two apart in the UI or in logs.</aside>
+<aside>Both durations are constants at the top of cafe_judge_service.dart. Force the fallback any time with --dart-define=OFFLINE_MODE=true, or simply leave GEMINI_API_KEY empty. The review object carries a source (JudgeSource) so you can still tell them apart in the UI or in logs.</aside>
 </section>

@@ -25,6 +25,9 @@ enum CustomerFaceState {
   }
 }
 
+/// Which judge produced a [CafeReview], shown as the judge badge under the verdict.
+enum JudgeSource { liveGemini, localGemma, offlineBundle }
+
 /// Structured JSON verdict returned by Gemini (`gemini-3.5-flash-lite`) or the offline fallback.
 @immutable
 class CafeReview {
@@ -36,13 +39,13 @@ class CafeReview {
     required this.customerReaction,
     required this.cityBonusTip,
     required this.evaluatedAt,
-    required this.isFromLiveGemini,
+    required this.source,
   });
 
   factory CafeReview.fromJson(
     Map<String, dynamic> jsonMap, {
     required DateTime evaluatedAt,
-    required bool isFromLiveGemini,
+    required JudgeSource source,
   }) {
     final rawStars = jsonMap['ratingStars'];
     final parsedStars = rawStars is num ? rawStars.toInt() : maxCafeRatingStars;
@@ -58,7 +61,7 @@ class CafeReview {
       customerReaction: (jsonMap['customerReaction'] as String?) ?? '',
       cityBonusTip: parsedTip,
       evaluatedAt: evaluatedAt,
-      isFromLiveGemini: isFromLiveGemini,
+      source: source,
     );
   }
 
@@ -69,7 +72,7 @@ class CafeReview {
   final String customerReaction;
   final int cityBonusTip;
   final DateTime evaluatedAt;
-  final bool isFromLiveGemini;
+  final JudgeSource source;
 
   bool get isPrankCaught =>
       tasteVerdict == 'salty_sabotage' || tasteVerdict == 'spicy_chaos' || ratingStars == minCafeRatingStars;
@@ -89,6 +92,18 @@ class CafeReview {
       case 'sweet_perfection':
       default:
         return isEnglish ? 'Sweet Perfection ✨' : 'Tatlı Mükemmellik ✨';
+    }
+  }
+
+  String localizedJudgeLabel(String languageCode) {
+    final isEnglish = languageCode == 'en';
+    switch (source) {
+      case JudgeSource.liveGemini:
+        return isEnglish ? 'Live Gemini 3.5 Flash-Lite' : 'Canlı Gemini 3.5 Flash-Lite';
+      case JudgeSource.localGemma:
+        return isEnglish ? 'Local Gemma 4 (offline)' : 'Yerel Gemma 4 (çevrimdışı)';
+      case JudgeSource.offlineBundle:
+        return isEnglish ? 'Offline JSON Schema' : 'Yerel JSON Şeması';
     }
   }
 
