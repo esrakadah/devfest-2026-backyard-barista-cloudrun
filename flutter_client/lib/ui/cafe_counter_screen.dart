@@ -904,7 +904,7 @@ class _FlameRunwayStage extends StatelessWidget {
 }
 
 /// Runner token gliding across the 3 lanes with a carved oak tray
-/// and 60fps Wingardium Leviosa levitation + Lottie spell aura.
+/// and a 60fps float animation with a Lottie aura.
 class _LaneRunnerAvatar extends StatefulWidget {
   const _LaneRunnerAvatar({
     required this.selectedTray,

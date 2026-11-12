@@ -365,7 +365,6 @@ class BaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks {
         const Radius.circular(1.6),
       );
       canvas
-        // Outer golden Lumos candle halo
         ..drawCircle(
           Offset(candleX, candleTopY - 3.5),
           12.5 * flameFlicker,

@@ -10,7 +10,7 @@ The speaker notes in the deck stay the Turkish 80-minute Gaziantep script. Use t
 |---|---|---|---|
 | 00:00 | 1 `/title` | Intro, GDE line | "I'm Esra, Flutter and AI engineer at Antigua Mobile and a Flutter and Dart GDE. My views today, not Google's. We ship an AI cafe game to Cloud Run and talk real numbers." |
 | 02:00 | 2 `/sweet-or-salty` | Poll: hands for A, hands for B | "Which one is sugar? Hold that thought: an AI is going to judge exactly this." Answer: A sugar, B salt. |
-| 04:00 | 3 `/workshop-contract` | **Skip** | Say instead: "If you want to build your own, the Vibe Lounge opens at 11 with Google's Backyard Barista guide." |
+| (skip) | 3 `/workshop-contract` | **Skip**, use the line on slide 2 | Say instead: "If you want to build your own, the Vibe Lounge opens at 11 with Google's Backyard Barista guide." |
 | 04:00 | 4 `/ai-studio-pipeline` | | "One prompt in AI Studio Build mode gives you a deployable app. Here is what actually comes out." |
 | 07:00 | 5 `/meet-antigravity` | | "Antigravity edits many files at once and draws new ingredients as vectors, no designer in the loop." |
 | 09:30 | 6 `/pure-flutter-widgets` | | "Flame runs the 60 fps stage, plain Flutter widgets run the counter. Each does what it is good at." |

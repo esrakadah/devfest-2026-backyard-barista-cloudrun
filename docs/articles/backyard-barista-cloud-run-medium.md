@@ -38,7 +38,7 @@ If you are building a **turn-based counter, card, or simulation game** inside an
 
 By building Backyard Barista with **pure Flutter widgets** (`LayoutBuilder`, `Row`/`Wrap`, `AnimatedScale`, `AnimatedSwitcher`, and `CustomPaint`), the entire 2-player counter becomes a declarative widget tree:
 - **Responsive 2x2 Desktop Split (`>= 980 px`):** On desktop monitors and stage projectors (`_desktopSplitBreakpointWidth = 980`), the Drink Bar and Pastry Vitrine sit side-by-side in row 1, while the Twin Condiment Jars and Interactive Wooden Tray sit side-by-side in row 2 ([`flutter_client/lib/ui/cafe_counter_screen.dart`](../../flutter_client/lib/ui/cafe_counter_screen.dart)).
-- **60fps Character Choreography without Sprite Sheets:** Our 3D studio portraits (`flutter_client/assets/base/characters/*.png`) breathe, tilt, and celebrate using a single `AnimationController` combined with `Transform.translate`, `Transform.rotate`, Lottie aura layers, and `CustomPaint` particle overlays ([`flutter_client/lib/ui/cafe_character_animations.dart`](../../flutter_client/lib/ui/cafe_character_animations.dart)).
+- **60fps Character Choreography without Sprite Sheets:** Our crew and customer portraits breathe, tilt, and celebrate using a single `AnimationController` combined with `Transform.translate`, `Transform.rotate`, Lottie aura layers, and `CustomPaint` particle overlays ([`flutter_client/lib/ui/cafe_character_animations.dart`](../../flutter_client/lib/ui/cafe_character_animations.dart)).
 
 ### The Sweet vs. Salty Twin-Jar Mechanic
 

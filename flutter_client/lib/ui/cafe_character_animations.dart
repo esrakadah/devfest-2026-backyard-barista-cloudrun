@@ -636,7 +636,6 @@ class _CharacterMoodParticlePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Orbiting Lumos wand sparkles around every character window
     final orbitAngle = progress * math.pi * 2;
     final leftSparkCenter = Offset(
       6 + math.sin(orbitAngle) * 3,

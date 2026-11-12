@@ -51,7 +51,7 @@ Berlin günü akşamı Gaziantep uçuşu 20:40: Vibe Lounge 15:00'te biter, hava
    flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep --dart-define=OFFLINE_MODE=true --dart-define=LOCAL_JUDGE_URL=http://localhost:11434/api/chat
    ```
    Tuzlu bir tepsi gönder: karar Türkçe ve 5-8.5 s içinde gelmeli, kaynak `localGemma` olmalı. 15 s'yi geçerse karar paketlenmiş cevaplara düşer.
-7. **Git tag kontrolü:** katılımcılar `git checkout step-1 / step-2 / step-3 / final` kullanacak. `final` etiketinin en güncel `main` commit'ini gösterdiğinden emin ol (`git log -1 final`); eski bir commit'i gösteriyorsa Web Audio, 3D karakterler gibi son eklemeler o kontrol noktasında yoktur.
+7. **Git tag kontrolü:** katılımcılar `git checkout step-1 / step-2 / step-3 / final` kullanacak. `final` etiketinin en güncel `main` commit'ini gösterdiğinden emin ol (`git log -1 final`); eski bir commit'i gösteriyorsa Web Audio, yeni sahne görünümü gibi son eklemeler o kontrol noktasında yoktur.
 
 ## T-2 saat: Salon Kurulumu
 
