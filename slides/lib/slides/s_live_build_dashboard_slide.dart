@@ -90,13 +90,13 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                         QrCodeCard(
                           assetPath: 'assets/images/starter_repo_qr.png',
                           caption: 'Starter repo & prompts',
-                          size: 170,
+                          size: 230,
                         ),
                         SizedBox(height: _gap),
                         QrCodeCard(
                           assetPath: 'assets/images/backyard_barista_cloudrun_qr.png',
                           caption: 'Play the reference cafe',
-                          size: 170,
+                          size: 230,
                           accentColor: DeckColors.googleGreen,
                         ),
                       ],

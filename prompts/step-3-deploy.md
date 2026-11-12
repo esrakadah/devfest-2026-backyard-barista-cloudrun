@@ -1,7 +1,9 @@
 # Round 3 Guide: Publish to Google Cloud Run (`.run.app`) & GitHub
 
 ## Path A: From Google AI Studio Build Mode (No Credit Card Required)
-1. Click **"Deploy to Cloud Run"** in the top-right bar of Google AI Studio.
+> The AI Studio Starter Tier needs no payment method, but it is for personal Google accounts: Workspace accounts (work, school, nonprofit) and accounts that have or had a paid Cloud billing account may not qualify, and it allows 2 published apps. Use a personal Gmail account today. Source: [Starter Tier explained](https://cloud.google.com/blog/topics/developers-practitioners/the-starter-tier-for-google-ai-studio-explained), [Publish from AI Studio](https://aistudio.google.com/docs/aistudio-deploying).
+
+1. Click **Publish** in the top-right bar of Build mode, then **Get started** and **Publish your app** (the app is served from Cloud Run).
    - AI Studio Starter Tier provisions a managed HTTPS `https://*.run.app` service and stores your `GEMINI_API_KEY` server-side.
 2. Click **"Sync to GitHub"** in the top-right bar of Google AI Studio to push your complete web game to your personal GitHub account.
 3. Open your live `.run.app` URL on your phone, switch the City Edition to **Gaziantep 🇹🇷** (or **Berlin 🇩🇪**), sneak **Salt (`Tuz`)** into a Baklava + Espresso order, and raise your hand to demo on stage for the **Google Pixel Sunglasses + Dash** prize!

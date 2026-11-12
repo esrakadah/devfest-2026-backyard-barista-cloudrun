@@ -88,6 +88,65 @@ void main() {
     },
   );
 
+  group('Gemini verdict guard', () {
+    MockClient geminiAnswers(Map<String, dynamic> reviewJson) => MockClient(
+          (request) async => http.Response(
+            jsonEncode(<String, dynamic>{
+              'candidates': <Map<String, dynamic>>[
+                <String, dynamic>{
+                  'content': <String, dynamic>{
+                    'parts': <Map<String, dynamic>>[
+                      <String, dynamic>{'text': jsonEncode(reviewJson)},
+                    ],
+                  },
+                },
+              ],
+            }),
+            200,
+          ),
+        );
+
+    test('a Gemini verdict that misses the salt prank falls back to the offline roast', () async {
+      final judgeService = CafeJudgeService(
+        clock: fixedClock,
+        httpClient: geminiAnswers(<String, dynamic>{
+          'ratingStars': 5,
+          'tasteVerdict': 'sweet_perfection',
+          'customerFace': 'happy',
+          'headline': 'Wrong praise',
+          'customerReaction': 'Harika!',
+          'cityBonusTip': 40,
+        }),
+        geminiProxyPath: '/api/gemini/generate',
+      );
+
+      final review = await judgeService.evaluateOrder(
+        selectedIngredients: saltyTray,
+        cityEdition: gaziantepEdition,
+      );
+
+      expect(review.source, JudgeSource.offlineBundle);
+      expect(review.tasteVerdict, 'salty_sabotage');
+      expect(review.ratingStars, minCafeRatingStars);
+    });
+
+    test('a Gemini reply with no fields never turns a salt tray into 5 stars', () async {
+      final judgeService = CafeJudgeService(
+        clock: fixedClock,
+        httpClient: geminiAnswers(<String, dynamic>{}),
+        geminiProxyPath: '/api/gemini/generate',
+      );
+
+      final review = await judgeService.evaluateOrder(
+        selectedIngredients: saltyTray,
+        cityEdition: gaziantepEdition,
+      );
+
+      expect(review.source, JudgeSource.offlineBundle);
+      expect(review.tasteVerdict, 'salty_sabotage');
+    });
+  });
+
   group('Local Gemma judge', () {
     const localJudgeUrl = 'http://localhost:11434/api/chat';
 

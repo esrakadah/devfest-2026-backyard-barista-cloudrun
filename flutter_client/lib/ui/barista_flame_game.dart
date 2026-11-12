@@ -14,22 +14,21 @@ const double _maxFrameDeltaSeconds = 0.05;
 const double _runnerGravity = 660;
 const double _horizonHeightRatio = 0.42;
 const double _trackBottomHeightRatio = 0.98;
-const int _floatingCandleCount = 11;
-const int _steamPlumeCount = 5;
+const int _floatingLanternCount = 11;
 const int _runeGlyphCount = 8;
 const double _topTrackWidthRatio = 0.34;
 const double _bottomTrackWidthRatio = 0.94;
 const double _runnerPerspectiveDepth = 0.56;
 
-/// Full-stage 3-lane Universal Studios Hogsmeade cafe runner game powered by Flame (`FlameGame`).
+/// Full-stage 3-lane night-cafe runner game powered by Flame (`FlameGame`).
 ///
 /// Players swipe left/right or tap any of the 3 cobblestone lanes to dash the
-/// Wizard Runner between:
-/// - **Lane 0 (Left · Gryffindor Copper):** Steaming Coffee & Copper Cezve Drinks
-/// - **Lane 1 (Center · Hufflepuff Gold):** Baklava, Katmer & Pastries
-/// - **Lane 2 (Right · Slytherin Emerald):** Twin Sugar / Stealth Salt Jars
-class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks {
-  SubwayBaristaFlameGame({
+/// tray runner between:
+/// - **Lane 0 (left, copper):** coffee and cezve drinks
+/// - **Lane 1 (center, gold):** baklava, katmer and pastries
+/// - **Lane 2 (right, green):** twin sugar and salt jars
+class BaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks {
+  BaristaFlameGame({
     required this.onLaneTapped,
     required this.onSwipeServeRequested,
     CityEditionId initialCityId = CityEditionId.gaziantep,
@@ -59,7 +58,7 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
 
   final List<_ArcadeFloatingBurst> _floatingBursts = <_ArcadeFloatingBurst>[];
   final List<_ActiveSpellBeam> _activeSpellBeams = <_ActiveSpellBeam>[];
-  final List<_WandTrailSpark> _wandTrailSparks = <_WandTrailSpark>[];
+  final List<_DashTrailSpark> _dashTrailSparks = <_DashTrailSpark>[];
   final List<_RollingTrackToken> _rollingTokens = <_RollingTrackToken>[
     _RollingTrackToken(laneIndex: 0, depthProgress: 0.16),
     _RollingTrackToken(laneIndex: 0, depthProgress: 0.66),
@@ -119,7 +118,7 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
     }
   }
 
-  /// Moves the Wizard Runner to [targetLane] (`0..2`), triggers a hop impulse, and spawns warm sparkles.
+  /// Moves the tray runner to [targetLane] (`0..2`), triggers a hop impulse, and spawns warm sparkles.
   void dashToLane(int targetLane, {bool triggerCallback = true}) {
     final clampedLane = targetLane.clamp(0, 2);
     _activeRunnerLane = clampedLane;
@@ -154,8 +153,8 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
       ),
     );
     for (var index = 0; index < 8; index++) {
-      _wandTrailSparks.add(
-        _WandTrailSpark(
+      _dashTrailSparks.add(
+        _DashTrailSpark(
           lanePosition: _runnerCurrentLanePosition,
           depthOffset: (index - 4) * 0.025,
           lateralJitter: math.sin(index * 1.7) * 18,
@@ -253,9 +252,9 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
     // Smoothly interpolate horizontal lane position and spawn wand trail sparks while gliding
     final targetLaneDouble = _activeRunnerLane.toDouble();
     final laneDelta = targetLaneDouble - _runnerCurrentLanePosition;
-    if (laneDelta.abs() > 0.04 && _wandTrailSparks.length < 36) {
-      _wandTrailSparks.add(
-        _WandTrailSpark(
+    if (laneDelta.abs() > 0.04 && _dashTrailSparks.length < 36) {
+      _dashTrailSparks.add(
+        _DashTrailSpark(
           lanePosition: _runnerCurrentLanePosition,
           depthOffset: 0,
           lateralJitter: math.sin(_runnerBouncePhase * 2.3) * 12,
@@ -305,11 +304,11 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
     }
 
     // Update wand trail sparks
-    for (var index = _wandTrailSparks.length - 1; index >= 0; index--) {
-      final spark = _wandTrailSparks[index];
+    for (var index = _dashTrailSparks.length - 1; index >= 0; index--) {
+      final spark = _dashTrailSparks[index];
       spark.remainingLife -= safeDt;
       if (spark.remainingLife <= 0) {
-        _wandTrailSparks.removeAt(index);
+        _dashTrailSparks.removeAt(index);
       }
     }
   }
@@ -325,7 +324,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
     final horizonY = size.y * _horizonHeightRatio;
     final trackBottomY = size.y * _trackBottomHeightRatio;
 
-    // 1. Universal Studios Hogsmeade Twilight & Hogwarts Castle Translucent Glaze
     final skyPaint = Paint()
       ..shader = const LinearGradient(
         begin: Alignment.topCenter,
@@ -338,7 +336,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
       ).createShader(stageRect);
     canvas.drawRect(stageRect, skyPaint);
 
-    // 2. Subtle Warm Hogsmeade Lantern Glow along the Horizon
     final cityWarmColor = switch (_activeCityId) {
       CityEditionId.berlin => const Color(0xFFC59B27),
       CityEditionId.gaziantep => const Color(0xFFB86B2B),
@@ -356,15 +353,10 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
       ).createShader(stageRect);
     canvas.drawRect(stageRect, horizonGlowPaint);
 
-    // 2B. Hogwarts Castle Astronomy Tower Patronus / Lumos Aurora Ribbon across the upper sky
-    _drawPatronusAuroraRibbon(canvas, size.x, horizonY);
+    _drawAuroraRibbon(canvas, size.x, horizonY);
 
-    // 2C. Hogwarts Express 5972 Enchanted Steam Plumes rising from the left locomotive chimney
-    _drawHogwartsExpressSteamPlumes(canvas, size.x, size.y);
-
-    // Hovering Enchanted Great Hall Candles & Hogsmeade Snow Sparkles across the Twilight Sky
-    for (var candleIndex = 1; candleIndex <= _floatingCandleCount; candleIndex++) {
-      final candleX = (size.x / (_floatingCandleCount + 1)) * candleIndex;
+    for (var candleIndex = 1; candleIndex <= _floatingLanternCount; candleIndex++) {
+      final candleX = (size.x / (_floatingLanternCount + 1)) * candleIndex;
       final bobOffset = math.sin(_runnerBouncePhase * 0.65 + candleIndex * 1.15) * 4.2;
       final candleTopY = 22.0 + (candleIndex.isEven ? 10.0 : 0.0) + bobOffset;
       final flameFlicker = 1.0 + math.sin(_runnerBouncePhase * 2.4 + candleIndex) * 0.22;
@@ -373,7 +365,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
         const Radius.circular(1.6),
       );
       canvas
-        // Outer golden Lumos candle halo
         ..drawCircle(
           Offset(candleX, candleTopY - 3.5),
           12.5 * flameFlicker,
@@ -400,8 +391,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
         );
     }
 
-    // 3. Subtle Ground Lantern Spotlights for the 3 Hogsmeade Station Lanes
-    // (Leaves the Universal Studios Hogsmeade street, Hogwarts Express 5972 & Hogwarts Castle 100% unobstructed)
     final topTrackWidth = size.x * _topTrackWidthRatio;
     final bottomTrackWidth = size.x * _bottomTrackWidthRatio;
     final centerX = size.x * 0.5;
@@ -444,7 +433,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
       );
     }
 
-    // 4. Drifting Hogsmeade 4-Point Diamond Starlight Crystals along the 3 Lanes
     for (final token in _rollingTokens) {
       final depth = token.depthProgress * token.depthProgress;
       final clampedDepth = (depth * 0.72).clamp(0.08, 0.72);
@@ -473,8 +461,7 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
     final bounceOffset = math.sin(_runnerBouncePhase).abs() * 6.0;
     final runnerY = baseRunnerY - bounceOffset - (_runnerJumpOffset * 0.34);
 
-    // 4B. Wand Trail Sparks behind Harry Potter when dashing across lanes
-    for (final spark in _wandTrailSparks) {
+    for (final spark in _dashTrailSparks) {
       final alpha = (spark.remainingLife / spark.maxLife).clamp(0.0, 1.0);
       final sparkX = _laneCenterXAtDepth(
             laneIndex: spark.lanePosition,
@@ -493,7 +480,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
       );
     }
 
-    // 4C. Curved Wingardium Leviosa / Lumos Maxima Spell Beams from Station Docks to Harry
     for (final beam in _activeSpellBeams) {
       final beamAlpha = (beam.remainingLife / beam.maxLife).clamp(0.0, 1.0);
       final originX = _laneCenterXAtDepth(
@@ -570,7 +556,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
       }
     }
 
-    // 6. Rotating Arcane Hogwarts Runic Circle & Orbiting Golden Snitch around the 3D Wizard Runner
     _drawRunnerMagicAuraRing(
       canvas: canvas,
       runnerX: runnerX,
@@ -578,14 +563,14 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
       baseRunnerY: baseRunnerY,
       activeLaneColor: laneAccentColors[_activeRunnerLane],
     );
-    _drawOrbitingGoldenSnitch(
+    _drawOrbitingSugarSpark(
       canvas: canvas,
       runnerX: runnerX,
       runnerY: runnerY,
     );
   }
 
-  void _drawPatronusAuroraRibbon(Canvas canvas, double width, double horizonY) {
+  void _drawAuroraRibbon(Canvas canvas, double width, double horizonY) {
     final auroraPath = Path()..moveTo(width * 0.18, horizonY * 0.36);
     for (var step = 0; step <= 16; step++) {
       final ratio = step / 16.0;
@@ -611,23 +596,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
           ..strokeWidth = 4
           ..strokeCap = StrokeCap.round,
       );
-  }
-
-  void _drawHogwartsExpressSteamPlumes(Canvas canvas, double width, double height) {
-    final chimneyX = width * 0.18;
-    final chimneyY = height * 0.44;
-    for (var plumeIndex = 0; plumeIndex < _steamPlumeCount; plumeIndex++) {
-      final progress = ((_trackScrollDistance * 0.8) + (plumeIndex / _steamPlumeCount)) % 1.0;
-      final plumeX = chimneyX - (progress * 26.0) + math.sin(_runnerBouncePhase * 0.5 + plumeIndex) * 5.0;
-      final plumeY = chimneyY - (progress * 52.0);
-      final radius = 9.0 + (progress * 18.0);
-      final alpha = (1.0 - progress) * 0.22;
-      canvas.drawCircle(
-        Offset(plumeX, plumeY),
-        radius,
-        Paint()..color = const Color(0xFFF3E5C8).withValues(alpha: alpha),
-      );
-    }
   }
 
   void _drawMagicalStarlightMote({
@@ -681,7 +649,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
     final outerWidth = 108.0 * pulse;
     final outerHeight = 32.0 * pulse;
 
-    // 1. Soft oval shadow on the Hogsmeade cobblestone floor
     canvas
       ..drawOval(
         Rect.fromCenter(
@@ -691,7 +658,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
         ),
         Paint()..color = Colors.black.withValues(alpha: 0.45),
       )
-      // 2. Outer Golden-House Hogwarts Runic Aura Ring under the 3D Wizard Runner
       ..drawOval(
         Rect.fromCenter(
           center: ringCenter,
@@ -715,7 +681,6 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
           ..strokeWidth = 1.8,
       );
 
-    // 3. Rotating 8-point Arcane Hogwarts Star Runes orbiting the aura ring
     for (var runeIndex = 0; runeIndex < _runeGlyphCount; runeIndex++) {
       final angle = (_runnerBouncePhase * 0.55) + (runeIndex * math.pi * 2 / _runeGlyphCount);
       final runeX = ringCenter.dx + math.cos(angle) * (outerWidth * 0.5);
@@ -729,44 +694,29 @@ class SubwayBaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks 
     }
   }
 
-  void _drawOrbitingGoldenSnitch({
+  void _drawOrbitingSugarSpark({
     required Canvas canvas,
     required double runnerX,
     required double runnerY,
   }) {
     final orbitAngle = _runnerBouncePhase * 1.15;
-    final snitchX = runnerX + math.cos(orbitAngle) * 58.0;
-    final snitchY = (runnerY - 22.0) + math.sin(orbitAngle * 2.0) * 14.0;
-    final wingFlutter = math.sin(_runnerBouncePhase * 6.5) * 6.0;
-    final snitchCenter = Offset(snitchX, snitchY);
+    final sparkX = runnerX + math.cos(orbitAngle) * 58.0;
+    final sparkY = (runnerY - 22.0) + math.sin(orbitAngle * 2.0) * 14.0;
+    final sparkCenter = Offset(sparkX, sparkY);
 
-    final leftWingPath = Path()
-      ..moveTo(snitchX - 3, snitchY - 1)
-      ..quadraticBezierTo(snitchX - 13, snitchY - 9 - wingFlutter, snitchX - 18, snitchY - 2 - wingFlutter)
-      ..quadraticBezierTo(snitchX - 11, snitchY + 2, snitchX - 3, snitchY + 1)
-      ..close();
-    final rightWingPath = Path()
-      ..moveTo(snitchX + 3, snitchY - 1)
-      ..quadraticBezierTo(snitchX + 13, snitchY - 9 - wingFlutter, snitchX + 18, snitchY - 2 - wingFlutter)
-      ..quadraticBezierTo(snitchX + 11, snitchY + 2, snitchX + 3, snitchY + 1)
-      ..close();
-
-    final wingPaint = Paint()..color = const Color(0xE6FFF8E1);
     canvas
       ..drawCircle(
-        snitchCenter,
+        sparkCenter,
         10,
         Paint()..color = const Color(0x55D4AF37),
       )
-      ..drawPath(leftWingPath, wingPaint)
-      ..drawPath(rightWingPath, wingPaint)
       ..drawCircle(
-        snitchCenter,
+        sparkCenter,
         4.2,
         Paint()..color = const Color(0xFFFFD54F),
       )
       ..drawCircle(
-        Offset(snitchX - 1.2, snitchY - 1.2),
+        Offset(sparkX - 1.2, sparkY - 1.2),
         1.4,
         Paint()..color = const Color(0xFFFFF8E1),
       );
@@ -825,8 +775,8 @@ class _ActiveSpellBeam {
   final double maxLife;
 }
 
-class _WandTrailSpark {
-  _WandTrailSpark({
+class _DashTrailSpark {
+  _DashTrailSpark({
     required this.lanePosition,
     required this.depthOffset,
     required this.lateralJitter,

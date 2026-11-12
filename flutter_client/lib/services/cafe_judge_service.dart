@@ -134,7 +134,12 @@ class CafeJudgeService {
         containsSaltPrank: containsSaltPrank,
         containsChiliPrank: containsChiliPrank,
       );
-      if (liveReview != null) {
+      if (liveReview != null &&
+          _verdictMatchesPranks(
+            liveReview,
+            containsSaltPrank: containsSaltPrank,
+            containsChiliPrank: containsChiliPrank,
+          )) {
         return liveReview;
       }
     }
@@ -295,7 +300,7 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
     }
   }
 
-  /// Ollama `/api/chat` with a JSON schema in `format`; thinking off keeps a verdict near 9 s instead of a minute.
+  /// Ollama `/api/chat` with a JSON schema in `format`; thinking off keeps a warm verdict at 5-8.5 s instead of a minute.
   Future<CafeReview?> _tryCallLocalGemma({
     required List<CafeIngredient> selectedIngredients,
     required CityEditionConfig cityEdition,
@@ -359,8 +364,9 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
     }
   }
 
-  /// A small local model can miss the prank even when the prompt states it, so its verdict must agree
-  /// with the flags decided in Dart before it reaches the screen.
+  /// A model can miss the prank even when the prompt states it, and a reply with missing fields parses as
+  /// `sweet_perfection`, so every model verdict must agree with the flags decided in Dart before it reaches
+  /// the screen. A salt tray must never score 5 stars on stage.
   bool _verdictMatchesPranks(
     CafeReview review, {
     required bool containsSaltPrank,

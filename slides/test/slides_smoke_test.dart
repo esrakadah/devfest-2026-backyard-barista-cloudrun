@@ -49,18 +49,18 @@ void main() {
 
       expect(find.textContaining('Web NFC'), findsWidgets);
       expect(find.textContaining('NDEFReader'), findsWidgets);
-      expect(find.textContaining('simulateTap'), findsWidgets);
+      expect(find.textContaining('nfcController.startScanning'), findsWidgets);
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('ArchitectureRecapSlide includes BaristaFlameGame 60fps and WebNfcService', (tester) async {
+    testWidgets('ArchitectureRecapSlide includes BaristaFlameGame 60fps and NfcTagController', (tester) async {
       const slide = ArchitectureRecapSlide();
       expect(slide.configuration?.route, '/architecture-recap');
 
       await pumpSlide(tester, slide);
 
       expect(find.textContaining('BaristaFlameGame 60fps 3-Lane'), findsOneWidget);
-      expect(find.textContaining('WebNfcService (NDEFReader)'), findsOneWidget);
+      expect(find.textContaining('NfcTagController (NDEFReader)'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
   });

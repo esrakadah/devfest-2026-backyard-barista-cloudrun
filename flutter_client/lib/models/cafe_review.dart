@@ -28,7 +28,7 @@ enum CustomerFaceState {
 /// Which judge produced a [CafeReview], shown as the judge badge under the verdict.
 enum JudgeSource { liveGemini, localGemma, offlineBundle }
 
-/// Structured JSON verdict returned by Gemini (`gemini-3.5-flash-lite`) or the offline fallback.
+/// Structured JSON verdict from Gemini (`gemini-3.5-flash-lite`), a local Gemma, or the offline bundle.
 @immutable
 class CafeReview {
   const CafeReview({

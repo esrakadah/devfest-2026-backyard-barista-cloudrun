@@ -7,6 +7,8 @@
 - **Starter GitHub Repository:** https://github.com/esrakadah/devfest-2026-backyard-barista-cloudrun
 - **Official Vibe Lounge Badge:** https://goo.gle/devfest26-vibe-lounge
 
+> **Vibe Lounge note:** this repo is Esra's talk and workshop demo. In the DevFest Vibe Lounge you follow Google's official Backyard Barista guide instead (a coffee companion app); you do not need this repo there.
+
 ---
 
 ## 🇹🇷 Türkçe Sürüm (Gaziantep 15 Kasım · Adana 11 Aralık · İstanbul 19 Aralık)
@@ -29,7 +31,7 @@ Hoş geldin! Bugün klavyeyle uzun mesajlar yazılan klasik bir sohbet botu değ
 2. **JSON Kafe Eleştirmeni (`CafeReview`):** Oyuncu 3 yuvalı ahşap tepsiyi (`1. İçecek + 2. Tatlı + 3. Kavanoz`) dizip **"Siparişi Servis Et!"** butonuna bastığında `gemini-3.5-flash-lite` seçilen malzemeleri kontrol etsin; eğer tatlı siparişe **Tuz** veya **İsot** karıştıysa `1/5 · Tuzlu Sabotaj 🧂`, eksik istasyon varsa `3/5 · Eksik Tepsi 🧩`, 3 istasyon da tatlıysa `5/5 · Tatlı Mükemmellik ✨` ve `+40` bahşiş döndürsün!
 
 #### Seviye 3: Google Cloud Run (`.run.app`) ve GitHub'da Canlıya Al! (3. Tur · 10 Dakika)
-1. [`prompts/step-3-deploy.md`](../prompts/step-3-deploy.md) adımlarını izleyerek AI Studio sağ üst köşedeki **Deploy to Cloud Run** butonuna bas (kredi kartsız Starter Tier) veya Flutter'da `gcloud run deploy backyard-barista --source .` çalıştırarak `.run.app` canlı oyun linkini oluştur.
+1. [`prompts/step-3-deploy.md`](../prompts/step-3-deploy.md) adımlarını izleyerek AI Studio sağ üst köşedeki **Publish** butonuna bas (kredi kartsız Starter Tier) veya Flutter'da `gcloud run deploy backyard-barista --source .` çalıştırarak `.run.app` canlı oyun linkini oluştur.
 2. **Sync to GitHub** ile kodu kendi GitHub hesabına gönder ve sahnede 60 saniyelik demoya katıl!
 
 ---
@@ -49,4 +51,4 @@ Hoş geldin! Bugün klavyeyle uzun mesajlar yazılan klasik bir sohbet botu değ
 2. **Level 2 (Custom AI Dish + Gemini Structured JSON Salt-vs-Sugar Judge · 15 Min):**
    - Paste [`prompts/step-2-custom-dish.md`](../prompts/step-2-custom-dish.md) to generate your own custom signature pastry and stealth prank condiment, wired to `gemini-3.5-flash-lite` structured JSON (`CafeReview`).
 3. **Level 3 (Deploy to Google Cloud Run `.run.app` & Sync to GitHub · 10 Min):**
-   - Follow [`prompts/step-3-deploy.md`](../prompts/step-3-deploy.md) to click **Deploy to Cloud Run** (no credit card required on AI Studio Starter Tier) or run `gcloud run deploy backyard-barista --source .`, then demo your live `.run.app` URL on stage!
+   - Follow [`prompts/step-3-deploy.md`](../prompts/step-3-deploy.md) to click **Publish** (no credit card required on AI Studio Starter Tier) or run `gcloud run deploy backyard-barista --source .`, then demo your live `.run.app` URL on stage!

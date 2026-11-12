@@ -26,7 +26,6 @@ flutter:
   assets:
     - assets/animations/
     - assets/audio/
-    - assets/base/characters/
     - assets/base/drinks/
     - assets/base/foods/
     - assets/base/toppings_pranks/

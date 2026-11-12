@@ -12,8 +12,8 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
             title: "11. Today's Game Mechanic: Tatlı mı Tuzlu mu? + Web NFC",
             speakerNotes:
                 'BEAT  [20:30 - 22:30] Oyun Mekaniği ("Tatlı mı Tuzlu mu?"), Web NFC Sahne Tetikleyicisi ve Yapılandırılmış JSON Şeması (CafeReview).\n'
-                'SAY   "Oyunumuzun kalbinde çok eğlenceli bir mekanik var: iki oyuncu tezgahtaki içecek ve tatlılara tıklayarak 3 yuvalı ahşap tepsiyi hazırlıyor. Ancak Şeker kavanozunun yanında ikizi gibi duran Tuzluk var! Üstelik Lukas Klingsbo\'nun badge_hack projesinden ilham alarak dart:js_interop ve Chrome Android NDEFReader ile gerçek bir WebNfcService ekledik: sahnede fiziksel bir NFC etikete dokunduğunuzda salt_shaker doğrudan tepsiye düşüyor; masaüstü ve iOS içinse tek tıkla simulateTap() yedeği hazır. Servis Et butonuna bastığınızda Gemini, CafeReview JSON şemamız üzerinden siparişi denetliyor ve tatlıya tuz atıldıysa ratingStars: 1, tasteVerdict: salty_sabotage döndürüyor."\n'
-                'HOLD  Sol taraftaki görselleri (Baklava, Şeker, Web NFC Tuzluk, 1 Yıldızlı Müşteri) ve sağdaki WebNfcService + CafeReview JSON kodunu göster.\n'
+                'SAY   "Oyunumuzun kalbinde çok eğlenceli bir mekanik var: iki oyuncu tezgahtaki içecek ve tatlılara tıklayarak 3 yuvalı ahşap tepsiyi hazırlıyor. Ancak Şeker kavanozunun yanında ikizi gibi duran Tuzluk var! Üstelik dart:js_interop ve Chrome Android NDEFReader ile gerçek bir NfcTagController ekledik: sahnede fiziksel bir NFC etikete dokunduğunuzda salt_shaker doğrudan tepsiye düşüyor; masaüstü ve iOS\'ta Tuzluk kartına dokunmak aynı işi yapıyor. Servis Et butonuna bastığınızda Gemini, CafeReview JSON şemamız üzerinden siparişi denetliyor ve tatlıya tuz atıldıysa ratingStars: 1, tasteVerdict: salty_sabotage döndürüyor."\n'
+                'HOLD  Sol taraftaki görselleri (Baklava, Şeker, Web NFC Tuzluk, 1 Yıldızlı Müşteri) ve sağdaki NfcTagController + CafeReview JSON kodunu göster.\n'
                 'NEXT  "Peki bu yüksek kaliteli 9D görselleri 300 kişinin bilgisayarında sıfır yükleme hatasıyla nasıl birleştiriyoruz?"',
           ),
         );
@@ -23,9 +23,10 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
 
   static const String _schemaSnippet = '''
 // 1. Web NFC Stage Trigger (nfc_tag_controller.dart + nfc_platform_web.dart)
-// dart:js_interop + Chrome Android NDEFReader (inspired by Lukas Klingsbo badge_hack)
-await webNfcService.startScanning(onSaltPrankTag: () => tray.drop('salt_shaker'));
-webNfcService.simulateTap(); // 1-tap fallback on Desktop / iOS
+// dart:js_interop + Chrome Android NDEFReader
+nfcController.onIngredientTapped = placeIngredientFromTag;
+await nfcController.startScanning(); // a salt_shaker tag lands on the tray
+// Desktop / iOS: tap the salt card, same tray, same judge
 
 // 2. Structured Verdict Schema (cafe_judge_service.dart)
 'generationConfig': {
@@ -52,7 +53,7 @@ webNfcService.simulateTap(); // 1-tap fallback on Desktop / iOS
           title: 'Tatlı mı Tuzlu mu? Web NFC Stage Pranks Meet Structured JSON',
           act: StoryAct.underTheHood,
           subtitle:
-              'Physical NFC sticker tap (WebNfcService + simulateTap fallback) drops salt_shaker onto the 3-slot tray',
+              'Physical NFC sticker tap (NfcTagController, card tap on desktop and iOS) drops salt_shaker onto the 3-slot tray',
           child: Row(
             children: [
               Expanded(
@@ -90,7 +91,7 @@ webNfcService.simulateTap(); // 1-tap fallback on Desktop / iOS
                           child: CafeAssetThumb(
                             assetFileName: 'salt_shaker.png',
                             label: 'Tuz (Web NFC Tap!)',
-                            badgeText: 'NDEFReader + simulateTap()',
+                            badgeText: 'NDEFReader + card tap',
                             borderColor: DeckColors.googleYellow,
                           ),
                         ),

@@ -38,7 +38,7 @@ If you are building a **turn-based counter, card, or simulation game** inside an
 
 By building Backyard Barista with **pure Flutter widgets** (`LayoutBuilder`, `Row`/`Wrap`, `AnimatedScale`, `AnimatedSwitcher`, and `CustomPaint`), the entire 2-player counter becomes a declarative widget tree:
 - **Responsive 2x2 Desktop Split (`>= 980 px`):** On desktop monitors and stage projectors (`_desktopSplitBreakpointWidth = 980`), the Drink Bar and Pastry Vitrine sit side-by-side in row 1, while the Twin Condiment Jars and Interactive Wooden Tray sit side-by-side in row 2 ([`flutter_client/lib/ui/cafe_counter_screen.dart`](../../flutter_client/lib/ui/cafe_counter_screen.dart)).
-- **60fps Character Choreography without Sprite Sheets:** Our 3D studio portraits (`flutter_client/assets/base/characters/*.png`) breathe, tilt, and celebrate using a single `AnimationController` combined with `Transform.translate`, `Transform.rotate`, Lottie aura layers, and `CustomPaint` particle overlays ([`flutter_client/lib/ui/cafe_character_animations.dart`](../../flutter_client/lib/ui/cafe_character_animations.dart)).
+- **60fps Character Choreography without Sprite Sheets:** Our crew and customer portraits breathe, tilt, and celebrate using a single `AnimationController` combined with `Transform.translate`, `Transform.rotate`, Lottie aura layers, and `CustomPaint` particle overlays ([`flutter_client/lib/ui/cafe_character_animations.dart`](../../flutter_client/lib/ui/cafe_character_animations.dart)).
 
 ### The Sweet vs. Salty Twin-Jar Mechanic
 
@@ -134,7 +134,7 @@ In [`flutter_client/lib/services/sound_player_web.dart`](../../flutter_client/li
 
 ## 5. Multi-Stage Cloud Run Container (`nginx:alpine` on Port 8080)
 
-To keep cold starts tiny and static asset delivery fast, [`flutter_client/Dockerfile`](../../flutter_client/Dockerfile) compiles the Flutter Web bundle with `--no-web-resources-cdn` (bundling `GoogleSans` and all 20 studio PNGs locally so no external font CDN can block rendering on slow venue Wi-Fi) and serves it from a stateless `nginx:alpine` image on port `8080`:
+To keep cold starts tiny and static asset delivery fast, [`flutter_client/Dockerfile`](../../flutter_client/Dockerfile) compiles the Flutter Web bundle with `--no-web-resources-cdn` (bundling `GoogleSans` and all 14 studio PNGs locally so no external font CDN can block rendering on slow venue Wi-Fi) and serves it from a stateless `nginx:alpine` image on port `8080`:
 
 ```dockerfile
 FROM ghcr.io/cirruslabs/flutter:stable AS build
@@ -148,11 +148,16 @@ RUN flutter pub get && \
     flutter build web --release \
       --no-web-resources-cdn \
       --dart-define=DEFAULT_CITY=${DEFAULT_CITY} \
-      --dart-define=GEMINI_MODEL=${GEMINI_MODEL}
+      --dart-define=GEMINI_MODEL=${GEMINI_MODEL} \
+      --dart-define=GEMINI_PROXY_PATH=/api/gemini/generate
 
 FROM nginx:alpine
+ARG GEMINI_MODEL=gemini-3.5-flash-lite
+ENV GEMINI_MODEL=${GEMINI_MODEL}
+ENV GEMINI_RATE_LIMIT=10r/s
 COPY --from=build /app/build/web /usr/share/nginx/html
-RUN printf 'server {\n  listen 8080;\n  server_name _;\n  root /usr/share/nginx/html;\n  index index.html;\n  location / {\n    try_files $uri $uri/ /index.html;\n  }\n}\n' > /etc/nginx/conf.d/default.conf
+COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
+COPY nginx/15-gemini-key.envsh /docker-entrypoint.d/15-gemini-key.envsh
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
 ```

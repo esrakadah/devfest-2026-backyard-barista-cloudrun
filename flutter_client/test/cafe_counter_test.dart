@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:backyard_barista_cloudrun/config/city_edition_controller.dart';
 import 'package:backyard_barista_cloudrun/data/ingredients_catalog.dart';
 import 'package:backyard_barista_cloudrun/main.dart';
@@ -415,7 +417,7 @@ void main() {
   );
 
   testWidgets(
-    'Subway Surfers Flame Engine 3-lane stage renders and lane pills dash-cycle Drinks, Pastries, and Twin Jars',
+    'Flame 3-lane stage renders and lane pills dash-cycle Drinks, Pastries, and Twin Jars',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(1280, 1000));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -433,9 +435,9 @@ void main() {
         ),
       );
 
-      expect(find.byKey(const Key('subway_barista_flame_stage')), findsOneWidget);
-      expect(find.byKey(const Key('magical_hogsmeade_atmosphere_overlay')), findsOneWidget);
-      expect(find.text('🪄 Lumos'), findsOneWidget);
+      expect(find.byKey(const Key('barista_flame_stage')), findsOneWidget);
+      expect(find.byKey(const Key('magical_atmosphere_overlay')), findsOneWidget);
+      expect(find.text('☕ Ready'), findsOneWidget);
       expect(find.byKey(const Key('flame_lane_pill_0')), findsOneWidget);
       expect(find.byKey(const Key('flame_lane_pill_1')), findsOneWidget);
       expect(find.byKey(const Key('flame_lane_pill_2')), findsOneWidget);
@@ -451,7 +453,53 @@ void main() {
       await tester.tap(find.byKey(const Key('flame_lane_pill_2')));
       await tester.pumpAndSettle();
       expect(find.textContaining('Ahşap Tepsi (3/3):'), findsOneWidget);
-      expect(find.text('✨ Wingardium!'), findsOneWidget);
+      expect(find.text('✨ Order up!'), findsOneWidget);
     },
   );
+
+  testWidgets('a verdict that arrives after Clear tray is dropped and the serve spinner stops', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(1280, 1200));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final pendingGeminiReply = Completer<http.Response>();
+    final judgeService = CafeJudgeService(
+      clock: fixedClock,
+      httpClient: MockClient((request) => pendingGeminiReply.future),
+      geminiProxyPath: '/api/gemini/generate',
+    );
+
+    await tester.pumpWidget(
+      BackyardBaristaApp(
+        cityController: CityEditionController(remoteConfigCityCode: 'gaziantep'),
+        judgeService: judgeService,
+      ),
+    );
+
+    await tester.tap(find.byKey(const Key('ingredient_card_espresso')));
+    await tester.tap(find.byKey(const Key('ingredient_card_baklava')));
+    final sugarFinder = find.byKey(const Key('ingredient_card_sugar_jar'));
+    await tester.ensureVisible(sugarFinder);
+    await tester.pumpAndSettle();
+    await tester.tap(sugarFinder);
+    await tester.pumpAndSettle();
+
+    final serveButton = find.byKey(const Key('serve_order_button'));
+    final serveSpinner = find.descendant(of: serveButton, matching: find.byType(CircularProgressIndicator));
+    await tester.ensureVisible(serveButton);
+    await tester.pumpAndSettle();
+    await tester.tap(serveButton);
+    await tester.pump();
+    expect(serveSpinner, findsOneWidget);
+
+    final clearButton = find.byKey(const Key('clear_tray_button'));
+    await tester.ensureVisible(clearButton);
+    await tester.tap(clearButton);
+    await tester.pump();
+
+    pendingGeminiReply.complete(http.Response('Too Many Requests', 429));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('customer_review_card')), findsNothing);
+    expect(serveSpinner, findsNothing);
+  });
 }

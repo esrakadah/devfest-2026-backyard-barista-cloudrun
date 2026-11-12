@@ -629,7 +629,7 @@ class CafeAssetThumb extends StatelessWidget {
   }
 }
 
-/// Custom-painted 4-step pipeline flow diagram for `/ai-studio-pipeline` (Slide 3).
+/// Custom-painted 4-step pipeline flow diagram for `/ai-studio-pipeline`.
 class AiStudioPipelineDiagramCard extends StatelessWidget {
   const AiStudioPipelineDiagramCard({super.key});
 
@@ -752,7 +752,7 @@ class _AiStudioPipelinePainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-/// Custom-painted horizontal Latency & Timeout Budget Bar Chart for `/real-numbers-latency` (Slide 6).
+/// Custom-painted horizontal Latency & Timeout Budget Bar Chart for `/real-numbers-latency`.
 class LatencyBudgetChartCard extends StatelessWidget {
   const LatencyBudgetChartCard({super.key});
 
@@ -801,8 +801,8 @@ class _LatencyBarsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const rows = [
-      ('Cloud Run p50 Warm', '53.81 ms (Measured)', 0.14, DeckColors.googleGreen),
-      ('Cloud Run p95 Warm', '75.52 ms (Measured)', 0.20, DeckColors.halftoneBlue),
+      ('Static Page p50 Warm', '53.81 ms (Measured)', 0.14, DeckColors.googleGreen),
+      ('Static Page p95 Warm', '75.52 ms (Measured)', 0.20, DeckColors.halftoneBlue),
       ('Offline JSON Fallback', '250 ms (_offlineBundleLoadTimeout)', 0.36, DeckColors.googleYellow),
       ('Initial TLS + Cold Start', '528.95 ms (Measured)', 0.52, DeckColors.halftonePink),
       ('Live Gemini Guardrail', '8,000 ms (_geminiRequestTimeout)', 0.96, DeckColors.googleRed),
@@ -864,7 +864,7 @@ class _LatencyBarsPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-/// Custom-painted 300-Person Room Quota Comparison Diagram for `/room-quota-trap` (Slide 8).
+/// Custom-painted 300-Person Room Quota Comparison Diagram for `/room-quota-trap`.
 class QuotaComparisonDiagramCard extends StatelessWidget {
   const QuotaComparisonDiagramCard({super.key});
 
@@ -998,7 +998,7 @@ class _QuotaComparisonPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-/// Custom-painted Round 2 Vector Artwork Showcase (`CustomVectorIngredientGraphic`) for Slide 11.
+/// Custom-painted Round 2 Vector Artwork Showcase (`CustomVectorIngredientGraphic`) for `/salt-sugar-mechanic`.
 class RoundTwoVectorPreviewCard extends StatelessWidget {
   const RoundTwoVectorPreviewCard({super.key});
 
