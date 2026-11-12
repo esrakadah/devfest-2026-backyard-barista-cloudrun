@@ -54,10 +54,11 @@ class PresenterMenuPlugin extends FlutterDeckPlugin {
         label: 'Stage Navigator & Shortcuts',
         icon: const Icon(Icons.navigation, color: DeckColors.googleYellow),
         onPressed: () {
+          final deck = context.flutterDeck;
           unawaited(
             showDialog<void>(
               context: context,
-              builder: (dialogContext) => PresenterHelpDialog(deckContext: context),
+              builder: (dialogContext) => PresenterHelpDialog(deck: deck),
             ),
           );
         },
@@ -68,9 +69,9 @@ class PresenterMenuPlugin extends FlutterDeckPlugin {
 
 /// The on-stage cheat sheet and rapid navigation modal.
 class PresenterHelpDialog extends StatefulWidget {
-  const PresenterHelpDialog({required this.deckContext, super.key});
+  const PresenterHelpDialog({required this.deck, super.key});
 
-  final BuildContext deckContext;
+  final FlutterDeck deck;
 
   @override
   State<PresenterHelpDialog> createState() => _PresenterHelpDialogState();
@@ -130,7 +131,7 @@ class _PresenterHelpDialogState extends State<PresenterHelpDialog> {
     final slideNumber = slideNumberForRoute(route);
     if (slideNumber == null) return;
     Navigator.of(context).pop();
-    widget.deckContext.flutterDeck.goToSlide(slideNumber);
+    widget.deck.goToSlide(slideNumber);
   }
 
   TextStyle _labelStyle(Color color) => TextStyle(

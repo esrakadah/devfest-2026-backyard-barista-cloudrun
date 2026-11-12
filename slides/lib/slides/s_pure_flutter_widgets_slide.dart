@@ -36,15 +36,15 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
               Expanded(
                 child: DeckFeatureCard(
                   badge: 'STAGE · BARISTAFLAMEGAME (60FPS)',
-                  title: 'FlameGame 3-Lane Arcade Stage + Hogsmeade Backdrop',
+                  title: 'FlameGame 3-Lane Arcade Stage + Night-Cafe Backdrop',
                   accentColor: DeckColors.googleYellow,
                   bullets: [
                     '60fps 3-Lane Arcade Stage: BaristaFlameGame renders Beverage, Sweet, and Prank lanes with smooth animations.',
-                    'Warm Walnut Palette (#1E130C / #F4E4CE): Rich timber stage paired with the Hogsmeade cafe backdrop.',
+                    'Warm Walnut Palette (#1E130C / #F4E4CE): Rich timber stage over a painted night-cafe backdrop.',
                     'Reactive Stage Avatars: Barista and customer sprites react live to tray drops, steam particles, and verdicts.',
                     'Deterministic Layout: Scene coordinates stay locked to the 3-lane stage while UI controls live in Flutter.',
                   ],
-                  footerText: 'flutter_client/lib/ui/subway_barista_flame_game.dart',
+                  footerText: 'flutter_client/lib/ui/barista_flame_game.dart',
                 ),
               ),
               SizedBox(width: _columnGap),

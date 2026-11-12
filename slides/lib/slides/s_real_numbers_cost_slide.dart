@@ -21,11 +21,11 @@ class RealNumbersCostSlide extends FlutterDeckSlideWidget {
   static const double _columnGap = 24;
 
   static const String _modelConstantSnippet = '''
-// flutter_client/lib/services/cafe_judge_service.dart (Lines 20-25)
+// flutter_client/lib/services/cafe_judge_service.dart
 this.geminiApiKey = const String.fromEnvironment('GEMINI_API_KEY'),
 this.geminiModel = const String.fromEnvironment(
   'GEMINI_MODEL',
-  defaultValue: 'gemini-3.5-flash-lite', // Safe for all new 2026 accounts!
+  defaultValue: 'gemini-3.5-flash-lite',
 ),
 
 // Per completed tray order (~270 tokens total):

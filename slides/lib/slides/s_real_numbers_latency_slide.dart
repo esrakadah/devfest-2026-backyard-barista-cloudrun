@@ -12,8 +12,8 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
             title: '7. Gerçek Rakamlar #1: Latency & Cold Starts',
             speakerNotes:
                 'BEAT  [11:30 - 14:00] Gerçek Rakamlar #1: Gecikme, zaman aşımı koruyucuları ve Cloud Run soğuk başlangıçları.\n'
-                'SAY   "Başlığımızda gerçek rakamlar sözü verdik; şimdi kodumuzdaki gerçek sınırları ve hedef bütçelerimizi açıkça konuşalım. CafeJudgeService içinde canlı Gemini çağrımız için tam 8 saniyelik bir zaman aşımı sınırı ve çevrimdışı JSON paketimiz için 250 milisaniyelik bir yükleme sınırı tanımlı. 150 token girdi ve 120 token yapılandırılmış JSON çıktı için hedefimiz gemini-3.5-flash-lite üzerinde p50 gecikmeyi 1 saniyenin altında tutmak. Cloud Run tarafını ise ölçtük: ısınmış isteklerde p50 53,81 milisaniye, TLS dahil ilk çağrı 528,95 milisaniye."\n'
-                'HOLD  "Fact" (cafe_judge_service.dart:11-12: 8s / 250ms; Dockerfile:1-25: nginx:alpine on PORT 8080), "Measured" (53.81 ms p50, 528.95 ms ilk çağrı, 24 Ekim) ve "Target" (<1s Gemini p50) rozetlerini özellikle vurgula; kesinleşmiş kod sabitleri ile sahne öncesi ölçüm hedeflerini birbirine karıştırma.\n'
+                'SAY   "Başlığımızda gerçek rakamlar sözü verdik; şimdi kodumuzdaki gerçek sınırları ve ölçtüğümüz süreleri açıkça konuşalım. CafeJudgeService içinde canlı Gemini çağrımız için tam 8 saniyelik bir zaman aşımı sınırı ve çevrimdışı JSON paketimiz için 250 milisaniyelik bir yükleme sınırı tanımlı. 11 Kasım\'da 12 tepsiyle ölçtük: gemini-3.5-flash-lite kararı 1,0 ile 1,8 saniyede veriyor, ortalama 1,4 saniye; laptoptaki Gemma 4 ise ısınmışken 5 ile 8,4 saniye, onun sınırı 15 saniye. Cloud Run\'ın statik sayfası ısınmışken p50 53,81 milisaniye, TLS dahil ilk çağrı 528,95 milisaniye."\n'
+                'HOLD  "Fact" (cafe_judge_service.dart:11-12: 8s / 250ms; Dockerfile:1-25: nginx:alpine on PORT 8080), "Measured" (53.81 ms p50, 528.95 ms ilk çağrı, 24 Ekim) ve Gemini 1,0-1,8 s / Gemma 5-8,4 s (11 Kasım) ölçümlerini vurgula; kod sabitleri ile ölçümleri birbirine karıştırma.\n'
                 'NEXT  "Peki 1.000 kafe siparişi değerlendirildiğinde bu çağrıların maliyeti ve model sınırları ne oluyor?"',
           ),
         );
@@ -44,9 +44,9 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                         bullets: [
                           'Defined in lib/services/cafe_judge_service.dart:11 (_geminiRequestTimeout = Duration(seconds: 8)).',
                           'Calls gemini-3.5-flash-lite with responseMimeType: application/json and 6 required schema keys.',
-                          'Target Latency: sub-second p50 on warm gemini-3.5-flash-lite (~150 input / ~120 output tokens).',
+                          'Measured 11 Nov (12 trays): 1.0-1.8 s per verdict, mean 1.4 s. Local Gemma 4 warm: 5-8.4 s, 15 s timeout.',
                         ],
-                        footerText: 'Evidence: cafe_judge_service.dart:11, 95-116',
+                        footerText: 'Evidence: cafe_judge_service.dart:11 · docs/articles/cloud-vs-local-judge-draft.md',
                       ),
                     ),
                     SizedBox(width: _gap),
@@ -58,7 +58,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                         accentColor: DeckColors.googleGreen,
                         bullets: [
                           'Defined in flutter_client/Dockerfile: multi-stage Flutter Web build served by nginx:alpine on PORT 8080.',
-                          'Measured 50-Req Warm Latency (europe-west3): 53.81 ms p50 / 75.52 ms p95 (initial TLS + cold call: 528.95 ms).',
+                          'Measured 50 requests for the static index.html (europe-west3): 53.81 ms p50 / 75.52 ms p95 (first call with TLS: 528.95 ms).',
                           'Zero server state: every order evaluation is self-contained.',
                         ],
                         footerText: 'Evidence: Dockerfile:1-25 · tool/benchmark_gaziantep.dart',
@@ -76,7 +76,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                           'Loads assets/offline_fallback/mock_responses.json once and caches reviewsByCity in memory.',
                           'If Wi-Fi drops completely, gameplay continues at 60fps with 0 ms network wait.',
                         ],
-                        footerText: 'Evidence: cafe_judge_service.dart:12, 188-215',
+                        footerText: 'Evidence: cafe_judge_service.dart:12 (_evaluateFromOfflineFallback)',
                       ),
                     ),
                   ],
