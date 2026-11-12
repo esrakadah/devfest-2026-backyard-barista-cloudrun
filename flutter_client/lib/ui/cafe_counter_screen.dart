@@ -60,6 +60,10 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   late final BaristaFlameGame _flameGame;
   bool _includeRoundTwoCustomItems = true;
   bool _isEvaluatingOrder = false;
+
+  /// Bumped whenever the tray is cleared or the city changes, so a verdict that arrives late for an
+  /// older tray is dropped instead of scoring points and playing sounds.
+  int _trayGeneration = 0;
   bool _isCrewSippingTea = false;
   bool _isCustomerSippingTea = false;
   int _activeTicketIndex = 0;
@@ -129,6 +133,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       return;
     }
     setState(() {
+      _trayGeneration++;
       _activeTicketIndex = 0;
       _selectedTray.clear();
       _latestReview = null;
@@ -241,6 +246,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
 
   void _clearTray() {
     setState(() {
+      _trayGeneration++;
       _selectedTray.clear();
       _latestReview = null;
       _syncFlameStage();
@@ -306,17 +312,26 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
     });
     _soundController.play(CafeSoundCue.serveBell);
 
-    final review = await widget.judgeService.evaluateOrder(
-      selectedIngredients: List<CafeIngredient>.unmodifiable(_selectedTray),
-      cityEdition: widget.cityController.activeEdition,
-    );
+    final servedTrayGeneration = _trayGeneration;
+    final CafeReview review;
+    try {
+      review = await widget.judgeService.evaluateOrder(
+        selectedIngredients: List<CafeIngredient>.unmodifiable(_selectedTray),
+        cityEdition: widget.cityController.activeEdition,
+      );
+    } finally {
+      if (mounted && _isEvaluatingOrder) {
+        setState(() {
+          _isEvaluatingOrder = false;
+        });
+      }
+    }
 
-    if (!mounted) {
+    if (!mounted || servedTrayGeneration != _trayGeneration) {
       return;
     }
     final previousLevel = _crewLevel;
     setState(() {
-      _isEvaluatingOrder = false;
       _latestReview = review;
       _tipJarTotal += review.cityBonusTip;
       if (review.isPrankCaught) {
@@ -2602,10 +2617,10 @@ class _CustomerReviewCard extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       isEnglish
-                          ? 'City: ${cityEdition.cityName} · Tip: +${currentReview.cityBonusTip} pts · '
-                              'Judge: ${currentReview.localizedJudgeLabel(languageCode)}'
-                          : 'Şehir: ${cityEdition.cityName} · Bahşiş: +${currentReview.cityBonusTip}p · '
-                              'Jüri: ${currentReview.localizedJudgeLabel(languageCode)}',
+                          ? 'City: ${cityEdition.cityName} · Tip: +${currentReview.cityBonusTip} pts'
+                              '${isIncomplete ? '' : ' · Judge: ${currentReview.localizedJudgeLabel(languageCode)}'}'
+                          : 'Şehir: ${cityEdition.cityName} · Bahşiş: +${currentReview.cityBonusTip}p'
+                              '${isIncomplete ? '' : ' · Jüri: ${currentReview.localizedJudgeLabel(languageCode)}'}',
                       style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFFC9B086)),
                     ),
                     FilledButton.tonalIcon(
