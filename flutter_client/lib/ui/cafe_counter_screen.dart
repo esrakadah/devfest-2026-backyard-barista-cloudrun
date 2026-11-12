@@ -8,10 +8,10 @@ import 'package:backyard_barista_cloudrun/models/customer_order_ticket.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
 import 'package:backyard_barista_cloudrun/services/nfc_tag_controller.dart';
+import 'package:backyard_barista_cloudrun/ui/barista_flame_game.dart';
 import 'package:backyard_barista_cloudrun/ui/cafe_character_animations.dart';
 import 'package:backyard_barista_cloudrun/ui/city_settings_drawer.dart';
 import 'package:backyard_barista_cloudrun/ui/nfc_tag_writer_sheet.dart';
-import 'package:backyard_barista_cloudrun/ui/subway_barista_flame_game.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -34,7 +34,7 @@ const int _incompleteRoundPoints = 15;
 const int _baristaRoundPoints = 50;
 const Duration _cardScaleDuration = Duration(milliseconds: 160);
 
-/// Subway Surfers-inspired 3-Lane Arcade Cafe Scene powered by Flame (`SubwayBaristaFlameGame`),
+/// 3-lane arcade cafe scene powered by Flame (`BaristaFlameGame`),
 /// Lottie animations, and `GoogleSans` typography.
 class CafeCounterScreen extends StatefulWidget {
   const CafeCounterScreen({
@@ -57,7 +57,7 @@ class CafeCounterScreen extends StatefulWidget {
 class _CafeCounterScreenState extends State<CafeCounterScreen> {
   final List<CafeIngredient> _selectedTray = <CafeIngredient>[];
   final CafeSoundController _soundController = CafeSoundController();
-  late final SubwayBaristaFlameGame _flameGame;
+  late final BaristaFlameGame _flameGame;
   bool _includeRoundTwoCustomItems = true;
   bool _isEvaluatingOrder = false;
   bool _isCrewSippingTea = false;
@@ -72,7 +72,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   @override
   void initState() {
     super.initState();
-    _flameGame = SubwayBaristaFlameGame(
+    _flameGame = BaristaFlameGame(
       initialCityId: widget.cityController.activeCityId,
       onLaneTapped: _handleFlameLaneTapped,
       onSwipeServeRequested: _serveOrder,
@@ -448,26 +448,8 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
           body: Stack(
             fit: StackFit.expand,
             children: <Widget>[
-              // Full-bleed Universal Studios Hogsmeade Village, Hogwarts Express 5972 & Hogwarts Castle World Backdrop
-              Positioned.fill(
-                child: Image.asset(
-                  CafeCharacterAssets.hogsmeadeUniversalStage,
-                  fit: BoxFit.cover,
-                  alignment: const Alignment(0, -0.15),
-                  errorBuilder: (context, error, stackTrace) {
-                    return const DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: <Color>[Color(0xFF0B101B), Color(0xFF151E30)],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              // Subtle atmospheric Hogsmeade twilight vignette so HUD glass panels and golden text pop cleanly
+              const Positioned.fill(child: _NightCafeBackdrop()),
+              // Darkens the top and bottom so the HUD glass panels and golden text stay readable.
               const Positioned.fill(
                 child: DecoratedBox(
                   decoration: BoxDecoration(
@@ -486,7 +468,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                 ),
               ),
               Positioned.fill(
-                child: MagicalHogsmeadeAtmosphereOverlay(
+                child: MagicalAtmosphereOverlay(
                   platedItemCount: _selectedTray.length,
                   isSippingTea: _isCrewSippingTea || _isCustomerSippingTea,
                   hasActiveReview: latestReview != null,
@@ -558,7 +540,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                           includeRoundTwoCustomItems: _includeRoundTwoCustomItems,
                         );
 
-                        final flameRunwayStageWidget = _SubwayFlameRunwayStage(
+                        final flameRunwayStageWidget = _FlameRunwayStage(
                           flameGame: _flameGame,
                           languageCode: languageCode,
                           selectedTray: _selectedTray,
@@ -692,8 +674,8 @@ class _NfcCounterMenuButton extends StatelessWidget {
 }
 
 /// Full-Stage 3-Lane Flame Courtyard Game Arena with in-lane item pickup medallions.
-class _SubwayFlameRunwayStage extends StatelessWidget {
-  const _SubwayFlameRunwayStage({
+class _FlameRunwayStage extends StatelessWidget {
+  const _FlameRunwayStage({
     required this.flameGame,
     required this.languageCode,
     required this.selectedTray,
@@ -704,7 +686,7 @@ class _SubwayFlameRunwayStage extends StatelessWidget {
     required this.onSelectLaneIngredient,
   });
 
-  final SubwayBaristaFlameGame flameGame;
+  final BaristaFlameGame flameGame;
   final String languageCode;
   final List<CafeIngredient> selectedTray;
   final List<CafeIngredient> drinkItems;
@@ -756,7 +738,7 @@ class _SubwayFlameRunwayStage extends StatelessWidget {
         );
 
         return Container(
-          key: const Key('subway_barista_flame_stage'),
+          key: const Key('barista_flame_stage'),
           decoration: BoxDecoration(
             color: const Color(0x990D1422),
             borderRadius: BorderRadius.circular(20),
@@ -774,33 +756,15 @@ class _SubwayFlameRunwayStage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                // Interactive 3-Lane Universal Studios Hogsmeade & Hogwarts Castle Stage
                 SizedBox(
                   height: isWideArena ? _wideRunwayStageHeight : _compactRunwayStageHeight,
                   child: Stack(
                     fit: StackFit.expand,
                     children: <Widget>[
-                      // Panoramic Universal Studios Hogsmeade Village + Hogwarts Express 5972 + Hogwarts Castle backdrop
-                      Image.asset(
-                        CafeCharacterAssets.hogsmeadeUniversalStage,
-                        fit: BoxFit.cover,
-                        alignment: const Alignment(0, -0.22),
-                        errorBuilder: (context, error, stackTrace) {
-                          return const DecoratedBox(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: <Color>[Color(0xFF0F172A), Color(0xFF1E150F)],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      GameWidget<SubwayBaristaFlameGame>(
+                      const _NightCafeBackdrop(),
+                      GameWidget<BaristaFlameGame>(
                         game: flameGame,
                       ),
-                      // 3D Generated Harry Potter Runner Character gliding across the 3 lanes
                       IgnorePointer(
                         child: AnimatedAlign(
                           duration: const Duration(milliseconds: 280),
@@ -809,7 +773,7 @@ class _SubwayFlameRunwayStage extends StatelessWidget {
                             (flameGame.activeRunnerLane - 1) * 0.60,
                             0.36,
                           ),
-                          child: _HarryPotterLaneRunnerAvatar(
+                          child: _LaneRunnerAvatar(
                             selectedTray: selectedTray,
                             isWideArena: isWideArena,
                           ),
@@ -924,10 +888,10 @@ class _SubwayFlameRunwayStage extends StatelessWidget {
   }
 }
 
-/// 3D Generated Harry Potter Wizard Character token gliding across the 3 Hogwarts lanes with a carved oak tray
+/// Runner token gliding across the 3 lanes with a carved oak tray
 /// and 60fps Wingardium Leviosa levitation + Lottie spell aura.
-class _HarryPotterLaneRunnerAvatar extends StatefulWidget {
-  const _HarryPotterLaneRunnerAvatar({
+class _LaneRunnerAvatar extends StatefulWidget {
+  const _LaneRunnerAvatar({
     required this.selectedTray,
     required this.isWideArena,
   });
@@ -936,11 +900,10 @@ class _HarryPotterLaneRunnerAvatar extends StatefulWidget {
   final bool isWideArena;
 
   @override
-  State<_HarryPotterLaneRunnerAvatar> createState() => _HarryPotterLaneRunnerAvatarState();
+  State<_LaneRunnerAvatar> createState() => _LaneRunnerAvatarState();
 }
 
-class _HarryPotterLaneRunnerAvatarState extends State<_HarryPotterLaneRunnerAvatar>
-    with SingleTickerProviderStateMixin {
+class _LaneRunnerAvatarState extends State<_LaneRunnerAvatar> with SingleTickerProviderStateMixin {
   late final AnimationController _levitationController;
 
   @override
@@ -1036,13 +999,13 @@ class _HarryPotterLaneRunnerAvatarState extends State<_HarryPotterLaneRunnerAvat
                 ),
                 child: ClipOval(
                   child: Image.asset(
-                    CafeCharacterAssets.harryPotterStageRunner,
+                    CafeCharacterAssets.laneRunner,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return const ColoredBox(
                         color: Color(0xFF2B1B10),
                         child: Icon(
-                          Icons.auto_fix_high_rounded,
+                          Icons.coffee_rounded,
                           color: Color(0xFFD4AF37),
                         ),
                       );
@@ -1061,7 +1024,7 @@ class _HarryPotterLaneRunnerAvatarState extends State<_HarryPotterLaneRunnerAvat
                     border: Border.all(color: const Color(0xFFD4AF37), width: 1.4),
                   ),
                   child: Text(
-                    platedCount >= 3 ? '✨ Wingardium!' : '🪄 Lumos',
+                    platedCount >= 3 ? '✨ Order up!' : '☕ Ready',
                     style: const TextStyle(
                       fontSize: 9,
                       fontWeight: FontWeight.w800,
@@ -1092,7 +1055,7 @@ class _HarryPotterLaneRunnerAvatarState extends State<_HarryPotterLaneRunnerAvat
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   const Text(
-                    '⚡ Harry',
+                    '☕ Runner',
                     style: TextStyle(
                       fontSize: 10.5,
                       fontWeight: FontWeight.w800,
@@ -1347,7 +1310,7 @@ class _RunwayLaneQuickPill extends StatelessWidget {
   }
 }
 
-/// Decorative Hogwarts / Gryffindor crimson velvet & antique gold banner valance beneath the AppBar.
+/// Decorative crimson velvet and antique gold valance beneath the AppBar.
 class _ScallopedAwningEdge extends StatelessWidget {
   const _ScallopedAwningEdge();
 
@@ -1821,7 +1784,7 @@ class _ScorePill extends StatelessWidget {
   }
 }
 
-/// Step 1 of the Cafe Loop: Gothic Arched Customer Window + Hogwarts Parchment Order Scroll.
+/// Step 1 of the Cafe Loop: Arched customer window and parchment order scroll.
 class _CustomerOrderStage extends StatelessWidget {
   const _CustomerOrderStage({
     required this.ticket,
@@ -1923,7 +1886,6 @@ class _CustomerOrderStage extends StatelessWidget {
             onSipTeaCompleted: onSipTeaCompleted,
           ),
           const SizedBox(width: 12),
-          // Hogsmeade Midnight & Gold Customer Order Scroll Overlay with Crimson Wax Seal
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(11),
@@ -1946,7 +1908,6 @@ class _CustomerOrderStage extends StatelessWidget {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            // Crimson Hogwarts Wax Seal emblem
                             Container(
                               width: 18,
                               height: 18,
@@ -2217,7 +2178,6 @@ class _InteractiveWoodenTray extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          // Hogsmeade Dark Obsidian & Brass inner tray mat with 3 dedicated station coasters
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -2377,7 +2337,7 @@ class _InteractiveWoodenTray extends StatelessWidget {
                       child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFFF3E5C8)),
                     )
                   : Icon(
-                      isTrayEmpty ? Icons.auto_fix_high_rounded : Icons.room_service_rounded,
+                      isTrayEmpty ? Icons.coffee_rounded : Icons.room_service_rounded,
                       color: const Color(0xFFD4AF37),
                     ),
               label: Text(
@@ -2521,7 +2481,7 @@ class _TrayStationSlotCoaster extends StatelessWidget {
   }
 }
 
-/// Hogwarts Wax-Sealed Gemini Verdict Scroll Card with "Next Customer" progression.
+/// Wax-sealed judge verdict scroll card with "Next Customer" progression.
 class _CustomerReviewCard extends StatelessWidget {
   const _CustomerReviewCard({
     required this.review,
@@ -2666,6 +2626,37 @@ class _CustomerReviewCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Painted night-cafe backdrop: a navy-to-walnut sky with a warm lantern glow over the counter.
+class _NightCafeBackdrop extends StatelessWidget {
+  const _NightCafeBackdrop();
+
+  static const Alignment _lanternGlowCenter = Alignment(0, 0.35);
+  static const double _lanternGlowRadius = 0.9;
+
+  @override
+  Widget build(BuildContext context) {
+    return const DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[Color(0xFF0B101B), Color(0xFF1B2236), Color(0xFF2A1A10)],
+        ),
+      ),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            center: _lanternGlowCenter,
+            radius: _lanternGlowRadius,
+            colors: <Color>[Color(0x55E08E45), Color(0x00E08E45)],
+          ),
+        ),
+        child: SizedBox.expand(),
       ),
     );
   }

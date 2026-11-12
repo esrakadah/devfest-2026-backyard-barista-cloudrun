@@ -415,7 +415,7 @@ void main() {
   );
 
   testWidgets(
-    'Subway Surfers Flame Engine 3-lane stage renders and lane pills dash-cycle Drinks, Pastries, and Twin Jars',
+    'Flame 3-lane stage renders and lane pills dash-cycle Drinks, Pastries, and Twin Jars',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(1280, 1000));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -433,9 +433,9 @@ void main() {
         ),
       );
 
-      expect(find.byKey(const Key('subway_barista_flame_stage')), findsOneWidget);
-      expect(find.byKey(const Key('magical_hogsmeade_atmosphere_overlay')), findsOneWidget);
-      expect(find.text('🪄 Lumos'), findsOneWidget);
+      expect(find.byKey(const Key('barista_flame_stage')), findsOneWidget);
+      expect(find.byKey(const Key('magical_atmosphere_overlay')), findsOneWidget);
+      expect(find.text('☕ Ready'), findsOneWidget);
       expect(find.byKey(const Key('flame_lane_pill_0')), findsOneWidget);
       expect(find.byKey(const Key('flame_lane_pill_1')), findsOneWidget);
       expect(find.byKey(const Key('flame_lane_pill_2')), findsOneWidget);
@@ -451,7 +451,7 @@ void main() {
       await tester.tap(find.byKey(const Key('flame_lane_pill_2')));
       await tester.pumpAndSettle();
       expect(find.textContaining('Ahşap Tepsi (3/3):'), findsOneWidget);
-      expect(find.text('✨ Wingardium!'), findsOneWidget);
+      expect(find.text('✨ Order up!'), findsOneWidget);
     },
   );
 }

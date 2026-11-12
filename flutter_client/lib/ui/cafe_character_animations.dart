@@ -874,8 +874,7 @@ class CafeCrewCharacterStage extends StatelessWidget {
           key: const Key('crew_character_barista_p1'),
           portraitAssetPath: CafeCharacterAssets.baristaPlayerOne,
           characterTitle: isEnglish ? 'P1 · Master Barista Esra' : 'P1 · Barista Esra',
-          roleSubtitle:
-              isEnglish ? 'Station 1 · Three Broomsticks Espresso Bar' : 'İstasyon 1 · Üç Süpürge Kahve & İksir Barı',
+          roleSubtitle: isEnglish ? 'Station 1 · Copper Cezve Espresso Bar' : 'İstasyon 1 · Bakır Cezve Kahve Barı',
           speechText: _baristaSpeechLine(isEnglish),
           scoreLabel: '${playerOneScore}p',
           mood: _baristaMood,
@@ -892,9 +891,10 @@ class CafeCrewCharacterStage extends StatelessWidget {
         final pastryChefCard = _CrewCharacterCard(
           key: const Key('crew_character_pastry_p2'),
           portraitAssetPath: CafeCharacterAssets.pastryChefPlayerTwo,
-          characterTitle: isEnglish ? 'P2 · Apothecary & Pastry Can' : 'P2 · Tatlı & Şaka Can',
-          roleSubtitle:
-              isEnglish ? 'Station 2 & 3 · Honeydukes & Twin Jars' : 'İstasyon 2 & 3 · Honeydukes Tatlı & İkiz Kavanoz',
+          characterTitle: isEnglish ? 'P2 · Pastry & Prank Can' : 'P2 · Tatlı & Şaka Can',
+          roleSubtitle: isEnglish
+              ? 'Station 2 & 3 · Dessert Vitrine & Twin Jars'
+              : 'İstasyon 2 & 3 · Tatlı Vitrini & İkiz Kavanoz',
           speechText: _pastryChefSpeechLine(isEnglish),
           scoreLabel: '${playerTwoScore}p',
           mood: _pastryChefMood,
@@ -1077,12 +1077,12 @@ class _CrewCharacterCard extends StatelessWidget {
   }
 }
 
-/// Full-viewport 60fps Universal Studios Hogsmeade & Hogwarts Castle Magical Atmosphere Overlay.
+/// Full-viewport 60fps atmosphere overlay for the night-cafe stage.
 ///
-/// Renders drifting Hogsmeade snow-starlight motes, golden Lumos wand fireflies,
+/// Renders drifting snow-starlight motes, golden fireflies,
 /// and interactive spell-cast aura waves across the full screen without blocking pointer events.
-class MagicalHogsmeadeAtmosphereOverlay extends StatefulWidget {
-  const MagicalHogsmeadeAtmosphereOverlay({
+class MagicalAtmosphereOverlay extends StatefulWidget {
+  const MagicalAtmosphereOverlay({
     required this.platedItemCount,
     required this.isSippingTea,
     required this.hasActiveReview,
@@ -1096,11 +1096,10 @@ class MagicalHogsmeadeAtmosphereOverlay extends StatefulWidget {
   final bool isSabotageReview;
 
   @override
-  State<MagicalHogsmeadeAtmosphereOverlay> createState() => _MagicalHogsmeadeAtmosphereOverlayState();
+  State<MagicalAtmosphereOverlay> createState() => _MagicalAtmosphereOverlayState();
 }
 
-class _MagicalHogsmeadeAtmosphereOverlayState extends State<MagicalHogsmeadeAtmosphereOverlay>
-    with SingleTickerProviderStateMixin {
+class _MagicalAtmosphereOverlayState extends State<MagicalAtmosphereOverlay> with SingleTickerProviderStateMixin {
   late final AnimationController _atmosphereController;
 
   @override
@@ -1131,9 +1130,9 @@ class _MagicalHogsmeadeAtmosphereOverlayState extends State<MagicalHogsmeadeAtmo
           animation: _atmosphereController,
           builder: (context, _) {
             return CustomPaint(
-              key: const Key('magical_hogsmeade_atmosphere_overlay'),
+              key: const Key('magical_atmosphere_overlay'),
               size: Size.infinite,
-              painter: _MagicalHogsmeadeAtmospherePainter(
+              painter: _MagicalAtmospherePainter(
                 phase: _atmosphereController.value * math.pi * 2,
                 platedItemCount: widget.platedItemCount,
                 isSippingTea: widget.isSippingTea,
@@ -1148,8 +1147,8 @@ class _MagicalHogsmeadeAtmosphereOverlayState extends State<MagicalHogsmeadeAtmo
   }
 }
 
-class _MagicalHogsmeadeAtmospherePainter extends CustomPainter {
-  const _MagicalHogsmeadeAtmospherePainter({
+class _MagicalAtmospherePainter extends CustomPainter {
+  const _MagicalAtmospherePainter({
     required this.phase,
     required this.platedItemCount,
     required this.isSippingTea,
@@ -1186,7 +1185,6 @@ class _MagicalHogsmeadeAtmospherePainter extends CustomPainter {
       return;
     }
 
-    // 1. Drifting Hogsmeade Snow-Starlight & Golden Lumos Fireflies across the full viewport
     for (var index = 0; index < _starlightFireflyCount; index++) {
       final seed = index * 1.6180339;
       final normalizedX = ((seed * 0.37) + math.sin(phase * 0.5 + index) * 0.03) % 1.0;
@@ -1194,22 +1192,22 @@ class _MagicalHogsmeadeAtmospherePainter extends CustomPainter {
       final x = normalizedX * size.width;
       final y = normalizedY * size.height;
       final twinkle = 0.45 + 0.55 * math.sin(phase * 2.0 + index * 1.3).abs();
-      final isGoldenLumos = index % 3 != 0;
+      final isGoldenFirefly = index % 3 != 0;
       final baseColor = isSabotageReview && index.isEven
           ? const Color(0xFFFF7043)
-          : isGoldenLumos
+          : isGoldenFirefly
               ? const Color(0xFFFFD54F)
               : const Color(0xFFE0F2FE);
 
       canvas.drawCircle(
         Offset(x, y),
-        (isGoldenLumos ? 7.5 : 5.5) * twinkle,
+        (isGoldenFirefly ? 7.5 : 5.5) * twinkle,
         Paint()..color = baseColor.withValues(alpha: 0.16 * twinkle),
       );
       _drawStar(
         canvas,
         Offset(x, y),
-        (isGoldenLumos ? 4.4 : 3.2) * twinkle,
+        (isGoldenFirefly ? 4.4 : 3.2) * twinkle,
         baseColor.withValues(alpha: 0.72 * twinkle),
       );
     }
@@ -1238,7 +1236,7 @@ class _MagicalHogsmeadeAtmospherePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _MagicalHogsmeadeAtmospherePainter oldDelegate) {
+  bool shouldRepaint(covariant _MagicalAtmospherePainter oldDelegate) {
     return oldDelegate.phase != phase ||
         oldDelegate.platedItemCount != platedItemCount ||
         oldDelegate.isSippingTea != isSippingTea ||
