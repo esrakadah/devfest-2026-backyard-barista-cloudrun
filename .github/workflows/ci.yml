@@ -20,7 +20,7 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Verify flutter_client (Analyze & 8 Widget Tests)
+      - name: Verify flutter_client (format, analyze, test)
         working-directory: flutter_client
         run: |
           flutter pub get
@@ -28,7 +28,7 @@ jobs:
           flutter analyze
           flutter test
 
-      - name: Verify slides (Analyze & 29 Deck Render Tests)
+      - name: Verify slides (analyze, test)
         working-directory: slides
         run: |
           flutter pub get

@@ -11,7 +11,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
             route: '/hybrid-asset-pipeline',
             title: '12. Hybrid Asset Pipeline: 14 Studio PNGs + On-the-Fly AI SVGs',
             speakerNotes:
-                'BEAT  [22:30 - 25:00] Hibrit Görsel Boru Hattı: 20 Hazır Stüdyo PNG + Yolda Üretilen AI Vektörleri.\n'
+                'BEAT  [22:30 - 25:00] Hibrit Görsel Boru Hattı: 14 Hazır Stüdyo PNG + Yolda Üretilen AI Vektörleri.\n'
                 'SAY   "Bir oyun atölyesinde en çok vakit kaybettiren şey görsel bulmak ve yüklemektir. Biz bunu hibrit bir boru hattıyla çözdük: 3 içecek, 3 tatlı, 3 şaka malzemesi ve 3 müşteri tepkisinden oluşan toplam 12 adet yüksek çözünürlüklü 1. Tur PNG görselini, 2 adet 2. Tur özel PNG görselini ve 6 adet 3D karakter portresini doğrudan GitHub repomuzun içinde hazır veriyoruz. Ardından 2. Turda herkes kendi özel imza tatlısını ve kendi şaka malzemesini Google AI Studio veya Antigravity ile anında CustomPaint vektör kodu olarak üretiyor. Sıfır dosya yükleme hatası, anında görsel sonuç!"\n'
                 'HOLD  Soldaki hazır PNG vitrinini ve sağdaki yolda üretilen CustomPaint vektör akışını göster. [Fact (flutter_client/assets/): 14 PNGs in assets/base/ (12 Round-1 + 2 Round-2), 5 Lottie JSONs in assets/animations/, 10 audio WAVs + Web Audio API synth in assets/audio/].\n'
                 'NEXT  "Şimdi bilgisayarlarımızı ve telefonlarımızı açıyoruz: 3 turluk canlı inşa maratonumuz başlıyor!"',

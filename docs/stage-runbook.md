@@ -4,10 +4,12 @@ Bu doküman sahnedeki teknik delivery'nin tek kontrol listesidir: ne zaman ne ko
 
 | Etkinlik | Tarih | Dil | Format |
 |---|---|---|---|
-| DevFest Berlin | 14 Kasım 2026 | EN | 2 x 45 dk Vibe Lounge |
+| DevFest Berlin | 14 Kasım 2026 | EN | 10:00 Room 2, 45 dk konuşma ([İngilizce akış kartı](berlin-45-en.md)), sonra 11:00-15:00 Vibe Lounge (katılımcılar Google'ın resmi Barista rehberini izler) |
 | DevFest Gaziantep | 15 Kasım 2026 | TR | 80 dk atölye veya 2 x 45 dk Vibe Lounge |
 | DevFest Adana | 11 Aralık 2026 | TR | 30+10 dk ana salon |
 | DevFest İstanbul | 19 Aralık 2026 | TR | 30+10 dk ana salon |
+
+Berlin günü akşamı Gaziantep uçuşu 20:40: Vibe Lounge 15:00'te biter, havalimanı için zamanında çık. Laptopu, USB'deki PDF yedeğini ve NFC etiketlerini el bagajına koy.
 
 ---
 
@@ -42,6 +44,7 @@ Bu doküman sahnedeki teknik delivery'nin tek kontrol listesidir: ne zaman ne ko
    curl -s -o /dev/null -w '%{http_code}\n' https://backyard-barista-389486729482.europe-west3.run.app
    curl -s -o /dev/null -w '%{http_code}\n' https://backyard-barista-870328613866.europe-west1.run.app
    ```
+   `europe-west1` aynasında Gemini anahtarı yok: `200` döner ama kararlar paketlenmiş cevaplardan gelir. Gemini'ı sahnede sadece `europe-west3` üzerinde göster.
 6. **Yerel Gemma jürisi (sadece Ollama'lı laptopta):** model indirilmiş olmalı (`ollama list` içinde `gemma4:12b-it-qat`, 7.2 GB). Yoksa evde, hızlı ağda `ollama pull gemma4:12b-it-qat`; salon Wi-Fi'ında indirme. Sonra bir prova turu:
    ```bash
    cd flutter_client
@@ -53,7 +56,7 @@ Bu doküman sahnedeki teknik delivery'nin tek kontrol listesidir: ne zaman ne ko
 ## T-2 saat: Salon Kurulumu
 
 - Projektör çözünürlüğünü öğren. Deck 1920x1080 mantıksal kanvasta tasarlandı ve her ekrana ölçeklenir; 4:3 projektörde üst ve altta siyah bant olur, içerik kaybolmaz.
-- Sahne laptopunda: deck (`flutter run -d chrome` veya `build/web`), canlı oyun sekmesi, `ai_studio_lane_a/index.html` (49.5 KB, çevrimdışı açılır) ve PDF yedeği açık olsun.
+- Sahne laptopunda: deck (`flutter run -d chrome` veya `build/web`), canlı oyun sekmesi, `ai_studio_lane_a/index.html` (49.5 KB) ve PDF yedeği açık olsun. Lane A dosyasını reponun içinden aç: görselleri `../flutter_client/assets/` yolundan okur, tek başına kopyalanırsa görseller internetten gelir.
 - Telefon hotspot'unu hazırla; salon Wi-Fi'ına güvenme.
 - Kendi Gemini anahtarını **sadece yerel** çalıştırmada kullan. Asla `--dart-define=GEMINI_API_KEY` ile public bir web build'i Cloud Run'a deploy etme: dart-define değerleri tarayıcının indirdiği JavaScript'e gömülür.
 - Ödülleri (piksel gözlükler, Dash) sahneye koy; slayt 3'te gösterilecek.
@@ -94,7 +97,7 @@ Etkinlikten sonra varsayılana dön: `launchctl unsetenv OLLAMA_KEEP_ALIVE`, ard
 
 ## Sahnede: 5 Perdelik Akış
 
-| Perde | Slaytlar | 80 dk atölye | 45 dk Vibe Lounge | 30 dk ana salon |
+| Perde | Slaytlar | 80 dk atölye | 45 dk konuşma (Berlin, [akış kartı](berlin-45-en.md)) | 30 dk ana salon |
 |---|---|---|---|---|
 | 1 · Hook | 1-3 | 00:00-05:00 | 4 dk | 3 dk |
 | 2 · Tools | 4-6 | 05:00-11:30 | 4 dk | 4 dk |
@@ -108,13 +111,13 @@ Her slaytın sağ üstündeki hikaye şeridi salona nerede olduğumuzu gösterir
 
 | Belirti | Sahnede yapılacak | Komut veya eylem |
 |---|---|---|
-| Wi-Fi tamamen koptu | Slayt 16 (`/demo-hiccup`), "tam da bunun için tasarladık" | `flutter run -d chrome --dart-define=OFFLINE_MODE=true` |
+| Wi-Fi tamamen koptu | Slayt 16 (`/demo-hiccup`), "tam da bunun için tasarladık" | `flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep --dart-define=OFFLINE_MODE=true --dart-define=LOCAL_JUDGE_URL=http://localhost:11434/api/chat` (karar Gemma'dan, o da yoksa paketten) |
 | Yerel jüri yavaş veya `localGemma` gelmiyor | Paketlenmiş cevaplar devrede, oyun durmaz | `lsof -nP -iTCP:11434` ile Ollama'yı tutan süreci bul, `ollama ps` ile model yüklü mü bak, T-10 adım 3'ü tekrarla |
 | HTTP 429 | Slayt 9'a atıf, uygulama zaten çevrimdışı jüriye düştü | Eylem gerekmez |
 | Deck çöktü veya laptop dondu | PDF yedeğine geç | `build/slides/backyard_barista_deck.pdf` |
 | AI Studio yavaş | Lane A referans oyununu aç (`49.5 KB`, 3 yuvalı tepsi + 3 müşteri kuyruğu) | `ai_studio_lane_a/index.html` |
 | Katılımcı geride kaldı | Bir sonraki kontrol noktasına atla, eski turu bitirmeye çalışma | `prompts/step-N-*.md` veya `git checkout step-N` (veya `Tur 2 Özel Menü: ON`) |
-| Lane B deploy fatura istiyor | Bugün için Lane A deploy'una yönlendir | AI Studio'da "Deploy to Cloud Run" |
+| Lane B deploy fatura istiyor | Bugün için Lane A deploy'una yönlendir | AI Studio'da "Publish" |
 
 ## Sonrası
 
