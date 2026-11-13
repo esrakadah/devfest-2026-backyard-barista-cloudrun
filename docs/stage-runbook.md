@@ -6,6 +6,7 @@ Bu doküman sahnedeki teknik delivery'nin tek kontrol listesidir: ne zaman ne ko
 |---|---|---|---|
 | DevFest Berlin | 14 Kasım 2026 | EN | 10:00 Room 2, 45 dk konuşma ([İngilizce akış kartı](berlin-45-en.md)), sonra 11:00-15:00 Vibe Lounge (katılımcılar Google'ın resmi Barista rehberini izler) |
 | DevFest Gaziantep | 15 Kasım 2026 | TR | 80 dk atölye veya 2 x 45 dk Vibe Lounge |
+| DevFest Konya | 21 Kasım 2026 | TR | 14:30 ana salon, 30 dk ([Konya akış kartı](konya-demo-runbook.md)) |
 | DevFest Adana | 11 Aralık 2026 | TR | 30+10 dk ana salon |
 | DevFest İstanbul | 19 Aralık 2026 | TR | 30+10 dk ana salon |
 
