@@ -1,6 +1,7 @@
 import 'package:backyard_barista_deck/slides/s_ai_studio_pipeline_slide.dart';
 import 'package:backyard_barista_deck/slides/s_architecture_recap_slide.dart';
 import 'package:backyard_barista_deck/slides/s_demo_hiccup_slide.dart';
+import 'package:backyard_barista_deck/slides/s_generate_vs_decide_slide.dart';
 import 'package:backyard_barista_deck/slides/s_hybrid_asset_pipeline_slide.dart';
 import 'package:backyard_barista_deck/slides/s_live_build_dashboard_slide.dart';
 import 'package:backyard_barista_deck/slides/s_meet_antigravity_slide.dart';
@@ -19,6 +20,7 @@ import 'package:flutter_deck/flutter_deck.dart';
 export 's_ai_studio_pipeline_slide.dart';
 export 's_architecture_recap_slide.dart';
 export 's_demo_hiccup_slide.dart';
+export 's_generate_vs_decide_slide.dart';
 export 's_hybrid_asset_pipeline_slide.dart';
 export 's_live_build_dashboard_slide.dart';
 export 's_meet_antigravity_slide.dart';
@@ -55,9 +57,10 @@ const List<FlutterDeckSlideWidget> mainSlides = [
 /// Backup slides after the closing slide, reachable via PresenterMenuPlugin.
 const List<FlutterDeckSlideWidget> backupSlides = [
   DemoHiccupSlide(),
+  GenerateVsDecideSlide(),
 ];
 
-/// Full running order (15 main slides + 1 backup slide).
+/// Full running order (15 main slides + 2 backup slides).
 const List<FlutterDeckSlideWidget> deckSlides = [
   ...mainSlides,
   ...backupSlides,

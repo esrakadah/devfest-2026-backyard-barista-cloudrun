@@ -18,7 +18,7 @@ Berlin günü akşamı Gaziantep uçuşu 20:40: Vibe Lounge 15:00'te biter, hava
 1. **Deck testleri yeşil mi?**
    ```bash
    cd slides
-   flutter analyze && flutter test        # manifest, konuşmacı notları, 16 slaytın gerçek fontlarla render'ı
+   flutter analyze && flutter test        # manifest, konuşmacı notları, 17 slaytın gerçek fontlarla render'ı
    ```
 2. **PDF yedek desteyi üret** (sahne bilgisayarı Flutter çalıştıramazsa herhangi bir makineden sunulur):
    ```bash

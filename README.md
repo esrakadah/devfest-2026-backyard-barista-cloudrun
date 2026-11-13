@@ -104,7 +104,7 @@ devfest-2026-backyard-barista-cloudrun/
 │   │   ├── main.dart
 │   │   ├── theme.dart
 │   │   ├── plugins/presenter_menu_plugin.dart
-│   │   └── slides/            # Slides 1..15 + /demo-hiccup backup slide
+│   │   └── slides/            # Slides 1..15 + /demo-hiccup and /generate-vs-decide backup slides
 │   ├── test/
 │   │   ├── deck_manifest_test.dart
 │   │   └── slides_render_test.dart  # Renders every slide with the real fonts and fails on any overflow
