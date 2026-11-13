@@ -17,6 +17,7 @@
   - `gaziantep` (🇹🇷 DevFest Gaziantep, 15 Nov 2026)
   - `adana` (🇹🇷 DevFest Adana, 11 Dec 2026)
   - `istanbul` (🇹🇷 DevFest Istanbul, 19 Dec 2026)
+  - `konya` (🇹🇷 DevFest Konya, 21 Nov 2026; neutral texts, no local menu yet)
 
 ![Backyard Barista 2x2 Desktop Counter](docs/visuals/game-counter-desktop.png)
 

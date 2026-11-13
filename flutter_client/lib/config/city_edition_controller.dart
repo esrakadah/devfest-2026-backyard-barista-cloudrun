@@ -8,7 +8,8 @@ enum CityEditionId {
   berlin('berlin'),
   gaziantep('gaziantep'),
   adana('adana'),
-  istanbul('istanbul');
+  istanbul('istanbul'),
+  konya('konya');
 
   const CityEditionId(this.code);
 
@@ -25,7 +26,7 @@ enum CityEditionId {
   }
 }
 
-/// Immutable configuration for a single DevFest City Edition (`Berlin`, `Gaziantep`, `Adana`, `Istanbul`).
+/// Immutable configuration for a single DevFest City Edition (`Berlin`, `Gaziantep`, `Adana`, `Istanbul`, `Konya`).
 @immutable
 class CityEditionConfig {
   const CityEditionConfig({
@@ -141,6 +142,18 @@ class CityEditionController extends ChangeNotifier {
       saltPrankRoast: "Galata Kulesi'nde turist kazıklar gibi kahveye tuz basmışsınız, 1 Yıldız!",
       chiliPrankRoast: "San Sebastian'ın üstüne çilek sosu diye acı sos dökmüşsünüz, martılar bile yemez! 1 Yıldız!",
       sweetCompliment: 'Boğaz havasında bundan güzel kahve ve tatlı ikilisi olamaz, 5 Yıldız!',
+    ),
+    CityEditionId.konya: CityEditionConfig(
+      editionId: CityEditionId.konya,
+      cityName: 'Konya',
+      flagEmoji: '🇹🇷',
+      eventTitle: 'DevFest Konya 2026 Edition',
+      cafeSubtitle: 'Backyard Barista on Cloud Run',
+      defaultLanguage: 'tr',
+      signatureSpecialty: 'Baklava & Espresso',
+      saltPrankRoast: 'Tatlı siparişe şeker yerine tuz konmuş! 1 Yıldız!',
+      chiliPrankRoast: 'Tatlı siparişe acı sos dökülmüş! 1 Yıldız!',
+      sweetCompliment: 'Şekeri doğru, tepsi tam: 5 Yıldız!',
     ),
   };
 

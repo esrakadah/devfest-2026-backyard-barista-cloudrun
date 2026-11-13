@@ -103,6 +103,32 @@
         "customerReaction": "Boğaz havasında bundan güzel kahve ve tatlı ikilisi olamaz, 5 Yıldız!",
         "cityBonusTip": 35
       }
+    },
+    "konya": {
+      "salty_sabotage": {
+        "ratingStars": 1,
+        "tasteVerdict": "salty_sabotage",
+        "customerFace": "salty_disgusted",
+        "headline": "Konya: Tepside Tuz Var!",
+        "customerReaction": "Tatlı siparişe şeker yerine tuz konmuş! 1 Yıldız!",
+        "cityBonusTip": 0
+      },
+      "spicy_chaos": {
+        "ratingStars": 1,
+        "tasteVerdict": "spicy_chaos",
+        "customerFace": "shocked",
+        "headline": "Konya: Tepside Acı Sos Var!",
+        "customerReaction": "Tatlı siparişe acı sos dökülmüş! 1 Yıldız!",
+        "cityBonusTip": 0
+      },
+      "sweet_perfection": {
+        "ratingStars": 5,
+        "tasteVerdict": "sweet_perfection",
+        "customerFace": "happy",
+        "headline": "Konya: 5 Yıldızlı Servis!",
+        "customerReaction": "Şekeri doğru, tepsi tam: 5 Yıldız!",
+        "cityBonusTip": 40
+      }
     }
   }
 }

@@ -15,7 +15,7 @@ const int _expectedSabotageRatingStars = 1;
 const int _expectedTotalBasePngCount = 20;
 const int _multiplexedHandshakeRttMultiplier = 3;
 const int _perRequestQueueOverheadMs = 15;
-const int _expectedMatrixCombinationCount = 12;
+const int _expectedMatrixCombinationCount = 15;
 
 const String _liveCloudRunUrl = 'https://backyard-barista-389486729482.europe-west3.run.app';
 const String _publicGitHubRawBaseUrl =
@@ -49,6 +49,7 @@ const List<String> _supportedCities = <String>[
   'gaziantep',
   'adana',
   'istanbul',
+  'konya',
 ];
 
 /// Automated Section 4.6 Rehearsal & Chaos Verification Harness (`workshop-options.md`).
@@ -57,7 +58,7 @@ const List<String> _supportedCities = <String>[
 /// - Test 2: Live Cloud Run (`europe-west3`) & Public GitHub Raw (`20/20` PNGs) reachability
 /// - Test 3: Gemini model guardrail (`gemini-3.5-flash-lite`, zero `gemini-2.5-flash` usage)
 /// - Test 4: Offline Wi-Fi disconnect & HTTP 429 room-quota chaos fallback verification
-/// - Test 5: Multi-City (`berlin`, `gaziantep`, `adana`, `istanbul`) Salt-vs-Sugar JSON schema check
+/// - Test 5: Multi-City (`berlin`, `gaziantep`, `adana`, `istanbul`, `konya`) Salt-vs-Sugar JSON schema check
 Future<void> main() async {
   stdout
     ..writeln('======================================================================')
@@ -277,10 +278,10 @@ Future<_RehearsalCheckResult> _runTest5MultiCitySaltVsSugarMatrixCheck() async {
 
   return _RehearsalCheckResult(
     testId: 'Test 5',
-    title: '4-City Remote Config x Salt/Isot Prank Matrix',
+    title: '5-City Remote Config x Salt/Isot Prank Matrix',
     passed: passed,
     evidence: 'Verified **$verifiedCombinations/$_expectedMatrixCombinationCount** city x verdict combinations '
-        '(`berlin`, `gaziantep`, `adana`, `istanbul` x Sweet 5-Star, Salt 1-Star, Isot/Chili 1-Star)',
+        '(`berlin`, `gaziantep`, `adana`, `istanbul`, `konya` x Sweet 5-Star, Salt 1-Star, Isot/Chili 1-Star)',
   );
 }
 

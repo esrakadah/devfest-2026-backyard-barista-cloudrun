@@ -216,6 +216,43 @@ class CustomerOrderTicket {
             characterBadgeEmoji: '🌟👩‍🏫',
           ),
         ];
+
+      case CityEditionId.konya:
+        return const <CustomerOrderTicket>[
+          CustomerOrderTicket(
+            ticketNumber: 1,
+            customerName: 'Deniz',
+            customerRoleEn: 'DevFest Konya Attendee',
+            customerRoleTr: 'DevFest Konya Katılımcısı',
+            orderBubbleEn: 'Double Espresso + Pistachio Baklava + Sweet Sugar please!',
+            orderBubbleTr: 'Çift Shot Espresso + Fıstıklı Baklava + Tatlı Şeker lütfen!',
+            requestedIngredientIds: <String>['espresso', 'baklava', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerDeniz,
+            characterBadgeEmoji: '☕🎟️',
+          ),
+          CustomerOrderTicket(
+            ticketNumber: 2,
+            customerName: 'Zeynep',
+            customerRoleEn: 'Flutter Student Builder',
+            customerRoleTr: 'Flutter Öğrenci Geliştirici',
+            orderBubbleEn: 'Steamed Milk + Butter Croissant + Sweet Sugar!',
+            orderBubbleTr: 'Köpüklü Süt + Tereyağlı Kruvasan + Tatlı Şeker!',
+            requestedIngredientIds: <String>['milk', 'croissant', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerZeynepHappy,
+            characterBadgeEmoji: '🦋☕',
+          ),
+          CustomerOrderTicket(
+            ticketNumber: 3,
+            customerName: 'Mustafa',
+            customerRoleEn: 'DevFest Speaker',
+            customerRoleTr: 'DevFest Konuşmacısı',
+            orderBubbleEn: 'Menengiç Coffee + AI Custom Katmer Roll + Sweet Sugar!',
+            orderBubbleTr: 'Menengiç Kahvesi + AI Özel Katmer Sarma + Tatlı Şeker lütfen!',
+            requestedIngredientIds: <String>['menengic_coffee', 'custom_katmer_roll', 'sugar_jar'],
+            portraitAssetPath: CafeCharacterAssets.customerMustafa,
+            characterBadgeEmoji: '🎤🔥',
+          ),
+        ];
     }
   }
 }

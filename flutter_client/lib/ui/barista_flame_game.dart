@@ -338,7 +338,7 @@ class BaristaFlameGame extends FlameGame with TapCallbacks, DragCallbacks {
 
     final cityWarmColor = switch (_activeCityId) {
       CityEditionId.berlin => const Color(0xFFC59B27),
-      CityEditionId.gaziantep => const Color(0xFFB86B2B),
+      CityEditionId.gaziantep || CityEditionId.konya => const Color(0xFFB86B2B),
       CityEditionId.adana => const Color(0xFF9E2A2B),
       CityEditionId.istanbul => const Color(0xFF3B7A57),
     };

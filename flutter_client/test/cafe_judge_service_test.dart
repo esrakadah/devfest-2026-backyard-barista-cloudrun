@@ -88,6 +88,30 @@ void main() {
     },
   );
 
+  test(
+    'the Konya edition falls back to its own roast in the offline bundle',
+    () async {
+      final konyaEdition = CityEditionController(remoteConfigCityCode: 'konya').activeEdition;
+      final judgeService = CafeJudgeService(
+        clock: fixedClock,
+        httpClient: MockClient(
+          (request) async => http.Response('Too Many Requests', 429),
+        ),
+        geminiProxyPath: '/api/gemini/generate',
+      );
+
+      final review = await judgeService.evaluateOrder(
+        selectedIngredients: saltyTray,
+        cityEdition: konyaEdition,
+      );
+
+      expect(review.source, JudgeSource.offlineBundle);
+      expect(review.ratingStars, 1);
+      expect(review.headline, 'Konya: Tepside Tuz Var!');
+      expect(review.customerReaction, konyaEdition.saltPrankRoast);
+    },
+  );
+
   group('Gemini verdict guard', () {
     MockClient geminiAnswers(Map<String, dynamic> reviewJson) => MockClient(
           (request) async => http.Response(

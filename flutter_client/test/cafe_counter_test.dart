@@ -164,6 +164,50 @@ void main() {
     expect(find.textContaining('Lukas'), findsOneWidget);
   });
 
+  test('a ?remote_city=konya URL selects the Konya edition through Priority 2', () async {
+    final controller = CityEditionController(remoteConfigCityCode: 'gaziantep');
+    await controller.loadBundledEditions();
+    controller.syncRemoteConfigFromUri(uri: Uri.parse('https://backyard-barista.run.app/?remote_city=konya'));
+
+    expect(controller.activeCityId, CityEditionId.konya);
+    expect(controller.activeSourceLayer, CityConfigSourceLayer.firebaseRemoteConfig);
+    expect(controller.activeEdition.cityName, 'Konya');
+    expect(controller.activeEdition.eventTitle, 'DevFest Konya 2026 Edition');
+    expect(controller.allEditions.map((edition) => edition.editionId), contains(CityEditionId.konya));
+  });
+
+  testWidgets('Switching to the Konya edition in the Settings sheet updates the title and customer queue', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(1280, 1024));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final cityController = CityEditionController(remoteConfigCityCode: 'gaziantep');
+    final judgeService = CafeJudgeService(
+      clock: fixedClock,
+      forceOfflineMode: true,
+    );
+
+    await tester.pumpWidget(
+      BackyardBaristaApp(
+        cityController: cityController,
+        judgeService: judgeService,
+      ),
+    );
+
+    await tester.tap(find.byKey(const Key('city_edition_switcher_button')));
+    await tester.pumpAndSettle();
+
+    final konyaOption = find.byKey(const Key('city_option_konya'));
+    await tester.ensureVisible(konyaOption);
+    await tester.tap(konyaOption);
+    await tester.pumpAndSettle();
+
+    expect(cityController.activeCityId, CityEditionId.konya);
+    expect(find.textContaining('Konya Edition'), findsOneWidget);
+    expect(find.textContaining('Deniz'), findsOneWidget);
+  });
+
   testWidgets('Renders and plays cleanly on narrow mobile phone screen (360x780) without overflow', (
     tester,
   ) async {
