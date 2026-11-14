@@ -1,7 +1,7 @@
 # Sahne Prova Kartları (Drills 1-4): Backyard Barista on Cloud Run
 
 - **Etkinlik Takvimi:**
-  - **🇩🇪 DevFest Berlin:** 14 Kasım 2026 (`EN` · 10:00 Room 2, 45 dk konuşma, akış: [`berlin-45-en.md`](berlin-45-en.md); ardından 11:00-15:00 Vibe Lounge)
+  - **🇩🇪 DevFest Berlin:** 14 Kasım 2026 (`EN` · Barista konuşması yok: 10:00 Room 2 konuşması "Dressing Up AI", ayrı deste; 11:00-15:00 Vibe Lounge'da bu oyun sadece opsiyonel demo, akış: [`berlin-45-en.md`](berlin-45-en.md))
   - **🇹🇷 DevFest Gaziantep:** 15 Kasım 2026 (`TR` · 80 dk Tam Atölye veya 2 x 45 dk Vibe Lounge)
   - **🇹🇷 DevFest Adana:** 11 Aralık 2026 (`TR`)
   - **🇹🇷 DevFest İstanbul:** 19 Aralık 2026 (`TR`)

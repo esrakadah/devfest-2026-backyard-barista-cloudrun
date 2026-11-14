@@ -4,7 +4,7 @@ Bu doküman sahnedeki teknik delivery'nin tek kontrol listesidir: ne zaman ne ko
 
 | Etkinlik | Tarih | Dil | Format |
 |---|---|---|---|
-| DevFest Berlin | 14 Kasım 2026 | EN | 10:00 Room 2, 45 dk konuşma ([İngilizce akış kartı](berlin-45-en.md)), sonra 11:00-15:00 Vibe Lounge (katılımcılar Google'ın resmi Barista rehberini izler) |
+| DevFest Berlin | 14 Kasım 2026 | EN | Barista konuşması yok: 10:00 Room 2 konuşması "Dressing Up AI" (ayrı deste, `esrakadah/modemoiselle_deck`). 11:00-15:00 Vibe Lounge'da katılımcılar Google'ın resmi Barista rehberini izler; bu oyun orada sadece opsiyonel demo ([İngilizce akış kartı](berlin-45-en.md)) |
 | DevFest Gaziantep | 15 Kasım 2026 | TR | 80 dk atölye veya 2 x 45 dk Vibe Lounge |
 | DevFest Adana | 11 Aralık 2026 | TR | 30+10 dk ana salon |
 | DevFest İstanbul | 19 Aralık 2026 | TR | 30+10 dk ana salon |
@@ -97,7 +97,7 @@ Etkinlikten sonra varsayılana dön: `launchctl unsetenv OLLAMA_KEEP_ALIVE`, ard
 
 ## Sahnede: 5 Perdelik Akış
 
-| Perde | Slaytlar | 80 dk atölye | 45 dk konuşma (Berlin, [akış kartı](berlin-45-en.md)) | 30 dk ana salon |
+| Perde | Slaytlar | 80 dk atölye | 45 dk İngilizce akış ([akış kartı](berlin-45-en.md); Berlin'de sadece opsiyonel lounge demosu) | 30 dk ana salon |
 |---|---|---|---|---|
 | 1 · Hook | 1-3 | 00:00-05:00 | 4 dk | 3 dk |
 | 2 · Tools | 4-6 | 05:00-11:30 | 4 dk | 4 dk |
