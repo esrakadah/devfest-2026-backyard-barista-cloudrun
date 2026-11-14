@@ -1321,7 +1321,7 @@ class RoundTimelineBar extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           isTurkishDeck
-              ? '$totalMinutes dakika · geride mi kaldınız? eski turu bitirmeye çalışmayın, sıradaki kontrol noktasına atlayın'
+              ? 'Hedef $totalMinutes dakika · geride mi kaldınız? eski turu bitirmeye çalışmayın, sıradaki kontrol noktasına atlayın'
               : '$totalMinutes minutes · fall behind? jump to the next checkpoint, never finish the old round',
           style: const TextStyle(
             fontFamily: DeckFonts.mono,

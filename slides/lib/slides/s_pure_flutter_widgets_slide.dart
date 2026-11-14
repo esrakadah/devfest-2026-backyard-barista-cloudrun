@@ -40,7 +40,7 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
               : 'Hybrid Flame Engine + Flutter HUD Architecture',
           act: StoryAct.tools,
           subtitle: isTurkishDeck
-              ? 'BaristaFlameGame 3 şeritli sahneyi çizer (#1E130C / #F4E4CE), tezgah 2x2 Flutter kartlarıyla çalışır'
+              ? 'BaristaFlameGame 3 şeritli sahneyi çizer, tezgah 2x2 Flutter kartlarıyla çalışır'
               : 'BaristaFlameGame 60fps 3-lane arcade stage (#1E130C / #F4E4CE) paired with reactive 2x2 Flutter HUD cards',
           accentColor: DeckColors.googleGreen,
           child: Row(
@@ -58,7 +58,7 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
                     else
                       '60fps 3-Lane Arcade Stage: BaristaFlameGame renders Beverage, Sweet, and Prank lanes with smooth animations.',
                     if (isTurkishDeck)
-                      'Sıcak ceviz paleti (#1E130C / #F4E4CE): boyalı gece kafesi dekorunun önünde ahşap sahne.'
+                      'Sıcak ceviz paleti: boyalı gece kafesi dekorunun önünde ahşap sahne.'
                     else
                       'Warm Walnut Palette (#1E130C / #F4E4CE): Rich timber stage over a painted night-cafe backdrop.',
                     if (isTurkishDeck)

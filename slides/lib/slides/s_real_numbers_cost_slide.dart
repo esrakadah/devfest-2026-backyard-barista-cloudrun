@@ -15,9 +15,9 @@ class RealNumbersCostSlide extends FlutterDeckSlideWidget {
                 : '8. Gerçek Rakamlar #2: Token Math & Model Trap',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [14:00 - 16:30] Gerçek Rakamlar #2: token hesabı ve 2026 model kısıtlaması tuzağı.\n'
-                    'SAY   "İkinci rakam cüzdanımızla ilgili. Token, modelin okuduğu ve yazdığı metin parçası; faturayı o belirliyor. Biz her tıklamada modele gitmiyoruz. Sadece tepsi hazır olup Servis Et\'e basılınca tek bir çağrı yapıyoruz. Bu çağrı yaklaşık 150 token okuyor, 120 token yazıyor: sipariş başına yaklaşık 270 token. Bir de tuzak var: yeni açılan Google Cloud projelerinde eski gemini-2.5-flash modelleri kısıtlı. Eski model adını yazarsanız yeni hesap hata alır. O yüzden kodda varsayılan model gemini-3.5-flash-lite."\n'
-                    "HOLD  Sağdaki kodda defaultValue: 'gemini-3.5-flash-lite' satırını göster. 270 token [YAKLAŞIK HESAP] (~150 + ~120), ölçüm diye söyleme. [Olgu (cafe_judge_service.dart:20-25 ve ai.google.dev/gemini-api/docs/models): atölyede kurulum gerekmesin diye package:http ile REST generateContent; production'da firebase_ai + App Check].\n"
-                    'NEWS  [Bu hafta, yalnız sözlü] "Bu hafta Gemini 4 Hydrogen genel kullanıma açıldı: 1 milyon token bağlam, 1 milyon girdi tokenı 1,50 dolar, 1 milyon çıktı tokenı 7,50 dolar. Biz atölyede gemini-3.5-flash-lite\'ta kalıyoruz. Yeni model çıktı diye canlı sistemi aynı gün değiştirmiyoruz, önce rakamları ölçüyoruz." [Olgu (aistudio.google.com/docs/changelog, 12 Kasım 2026 ve aistudio.google.com/docs/pricing): gemini-4-hydrogen genel kullanımda, 1M bağlam, 1M token başına \$1.50 girdi / \$7.50 çıktı].\n'
+                    'SAY   "İkinci rakam cüzdanımızla ilgili. Token, modelin okuduğu ve ürettiği metin parçası; faturayı o belirliyor. Biz her tıklamada modele gitmiyoruz. Sadece tepsi hazır olup Servis Et\'e basılınca tek bir çağrı yapıyoruz. Bu çağrı yaklaşık 150 token okuyor, 120 token yazıyor: sipariş başına yaklaşık 270 token. Hesapladık: 1.000 sipariş 5 sentten az tutuyor. Bir de tuzak var: yeni açılan Google Cloud projelerinde eski gemini-2.5-flash modelleri kısıtlı. Eski model adını yazarsanız yeni hesap hata alır. O yüzden kodda varsayılan model gemini-3.5-flash-lite."\n'
+                    "HOLD  Sağdaki kodda defaultValue: 'gemini-3.5-flash-lite' satırını göster. 270 token [YAKLAŞIK HESAP] (~150 + ~120), ölçüm diye söyleme. 1.000 sipariş = 0,0468 dolar da [HESAP] (docs/benchmark-report-2026-10-24.md, gemini-3.5-flash-lite liste fiyatı). [Olgu (cafe_judge_service.dart:20-25 ve ai.google.dev/gemini-api/docs/models): atölyede kurulum gerekmesin diye package:http ile REST generateContent; production'da firebase_ai + App Check].\n"
+                    'NEWS  [Bu hafta, yalnız sözlü] "Bu hafta Gemini 4 Hydrogen genel kullanıma açıldı: 1 milyon token bağlam, 1 milyon girdi token\'ı 1,50 dolar, 1 milyon çıktı token\'ı 7,50 dolar. Biz atölyede gemini-3.5-flash-lite\'ta kalıyoruz. Yeni model çıktı diye canlı sistemi aynı gün değiştirmiyoruz, önce rakamları ölçüyoruz." [Olgu (aistudio.google.com/docs/changelog, 12 Kasım 2026 ve aistudio.google.com/docs/pricing): gemini-4-hydrogen genel kullanımda, 1M bağlam, 1M token başına \$1.50 girdi / \$7.50 çıktı].\n'
                     'NEXT  "Peki 300 kişi aynı anda bu butona basarsa ne olur? Üçüncü rakama geçelim."'
                 : 'BEAT  [14:00 - 16:30] Gerçek Rakamlar #2: Token matematiği ve 2026 model kısıtlaması tuzağı.\n'
                     'SAY   "İkinci gerçek rakamımız doğrudan cüzdanımızı ve yeni hesapları ilgilendiriyor. Bizim oyunumuzda her malzeme tıklamasında yapay zekaya gitmiyoruz; yalnızca tepsi hazır olup Servis Et butonuna basıldığında tek bir JSON çağrısı yapıyoruz. Bu çağrı yaklaşık 150 girdi tokenı ve 120 çıktı tokenı tüketiyor, yani toplamda sipariş başına 270 token! Ve çok kritik bir 2026 gerçeği: yeni açılan Google Cloud projelerinde eski gemini-2.5-flash modelleri kısıtlandı. Eğer atölyede eski model adını yazarsanız yeni hesaplar anında hata alır. Bu yüzden kodumuzda varsayılan model doğrudan gemini-3.5-flash-lite olarak sabitlendi."\n'
@@ -51,7 +51,7 @@ this.geminiModel = const String.fromEnvironment(
               ? 'GERÇEK RAKAMLAR #2 (TOKEN HESABI VE 2026 MODEL TUZAĞI)'
               : 'GERÇEK RAKAMLAR #2 (TOKEN MATH & 2026 MODEL GUARD)',
           title: isTurkishDeck
-              ? 'Gerçek rakamlar #2: sipariş başına ~270 token ve 2.5 tuzağı'
+              ? 'Gerçek rakamlar #2: sipariş başına ~270 token ve eski model tuzağı'
               : 'Real Numbers #2: ~270 Tokens per Order & The 2.5 Trap',
           act: StoryAct.realNumbers,
           subtitle: isTurkishDeck
@@ -111,7 +111,7 @@ this.geminiModel = const String.fromEnvironment(
                           else
                             '0 Tokens During Tray Assembly: Tapping Espresso, Milk, Baklava, or Salt runs 100% locally in Flutter at 60fps.',
                           if (isTurkishDeck)
-                            "Servis Et'te 1 çağrı: ~150 girdi + ~120 JSON çıktı tokenı (sipariş başına ~270 token)."
+                            "Servis Et'te 1 çağrı: ~150 girdi + ~120 JSON çıktı token'ı (sipariş başına ~270 token)."
                           else
                             '1 Structured Call on Serve: ~150 input tokens + ~120 JSON output tokens (~270 tokens per completed order).',
                           if (isTurkishDeck)

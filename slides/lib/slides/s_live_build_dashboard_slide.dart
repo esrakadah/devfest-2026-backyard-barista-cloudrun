@@ -13,8 +13,9 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? '13. Canlı yapım panosu (3 tur)' : '13. Live Build Dashboard (3 Rounds)',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [25:00 - 60:00] Canlı yapım. Bu slayt üç tur boyunca ekranda kalır.\n'
-                    'SAY   "Şimdi sıra sizde: üç turda kendi kafenizi kuruyorsunuz. Bu slayt ekranda kalacak. 1. tur, 10 dakika: 12 hazır görseli yüklüyoruz ve şehrimizi seçiyoruz. 2. tur, 15 dakika: kendi imza tatlımızı ve şaka malzememizi ürettirip Gemini jürisine bağlıyoruz. 3. tur, 10 dakika: Deploy to Cloud Run butonuna basıp ya da gcloud run deploy komutunu çalıştırıp canlı .run.app linkimizi alıyoruz. Geride kalan olursa dert değil: repodaki prompts/step-1, step-2, step-3 dosyalarından bir sonraki adıma atlayın."\n'
+                    'SAY   "Şimdi sıra sizde: üç turda kendi kafenizi kuruyorsunuz. Bu slayt ekranda kalacak. 1. tur, 10 dakika: 12 hazır görseli yüklüyoruz ve şehrimizi seçiyoruz. 2. tur, 15 dakika: kendi imza tatlımızı ve şaka malzememizi ürettirip Gemini jürisine bağlıyoruz. 3. tur, 10 dakika: AI Studio\'da Publish butonuna basıp ya da gcloud run deploy komutunu çalıştırıp canlı .run.app linkimizi alıyoruz. Geride kalan olursa dert değil: repodaki prompts/step-1, step-2, step-3 dosyalarından bir sonraki adıma atlayın."\n'
                     "HOLD  Zamanlayıcıyı başlat (Stage Navigator -> Timer) ve salonda dolaş, ekranlara bak. Süreler [HEDEF]: salon geride kalırsa 2. turu kısalt, 3. turu koru. [Süre kuralı: 80 dk atölyede 35 dk tam tur; 2 x 45 dk olursa her blokta 20 dk'lık 2 turluk sprint].\n"
+                    'ANTEP [15 Kasım] Önce 30 saniye: sağdaki yeşil QR\'daki örnek kafede bir tatlıya tuz at, 1 yıldızı göster, "İşte bunu kuruyoruz." de. Canlı yapıma 32 dakika var: 1. tur 9, 2. tur 14, 3. tur 9 dakika. Slayttaki 10, 15, 10 hedef süre: "bugün biraz daha hızlıyız" de. Publish seçeneği çıkmayan olursa: sağdaki yeşil QR ile örnek kafeyi oynasın (Yol C). Kodu bozulan olursa: repodaki prompts/step-N dosyasını yapıştırsın. Terimler: imza tatlısı = kodla çizilen kendi tatlınız, Tur 2 Özel Menü anahtarı = oyunda kendi tatlınızı gösteren düğme, gcloud run deploy = terminalden yayın komutu. Bitince 14. slaytı atla, 15. slayta geç.\n'
                     'NEXT  "Herkes linkini aldıysa, ödüllerden önce bugün ne kurduğumuzu 5 dakikada toparlayalım."'
                 : 'BEAT  [25:00 - 60:00] Canlı Kodlama ve Vibe Lounge Görev Panosu (Bu slayt inşa süresince ekranda açık kalır).\n'
                     'SAY   "Şimdi 3 turluk inşa maratonumuz başlıyor! Bu slayt boyunca ekranda kalacak. 1. Turda (10 dakika) 12 hazır görselimizi çekip şehir modumuzu seçiyoruz. 2. Turda (15 dakika) kendi özel imza tatlımızı ve şaka malzememizi üretip Gemini JSON jürisine bağlıyoruz. 3. Turda (10 dakika) ise sağ üstteki Deploy to Cloud Run butonuna veya gcloud run deploy komutuna basıp canlı .run.app linkimizi ve GitHub repomuzu alıyoruz. Herhangi bir adımda geride kalan olursa repodaki prompts/step-1, step-2, step-3 dosyalarından veya uygulama içi Round 2 AI SVGs anahtarından anında yakalayabilir!"\n'
@@ -30,13 +31,13 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: isTurkishDeck ? 'EKRANDA KALSIN · 25. İLE 60. DAKİKA ARASI' : 'KEEP ON SCREEN · MINUTES 25 TO 60',
+          eyebrow: isTurkishDeck ? 'EKRANDA KALSIN · CANLI YAPIM, 3 TUR' : 'KEEP ON SCREEN · MINUTES 25 TO 60',
           title: isTurkishDeck
               ? "Canlı yapım panosu: 3 turda Cloud Run ve GitHub'a"
               : 'Live Build Dashboard: 3 Rounds to Cloud Run & GitHub',
           act: StoryAct.buildAndShip,
           subtitle: isTurkishDeck
-              ? 'Geride mi kaldınız? prompts/step-1..3.md dosyalarını ya da uygulamadaki Round 2 AI SVGs anahtarını kullanın!'
+              ? 'Geride mi kaldınız? prompts/step-1..3.md dosyalarını ya da uygulamadaki Tur 2 Özel Menü anahtarını kullanın!'
               : 'Fall behind? Use prompts/step-1..3.md or toggle the in-app Round 2 AI SVGs switch!',
           accentColor: DeckColors.googleGreen,
           child: Column(
@@ -74,7 +75,7 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                           else
                             'Lane A: Paste prompts/step-1-base-cafe.md in AI Studio Build mode.',
                           if (isTurkishDeck)
-                            'Yol B: flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep komutunu çalıştırın.'
+                            'Yol B: flutter_client/ içinde flutter run -d chrome komutunu çalıştırın.'
                           else
                             'Lane B: Run flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep.',
                           if (isTurkishDeck)
@@ -108,7 +109,7 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                             'Test sneaking Salt (Tuz) onto the tray and verify the 1-star JSON roast!',
                         ],
                         footerText: isTurkishDeck
-                            ? 'Kontrol noktası: Round 2 AI SVGs anahtarı AÇIK'
+                            ? 'Kontrol noktası: Tur 2 Özel Menü anahtarı AÇIK'
                             : 'Checkpoint: Round 2 AI SVGs switch ON',
                       ),
                     ),
@@ -120,7 +121,7 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                         accentColor: DeckColors.googleGreen,
                         bullets: [
                           if (isTurkishDeck)
-                            "Yol A: AI Studio'da Deploy to Cloud Run (.run.app) + Sync to GitHub'a tıklayın."
+                            "Yol A: AI Studio'da Publish (.run.app) + Sync to GitHub'a tıklayın."
                           else
                             'Lane A: Click Deploy to Cloud Run (.run.app) + Sync to GitHub in AI Studio.',
                           if (isTurkishDeck)

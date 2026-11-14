@@ -15,7 +15,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
                 : '12. Hybrid Asset Pipeline: 14 Studio PNGs + On-the-Fly AI SVGs',
             speakerNotes: isTurkishDeck
                 ? "BEAT  [22:30 - 25:00] Hibrit görseller: 14 hazır stüdyo PNG'si + turda üretilen AI vektörleri.\n"
-                    'SAY   "Atölyede en çok vakit görsel aramaya gider. Biz bunu ikiye böldük. Hazır kısım: birinci tur için 12 görsel, yani 3 içecek, 3 tatlı, 3 şaka malzemesi ve 3 müşteri yüzü. İkinci tur için 2 özel görsel daha. Toplam 14 PNG, hepsi repoda hazır. Üretilen kısım: ikinci turda herkes kendi imza tatlısını ve şaka malzemesini AI Studio ya da Antigravity\'ye çizdiriyor. Resim dosyası olarak değil, CustomPaint koduyla. Yüklenecek dosya olmayınca yükleme hatası da olmuyor."\n'
+                    'SAY   "Atölyede en çok vakit görsel aramaya gider. Biz bunu ikiye böldük. Hazır kısım: birinci tur için 12 görsel, yani 3 içecek, 3 yiyecek, 3 şaka malzemesi ve 3 müşteri yüzü. İkinci tur için 2 özel görsel daha. Toplam 14 PNG, hepsi repoda hazır. Üretilen kısım: ikinci turda herkes kendi imza tatlısını ve şaka malzemesini AI Studio ya da Antigravity\'ye çizdiriyor. Resim dosyası olarak değil, CustomPaint koduyla. Yüklenecek dosya olmayınca yükleme hatası da olmuyor."\n'
                     "HOLD  Solda hazır PNG'ler, sağda kodla çizilen iki örnek. [Olgu (flutter_client/assets/): assets/base/ içinde 14 PNG (12 + 2), assets/animations/ içinde 5 Lottie JSON, assets/audio/ içinde 10 WAV + Web Audio API].\n"
                     'NEXT  "Şimdi bilgisayarları ve telefonları açıyoruz: 3 turluk canlı yapım başlıyor!"'
                 : 'BEAT  [22:30 - 25:00] Hibrit Görsel Boru Hattı: 14 Hazır Stüdyo PNG + Yolda Üretilen AI Vektörleri.\n'
