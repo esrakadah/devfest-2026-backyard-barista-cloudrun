@@ -1,3 +1,4 @@
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/plugins/presenter_menu_plugin.dart';
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:backyard_barista_deck/theme.dart';
@@ -8,7 +9,9 @@ import 'package:flutter_deck/flutter_deck.dart';
 void main() {
   ErrorWidget.builder = (details) {
     return DemoHiccupScreen(
-      message: 'Reload or run with --dart-define=OFFLINE_MODE=true.\n${details.exceptionAsString()}',
+      message: isTurkishDeck
+          ? 'Sayfayı yenile ya da --dart-define=OFFLINE_MODE=true ile çalıştır.\n${details.exceptionAsString()}'
+          : 'Reload or run with --dart-define=OFFLINE_MODE=true.\n${details.exceptionAsString()}',
     );
   };
   runApp(const BackyardBaristaDeckApp());

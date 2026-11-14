@@ -1,3 +1,4 @@
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
 import 'package:backyard_barista_deck/widgets/story_arc.dart';
@@ -10,12 +11,16 @@ class SweetOrSaltySlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/sweet-or-salty',
-            title: '2. Cold Open: Hangisi şeker?',
-            speakerNotes:
-                'BEAT  [02:00 - 03:30] Soğuk açılış ve salon oylaması. Oyunun tüm fikrini tek bir resimle ver; henüz hiçbir teknoloji adı söyleme.\n'
-                'SAY   "Başlamadan önce küçük bir oylama. Ekrandaki iki kavanozdan biri şeker, biri tuz. A şeker diyenler el kaldırsın. Şimdi B diyenler. Salon ikiye bölündü, değil mi? Doğru cevap: A şeker, B tuz. İşte bugünkü oyunun bütün fikri bu: iki kavanoz neredeyse aynı ve arayüz hiçbir uyarı vermiyor. Peki tatlıya tuz atıldığını kim fark edecek? Gemini. Sipariş servis edildiği anda yapılandırılmış bir JSON kararı dönüyor: ya beş yıldız ya da şehre özel, bir yıldızlı bir laf sokma. Bu oturumun sonunda sizin kafenizin jürisi de bunu her seferinde bilecek."\n'
-                'HOLD  Her oylamadan sonra elleri saymak için 3 saniye bekle. Cevabı söylerken sağdaki iki müşteri yüzünü işaret et (yanlış kavanoz 1 yıldız, doğru kavanoz 5 yıldız).\n'
-                'NEXT  "Bu oyunu bugün bu salondaki herkes kuracak. Kurallarımız ve ödüllerimiz şöyle."',
+            title: isTurkishDeck ? '2. Açılış: hangisi şeker?' : '2. Cold Open: Hangisi şeker?',
+            speakerNotes: isTurkishDeck
+                ? 'BEAT  [02:00 - 03:30] Salon oylaması. Oyunun fikrini tek resimle ver. Henüz hiçbir teknoloji adı söyleme.\n'
+                    'SAY   "Küçük bir oylamayla başlayalım. Ekranda iki kavanoz var: biri şeker, biri tuz. A şeker diyenler el kaldırsın. Şimdi B diyenler. Salon ikiye bölündü, değil mi? Doğru cevap: A şeker, B tuz. Bugünkü oyunun bütün fikri bu. İki kavanoz neredeyse aynı ve ekran sizi uyarmıyor. Peki tatlıya tuz atıldığını kim fark edecek? Gemini. Sipariş servis edilince bize JSON dönüyor, yani kodun okuyabildiği düzenli bir cevap: ya beş yıldız, ya da şehre özel, bir yıldızlı bir laf sokma."\n'
+                    'HOLD  Her oylamadan sonra elleri saymak için 3 saniye bekle. Cevabı söylerken sağdaki iki müşteri yüzünü göster: yanlış kavanoz 1 yıldız, doğru kavanoz 5 yıldız.\n'
+                    'NEXT  "Bu oyunu bugün hepiniz kuracaksınız. Kurallar ve ödüller şöyle."'
+                : 'BEAT  [02:00 - 03:30] Soğuk açılış ve salon oylaması. Oyunun tüm fikrini tek bir resimle ver; henüz hiçbir teknoloji adı söyleme.\n'
+                    'SAY   "Başlamadan önce küçük bir oylama. Ekrandaki iki kavanozdan biri şeker, biri tuz. A şeker diyenler el kaldırsın. Şimdi B diyenler. Salon ikiye bölündü, değil mi? Doğru cevap: A şeker, B tuz. İşte bugünkü oyunun bütün fikri bu: iki kavanoz neredeyse aynı ve arayüz hiçbir uyarı vermiyor. Peki tatlıya tuz atıldığını kim fark edecek? Gemini. Sipariş servis edildiği anda yapılandırılmış bir JSON kararı dönüyor: ya beş yıldız ya da şehre özel, bir yıldızlı bir laf sokma. Bu oturumun sonunda sizin kafenizin jürisi de bunu her seferinde bilecek."\n'
+                    'HOLD  Her oylamadan sonra elleri saymak için 3 saniye bekle. Cevabı söylerken sağdaki iki müşteri yüzünü işaret et (yanlış kavanoz 1 yıldız, doğru kavanoz 5 yıldız).\n'
+                    'NEXT  "Bu oyunu bugün bu salondaki herkes kuracak. Kurallarımız ve ödüllerimiz şöyle."',
           ),
         );
 
@@ -28,10 +33,12 @@ class SweetOrSaltySlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'AUDIENCE POLL · HANDS UP',
-          title: 'Hangisi şeker? Which jar is the sugar?',
+          eyebrow: isTurkishDeck ? 'SALON OYLAMASI · ELLER YUKARI' : 'AUDIENCE POLL · HANDS UP',
+          title: isTurkishDeck ? 'Hangisi şeker?' : 'Hangisi şeker? Which jar is the sugar?',
           act: StoryAct.hook,
-          subtitle: 'One of them is salt. The screen will not warn you. Gemini will.',
+          subtitle: isTurkishDeck
+              ? 'Biri tuz. Ekran sizi uyarmayacak. Gemini uyaracak.'
+              : 'One of them is salt. The screen will not warn you. Gemini will.',
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,7 +54,7 @@ class SweetOrSaltySlide extends FlutterDeckSlideWidget {
                       assetFileName: 'customer_salty_disgusted.png',
                       size: _faceSize,
                       stars: 1,
-                      headline: 'Salt in the baklava',
+                      headline: isTurkishDeck ? 'Baklavaya tuz' : 'Salt in the baklava',
                       verdict: 'tasteVerdict: "salty_sabotage"',
                       color: DeckColors.googleRed,
                     ),
@@ -56,13 +63,13 @@ class SweetOrSaltySlide extends FlutterDeckSlideWidget {
                       assetFileName: 'customer_happy.png',
                       size: _faceSize,
                       stars: 5,
-                      headline: 'Sugar, as ordered',
+                      headline: isTurkishDeck ? 'Şeker, sipariş edildiği gibi' : 'Sugar, as ordered',
                       verdict: 'tasteVerdict: "sweet_perfection"',
                       color: DeckColors.googleGreen,
                     ),
                     Spacer(),
                     Text(
-                      'One tray. One JSON verdict.',
+                      isTurkishDeck ? 'Bir tepsi. Bir JSON kararı.' : 'One tray. One JSON verdict.',
                       style: TextStyle(
                         fontFamily: DeckFonts.sans,
                         fontSize: DeckTypeScale.title,

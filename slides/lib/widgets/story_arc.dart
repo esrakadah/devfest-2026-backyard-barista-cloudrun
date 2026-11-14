@@ -1,14 +1,15 @@
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:flutter/material.dart';
 
 /// The five acts of the talk. Every `SlideFrame` names its act, and the strip in its header
 /// shows the audience where they are in the story.
 enum StoryAct {
-  hook('HOOK', DeckColors.googleYellow),
-  tools('TOOLS', DeckColors.halftoneBlue),
+  hook(isTurkishDeck ? 'GİRİŞ' : 'HOOK', DeckColors.googleYellow),
+  tools(isTurkishDeck ? 'ARAÇLAR' : 'TOOLS', DeckColors.halftoneBlue),
   realNumbers('GERÇEK RAKAMLAR', DeckColors.googleRed),
-  underTheHood('UNDER THE HOOD', DeckColors.googleGreen),
-  buildAndShip('BUILD & SHIP', DeckColors.googleBlue);
+  underTheHood(isTurkishDeck ? 'KAPUTUN ALTI' : 'UNDER THE HOOD', DeckColors.googleGreen),
+  buildAndShip(isTurkishDeck ? 'YAPIM VE YAYIN' : 'BUILD & SHIP', DeckColors.googleBlue);
 
   const StoryAct(this.label, this.color);
 

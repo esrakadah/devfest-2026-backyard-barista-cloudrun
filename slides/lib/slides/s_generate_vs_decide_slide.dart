@@ -1,3 +1,4 @@
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
 import 'package:backyard_barista_deck/widgets/story_arc.dart';
@@ -9,7 +10,9 @@ class GenerateVsDecideSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/generate-vs-decide',
-            title: 'Backup: Generate or Decide? CafeReview vs Decisions API',
+            title: isTurkishDeck
+                ? 'Yedek: üretmek mi, karar vermek mi? CafeReview ve Decisions API'
+                : 'Backup: Generate or Decide? CafeReview vs Decisions API',
             speakerNotes:
                 "BEAT  [BACKUP · Konya, 60 sn] Slayt 11'den Stage Navigator ile gelinir. Aynı jüri, iki API: üretmek mi, karar vermek mi?\n"
                 'SAY   "Bizim jüri iki iş yapıyor. Birincisi komik yorumu yazmak: bu üretim işi, metin lazım. İkincisi tatlı mı tuzlu mu demek: bu bir karar, cevabı üç seçenekten biri. Bugün ikisini tek generateContent çağrısında yapıyoruz ve kararı JSON\'dan okuyoruz. Google\'ın Decisions API\'si kararı ayrı soruyor: metin üretmiyor, her seçenek için olasılık döndürüyor, çıktı tokenı sıfır. Dart SDK\'sı yok, package:http ile REST çağrısı yeterli. Oyuna bağlamadım, çünkü tuz kontrolünü zaten Dart yapıyor. Kodla yazamadığınız kararlarda deneyin."\n'
@@ -65,10 +68,14 @@ POST v1beta/decisions
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'UNDER THE HOOD · GENERATE VS DECIDE',
-          title: 'Generate or Decide? Same Judge, Two APIs',
+          eyebrow: isTurkishDeck ? 'KAPUTUN ALTI · ÜRETMEK Mİ, KARAR VERMEK Mİ' : 'UNDER THE HOOD · GENERATE VS DECIDE',
+          title: isTurkishDeck
+              ? 'Üretmek mi, karar vermek mi? Aynı jüri, iki API'
+              : 'Generate or Decide? Same Judge, Two APIs',
           act: StoryAct.underTheHood,
-          subtitle: 'The roast needs generated text. Sweet or salty is a decision from a fixed list.',
+          subtitle: isTurkishDeck
+              ? 'Laf sokma için üretilmiş metin gerekir. Tatlı mı tuzlu mu ise sabit bir listeden seçilen bir karardır.'
+              : 'The roast needs generated text. Sweet or salty is a decision from a fixed list.',
           accentColor: DeckColors.googleGreen,
           child: Column(
             children: [
@@ -77,37 +84,37 @@ POST v1beta/decisions
                   Expanded(
                     child: StatChip(
                       value: 'gemini-decision-1',
-                      label: 'Decisions API Model',
+                      label: isTurkishDeck ? 'DECISIONS API MODELİ' : 'Decisions API Model',
                       accentColor: DeckColors.googleGreen,
                     ),
                   ),
                   SizedBox(width: _chipGap),
                   Expanded(
                     child: StatChip(
-                      value: '3 Question Types',
-                      label: 'noul (yes/no) · choice · score',
+                      value: isTurkishDeck ? '3 soru tipi' : '3 Question Types',
+                      label: isTurkishDeck ? 'NOUL (EVET/HAYIR) · CHOICE · SCORE' : 'noul (yes/no) · choice · score',
                     ),
                   ),
                   SizedBox(width: _chipGap),
                   Expanded(
                     child: StatChip(
-                      value: '1 to 1,000',
-                      label: 'Questions per Request',
+                      value: isTurkishDeck ? '1 ile 1.000' : '1 to 1,000',
+                      label: isTurkishDeck ? 'İSTEK BAŞINA SORU' : 'Questions per Request',
                     ),
                   ),
                   SizedBox(width: _chipGap),
                   Expanded(
                     child: StatChip(
-                      value: '0 Output Tokens',
-                      label: 'Only Input Tokens Billed',
+                      value: isTurkishDeck ? '0 çıktı tokenı' : '0 Output Tokens',
+                      label: isTurkishDeck ? 'YALNIZCA GİRDİ TOKENI ÜCRETLİ' : 'Only Input Tokens Billed',
                       accentColor: DeckColors.googleYellow,
                     ),
                   ),
                   SizedBox(width: _chipGap),
                   Expanded(
                     child: StatChip(
-                      value: 'REST, no Dart SDK',
-                      label: 'Python & JS SDKs · v1beta',
+                      value: isTurkishDeck ? 'REST, Dart SDK yok' : 'REST, no Dart SDK',
+                      label: isTurkishDeck ? 'PYTHON VE JS SDK · V1BETA' : 'Python & JS SDKs · v1beta',
                       accentColor: DeckColors.googleRed,
                     ),
                   ),
@@ -122,7 +129,7 @@ POST v1beta/decisions
                         filePathLabel: 'flutter_client/lib/services/cafe_judge_service.dart',
                         code: _generateSnippet,
                         accentColor: DeckColors.googleYellow,
-                        badgeLabel: 'GENERATE',
+                        badgeLabel: isTurkishDeck ? 'ÜRETİM' : 'GENERATE',
                       ),
                     ),
                     SizedBox(width: _columnGap),
@@ -131,7 +138,7 @@ POST v1beta/decisions
                         filePathLabel: 'aistudio.google.com/docs/decisions-api',
                         code: _decideSnippet,
                         accentColor: DeckColors.googleGreen,
-                        badgeLabel: 'DECIDE',
+                        badgeLabel: isTurkishDeck ? 'KARAR' : 'DECIDE',
                       ),
                     ),
                   ],

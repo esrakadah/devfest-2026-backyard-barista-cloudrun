@@ -1,3 +1,4 @@
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +36,16 @@ void main() {
 
       await pumpSlide(tester, slide);
 
-      expect(find.text('Hybrid Flame Engine + Flutter HUD Architecture'), findsOneWidget);
+      expect(
+        find.text(
+          isTurkishDeck
+              ? 'Flame sahnesi + Flutter arayüzü: hibrit mimari'
+              : 'Hybrid Flame Engine + Flutter HUD Architecture',
+        ),
+        findsOneWidget,
+      );
       expect(find.textContaining('BaristaFlameGame'), findsWidgets);
-      expect(find.textContaining('2x2 Counter Grid'), findsWidgets);
+      expect(find.textContaining(isTurkishDeck ? '2x2 tezgah' : '2x2 Counter Grid'), findsWidgets);
       expect(tester.takeException(), isNull);
     });
 
@@ -59,7 +67,10 @@ void main() {
 
       await pumpSlide(tester, slide);
 
-      expect(find.textContaining('BaristaFlameGame 60fps 3-Lane'), findsOneWidget);
+      expect(
+        find.textContaining(isTurkishDeck ? 'BaristaFlameGame 60fps 3 şerit' : 'BaristaFlameGame 60fps 3-Lane'),
+        findsOneWidget,
+      );
       expect(find.textContaining('NfcTagController (NDEFReader)'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });

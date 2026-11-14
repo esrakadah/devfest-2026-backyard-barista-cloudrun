@@ -1,3 +1,6 @@
+import 'dart:math' as math;
+
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
@@ -306,7 +309,9 @@ class GdeBadgeStrip extends StatelessWidget {
                 if (!compact) ...[
                   const SizedBox(height: 2),
                   const Text(
-                    'Google Developer Expert, does not speak for Google',
+                    isTurkishDeck
+                        ? 'Kendi görüşlerim, Google adına konuşmuyorum'
+                        : 'Google Developer Expert, does not speak for Google',
                     style: TextStyle(
                       fontFamily: DeckFonts.sans,
                       fontSize: 12,
@@ -558,6 +563,7 @@ class CafeAssetThumb extends StatelessWidget {
     required this.label,
     this.badgeText,
     this.borderColor = DeckColors.outline,
+    this.badgeColor,
     this.imageSize = 104,
     super.key,
   });
@@ -570,6 +576,9 @@ class CafeAssetThumb extends StatelessWidget {
   final String label;
   final String? badgeText;
   final Color borderColor;
+
+  /// Caption colour; defaults to [borderColor], which is too dark to read on the default outline.
+  final Color? badgeColor;
   final double imageSize;
 
   @override
@@ -619,7 +628,7 @@ class CafeAssetThumb extends StatelessWidget {
               style: TextStyle(
                 fontFamily: DeckFonts.mono,
                 fontSize: 13,
-                color: borderColor,
+                color: badgeColor ?? borderColor,
               ),
             ),
           ],
@@ -647,7 +656,9 @@ class AiStudioPipelineDiagramCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'END-TO-END AI STUDIO BUILD -> GITHUB -> CLOUD RUN PIPELINE',
+                isTurkishDeck
+                    ? 'UÇTAN UCA: AI STUDIO BUILD -> GITHUB -> CLOUD RUN'
+                    : 'END-TO-END AI STUDIO BUILD -> GITHUB -> CLOUD RUN PIPELINE',
                 style: TextStyle(
                   fontFamily: DeckFonts.mono,
                   fontSize: 12,
@@ -656,7 +667,9 @@ class AiStudioPipelineDiagramCard extends StatelessWidget {
                 ),
               ),
               PillTag(
-                label: 'STARTER TIER: 2 FREE CLOUD RUN APPS · 0 CREDIT CARD',
+                label: isTurkishDeck
+                    ? 'STARTER TIER: 2 ÜCRETSİZ CLOUD RUN UYGULAMASI · 0 KREDİ KARTI'
+                    : 'STARTER TIER: 2 FREE CLOUD RUN APPS · 0 CREDIT CARD',
                 color: DeckColors.googleGreen,
                 icon: Icons.verified,
               ),
@@ -682,10 +695,26 @@ class _AiStudioPipelinePainter extends CustomPainter {
     const topY = 4.0;
 
     final steps = [
-      ('01 · SEED + ASSETS', 'step-1-base-cafe.md + 12 PNGs', DeckColors.googleBlue),
-      ('02 · BUILD PREVIEW', '2-Player Counter + CafeReview JSON', DeckColors.googleGreen),
-      ('03 · GITHUB SYNC', 'Two-Way Commits + ZIP Backup', DeckColors.googleYellow),
-      ('04 · CLOUD RUN', 'Serverless *.run.app Container', DeckColors.googleRed),
+      (
+        isTurkishDeck ? '01 · PROMPT + GÖRSELLER' : '01 · SEED + ASSETS',
+        isTurkishDeck ? 'step-1-base-cafe.md + 12 PNG' : 'step-1-base-cafe.md + 12 PNGs',
+        DeckColors.googleBlue
+      ),
+      (
+        isTurkishDeck ? '02 · ÖNİZLEME' : '02 · BUILD PREVIEW',
+        isTurkishDeck ? '2 oyunculu tezgah + CafeReview JSON' : '2-Player Counter + CafeReview JSON',
+        DeckColors.googleGreen
+      ),
+      (
+        isTurkishDeck ? '03 · GITHUB' : '03 · GITHUB SYNC',
+        isTurkishDeck ? 'İki yönlü commit + ZIP yedeği' : 'Two-Way Commits + ZIP Backup',
+        DeckColors.googleYellow
+      ),
+      (
+        '04 · CLOUD RUN',
+        isTurkishDeck ? 'Sunucusuz *.run.app container' : 'Serverless *.run.app Container',
+        DeckColors.googleRed
+      ),
     ];
 
     for (var i = 0; i < steps.length; i++) {
@@ -770,7 +799,9 @@ class LatencyBudgetChartCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'MEASURED CLOUD RUN BENCHMARKS vs BOUNDED TIMEOUT GUARDRAILS (LOG-SCALE VISUAL)',
+                isTurkishDeck
+                    ? 'ÖLÇÜLEN CLOUD RUN SÜRELERİ ve KODDAKİ TIMEOUT SINIRLARI (LOGARİTMİK GÖRSEL)'
+                    : 'MEASURED CLOUD RUN BENCHMARKS vs BOUNDED TIMEOUT GUARDRAILS (LOG-SCALE VISUAL)',
                 style: TextStyle(
                   fontFamily: DeckFonts.mono,
                   fontSize: 12,
@@ -779,7 +810,7 @@ class LatencyBudgetChartCard extends StatelessWidget {
                 ),
               ),
               PillTag(
-                label: '50-REQ BENCHMARK · EUROPE-WEST3',
+                label: isTurkishDeck ? '50 İSTEKLİK ÖLÇÜM · EUROPE-WEST3' : '50-REQ BENCHMARK · EUROPE-WEST3',
                 color: DeckColors.halftoneBlue,
                 icon: Icons.speed,
               ),
@@ -801,18 +832,62 @@ class _LatencyBarsPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     const rows = [
-      ('Static Page p50 Warm', '53.81 ms (Measured)', 0.14, DeckColors.googleGreen),
-      ('Static Page p95 Warm', '75.52 ms (Measured)', 0.20, DeckColors.halftoneBlue),
-      ('Offline JSON Fallback', '250 ms (_offlineBundleLoadTimeout)', 0.36, DeckColors.googleYellow),
-      ('Initial TLS + Cold Start', '528.95 ms (Measured)', 0.52, DeckColors.halftonePink),
-      ('Live Gemini Guardrail', '8,000 ms (_geminiRequestTimeout)', 0.96, DeckColors.googleRed),
+      (
+        isTurkishDeck ? 'Statik sayfa p50, ısınmış' : 'Static Page p50 Warm',
+        isTurkishDeck ? '53,81 ms (ölçüldü)' : '53.81 ms (Measured)',
+        0.14,
+        DeckColors.googleGreen
+      ),
+      (
+        isTurkishDeck ? 'Statik sayfa p95, ısınmış' : 'Static Page p95 Warm',
+        isTurkishDeck ? '75,52 ms (ölçüldü)' : '75.52 ms (Measured)',
+        0.20,
+        DeckColors.halftoneBlue
+      ),
+      (
+        isTurkishDeck ? 'Çevrimdışı JSON yedeği' : 'Offline JSON Fallback',
+        '250 ms (_offlineBundleLoadTimeout)',
+        0.36,
+        DeckColors.googleYellow
+      ),
+      (
+        isTurkishDeck ? 'İlk çağrı (TLS + soğuk)' : 'Initial TLS + Cold Start',
+        isTurkishDeck ? '528,95 ms (ölçüldü)' : '528.95 ms (Measured)',
+        0.52,
+        DeckColors.halftonePink
+      ),
+      (
+        isTurkishDeck ? 'Canlı Gemini sınırı' : 'Live Gemini Guardrail',
+        isTurkishDeck ? '8 sn (_geminiRequestTimeout)' : '8,000 ms (_geminiRequestTimeout)',
+        0.96,
+        DeckColors.googleRed
+      ),
     ];
 
     const labelWidth = 220.0;
     const trackLeft = labelWidth + 12;
-    final trackWidth = size.width - trackLeft - 240;
+    const valueGap = 14.0;
+    const valueEndPadding = 8.0;
     const rowH = 17.0;
     const gap = 5.0;
+
+    final valuePainters = [
+      for (final row in rows)
+        TextPainter(
+          text: TextSpan(
+            text: row.$2,
+            style: TextStyle(
+              fontFamily: DeckFonts.mono,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: row.$4,
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        )..layout(),
+    ];
+    final widestValue = valuePainters.map((painter) => painter.width).reduce(math.max);
+    final trackWidth = size.width - trackLeft - valueGap - widestValue - valueEndPadding;
 
     for (var i = 0; i < rows.length; i++) {
       final y = i * (rowH + gap);
@@ -844,19 +919,7 @@ class _LatencyBarsPainter extends CustomPainter {
       );
       canvas.drawRRect(fillRect, Paint()..color = row.$4);
 
-      final valTp = TextPainter(
-        text: TextSpan(
-          text: row.$2,
-          style: TextStyle(
-            fontFamily: DeckFonts.mono,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            color: row.$4,
-          ),
-        ),
-        textDirection: TextDirection.ltr,
-      )..layout();
-      valTp.paint(canvas, Offset(trackLeft + trackWidth + 14, y + 1));
+      valuePainters[i].paint(canvas, Offset(trackLeft + trackWidth + valueGap, y + 1));
     }
   }
 
@@ -882,7 +945,9 @@ class QuotaComparisonDiagramCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'WHY SHARED KEYS FAIL vs HOW 300 ISOLATED AI STUDIO PROJECTS STAY GREEN',
+                isTurkishDeck
+                    ? 'ORTAK ANAHTAR NEDEN BATAR, 300 AYRI AI STUDIO PROJESİ NEDEN AYAKTA KALIR'
+                    : 'WHY SHARED KEYS FAIL vs HOW 300 ISOLATED AI STUDIO PROJECTS STAY GREEN',
                 style: TextStyle(
                   fontFamily: DeckFonts.mono,
                   fontSize: 12,
@@ -891,7 +956,9 @@ class QuotaComparisonDiagramCard extends StatelessWidget {
                 ),
               ),
               PillTag(
-                label: 'FREE TIER = 5 TO 15 RPM PER GCP PROJECT',
+                label: isTurkishDeck
+                    ? 'ÜCRETSİZ KATMAN = GCP PROJESİ BAŞINA 5-15 RPM'
+                    : 'FREE TIER = 5 TO 15 RPM PER GCP PROJECT',
                 color: DeckColors.googleRed,
                 icon: Icons.warning_amber_rounded,
               ),
@@ -979,17 +1046,28 @@ class _QuotaComparisonPainter extends CustomPainter {
 
     drawLane(
       left: 0,
-      badge: 'TRAP · SHARED SPEAKER KEY OR 100-SEAT LAB',
-      flow: '300 Builders -> 1 Shared GCP Project (15 RPM Cap)',
-      outcome: 'HTTP 429 RESOURCE_EXHAUSTED in < 3.0 seconds',
+      badge: isTurkishDeck
+          ? 'TUZAK · ORTAK KONUŞMACI ANAHTARI YA DA 100 KİŞİLİK LAB'
+          : 'TRAP · SHARED SPEAKER KEY OR 100-SEAT LAB',
+      flow: isTurkishDeck
+          ? '300 kişi -> 1 ortak GCP projesi (15 RPM sınırı)'
+          : '300 Builders -> 1 Shared GCP Project (15 RPM Cap)',
+      outcome: isTurkishDeck
+          ? '3 saniyeden kısa sürede HTTP 429 RESOURCE_EXHAUSTED'
+          : 'HTTP 429 RESOURCE_EXHAUSTED in < 3.0 seconds',
       color: DeckColors.googleRed,
     );
 
     drawLane(
       left: halfW + 28,
-      badge: 'SOLUTION · ISOLATED KEYS + 1 CALL ON SERVE',
-      flow: '300 Builders -> 300 Personal Projects (300 x 15 RPM)',
-      outcome: '1-2 RPM per player + 250ms mock_responses.json net',
+      badge:
+          isTurkishDeck ? 'ÇÖZÜM · AYRI ANAHTARLAR + SERVİSTE 1 ÇAĞRI' : 'SOLUTION · ISOLATED KEYS + 1 CALL ON SERVE',
+      flow: isTurkishDeck
+          ? '300 kişi -> 300 kişisel proje (300 x 15 RPM)'
+          : '300 Builders -> 300 Personal Projects (300 x 15 RPM)',
+      outcome: isTurkishDeck
+          ? 'Oyuncu başına 1-2 RPM + 250 ms mock_responses.json ağı'
+          : '1-2 RPM per player + 250ms mock_responses.json net',
       color: DeckColors.googleGreen,
     );
   }
@@ -1021,7 +1099,7 @@ class RoundTwoVectorPreviewCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 PillTag(
-                  label: 'LIVE DART CUSTOMPAINTER',
+                  label: isTurkishDeck ? 'CANLI CUSTOMPAINTER' : 'LIVE DART CUSTOMPAINTER',
                   color: DeckColors.googleGreen,
                   icon: Icons.brush,
                 ),
@@ -1036,7 +1114,7 @@ class RoundTwoVectorPreviewCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Crispy Phyllo · Kaymak & Boz Fıstık',
+                  isTurkishDeck ? 'Çıtır Yufka · Kaymak & Boz Fıstık' : 'Crispy Phyllo · Kaymak & Boz Fıstık',
                   style: TextStyle(
                     fontFamily: DeckFonts.sans,
                     fontSize: 13,
@@ -1058,7 +1136,7 @@ class RoundTwoVectorPreviewCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 PillTag(
-                  label: 'PRANK VECTOR SHAKER',
+                  label: isTurkishDeck ? 'ŞAKA VEKTÖRÜ' : 'PRANK VECTOR SHAKER',
                   color: DeckColors.googleRed,
                   icon: Icons.whatshot,
                 ),
@@ -1073,7 +1151,7 @@ class RoundTwoVectorPreviewCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Smoky Urfa & Antep Chili Flakes',
+                  isTurkishDeck ? 'İsli Urfa & Antep İsotu' : 'Smoky Urfa & Antep Chili Flakes',
                   style: TextStyle(
                     fontFamily: DeckFonts.sans,
                     fontSize: 13,
@@ -1228,7 +1306,7 @@ class RoundTimelineBar extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(color: round.color, borderRadius: BorderRadius.circular(14)),
                   child: Text(
-                    '${round.label} · ${round.minutes} MIN',
+                    isTurkishDeck ? '${round.label} · ${round.minutes} DK' : '${round.label} · ${round.minutes} MIN',
                     style: const TextStyle(
                       fontFamily: DeckFonts.sans,
                       fontSize: DeckTypeScale.bodyLarge,
@@ -1242,7 +1320,9 @@ class RoundTimelineBar extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          '$totalMinutes minutes · fall behind? jump to the next checkpoint, never finish the old round',
+          isTurkishDeck
+              ? '$totalMinutes dakika · geride mi kaldınız? eski turu bitirmeye çalışmayın, sıradaki kontrol noktasına atlayın'
+              : '$totalMinutes minutes · fall behind? jump to the next checkpoint, never finish the old round',
           style: const TextStyle(
             fontFamily: DeckFonts.mono,
             fontSize: DeckTypeScale.bodySmall,
