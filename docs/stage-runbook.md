@@ -28,6 +28,14 @@ Berlin günü akşamı Gaziantep uçuşu 20:40: Vibe Lounge 15:00'te biter, hava
    python3 tool/pngs_to_pdf.py                 # build/slides/backyard_barista_deck.pdf
    ```
    PDF'i bir USB belleğe ve telefona kopyala.
+
+   **Türkçe slaytlar (Gaziantep ve Türkiye'deki diğer sahneler):** aynı komutlara `--dart-define=DECK_LANG=tr` ekle. Slayt metinleri ve konuşmacı notları Türkçe olur; bayrak yoksa deck İngilizce açılır.
+   ```bash
+   cd slides
+   flutter run -d chrome --dart-define=DECK_LANG=tr                            # sahnede Türkçe deck
+   flutter test --dart-define=DECK_LANG=tr                                     # Türkçe metinle taşma kontrolü
+   flutter test --dart-define=DECK_LANG=tr tool/export_slides_test.dart        # Türkçe PNG'ler, sonra pngs_to_pdf.py
+   ```
 3. **Uygulama testleri ve kaos provası:**
    ```bash
    cd flutter_client

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:flutter/material.dart';
@@ -24,23 +25,63 @@ class PresenterSection {
 /// The sections the presenter menu offers. Every route here must exist in [deckSlides];
 /// `deck_manifest_test.dart` asserts it.
 const List<PresenterSection> presenterSections = [
-  PresenterSection(icon: Icons.title, label: '1. Title & City Editions', route: '/title'),
-  PresenterSection(icon: Icons.how_to_vote, label: '2. Cold Open: Hangisi şeker?', route: '/sweet-or-salty'),
-  PresenterSection(icon: Icons.emoji_events, label: '3. Workshop Lanes & Prizes', route: '/workshop-contract'),
-  PresenterSection(icon: Icons.auto_awesome, label: '4. AI Studio & Antigravity', route: '/ai-studio-pipeline'),
-  PresenterSection(icon: Icons.speed, label: '7. Gerçek Rakamlar (Benchmarks)', route: '/real-numbers-latency'),
-  PresenterSection(icon: Icons.public, label: '10. Multi-City Remote Config', route: '/multi-city-remote-config'),
-  PresenterSection(icon: Icons.restaurant_menu, label: '11. Salt vs Sugar & Assets', route: '/salt-sugar-mechanic'),
-  PresenterSection(icon: Icons.timer, label: '13. Live Build Dashboard', route: '/live-build-dashboard'),
-  PresenterSection(icon: Icons.layers, label: '14. Architecture Recap', route: '/architecture-recap'),
-  PresenterSection(icon: Icons.celebration, label: '15. Winner Podium & Badge', route: '/winner-podium-closing'),
+  PresenterSection(icon: Icons.title, label: isTurkishDeck ? '1. Başlık' : '1. Title & City Editions', route: '/title'),
+  PresenterSection(
+    icon: Icons.how_to_vote,
+    label: isTurkishDeck ? '2. Açılış: hangisi şeker?' : '2. Cold Open: Hangisi şeker?',
+    route: '/sweet-or-salty',
+  ),
+  PresenterSection(
+    icon: Icons.emoji_events,
+    label: isTurkishDeck ? '3. Üç yol ve ödüller' : '3. Workshop Lanes & Prizes',
+    route: '/workshop-contract',
+  ),
+  PresenterSection(
+    icon: Icons.auto_awesome,
+    label: isTurkishDeck ? '4. AI Studio ve Antigravity' : '4. AI Studio & Antigravity',
+    route: '/ai-studio-pipeline',
+  ),
+  PresenterSection(
+    icon: Icons.speed,
+    label: isTurkishDeck ? '7. Gerçek rakamlar' : '7. Gerçek Rakamlar (Benchmarks)',
+    route: '/real-numbers-latency',
+  ),
+  PresenterSection(
+    icon: Icons.public,
+    label: isTurkishDeck ? '10. Çok şehirli Remote Config' : '10. Multi-City Remote Config',
+    route: '/multi-city-remote-config',
+  ),
+  PresenterSection(
+    icon: Icons.restaurant_menu,
+    label: isTurkishDeck ? '11. Tatlı mı tuzlu mu ve görseller' : '11. Salt vs Sugar & Assets',
+    route: '/salt-sugar-mechanic',
+  ),
+  PresenterSection(
+    icon: Icons.timer,
+    label: isTurkishDeck ? '13. Canlı yapım panosu' : '13. Live Build Dashboard',
+    route: '/live-build-dashboard',
+  ),
+  PresenterSection(
+    icon: Icons.layers,
+    label: isTurkishDeck ? '14. Mimari özeti' : '14. Architecture Recap',
+    route: '/architecture-recap',
+  ),
+  PresenterSection(
+    icon: Icons.celebration,
+    label: isTurkishDeck ? '15. Demolar, ödüller, sorular' : '15. Winner Podium & Badge',
+    route: '/winner-podium-closing',
+  ),
   PresenterSection(
     icon: Icons.wifi_tethering_error,
-    label: 'Demo Hiccup (Offline Backup)',
+    label: isTurkishDeck ? 'Demo aksadı (çevrimdışı yedek)' : 'Demo Hiccup (Offline Backup)',
     route: '/demo-hiccup',
     highlighted: true,
   ),
-  PresenterSection(icon: Icons.call_split, label: 'Konya: Generate vs Decide', route: '/generate-vs-decide'),
+  PresenterSection(
+    icon: Icons.call_split,
+    label: isTurkishDeck ? 'Konya: üret ya da karar ver' : 'Konya: Generate vs Decide',
+    route: '/generate-vs-decide',
+  ),
 ];
 
 /// Quick jumps across the talk sections, the keyboard cheat sheet and an on-stage talk timer.
@@ -52,7 +93,7 @@ class PresenterMenuPlugin extends FlutterDeckPlugin {
     return [
       menuItemBuilder(
         context,
-        label: 'Stage Navigator & Shortcuts',
+        label: isTurkishDeck ? 'Stage Navigator ve kısayollar' : 'Stage Navigator & Shortcuts',
         icon: const Icon(Icons.navigation, color: DeckColors.googleYellow),
         onPressed: () {
           final deck = context.flutterDeck;
@@ -195,7 +236,10 @@ class _PresenterHelpDialogState extends State<PresenterHelpDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('WORKSHOP & VIBE LOUNGE SECTIONS', style: _labelStyle(DeckColors.halftoneBlue)),
+                      Text(
+                        isTurkishDeck ? 'ATÖLYE BÖLÜMLERİ' : 'WORKSHOP & VIBE LOUNGE SECTIONS',
+                        style: _labelStyle(DeckColors.halftoneBlue),
+                      ),
                       const SizedBox(height: _labelGap),
                       for (final section in presenterSections)
                         _SectionButton(section: section, onPressed: () => _jumpTo(section.route)),
@@ -207,7 +251,10 @@ class _PresenterHelpDialogState extends State<PresenterHelpDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('KEYBOARD CHEAT SHEET', style: _labelStyle(DeckColors.halftonePink)),
+                      Text(
+                        isTurkishDeck ? 'KLAVYE KISAYOLLARI' : 'KEYBOARD CHEAT SHEET',
+                        style: _labelStyle(DeckColors.halftonePink),
+                      ),
                       const SizedBox(height: _labelGap),
                       const _ShortcutPanel(),
                     ],
@@ -337,7 +384,9 @@ class _SectionButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(_badgeRadius),
                   ),
                   child: Text(
-                    'Slide ${slideNumberForRoute(section.route) ?? "?"}',
+                    isTurkishDeck
+                        ? 'Slayt ${slideNumberForRoute(section.route) ?? "?"}'
+                        : 'Slide ${slideNumberForRoute(section.route) ?? "?"}',
                     style: const TextStyle(
                       fontFamily: DeckFonts.mono,
                       fontSize: _badgeSize,
@@ -371,9 +420,12 @@ class _ShortcutPanel extends StatelessWidget {
       ),
       child: const Column(
         children: [
-          _ShortcutRow(keyLabel: '← / →', action: 'Previous / next slide or step'),
-          _ShortcutRow(keyLabel: '.', action: 'Slide navigation drawer'),
-          _ShortcutRow(keyLabel: 'M', action: 'Toggle marker tool'),
+          _ShortcutRow(
+            keyLabel: '← / →',
+            action: isTurkishDeck ? 'Önceki / sonraki slayt ya da adım' : 'Previous / next slide or step',
+          ),
+          _ShortcutRow(keyLabel: '.', action: isTurkishDeck ? 'Slayt listesi' : 'Slide navigation drawer'),
+          _ShortcutRow(keyLabel: 'M', action: isTurkishDeck ? 'İşaretleyiciyi aç / kapat' : 'Toggle marker tool'),
         ],
       ),
     );

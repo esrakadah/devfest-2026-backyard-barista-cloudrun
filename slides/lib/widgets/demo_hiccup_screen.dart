@@ -1,3 +1,4 @@
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class DemoHiccupScreen extends StatelessWidget {
                       Icon(Icons.wifi_tethering_error, color: DeckColors.googleRed, size: _iconSize),
                       SizedBox(width: 14),
                       PillTag(
-                        label: 'DETERMINISTIC OFFLINE FALLBACK READY',
+                        label: isTurkishDeck ? 'ÇEVRİMDIŞI YEDEK HAZIR' : 'DETERMINISTIC OFFLINE FALLBACK READY',
                         color: DeckColors.googleYellow,
                         icon: Icons.bolt,
                       ),
@@ -45,7 +46,7 @@ class DemoHiccupScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: _gap),
                   const Text(
-                    'Demo Hiccup · Offline Fallback Ready',
+                    isTurkishDeck ? 'Demo aksadı · çevrimdışı yedek hazır' : 'Demo Hiccup · Offline Fallback Ready',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: DeckFonts.sans,
