@@ -5,6 +5,7 @@ import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/demo_hiccup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
+import 'package:flutter_deck_web_client/flutter_deck_web_client.dart';
 
 void main() {
   ErrorWidget.builder = (details) {
@@ -17,12 +18,16 @@ void main() {
   runApp(const BackyardBaristaDeckApp());
 }
 
+/// Syncs the slides with the presenter view window, where the speaker notes show.
+final _presenterClient = FlutterDeckWebClient();
+
 class BackyardBaristaDeckApp extends StatelessWidget {
   const BackyardBaristaDeckApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FlutterDeckApp(
+      client: _presenterClient,
       configuration: const FlutterDeckConfiguration(
         slideSize: DeckCanvas.slideSize,
         transition: FlutterDeckTransition.fade(),

@@ -13,7 +13,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? '3. Atölye anlaşması ve ödüller' : '3. The Workshop Contract & Prizes',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [03:30 - 05:00] Üç yol (A, B, C) ve ödüller. Kimsenin dışarıda kalmayacağını söyle.\n'
-                    'SAY   "Bugün kimse sadece izleyici kalmayacak. Üç yolumuz var. Yol A: bilgisayarınızda hiçbir kurulum yoksa tarayıcıda Google AI Studio ile oyunu kurup Cloud Run\'da yayınlıyorsunuz, kredi kartı gerekmiyor. Yol B: Flutter ve Antigravity kuruluysa başlangıç reposundan ilerliyorsunuz. Yol C: sadece telefonunuz varsa sahnedeki QR kodları okutup arkadaşlarınızın kafesini test ediyorsunuz. Oyununu yayınlayıp sahnede 60 saniyede gösterenlere ödülümüz var: Google renkli piksel gözlükler ve Dash hediyeleri."\n'
+                    'SAY   "Bugün kimse sadece izleyici kalmayacak. Üç yolumuz var. Yol A: bilgisayarınızda hiçbir kurulum yoksa tarayıcıda Google AI Studio ile oyunu kurup Cloud Run\'da yayınlıyorsunuz, kredi kartı gerekmiyor. Kişisel Gmail hesabınızla girin: okul ya da iş hesabında ücretsiz yayın seçeneği çıkmayabilir. Yol B: Flutter ve Antigravity kuruluysa başlangıç reposundan ilerliyorsunuz. Yol C: sadece telefonunuz varsa sahnedeki QR kodları okutup arkadaşlarınızın kafesini test ediyorsunuz. Oyununu yayınlayıp sahnede 60 saniyede gösterenler arasından dört kafeye ödülümüz var: Google renkli piksel gözlükler ve Dash hediyeleri."\n'
                     'HOLD  Gözlükleri ve Dash oyuncaklarını elinde göster. Slayt 4 gözlük diyor: sahneye çıkmadan yanındakileri say, sayı farklıysa gerçek sayıyı söyle.\n'
                     'NEXT  "Önce en çok sorulan soru: Google AI Studio\'dan bugün tam olarak ne çıkıyor?"'
                 : 'BEAT  [03:30 - 05:00] Üç Kulvar (Lane A, B, C) ve Ödül Sözleşmesi. Salondaki hiç kimsenin dışarıda kalmayacağını garanti et.\n'
@@ -62,7 +62,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                           else
                             'Paste step-1-base-cafe.md + load 12 base PNGs from GitHub.',
                           if (isTurkishDeck)
-                            "Deploy to Cloud Run (.run.app) ve Sync to GitHub'a tıklayın."
+                            "Publish (.run.app) ve Sync to GitHub'a tıklayın."
                           else
                             'Click Deploy to Cloud Run (.run.app) & Sync to GitHub.',
                         ],

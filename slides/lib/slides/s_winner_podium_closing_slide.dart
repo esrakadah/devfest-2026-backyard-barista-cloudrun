@@ -14,8 +14,9 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                 isTurkishDeck ? '15. Sahne demoları, ödüller ve sorular' : '15. Winner Podium, Vibe Lounge Badge & Q&A',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [65:00 - 80:00] 60 saniyelik sahne demoları, ödüller, bugün ne öğrendik ve sorular.\n'
-                    'SAY   "Şimdi en güzel kısım: sahne sizin. Oyununu Cloud Run\'da ya da GitHub\'da yayınlayan arkadaşları 60 saniyelik demo için sahneye davet ediyorum. Tatlıya tuz atıp 1 yıldızlı yorumu canlı gösteren en yaratıcı kafelere piksel gözlüklerimizi ve Dash hediyelerimizi veriyoruz. Bugünden aklınızda dört şey kalsın, hepsini kendi vibe coding\'inize taşıyabilirsiniz. Şakayı model yazsın, puanı kodunuz versin. Cevabı şemayla isteyin. Her AI çağrısına süre sınırı ve yedek plan koyun. Anahtar ve kota kişiye özel olsun. Yazılarım esratech.com\'da, repo ve slaytlar ekrandaki QR kodda. Enerjiniz ve oyunlarınız için çok teşekkür ederim. Şimdi sorularınızı alayım."\n'
+                    'SAY   "Şimdi en güzel kısım: sahne sizin. Oyununu Cloud Run\'da ya da GitHub\'da yayınlayan arkadaşları 60 saniyelik demo için sahneye davet ediyorum. Tatlıya tuz atıp 1 yıldızlı yorumu canlı gösteren en yaratıcı kafelere piksel gözlüklerimizi ve Dash hediyelerimizi veriyoruz. Bugünden aklınızda dört şey kalsın, hepsini kendi vibe coding\'inize taşıyabilirsiniz. Cevabı şemayla isteyin. Her AI çağrısına zaman aşımı ve yedek plan koyun. Anahtar ve kota kişiye özel olsun. Ve en önemlisi: şakayı model yazsın, puanı kodunuz versin. Yazılarım esratech.com\'da, repo ve slaytlar ekrandaki QR kodda. Enerjiniz ve oyunlarınız için çok teşekkür ederim. Şimdi sorularınızı alayım."\n'
                     'HOLD  Ödülleri verdikten sonra grup fotoğrafı. Dört maddeyi slayttan okuma, salona bakarak say, her maddeden sonra kısa dur. Soruları mikrofonda tekrar et.\n'
+                    'ANTEP [15 Kasım] Önce dört maddeyi say (2 dakika), her birini bugün görülen bir şeye bağla: şema = konuşmadaki tipli veri, zaman aşımı = Gemini 8 saniyede cevap vermezse oyun yedek cevaplara düşer, kişisel anahtar = yayınlayanlar kendi AI Studio hesabını kullandı, şaka ve puan = tuzlu tepsiye gelen 1 yıldız. Sonra en fazla 4 sahne demosu (60 saniye, dört ödül), ödüller ve iki destenin soruları birlikte: 14 dakika, soruya en az 8 dakika kalsın. Son cümle: "Şakayı model yazsın, puanı kodunuz versin. Teşekkürler Gaziantep!"\n'
                     'NEXT  "Sorular ve grup fotoğrafı. Soruyu mikrofonda tekrar et."'
                 : 'BEAT  [65:00 - 80:00] 60 Saniyelik Sahne Demoları, Google Piksel Gözlük + Dash Ödül Töreni, Vibe Lounge Rozeti ve Q&A.\n'
                     'SAY   "Şimdi en heyecanlı an! Oyununu Cloud Run (.run.app) veya GitHub üzerinde yayınlayan arkadaşlarımızı 60 saniyelik canlı demoları için sahneye davet ediyorum. Tatlı siparişine tuz şakası yapıp 1 yıldızlı yorumu canlı gösteren en yaratıcı kafelere 4 adet Google renkli piksel gözlüğümüzü ve Dash hediyelerimizi takdim ediyoruz! Ayrıca herkes ekrandaki goo.gle/devfest26-vibe-lounge adresinden resmi DevFest 2026 Vibe Lounge rozetini alabilir. Bugünden aklınızda tek cümle kalsın: modeli şakayı yazmak için kullanın, puanı kodunuz versin. Hepinize enerjiniz ve harika oyunlarınız için çok teşekkür ederim, şimdi sorularınızı alabiliriz!"\n'
@@ -32,7 +33,7 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: isTurkishDeck ? 'SAHNE DEMOLARI, ÖDÜLLER VE SORULAR' : 'SHOWCASE PODIUM, VIBE LOUNGE BADGE & Q&A',
+          eyebrow: isTurkishDeck ? 'SAHNE DEMOLARI, ÖDÜLLER VE SORU CEVAP' : 'SHOWCASE PODIUM, VIBE LOUNGE BADGE & Q&A',
           title: isTurkishDeck
               ? 'Teşekkürler! Kafenizi gösterin, ödülünüzü alın'
               : 'Teşekkürler! Show Us Your Cafe & Claim Your Prizes',
@@ -66,7 +67,7 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                             'Win 1 of 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts.',
                         ],
                         footerText: isTurkishDeck
-                            ? "80 dk atölyede 4 kazanan / 45 dk'lık blokta 2 kazanan"
+                            ? "80 dk'lık blokta 4 kazanan, 45 dk'lık blokta 2 kazanan"
                             : '2 winners per 45-min Vibe Lounge wave / 4 winners in 80-min workshop',
                       ),
                     ),
@@ -79,10 +80,10 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                               title: "Kendi vibe coding'inize taşıyın",
                               accentColor: DeckColors.halftoneBlue,
                               bullets: [
-                                'Şakayı model yazsın, puanı kodunuz versin.',
                                 'Cevabı şemayla isteyin: düz metin değil, kodun okuduğu JSON.',
-                                'Her AI çağrısına süre sınırı (timeout) ve yedek plan koyun.',
+                                'Her AI çağrısına zaman aşımı (timeout) ve yedek plan koyun.',
                                 'Anahtar ve kota kişiye özel olsun: ortak anahtar salonu batırır.',
+                                'Şakayı model yazsın, puanı kodunuz versin.',
                               ],
                               footerText: 'Yazılar ve iletişim: esratech.com · @esrakadah',
                             )
@@ -105,7 +106,7 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                       assetPath: 'assets/images/starter_repo_qr.png',
                       caption: isTurkishDeck ? "Repo, prompt'lar ve slaytlar" : 'Repo, prompts & slides',
                       url: 'github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
-                      size: 300,
+                      size: 380,
                     ),
                   ],
                 ),

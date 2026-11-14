@@ -11,8 +11,8 @@ class DemoHiccupSlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? 'Yedek: demo aksarsa, çevrimdışı mod' : 'Backup: Demo Hiccup & Offline Mode',
             speakerNotes: isTurkishDeck
                 ? "BEAT  [YEDEK] Salon Wi-Fi'ı kesilirse cankurtaran slaytı.\n"
-                    'SAY   "Wi-Fi kısa bir çay molası verdi. Sorun değil, mimariyi tam bu an için kurduk. Uygulamayı OFFLINE_MODE=true ile çalıştırıyorum. Gemini atlanıyor, kararı bu laptoptaki Gemma 4 veriyor. O da yetişmezse paketteki mock_responses.json devreye giriyor. Oyuna kaldığımız yerden devam ediyoruz."\n'
-                    'HOLD  Sakin kal, gülümse, yerel sekmedeki çevrimdışı Flutter Web örneğine geç. Komut ekranda yazıyor, ezberden yazma.\n'
+                    'SAY   "Wi-Fi kısa bir çay molası verdi. Sorun değil, mimariyi tam bu an için kurduk. Uygulamayı OFFLINE_MODE=true ile çalıştırıyorum. Gemini atlanıyor. Yerel jüri açıksa kararı bu laptoptaki Gemma 4 veriyor, değilse paketteki mock_responses.json devreye giriyor. Oyuna kaldığımız yerden devam ediyoruz."\n'
+                    'HOLD  Sakin kal, gülümse, yerel sekmedeki çevrimdışı Flutter Web örneğine geç. Komut ekranda yazıyor, ezberden yazma. Sahneden önce bu komutla açılmış yerel sekme hazır beklesin.\n'
                     'NEXT  "Canlı yapım panosuna (/live-build-dashboard) geri dön."'
                 : 'BEAT  [BACKUP] Konferans Wi-Fi Bağlantısı Kesildiğinde Cankurtaran Slaydı.\n'
                     'SAY   "Konferans Wi-Fi ağımız şu an 300 kişinin yüklenmesiyle kısa bir mola verdi; ama mimarimizi tam da bu an için tasarladık! Şimdi uygulamayı OFFLINE_MODE=true ile çalıştırıyorum: Gemini atlanıyor, kararı bu laptoptaki Gemma 4 veriyor, o da yetişmezse paketteki mock_responses.json devreye giriyor. 4 şehrin tamamında şaka testlerimize kesintisiz devam ediyoruz."\n'
@@ -28,7 +28,10 @@ class DemoHiccupSlide extends FlutterDeckSlideWidget {
         message: isTurkishDeck
             ? "Salon Wi-Fi'ı çay molası verdi!\n"
                 'Çevrimdışı yedeğe geçiyoruz:\n'
-                'flutter run -d chrome --dart-define=OFFLINE_MODE=true --dart-define=DEFAULT_CITY=gaziantep'
+                'flutter run -d chrome\n'
+                '--dart-define=OFFLINE_MODE=true\n'
+                '--dart-define=DEFAULT_CITY=gaziantep\n'
+                '--dart-define=LOCAL_JUDGE_URL=http://localhost:11434/api/chat'
             : 'Conference Wi-Fi took a coffee break!\n'
                 'Switch to offline fallback:\n'
                 'flutter run -d chrome --dart-define=OFFLINE_MODE=true --dart-define=DEFAULT_CITY=gaziantep',
