@@ -16,9 +16,12 @@
         },
         "devfest_istanbul_2026": {
           "value": "istanbul"
+        },
+        "devfest_konya_2026": {
+          "value": "konya"
         }
       },
-      "description": "Active DevFest City Edition (berlin, gaziantep, adana, istanbul) for Backyard Barista on Cloud Run.",
+      "description": "Active DevFest City Edition (berlin, gaziantep, adana, istanbul, konya) for Backyard Barista on Cloud Run.",
       "valueType": "STRING"
     },
     "custom_city_jokes_json": {

@@ -77,7 +77,7 @@ class _CityFlagPainter extends CustomPainter {
 }
 
 /// Bottom sheet / drawer that lets Esra or workshop attendees inspect the 3-Layer City Edition
-/// hierarchy and switch between `Berlin`, `Gaziantep`, `Adana`, and `Istanbul` in one tap.
+/// hierarchy and switch between `Berlin`, `Gaziantep`, `Adana`, `Istanbul`, and `Konya` in one tap.
 class CitySettingsSheet extends StatelessWidget {
   const CitySettingsSheet({
     required this.controller,

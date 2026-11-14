@@ -40,6 +40,7 @@ const List<PresenterSection> presenterSections = [
     route: '/demo-hiccup',
     highlighted: true,
   ),
+  PresenterSection(icon: Icons.call_split, label: 'Konya: Generate vs Decide', route: '/generate-vs-decide'),
 ];
 
 /// Quick jumps across the talk sections, the keyboard cheat sheet and an on-stage talk timer.

@@ -48,6 +48,18 @@
       "saltPrankRoast": "Galata Kulesi'nde turist kazıklar gibi kahveye tuz basmışsınız, 1 Yıldız!",
       "chiliPrankRoast": "San Sebastian'ın üstüne çilek sosu diye acı sos dökmüşsünüz, martılar bile yemez! 1 Yıldız!",
       "sweetCompliment": "Boğaz havasında bundan güzel kahve ve tatlı ikilisi olamaz, 5 Yıldız!"
+    },
+    "konya": {
+      "id": "konya",
+      "cityName": "Konya",
+      "flagEmoji": "🇹🇷",
+      "eventTitle": "DevFest Konya 2026 Edition",
+      "cafeSubtitle": "Backyard Barista on Cloud Run",
+      "defaultLanguage": "tr",
+      "signatureSpecialty": "Baklava & Espresso",
+      "saltPrankRoast": "Tatlı siparişe şeker yerine tuz konmuş! 1 Yıldız!",
+      "chiliPrankRoast": "Tatlı siparişe acı sos dökülmüş! 1 Yıldız!",
+      "sweetCompliment": "Şekeri doğru, tepsi tam: 5 Yıldız!"
     }
   }
 }

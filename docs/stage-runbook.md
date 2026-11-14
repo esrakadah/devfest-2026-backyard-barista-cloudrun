@@ -6,6 +6,7 @@ Bu doküman sahnedeki teknik delivery'nin tek kontrol listesidir: ne zaman ne ko
 |---|---|---|---|
 | DevFest Berlin | 14 Kasım 2026 | EN | Barista konuşması yok: 10:00 Room 2 konuşması "Dressing Up AI" (ayrı deste, `esrakadah/modemoiselle_deck`). 11:00-15:00 Vibe Lounge'da katılımcılar Google'ın resmi Barista rehberini izler; bu oyun orada sadece opsiyonel demo ([İngilizce akış kartı](berlin-45-en.md)) |
 | DevFest Gaziantep | 15 Kasım 2026 | TR | 80 dk atölye veya 2 x 45 dk Vibe Lounge |
+| DevFest Konya | 21 Kasım 2026 | TR | 14:30 ana salon, 30 dk ([Konya akış kartı](konya-demo-runbook.md)) |
 | DevFest Adana | 11 Aralık 2026 | TR | 30+10 dk ana salon |
 | DevFest İstanbul | 19 Aralık 2026 | TR | 30+10 dk ana salon |
 
@@ -18,7 +19,7 @@ Berlin günü akşamı Gaziantep uçuşu 20:40: Vibe Lounge 15:00'te biter, hava
 1. **Deck testleri yeşil mi?**
    ```bash
    cd slides
-   flutter analyze && flutter test        # manifest, konuşmacı notları, 16 slaytın gerçek fontlarla render'ı
+   flutter analyze && flutter test        # manifest, konuşmacı notları, 17 slaytın gerçek fontlarla render'ı
    ```
 2. **PDF yedek desteyi üret** (sahne bilgisayarı Flutter çalıştıramazsa herhangi bir makineden sunulur):
    ```bash
