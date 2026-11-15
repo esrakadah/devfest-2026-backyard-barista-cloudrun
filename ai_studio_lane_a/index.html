@@ -365,11 +365,10 @@
 
     <section class="soundboard-bar" id="baristaSoundboard">
       <div class="soundboard-header">
-        <span class="soundboard-title" id="soundboardTitle">🎛️ Barista Ses Efektleri (10 Web Audio API SFX)</span>
+        <span class="soundboard-title" id="soundboardTitle">🎛️ Barista Ses Efektleri (9 Web Audio API SFX)</span>
         <span class="soundboard-status" id="activeWebAudioCueBadge">🎵 Web Audio Hazır</span>
       </div>
       <div class="soundboard-buttons">
-        <button class="btn-sfx" id="sfxCoffeeGrinderBtn" onclick="playBaristaCue('coffeeGrinder')">⚙️ Kahve Değirmeni</button>
         <button class="btn-sfx" id="sfxEspressoSteamBtn" onclick="playBaristaCue('espressoSteam')">💨 Espresso Buharı</button>
         <button class="btn-sfx" id="sfxServeBellBtn" onclick="playBaristaCue('serveBell')">🔔 Sipariş Zili</button>
         <button class="btn-sfx" id="sfxLevelUpBtn" onclick="playBaristaCue('levelUpFanfare')">🏆 Seviye Atlama</button>
@@ -617,7 +616,6 @@
     let sharedAudioContext = null;
 
     const CUE_LABELS = {
-      coffeeGrinder: { tr: '⚙️ Kahve Değirmeni Sesi', en: '⚙️ Burr Coffee Grinder' },
       espressoSteam: { tr: '💨 Espresso Buhar Çubuğu', en: '💨 Espresso Steam Wand' },
       serveBell: { tr: '🔔 Servis Zili', en: '🔔 Order Counter Bell' },
       levelUpFanfare: { tr: '🏆 Seviye Atlama Fanfarı', en: '🏆 Level-Up Fanfare' },
@@ -663,7 +661,7 @@
         return;
       }
       const labelObj = CUE_LABELS[cueName];
-      badgeEl.textContent = labelObj ? (en ? labelObj.en : labelObj.tr) : (en ? '🎵 10 Web Audio SFX Ready' : '🎵 Web Audio Hazır');
+      badgeEl.textContent = labelObj ? (en ? labelObj.en : labelObj.tr) : (en ? '🎵 9 Web Audio SFX Ready' : '🎵 Web Audio Hazır');
     }
 
     function ensureAudioContext() {
@@ -708,22 +706,7 @@
       try {
         const audioCtx = ensureAudioContext();
         const now = audioCtx.currentTime;
-        if (cueName === 'coffeeGrinder') {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(92, now);
-          osc.frequency.linearRampToValueAtTime(118, now + 0.45);
-          osc.frequency.linearRampToValueAtTime(96, now + 0.9);
-          gain.gain.setValueAtTime(0.001, now);
-          gain.gain.linearRampToValueAtTime(0.14, now + 0.05);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.92);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start(now);
-          osc.stop(now + 0.93);
-          playNoiseBurst(audioCtx, now, 0.9, 'bandpass', 1450, 2.4, 0.16);
-        } else if (cueName === 'espressoSteam') {
+        if (cueName === 'espressoSteam') {
           playNoiseBurst(audioCtx, now, 0.78, 'bandpass', 2800, 1.4, 0.2);
           const osc = audioCtx.createOscillator();
           const gain = audioCtx.createGain();
@@ -904,8 +887,6 @@
         tray.push(itemId);
         if (selectedItem.isPrank) {
           playBaristaCue('prankSprinkle');
-        } else if (selectedItem.id === 'espresso' || selectedItem.id === 'menengic_coffee') {
-          playBaristaCue('coffeeGrinder');
         } else if (selectedItem.id === 'milk') {
           playBaristaCue('espressoSteam');
         } else {
@@ -1006,8 +987,7 @@
 
       document.getElementById('round2Btn').textContent = `✨ Round 2 AI Menu: ${showRound2CustomItems ? 'ON' : 'OFF'}`;
       document.getElementById('muteBtn').textContent = isMuted ? (en ? '🔇 Sound Off' : '🔇 Ses Kapalı') : (en ? '🔊 Sound On' : '🔊 Ses Açık');
-      document.getElementById('soundboardTitle').textContent = en ? '🎛️ Barista Soundboard (10 Web Audio API SFX)' : '🎛️ Barista Ses Efektleri (10 Web Audio API SFX)';
-      document.getElementById('sfxCoffeeGrinderBtn').textContent = en ? '⚙️ Coffee Grinder' : '⚙️ Kahve Değirmeni';
+      document.getElementById('soundboardTitle').textContent = en ? '🎛️ Barista Soundboard (9 Web Audio API SFX)' : '🎛️ Barista Ses Efektleri (9 Web Audio API SFX)';
       document.getElementById('sfxEspressoSteamBtn').textContent = en ? '💨 Espresso Steam' : '💨 Espresso Buharı';
       document.getElementById('sfxServeBellBtn').textContent = en ? '🔔 Order Bell' : '🔔 Sipariş Zili';
       document.getElementById('sfxLevelUpBtn').textContent = en ? '🏆 Level Up' : '🏆 Seviye Atlama';

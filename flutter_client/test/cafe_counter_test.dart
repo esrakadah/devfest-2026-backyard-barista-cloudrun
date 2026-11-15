@@ -332,7 +332,7 @@ void main() {
   });
 
   testWidgets(
-    'Web Audio API Barista Soundboard buttons and Level Up progression trigger coffee grinder, steam, bell, and level-up fanfare',
+    'Web Audio API Barista Soundboard buttons and Level Up progression trigger steam, bell, and level-up fanfare',
     (tester) async {
       await tester.binding.setSurfaceSize(const Size(1280, 1200));
       addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -354,10 +354,6 @@ void main() {
       expect(find.text('Lv.1 Barista'), findsOneWidget);
       expect(find.byKey(const Key('barista_web_audio_soundboard')), findsOneWidget);
 
-      await tester.tap(find.byKey(const Key('sound_fx_coffee_grinder_button')));
-      await tester.pump();
-      expect(find.text('Kahve Değirmeni · Burr Grinder'), findsOneWidget);
-
       await tester.tap(find.byKey(const Key('sound_fx_espresso_steam_button')));
       await tester.pump();
       expect(find.text('Espresso Buharı · Steam Wand'), findsOneWidget);
@@ -369,7 +365,7 @@ void main() {
       // Select Espresso + Baklava + Sugar and serve: P1 (+50) + P2 (+50) = 100 pts -> Lv.2 Barista + Level Up Fanfare!
       await tester.tap(find.byKey(const Key('ingredient_card_espresso')));
       await tester.pump();
-      expect(find.text('Kahve Değirmeni · Burr Grinder'), findsOneWidget);
+      expect(find.text('Espresso Buharı · Steam Wand'), findsOneWidget);
 
       await tester.tap(find.byKey(const Key('ingredient_card_baklava')));
       final sugarJar = find.byKey(const Key('ingredient_card_sugar_jar'));
@@ -388,11 +384,11 @@ void main() {
       expect(find.text('Seviye Atlama · Level Up!'), findsOneWidget);
 
       final soundController = CafeSoundController()
-        ..play(CafeSoundCue.coffeeGrinder)
+        ..play(CafeSoundCue.espressoSteam)
         ..play(CafeSoundCue.serveBell);
       expect(
         soundController.playedCues,
-        <CafeSoundCue>[CafeSoundCue.coffeeGrinder, CafeSoundCue.serveBell],
+        <CafeSoundCue>[CafeSoundCue.espressoSteam, CafeSoundCue.serveBell],
       );
       soundController.toggleMute();
       soundController.play(CafeSoundCue.saltyBuzzer);

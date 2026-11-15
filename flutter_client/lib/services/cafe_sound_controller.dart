@@ -8,7 +8,6 @@ import 'package:backyard_barista_cloudrun/services/sound_player_stub.dart'
 /// via Web Audio API procedural synthesis and bundled `.wav` assets.
 enum CafeSoundCue {
   tapPop('assets/audio/tap_pop.wav', 'Tap Pop'),
-  coffeeGrinder('assets/audio/coffee_grinder.wav', 'Kahve Değirmeni · Burr Grinder'),
   espressoSteam('assets/audio/espresso_steam.wav', 'Espresso Buharı · Steam Wand'),
   stealthWink('assets/audio/stealth_wink.wav', 'Gizli Tuz · Stealth Wink'),
   serveBell('assets/audio/serve_bell.wav', 'Sipariş Zili · Order Bell'),
@@ -24,7 +23,7 @@ enum CafeSoundCue {
   final String displayLabel;
 }
 
-/// Plays cozy cafe sound effects (`coffee_grinder`, `espresso_steam`, `serve_bell`,
+/// Plays cozy cafe sound effects (`espresso_steam`, `serve_bell`,
 /// `level_up`, `tap_pop`, `stealth_wink`, `sweet_fanfare`, `salty_buzzer`, `next_chime`,
 /// `tea_sip`) using Web Audio API synthesis on Web and native audio on macOS/mobile,
 /// with an in-app mute toggle for workshop halls.

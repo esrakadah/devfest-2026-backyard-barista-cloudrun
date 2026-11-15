@@ -153,11 +153,6 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
 
   int get _crewLevel => 1 + ((_playerOneBaristaScore + _playerTwoPastryScore) ~/ _pointsPerCrewLevel);
 
-  static const Set<String> _coffeeGrindIds = <String>{
-    'espresso',
-    'menengic_coffee',
-  };
-
   void _triggerManualSoundCue(CafeSoundCue cue) {
     setState(() {
       _soundController.play(cue);
@@ -190,8 +185,6 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       _syncFlameStage();
       if (!isRemoving && ingredient.isPrankItem) {
         _soundController.play(CafeSoundCue.stealthWink);
-      } else if (!isRemoving && _coffeeGrindIds.contains(ingredient.id)) {
-        _soundController.play(CafeSoundCue.coffeeGrinder);
       } else if (!isRemoving && ingredient.category == IngredientCategory.drink) {
         _soundController.play(CafeSoundCue.espressoSteam);
       } else {
@@ -1676,12 +1669,6 @@ class _BaristaWebAudioSoundboardBar extends StatelessWidget {
               spacing: 6,
               runSpacing: 4,
               children: <Widget>[
-                _SoundboardActionChip(
-                  buttonKey: const Key('sound_fx_coffee_grinder_button'),
-                  icon: Icons.settings_suggest_rounded,
-                  label: isTurkish ? 'Kahve Değirmeni' : 'Coffee Grinder',
-                  onTap: () => onPlayCue(CafeSoundCue.coffeeGrinder),
-                ),
                 _SoundboardActionChip(
                   buttonKey: const Key('sound_fx_espresso_steam_button'),
                   icon: Icons.air_rounded,
