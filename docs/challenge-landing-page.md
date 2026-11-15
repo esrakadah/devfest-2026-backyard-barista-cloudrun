@@ -15,7 +15,7 @@
 
 **Süre:** 45 Dakika (Vibe Lounge) / 80 Dakika (Tam Atölye) | **Seviye:** Başlangıçtan İleriye (Kodlama deneyimi şart değil!)
 **Araçlar:** Google AI Studio (`aistudio.google.com`), Google Antigravity (`antigravity.google`), Flutter (`package:http` Gemini REST / `firebase_ai`, `firebase_remote_config`) & Google Cloud Run
-**Ödüller:** Toplam **4 Adet Google Renkli Pixel Gözlük (Sarı, Mavi, Yeşil, Kırmızı) + Flutter Dash Hediyesi!** (45 dk Vibe Lounge turunda 2 kazanan / 80 dk tam atölyede 4 kazanan) 🕶️🐦
+**Sahne demosu:** Uygulamasını yayınlayan dört kişi sonda 60 saniyede sahnede gösteriyor. Tatlıya tuz atıp 1 yıldızlı yorumu canlı göstermek yeter.
 
 Hoş geldin! Bugün klavyeyle uzun mesajlar yazılan klasik bir sohbet botu değil; yanındaki arkadaşınla butonlara tıklayarak içecek ve tatlı hazırladığın, karakterlere **5 saniye boyunca ince belli bardakta çay yudumlattığın (`🫖 5sn Çay Yudumlat`)** ve **Şeker (`Tatlı Şeker`) yerine gizlice Tuz (`Tuzluk`) atarsan Gemini'dan 1 yıldızlı komik bir eleştiri yediğin** 2 kişilik bir Kafe Oyunu kurup **Google Cloud Run (`.run.app`)** üzerinde canlıya alacaksın!
 
@@ -40,7 +40,7 @@ Hoş geldin! Bugün klavyeyle uzun mesajlar yazılan klasik bir sohbet botu değ
 
 **Duration:** 45 Minutes (Vibe Lounge) / 80 Minutes (Full Workshop) | **Level:** Beginner to Intermediate (Zero coding experience required for Lane A!)
 **Tools:** Google AI Studio (`aistudio.google.com`), Google Antigravity (`antigravity.google`), Flutter (`package:http` Gemini REST / `firebase_ai`, `firebase_remote_config`) & Google Cloud Run
-**Prizes:** **4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Flutter Dash Gifts** for builders who publish to Cloud Run (`.run.app`) or GitHub and demo live in 60 seconds! (`2` winners per 45-min Vibe Lounge wave / `4` winners in 80-min workshop) 🕶️🐦
+**Stage demo:** Up to four builders who publish to Cloud Run (`.run.app`) or GitHub demo live in 60 seconds at the end.
 
 ### 🚀 3 Progressive Levels
 

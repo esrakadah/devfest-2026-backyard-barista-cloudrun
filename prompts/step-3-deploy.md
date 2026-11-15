@@ -6,7 +6,7 @@
 1. Click **Publish** in the top-right bar of Build mode, then **Get started** and **Publish your app** (the app is served from Cloud Run).
    - AI Studio Starter Tier provisions a managed HTTPS `https://*.run.app` service and stores your `GEMINI_API_KEY` server-side.
 2. Click **"Sync to GitHub"** in the top-right bar of Google AI Studio to push your complete web game to your personal GitHub account.
-3. Open your live `.run.app` URL on your phone, switch the City Edition to **Gaziantep 🇹🇷** (or **Berlin 🇩🇪**), sneak **Salt (`Tuz`)** into a Baklava + Espresso order, and raise your hand to demo on stage for the **Google Pixel Sunglasses + Dash** prize!
+3. Open your live `.run.app` URL on your phone, switch the City Edition to **Gaziantep 🇹🇷** (or **Berlin 🇩🇪**), sneak **Salt (`Tuz`)** into a Baklava + Espresso order, and raise your hand to demo it on stage in 60 seconds (up to four people).
 
 ---
 
