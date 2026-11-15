@@ -103,9 +103,12 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                     ),
                     SizedBox(width: _gap),
                     QrCodeCard(
-                      assetPath: 'assets/images/starter_repo_qr.png',
-                      caption: isTurkishDeck ? "Repo, prompt'lar ve slaytlar" : 'Repo, prompts & slides',
-                      url: 'github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
+                      assetPath:
+                          isTurkishDeck ? 'assets/images/gaziantep_atolye_qr.png' : 'assets/images/starter_repo_qr.png',
+                      caption: isTurkishDeck ? "Atölye rehberi ve prompt'lar" : 'Repo, prompts & slides',
+                      url: isTurkishDeck
+                          ? 'github.com/esrakadah/devfest-gaziantep-2026-atolye'
+                          : 'github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
                       size: 380,
                     ),
                   ],

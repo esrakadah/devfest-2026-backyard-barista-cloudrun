@@ -141,7 +141,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                         children: [
                           Text(
                             isTurkishDeck
-                                ? "Repo ve prompt'lar: github.com/esrakadah/devfest-2026-backyard-barista-cloudrun"
+                                ? 'Türkçe atölye: github.com/esrakadah/devfest-gaziantep-2026-atolye'
                                 : 'Starter Repo & Prompts: github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
                             style: TextStyle(
                               fontFamily: DeckFonts.mono,

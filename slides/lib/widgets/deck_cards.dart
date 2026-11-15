@@ -697,7 +697,7 @@ class _AiStudioPipelinePainter extends CustomPainter {
     final steps = [
       (
         isTurkishDeck ? '01 · PROMPT + GÖRSELLER' : '01 · SEED + ASSETS',
-        isTurkishDeck ? 'step-1-base-cafe.md + 12 PNG' : 'step-1-base-cafe.md + 12 PNGs',
+        isTurkishDeck ? 'tur-1-kafe.md + 12 PNG' : 'step-1-base-cafe.md + 12 PNGs',
         DeckColors.googleBlue
       ),
       (

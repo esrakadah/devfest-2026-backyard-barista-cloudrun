@@ -54,7 +54,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                         title: isTurkishDeck ? "Prompt + GitHub PNG'leri" : 'Prompt + GitHub PNGs',
                         bullets: [
                           if (isTurkishDeck)
-                            'prompts/step-1-base-cafe.md dosyasını Build moduna yapıştırın.'
+                            'promptlar/tur-1-kafe.md dosyasını Build moduna yapıştırın.'
                           else
                             'Paste prompts/step-1-base-cafe.md in AI Studio Build mode.',
                           if (isTurkishDeck)
@@ -81,7 +81,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                           else
                             'Generates interactive 2-player cafe counter UI + backend.',
                           if (isTurkishDeck)
-                            '4 şehir sürümü arasında geçiş: Berlin, Gaziantep, Adana, İstanbul.'
+                            'Gaziantep teması ve Türkçe arayüz.'
                           else
                             'Includes 4-City Edition switcher (Berlin, Gaziantep, Adana, Istanbul).',
                           if (isTurkishDeck)
