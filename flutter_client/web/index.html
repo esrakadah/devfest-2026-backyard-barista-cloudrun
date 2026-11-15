@@ -43,45 +43,6 @@
           if (!ctx) return false;
           const now = ctx.currentTime;
 
-          if (cueName === 'coffeeGrinder') {
-            // Burr grinder motor sawtooth + cracking coffee bean noise bursts
-            const osc = ctx.createOscillator();
-            const motorGain = ctx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(118, now);
-            osc.frequency.linearRampToValueAtTime(142, now + 0.4);
-            osc.frequency.linearRampToValueAtTime(112, now + 0.8);
-            motorGain.gain.setValueAtTime(0.001, now);
-            motorGain.gain.linearRampToValueAtTime(0.14, now + 0.06);
-            motorGain.gain.exponentialRampToValueAtTime(0.001, now + 0.82);
-            osc.connect(motorGain);
-            motorGain.connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.84);
-
-            const bufferSize = Math.floor(ctx.sampleRate * 0.8);
-            const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-            const data = noiseBuffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-              const gate = 0.5 + 0.5 * Math.sin((2 * Math.PI * 28 * i) / ctx.sampleRate);
-              data[i] = (Math.random() * 2 - 1) * gate;
-            }
-            const noise = ctx.createBufferSource();
-            noise.buffer = noiseBuffer;
-            const filter = ctx.createBiquadFilter();
-            filter.type = 'bandpass';
-            filter.frequency.setValueAtTime(1150, now);
-            filter.Q.setValueAtTime(2.8, now);
-            const noiseGain = ctx.createGain();
-            noiseGain.gain.setValueAtTime(0.22, now);
-            noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
-            noise.connect(filter);
-            filter.connect(noiseGain);
-            noiseGain.connect(ctx.destination);
-            noise.start(now);
-            return true;
-          }
-
           if (cueName === 'espressoSteam') {
             // Pressurized steam wand hiss with sweeping bandpass filter + boiler resonance
             const bufferSize = Math.floor(ctx.sampleRate * 0.9);

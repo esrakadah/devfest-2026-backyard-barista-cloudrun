@@ -9,7 +9,7 @@
 
 > **Vibe Lounge note:** this repo is Esra's talk and workshop demo. In the DevFest Vibe Lounge you follow Google's official Backyard Barista guide instead (a coffee companion app); you do not need this repo there.
 - **Author:** Esra Kadah (Tech Lead, Senior Flutter & AI Engineer at Antigua Mobile Berlin · Flutter & Dart GDE)
-- **Live Cloud Run Reference App (`europe-west3` · Flame stage + Lottie + 10 Web Audio SFX):** [https://backyard-barista-389486729482.europe-west3.run.app](https://backyard-barista-389486729482.europe-west3.run.app) (`devfest-backyard-barista-2026`)
+- **Live Cloud Run Reference App (`europe-west3` · Flame stage + Lottie + 9 Web Audio SFX):** [https://backyard-barista-389486729482.europe-west3.run.app](https://backyard-barista-389486729482.europe-west3.run.app) (`devfest-backyard-barista-2026`)
 - **Live Cloud Run Mirror (`europe-west1`):** [https://backyard-barista-870328613866.europe-west1.run.app](https://backyard-barista-870328613866.europe-west1.run.app) (`soundstage-dea29`)
 - **Technical Deep-Dive Article (Medium / `esra.tech`):** [`docs/articles/backyard-barista-cloud-run-medium.md`](docs/articles/backyard-barista-cloud-run-medium.md)
 - **City Editions Included:**
@@ -120,7 +120,7 @@ devfest-2026-backyard-barista-cloudrun/
     │   └── rehearsal_3g_check.dart    # Section 4.6 Slow 3G & HTTP 429 chaos verification suite (5/5 PASS)
     ├── assets/
     │   ├── animations/        # 5 ready-made Lottie JSON animations (coffee_steam_loop, barista_brewing_pulse, sweet_celebration_burst, salty_spicy_explosion, tea_sip_steam_loop)
-    │   ├── audio/             # 10 cafe sound effects + Web Audio API synth (coffee_grinder, espresso_steam, serve_bell, level_up, tap_pop, stealth_wink, tea_sip, sweet_fanfare, salty_buzzer, next_chime)
+    │   ├── audio/             # 9 cafe sound effects + Web Audio API synth (espresso_steam, serve_bell, level_up, tap_pop, stealth_wink, tea_sip, sweet_fanfare, salty_buzzer, next_chime)
     │   ├── base/              # 14 studio PNG cafe assets (12 Round-1 base + 2 Round-2 custom, 512x512)
     │   │   ├── drinks/        # espresso.png, milk.png, menengic_coffee.png
     │   │   ├── foods/         # croissant.png, san_sebastian.png, baklava.png, katmer_roll.png
