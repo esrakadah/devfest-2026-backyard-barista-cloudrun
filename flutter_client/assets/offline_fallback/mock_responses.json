@@ -32,7 +32,7 @@
         "tasteVerdict": "salty_sabotage",
         "customerFace": "salty_disgusted",
         "headline": "Tuz Şakası Yakalandı!",
-        "customerReaction": "Baklavaya ve kahveye tuz atanı Şehitkamil'den sınır dışı ederler! 1 Yıldız!",
+        "customerReaction": "Baklavaya ve kahveye tuz atanı Şehitkamil'de bir daha kapıdan sokmazlar! 1 Yıldız!",
         "cityBonusTip": 0
       },
       "spicy_chaos": {
@@ -48,7 +48,7 @@
         "tasteVerdict": "sweet_perfection",
         "customerFace": "happy",
         "headline": "Gaziantep Ustası Onayladı!",
-        "customerReaction": "Ellerine sağlık usta! Fıstığı bol, şekeri tam kıvamında, 5 Yıldız!",
+        "customerReaction": "Ellerine sağlık usta! Fıstığı bol, şerbeti tam kıvamında, 5 Yıldız!",
         "cityBonusTip": 50
       }
     },

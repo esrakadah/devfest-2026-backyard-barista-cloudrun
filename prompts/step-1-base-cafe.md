@@ -8,7 +8,7 @@ Build a playful, zero-typing 2-player web game called "Backyard Barista on Cloud
 1. MULTI-CITY EDITION SWITCHER (Top App Bar):
 Include a top-right dropdown selector and state controller with 4 City Editions (simulating Firebase Remote Config `active_city_id` with a manual UI override):
 - "berlin" (🇩🇪 DevFest Berlin Edition): Subtitle "Späti & Kiez Roasters", Local Dish: "Berliner Pfannkuchen", Salt Prank Joke: "Das ist Salz, kein Zucker! Tougher than the Berghain bouncer: 1 Star!"
-- "gaziantep" (🇹🇷 DevFest Gaziantep Edition): Subtitle "Şehitkamil Baklava & Kahve Evi", Local Dish: "Fıstıklı Baklava", Salt Prank Joke: "Baklavaya ve kahveye tuz atanı Şehitkamil'den sınır dışı ederler! 1 Yıldız!"
+- "gaziantep" (🇹🇷 DevFest Gaziantep Edition): Subtitle "Şehitkamil Baklava & Kahve Evi", Local Dish: "Fıstıklı Baklava", Salt Prank Joke: "Baklavaya ve kahveye tuz atanı Şehitkamil'de bir daha kapıdan sokmazlar! 1 Yıldız!"
 - "adana" (🇹🇷 DevFest Adana Edition): Subtitle "Gar Kahvesi & Tatlı Durağı", Local Dish: "Bici Bici", Salt Prank Joke: "Şalgam suyu mu sandın bunu? Tatlıya tuz basmışsın, 1 Yıldız!"
 - "istanbul" (🇹🇷 DevFest Istanbul Edition): Subtitle "Galata & Vapur Kafe", Local Dish: "San Sebastian Cheesecake", Salt Prank Joke: "Galata Kulesi'nde turist kazıklar gibi kahveye tuz basmışsınız, 1 Yıldız!"
 

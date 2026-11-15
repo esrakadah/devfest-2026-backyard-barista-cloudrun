@@ -45,7 +45,7 @@ static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
     titleEn: 'AI Flakes: İsot Pepper',
     titleTr: 'AI Özel: İsot Biberi',
     subtitleEn: 'Smoky Urfa Chili Flakes',
-    subtitleTr: 'İsli Urfa & Antep İsotu',
+    subtitleTr: 'İsli Urfa İsotu',
     category: IngredientCategory.toppingOrPrank,
     isPrankItem: true,
     prankKind: 'chili',

@@ -696,13 +696,13 @@ class _AiStudioPipelinePainter extends CustomPainter {
 
     final steps = [
       (
-        isTurkishDeck ? '01 · PROMPT + GÖRSELLER' : '01 · SEED + ASSETS',
-        isTurkishDeck ? 'tur-1-kafe.md + 12 PNG' : 'step-1-base-cafe.md + 12 PNGs',
+        isTurkishDeck ? '01 · PROMPT' : '01 · SEED + ASSETS',
+        isTurkishDeck ? 'tur-1-barista.md' : 'step-1-base-cafe.md + 12 PNGs',
         DeckColors.googleBlue
       ),
       (
         isTurkishDeck ? '02 · ÖNİZLEME' : '02 · BUILD PREVIEW',
-        isTurkishDeck ? '2 oyunculu tezgah + CafeReview JSON' : '2-Player Counter + CafeReview JSON',
+        isTurkishDeck ? 'Gemini baristalı web uygulaması' : '2-Player Counter + CafeReview JSON',
         DeckColors.googleGreen
       ),
       (
@@ -1151,7 +1151,7 @@ class RoundTwoVectorPreviewCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  isTurkishDeck ? 'İsli Urfa & Antep İsotu' : 'Smoky Urfa & Antep Chili Flakes',
+                  isTurkishDeck ? 'İsli Urfa İsotu' : 'Smoky Urfa & Antep Chili Flakes',
                   style: TextStyle(
                     fontFamily: DeckFonts.sans,
                     fontSize: 13,

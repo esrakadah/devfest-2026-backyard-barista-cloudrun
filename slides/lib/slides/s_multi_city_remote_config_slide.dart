@@ -105,9 +105,9 @@ CityEditionConfig get activeEdition =>
                           else
                             'DE · Berlin (14 Nov): Kreuzberg Späti & Kiez Roasters · Berliner Pfannkuchen & Späti Club-Mate.',
                           if (isTurkishDeck)
-                            'TR · Gaziantep (bugün): Şehitkamil Baklava & Menengiç Kahvesi · "Şehitkamil\'den sınır dışı ederler!"'
+                            'TR · Gaziantep (bugün): Şehitkamil Baklava & Menengiç Kahvesi · "Şehitkamil\'de kapıdan sokmazlar!"'
                           else
-                            'TR · Gaziantep (15 Nov): Şehitkamil Baklava & Menengiç Kahvesi · "Şehitkamil\'den sınır dışı ederler!"',
+                            'TR · Gaziantep (15 Nov): Şehitkamil Baklava & Menengiç Kahvesi · "Şehitkamil\'de kapıdan sokmazlar!"',
                           if (isTurkishDeck)
                             'TR · Adana: Gar Kahvesi & Bici Bici Durağı · Bici Bici & Gar Kahvesi ("Şalgam suyu mu sandın?").'
                           else

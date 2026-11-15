@@ -105,7 +105,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.textContaining('1/5 · Tuzlu Sabotaj 🧂'), findsOneWidget);
-      expect(find.textContaining('sınır dışı ederler'), findsOneWidget);
+      expect(find.textContaining('kapıdan sokmazlar'), findsOneWidget);
 
       // 2b. Sneak Chili Sauce (Acı Biber) onto the tray: verify spicy_chaos 1-star verdict
       final chiliCard = find.byKey(const Key('ingredient_card_chili_sauce'));
