@@ -33,7 +33,7 @@ const List<PresenterSection> presenterSections = [
   ),
   PresenterSection(
     icon: Icons.emoji_events,
-    label: isTurkishDeck ? '3. Üç yol ve ödüller' : '3. Workshop Lanes & Prizes',
+    label: isTurkishDeck ? '3. Üç yol' : '3. Workshop Lanes & Prizes',
     route: '/workshop-contract',
   ),
   PresenterSection(
@@ -68,7 +68,7 @@ const List<PresenterSection> presenterSections = [
   ),
   PresenterSection(
     icon: Icons.celebration,
-    label: isTurkishDeck ? '15. Demolar, ödüller, sorular' : '15. Winner Podium & Badge',
+    label: isTurkishDeck ? '15. Demolar ve sorular' : '15. Winner Podium & Badge',
     route: '/winner-podium-closing',
   ),
   PresenterSection(

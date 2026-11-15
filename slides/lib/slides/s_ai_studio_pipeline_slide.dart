@@ -15,9 +15,9 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                 : '4. What Comes Out of Google AI Studio Today',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [05:00 - 07:30] "AI Studio\'dan ne çıkar?" sorusunun somut cevabı.\n'
-                    'SAY   "AI Studio artık sadece prompt denediğimiz bir ekran değil. En çok sorulan şey bu: bugün tam olarak ne çıkıyor? Build modu size çalışan bir web uygulaması üretiyor. Kodu GitHub ile iki yönlü eşitliyor. Starter Tier\'da, kredi kartı ve fatura hesabı açmadan, 2 uygulamaya kadar tek tıkla Cloud Run\'da canlı bir .run.app adresine yayınlıyor. Bir uyarı: eski Firebase Studio kapanıyor ve yeni kayıt almıyor. Doğru adres Google AI Studio ve Google Antigravity."\n'
+                    'SAY   "AI Studio artık sadece prompt denediğimiz bir ekran değil. En çok sorulan şey bu: bugün tam olarak ne çıkıyor? Build modu size çalışan bir web uygulaması üretiyor: bugün sizin barista uygulamanız. Kodu GitHub ile iki yönlü eşitliyor. Starter Tier\'da, kredi kartı ve fatura hesabı açmadan, 2 uygulamaya kadar tek tıkla Cloud Run\'da canlı bir .run.app adresine yayınlıyor. Bir uyarı: eski Firebase Studio kapanıyor ve yeni kayıt almıyor. Doğru adres Google AI Studio ve Google Antigravity."\n'
                     "HOLD  Slayttaki 4 adımı soldan sağa göster, her adımda bir nefes. [Olgu (Ekim 2026, ai.google.dev): Starter Tier = 2 Cloud Run uygulaması; Firebase Studio kayıtları 22 Haziran 2026'da kapandı, Mart 2027'de tamamen kapanıyor].\n"
-                    'ANTEP [15 Kasım] Bu slayt 1 dakika. Terimleri kısaca aç: Build modu = AI Studio\'nun uygulama yazan modu, Starter Tier = kartsız ücretsiz başlangıç katmanı (Ekim 2026 dokümanına göre), .run.app = Cloud Run\'ın verdiği canlı adres. Sonra Stage Navigator ile 13. slayta (/live-build-dashboard) geç, 5 ile 12 arası bugün yok, alttaki NEXT satırını söyleme. Geçiş cümlesi: "Yeter konuştuk, şimdi kuruyoruz."\n'
+                    'ANTEP [15 Kasım] Bu slayt 1 dakika. Terimleri kısaca aç: Build modu = AI Studio\'nun uygulama yazan modu, Starter Tier = kartsız ücretsiz başlangıç katmanı (Ekim 2026 dokümanına göre), .run.app = Cloud Run\'ın verdiği canlı adres. Sonra Stage Navigator ile 13. slayta (/live-build-dashboard) geç, 5 ile 12 arası bugün yok, alttaki NEXT satırını söyleme. Geçiş cümlesi: "Yeter konuştuk, şimdi kuruyoruz." Altyazıdaki "tek tıkla" sorulursa: "Kod yazmadan, birkaç tıkla. Ekranlar sırayla çıkar, Tur 3\'te birlikte geçeceğiz."\n'
                     'NEXT  "Peki çok dosyalı Flutter tarafında Google Antigravity bize ne kazandırıyor?"'
                 : 'BEAT  [05:00 - 07:30] "AI Studio\'dan ne gelir?" sorusunun somut cevabı.\n'
                     'SAY   "Mustafa ile konuşurken en önemli soru şuydu: Google AI Studio\'dan bugün tam olarak ne çıkıyor? Eskiden sadece bir prompt test ekranıydı. Bugün ise AI Studio Build modu size çalışan tam yığın bir web uygulaması üretiyor, çift yönlü GitHub senkronizasyonu yapıyor ve Starter Tier kapsamında kredi kartı veya fatura hesabı açmadan 2 adede kadar tam yığın uygulamayı tek tıkla Google Cloud Run üzerinde canlı bir .run.app adresine yayınlıyor. Dikkat etmeniz gereken tek önemli kural: eski Firebase Studio kapandı, yeni kayıt almıyor; doğru adres doğrudan Google AI Studio ve Google Antigravity."\n'
@@ -49,20 +49,20 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                   children: [
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'ADIM 1 · PROMPT + GÖRSELLER' : 'STEP 1 · SEED + ASSETS',
+                        badge: isTurkishDeck ? 'ADIM 1 · PROMPT' : 'STEP 1 · SEED + ASSETS',
                         badgeIcon: Icons.description,
-                        title: isTurkishDeck ? "Prompt + GitHub PNG'leri" : 'Prompt + GitHub PNGs',
+                        title: isTurkishDeck ? "Türkçe başlangıç prompt'u" : 'Prompt + GitHub PNGs',
                         bullets: [
                           if (isTurkishDeck)
-                            'promptlar/tur-1-kafe.md dosyasını Build moduna yapıştırın.'
+                            'promptlar/tur-1-barista.md dosyasını Build moduna yapıştırın.'
                           else
                             'Paste prompts/step-1-base-cafe.md in AI Studio Build mode.',
                           if (isTurkishDeck)
-                            '12 kafe görseli GitHub Raw adresinden kendiliğinden yüklenir.'
+                            'Önerilen tasarımlardan birini seçin, ilk sürüm birkaç dakikada gelir.'
                           else
                             'Loads our 12 studio cafe PNGs directly from GitHub Raw URLs.',
                           if (isTurkishDeck)
-                            'Model: gemini-3.5-flash-lite ya da gemini-3.8-flash.'
+                            'Gemini Flash baristanız: zevkinize göre çekirdek, kavrum ve süt önerir.'
                           else
                             'Targets gemini-3.5-flash-lite or gemini-3.8-flash.',
                         ],
@@ -77,7 +77,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                         accentColor: DeckColors.googleGreen,
                         bullets: [
                           if (isTurkishDeck)
-                            'İki oyunculu kafe tezgahını ve arka ucunu üretir.'
+                            'Barista uygulamasını ve arka ucunu üretir.'
                           else
                             'Generates interactive 2-player cafe counter UI + backend.',
                           if (isTurkishDeck)
@@ -85,7 +85,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                           else
                             'Includes 4-City Edition switcher (Berlin, Gaziantep, Adana, Istanbul).',
                           if (isTurkishDeck)
-                            'Tepsiyi JSON şemasıyla (CafeReview) değerlendirir.'
+                            "Code sekmesinde kodu ve AI'ın gerekçesini görürsünüz."
                           else
                             'Evaluates trays via structured JSON schema (CafeReview).',
                         ],

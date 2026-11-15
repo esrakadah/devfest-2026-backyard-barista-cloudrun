@@ -10,12 +10,12 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/workshop-contract',
-            title: isTurkishDeck ? '3. Atölye anlaşması ve ödüller' : '3. The Workshop Contract & Prizes',
+            title: isTurkishDeck ? '3. Atölye anlaşması' : '3. The Workshop Contract & Prizes',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [03:30 - 05:00] Üç yol (A, B, C) ve ödüller. Kimsenin dışarıda kalmayacağını söyle.\n'
-                    'SAY   "Bugün kimse sadece izleyici kalmayacak. Üç yolumuz var. Yol A: bilgisayarınızda hiçbir kurulum yoksa tarayıcıda Google AI Studio ile oyunu kurup Cloud Run\'da yayınlıyorsunuz, kredi kartı gerekmiyor. Kişisel Gmail hesabınızla girin: okul ya da iş hesabında ücretsiz yayın seçeneği çıkmayabilir. Yol B: Flutter ve Antigravity kuruluysa başlangıç reposundan ilerliyorsunuz. Yol C: sadece telefonunuz varsa sahnedeki QR kodları okutup arkadaşlarınızın kafesini test ediyorsunuz. Oyununu yayınlayıp sahnede 60 saniyede gösterenler arasından dört kafeye ödülümüz var: Google renkli piksel gözlükler ve Dash hediyeleri."\n'
-                    'HOLD  Gözlükleri ve Dash oyuncaklarını elinde göster. Slayt 4 gözlük diyor: sahneye çıkmadan yanındakileri say, sayı farklıysa gerçek sayıyı söyle.\n'
-                    'ANTEP [15 Kasım] 1,5 dakika, saat 29:30 civarı. Üç yolu say, ödülleri elinde göster, uzatma.\n'
+                ? 'BEAT  [03:30 - 05:00] Üç yol (A, B, C) ve sahne demosu. Kimsenin dışarıda kalmayacağını söyle.\n'
+                    'SAY   "Bugün kimse sadece izleyici kalmayacak. Üç yolumuz var. Yol A: bilgisayarınızda hiçbir kurulum yoksa tarayıcıda Google AI Studio ile Google\'ın resmi Backyard Barista uygulamasını Türkçe prompt\'larla kurup Cloud Run\'da yayınlıyorsunuz, kredi kartı gerekmiyor. Gemini sizin baristanız: zevkinize göre kahve tarifi öneriyor. Kişisel Gmail hesabınızla girin: okul ya da iş hesabında ücretsiz yayın seçeneği çıkmayabilir. Yol B, ileri seviye: Flutter ve Antigravity kuruluysa benim Flutter örnek kafemin reposundan ilerliyorsunuz. Yol C: sadece telefonunuz varsa yeşil QR\'daki örnek kafeyi oynuyor, sonra yanınızdaki bir bilgisayara eşleşiyorsunuz. Uygulamasını yayınlayan dört kişiyi sonda 60 saniyelik demo için sahneye davet edeceğim."\n'
+                    'HOLD  Ödül yok, sahne demosu var: bunu net söyle.\n'
+                    'ANTEP [15 Kasım] 1,5 dakika, saat 29:30 civarı. Üç yolu say, uzatma. Slaytın sonunda: "Ben anlatırken bilgisayarınızı açın, aistudio.google.com\'a kişisel Gmail\'inizle girin ve açık bırakın. Bilgisayarı olmayan Yol C\'ye geçsin."\n'
                     'NEXT  "Önce en çok sorulan soru: Google AI Studio\'dan bugün tam olarak ne çıkıyor?"'
                 : 'BEAT  [03:30 - 05:00] Üç Kulvar (Lane A, B, C) ve Ödül Sözleşmesi. Salondaki hiç kimsenin dışarıda kalmayacağını garanti et.\n'
                     'SAY   "Bugünkü anlaşmamız çok net: bu salondaki hiç kimse sadece izleyici olarak kalmayacak. Bilgisayarında hiçbir kurulum olmayanlar Yol A ile doğrudan tarayıcıda Google AI Studio üzerinden oyununu kurup kredi kartı gerekmeden Cloud Run üzerinde canlıya alacak. Bilgisayarında Flutter ve Antigravity yüklü olanlar Yol B ile başlangıç repomuzdan ilerleyecek. Sadece telefonuyla katılanlar bile Yol C ile sahnedeki QR kodları okutup arkadaşlarının kafelerinde şaka malzemelerini test edecek. Ve en güzeli: oyununu canlıya alıp sahnede 60 saniyede gösteren katılımcılarımıza yanımızda getirdiğimiz 4 adet Google renkli piksel gözlüğü ve Dash ödüllerini hediye ediyoruz!"\n'
@@ -35,13 +35,13 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         final textTheme = FlutterDeckTheme.of(context).textTheme;
         return SlideFrame(
-          eyebrow: isTurkishDeck ? 'KİMSE DIŞARIDA KALMIYOR · ÖDÜLLER' : 'ZERO-EXCLUSION CONTRACT & PRIZES',
+          eyebrow: isTurkishDeck ? 'KİMSE DIŞARIDA KALMIYOR · SAHNE DEMOSU' : 'ZERO-EXCLUSION CONTRACT & PRIZES',
           title: isTurkishDeck
-              ? 'Üç yol, tek hedef: canlı bir link ya da GitHub reposu'
+              ? 'Üç yol, tek hedef: canlı bir barista uygulaması'
               : 'Three Lanes, One Finish Line: A Live URL or GitHub Repo',
           act: StoryAct.hook,
           subtitle: isTurkishDeck
-              ? 'Hedef: herkes yayında çalışan bir AI kafe oyunuyla çıksın'
+              ? 'Hedef: herkes Gemini baristalı kendi uygulamasıyla çıksın'
               : 'Every builder leaves with a deployed multiplayer AI cafe game',
           child: Column(
             children: [
@@ -59,11 +59,11 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                           else
                             'Open aistudio.google.com -> Build mode in any browser.',
                           if (isTurkishDeck)
-                            "tur-1-kafe.md promptunu yapıştırın, 12 hazır PNG GitHub'dan gelir."
+                            "tur-1-barista.md içindeki prompt'u yapıştırın, Gemini baristanız hazır."
                           else
                             'Paste step-1-base-cafe.md + load 12 base PNGs from GitHub.',
                           if (isTurkishDeck)
-                            "Publish (.run.app) ve Sync to GitHub'a tıklayın."
+                            "Publish ya da Share'e tıklayın."
                           else
                             'Click Deploy to Cloud Run (.run.app) & Sync to GitHub.',
                         ],
@@ -83,7 +83,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                           else
                             'Clone devfest-2026-backyard-barista-cloudrun/flutter_client.',
                           if (isTurkishDeck)
-                            'Antigravity Agent Mode ile kendi SVG tatlınızı ürettirin.'
+                            'İleri seviye: örnek kafeyi Antigravity Agent Mode ile değiştirin.'
                           else
                             'Use Antigravity Agent Mode to generate custom SVG dishes.',
                           if (isTurkishDeck)
@@ -100,7 +100,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: isTurkishDeck ? 'YOL C · TELEFONLA TEST' : 'LANE C · PHONE PLAY-TESTER',
-                        title: isTurkishDeck ? 'Telefondan kafe sabotajcısı' : 'Mobile Cafe Saboteur',
+                        title: isTurkishDeck ? 'Telefonla örnek kafe' : 'Mobile Cafe Saboteur',
                         accentColor: DeckColors.googleYellow,
                         bullets: [
                           if (isTurkishDeck)
@@ -108,11 +108,11 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                           else
                             'No laptop required: join from mobile Safari or Chrome.',
                           if (isTurkishDeck)
-                            'Sahnedeki .run.app QR kodlarını okutun.'
+                            "Yeşil QR'daki örnek kafeyi açın."
                           else
                             'Scan deployed .run.app QR codes from the stage wall.',
                           if (isTurkishDeck)
-                            'Tatlı siparişe gizlice tuz atın, AI jüri yakalıyor mu görün!'
+                            'Tatlıya tuz atın, sonra yanınızdaki bilgisayara eşleşin.'
                           else
                             'Sneak Salt (Tuz) into sweet orders to test the AI Judge!',
                         ],
@@ -140,7 +140,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: Text(
                         isTurkishDeck
-                            ? 'SAHNE ÖDÜLLERİ: Oyununu yayınlayıp (.run.app / GitHub) 60 saniyede gösterenlere 4 Google renkli piksel gözlük (sarı, mavi, yeşil, kırmızı) ve Dash hediyeleri!'
+                            ? 'SAHNE DEMOSU: Uygulamasını yayınlayan dört kişi sonda 60 saniyede sahnede gösteriyor!'
                             : 'STAGE PRIZES: 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts for builders who publish (.run.app / GitHub) & demo in 60 seconds!',
                         style: textTheme.bodyLarge.copyWith(
                           color: DeckColors.googleYellow,
