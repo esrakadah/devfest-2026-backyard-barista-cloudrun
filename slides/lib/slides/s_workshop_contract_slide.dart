@@ -59,7 +59,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                           else
                             'Open aistudio.google.com -> Build mode in any browser.',
                           if (isTurkishDeck)
-                            "step-1-base-cafe.md promptunu yapıştırın, 12 hazır PNG GitHub'dan gelir."
+                            "tur-1-kafe.md promptunu yapıştırın, 12 hazır PNG GitHub'dan gelir."
                           else
                             'Paste step-1-base-cafe.md + load 12 base PNGs from GitHub.',
                           if (isTurkishDeck)

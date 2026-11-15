@@ -13,12 +13,12 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? '13. Canlı yapım panosu (3 tur)' : '13. Live Build Dashboard (3 Rounds)',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [25:00 - 60:00] Canlı yapım. Bu slayt üç tur boyunca ekranda kalır.\n'
-                    'SAY   "Şimdi sıra sizde: üç turda kendi kafenizi kuruyorsunuz. Bu slayt ekranda kalacak. 1. tur, 10 dakika: 12 hazır görseli yüklüyoruz ve şehrimizi seçiyoruz. 2. tur, 15 dakika: kendi imza tatlımızı ve şaka malzememizi ürettirip Gemini jürisine bağlıyoruz. 3. tur, 10 dakika: AI Studio\'da Publish butonuna basıp ya da gcloud run deploy komutunu çalıştırıp canlı .run.app linkimizi alıyoruz. Geride kalan olursa dert değil: repodaki prompts/step-1, step-2, step-3 dosyalarından bir sonraki adıma atlayın."\n'
+                    'SAY   "Şimdi sıra sizde: üç turda kendi kafenizi kuruyorsunuz. Bu slayt ekranda kalacak. 1. tur, 10 dakika: 12 hazır görseli yüklüyoruz ve iki kişilik kafe tezgahını kuruyoruz. 2. tur, 15 dakika: kendi imza tatlımızı ve şaka malzememizi ürettirip Gemini yargıcına bağlıyoruz. 3. tur, 10 dakika: AI Studio\'da Publish butonuna basıp ya da gcloud run deploy komutunu çalıştırıp canlı .run.app linkimizi alıyoruz. Geride kalan olursa dert değil: QR kodundaki Türkçe repodan promptlar/tur-1, tur-2, tur-3 dosyalarından bir sonraki adıma atlayın."\n'
                     "HOLD  Zamanlayıcıyı başlat (Stage Navigator -> Timer) ve salonda dolaş, ekranlara bak. Süreler [HEDEF]: salon geride kalırsa 2. turu kısalt, 3. turu koru. [Antep'te geçersiz, ANTEP satırına bak] [Süre kuralı: 80 dk atölyede 35 dk tam tur; 2 x 45 dk olursa her blokta 20 dk'lık 2 turluk sprint].\n"
-                    'ANTEP [15 Kasım] Önce 30 saniye: sağdaki yeşil QR\'daki örnek kafede bir tatlıya tuz at, 1 yıldızı göster, "İşte bunu kuruyoruz." de. Blok 90 dakika: slayttaki gibi 10, 15, 10 = 35 dakika, saat 32:00 ile 67:00 arası, sonra 3 dakika tampon. Turlar arasında bir cümleyle kontrol listesine bağla: "AI kodu yazdı, siz oyunda deneyip kontrol ediyorsunuz." Publish seçeneği çıkmayan olursa: sağdaki yeşil QR ile örnek kafeyi oynasın (Yol C). Kodu bozulan olursa: repodaki prompts/step-N dosyasını yapıştırsın. Terimler: imza tatlısı = kodla çizilen kendi tatlınız, Tur 2 Özel Menü anahtarı = oyunda kendi tatlınızı gösteren düğme, gcloud run deploy = terminalden yayın komutu. Örnek kafe 8 saniyede cevap vermezse oyun yedek cevaba düşer: bunu söyle, devam et. Wi-Fi tamamen giderse yedekteki /demo-hiccup slaytı ve yerel Gemma sekmesi (run card bölüm 4). Bitince 14. slaytı atla, 15. slayta geç; alttaki NEXT yerine: "Şimdi bugünden aklımızda kalan dört şey."\n'
+                    'ANTEP [15 Kasım] Önce 30 saniye: sağdaki yeşil QR\'daki örnek kafede bir tatlıya tuz at, 1 yıldızı göster, "İşte bunu kuruyoruz." de. Blok 90 dakika: slayttaki gibi 10, 15, 10 = 35 dakika, saat 32:00 ile 67:00 arası, sonra 3 dakika tampon. Turlar arasında bir cümleyle kontrol listesine bağla: "AI kodu yazdı, siz oyunda deneyip kontrol ediyorsunuz." Publish seçeneği çıkmayan olursa: sağdaki yeşil QR ile örnek kafeyi oynasın (Yol C). Kodu bozulan olursa: QR kodundaki Türkçe repodan promptlar/tur-N dosyasını yapıştırsın. Terimler: imza tatlısı = kodla çizilen kendi tatlınız, Tur 2 Özel Menü anahtarı = oyunda kendi tatlınızı gösteren düğme, gcloud run deploy = terminalden yayın komutu. Örnek kafe 8 saniyede cevap vermezse oyun yedek cevaba düşer: bunu söyle, devam et. Wi-Fi tamamen giderse yedekteki /demo-hiccup slaytı ve yerel Gemma sekmesi (run card bölüm 4). Bitince 14. slaytı atla, 15. slayta geç; alttaki NEXT yerine: "Şimdi bugünden aklımızda kalan dört şey."\n'
                     'NEXT  "Herkes linkini aldıysa, ödüllerden önce bugün ne kurduğumuzu 5 dakikada toparlayalım."'
                 : 'BEAT  [25:00 - 60:00] Canlı Kodlama ve Vibe Lounge Görev Panosu (Bu slayt inşa süresince ekranda açık kalır).\n'
-                    'SAY   "Şimdi 3 turluk inşa maratonumuz başlıyor! Bu slayt boyunca ekranda kalacak. 1. Turda (10 dakika) 12 hazır görselimizi çekip şehir modumuzu seçiyoruz. 2. Turda (15 dakika) kendi özel imza tatlımızı ve şaka malzememizi üretip Gemini JSON jürisine bağlıyoruz. 3. Turda (10 dakika) ise sağ üstteki Deploy to Cloud Run butonuna veya gcloud run deploy komutuna basıp canlı .run.app linkimizi ve GitHub repomuzu alıyoruz. Herhangi bir adımda geride kalan olursa repodaki prompts/step-1, step-2, step-3 dosyalarından veya uygulama içi Round 2 AI SVGs anahtarından anında yakalayabilir!"\n'
+                    'SAY   "Şimdi 3 turluk inşa maratonumuz başlıyor! Bu slayt boyunca ekranda kalacak. 1. Turda (10 dakika) 12 hazır görselimizi çekip şehir modumuzu seçiyoruz. 2. Turda (15 dakika) kendi özel imza tatlımızı ve şaka malzememizi üretip Gemini JSON jürisine bağlıyoruz. 3. Turda (10 dakika) ise sağ üstteki Deploy to Cloud Run butonuna veya gcloud run deploy komutuna basıp canlı .run.app linkimizi ve GitHub repomuzu alıyoruz. Herhangi bir adımda geride kalan olursa QR kodundaki Türkçe repodan promptlar/tur-1, tur-2, tur-3 dosyalarından veya uygulama içi Round 2 AI SVGs anahtarından anında yakalayabilir!"\n'
                     'HOLD  Sahnedeki zamanlayıcıyı (Stage Navigator -> Timer) başlat ve mentörlerle birlikte salonda dolaşarak katılımcıların ekranlarını kontrol et. [Slot kesim kuralı: 80dk atölyede 35dk tam tur; 45dk Vibe Lounge dalgasında 20dk 2-tur sprint; 30+10dk Adana ana salon konuşmasında ise bu slaytı 60 saniyede özetleyip doğrudan kendi 3 adımlı canlı sahne demona geç].\n'
                     'NEXT  "Herkes canlı linkini aldığına göre, ödül töreninden hemen önce 5 dakikada bugün kurduğumuz uçtan uca bulut mimarisini özetleyelim!"',
           ),
@@ -37,7 +37,7 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
               : 'Live Build Dashboard: 3 Rounds to Cloud Run & GitHub',
           act: StoryAct.buildAndShip,
           subtitle: isTurkishDeck
-              ? 'Geride mi kaldınız? prompts/step-1..3.md dosyalarını ya da uygulamadaki Tur 2 Özel Menü anahtarını kullanın!'
+              ? 'Geride mi kaldınız? QR kodundaki promptlar klasörünü ya da uygulamadaki Tur 2 Özel Menü anahtarını kullanın!'
               : 'Fall behind? Use prompts/step-1..3.md or toggle the in-app Round 2 AI SVGs switch!',
           accentColor: DeckColors.googleGreen,
           child: Column(
@@ -45,17 +45,17 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
               RoundTimelineBar(
                 rounds: [
                   (
-                    label: isTurkishDeck ? '1. TUR · TEMEL KAFE' : 'ROUND 1 · BASE CAFE',
+                    label: isTurkishDeck ? '1. TUR · KAFE TEZGAHI' : 'ROUND 1 · BASE CAFE',
                     minutes: 10,
                     color: DeckColors.googleBlue
                   ),
                   (
-                    label: isTurkishDeck ? '2. TUR · SİZİN TATLINIZ' : 'ROUND 2 · YOUR DISH',
+                    label: isTurkishDeck ? '2. TUR · İMZA TATLI + YARGIÇ' : 'ROUND 2 · YOUR DISH',
                     minutes: 15,
                     color: DeckColors.googleYellow
                   ),
                   (
-                    label: isTurkishDeck ? '3. TUR · YAYIN' : 'ROUND 3 · SHIP',
+                    label: isTurkishDeck ? '3. TUR · YAYINLA' : 'ROUND 3 · SHIP',
                     minutes: 10,
                     color: DeckColors.googleGreen
                   ),
@@ -68,10 +68,10 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: isTurkishDeck ? '1. TUR · 10 DK (ADIM 1)' : 'ROUND 1 · 10 MIN (STEP 1)',
-                        title: isTurkishDeck ? 'Temel kafe ve şehir seçimi' : 'Base Cafe & City Switcher',
+                        title: isTurkishDeck ? 'Kafe tezgahı ve tepsi' : 'Base Cafe & City Switcher',
                         bullets: [
                           if (isTurkishDeck)
-                            'Yol A: prompts/step-1-base-cafe.md dosyasını AI Studio Build moduna yapıştırın.'
+                            'Yol A: promptlar/tur-1-kafe.md dosyasını AI Studio Build moduna yapıştırın.'
                           else
                             'Lane A: Paste prompts/step-1-base-cafe.md in AI Studio Build mode.',
                           if (isTurkishDeck)
@@ -79,12 +79,12 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                           else
                             'Lane B: Run flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep.',
                           if (isTurkishDeck)
-                            '12 hazır PNG yüklendi mi bakın, üst bardan şehir sürümünü değiştirin.'
+                            '12 hazır PNG yüklendi mi bakın, baklava + kahve + şeker 5 yıldız veriyor mu deneyin.'
                           else
                             'Verify all 12 base PNGs load and switch City Edition in the top bar.',
                         ],
                         footerText: isTurkishDeck
-                            ? 'Kontrol noktası: prompts/step-1-base-cafe.md'
+                            ? 'Kontrol noktası: promptlar/tur-1-kafe.md'
                             : 'Checkpoint: prompts/step-1-base-cafe.md',
                       ),
                     ),
@@ -92,11 +92,11 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: isTurkishDeck ? '2. TUR · 15 DK (ADIM 2)' : 'ROUND 2 · 15 MIN (STEP 2)',
-                        title: isTurkishDeck ? 'Kendi AI tatlınız ve şaka jürisi' : 'Custom AI Dish & Prank Judge',
+                        title: isTurkishDeck ? 'Kendi AI tatlınız ve Gemini yargıç' : 'Custom AI Dish & Prank Judge',
                         accentColor: DeckColors.googleYellow,
                         bullets: [
                           if (isTurkishDeck)
-                            'Yol A: prompts/step-2-custom-dish.md ile 1 vektör tatlı + 1 şaka malzemesi ekleyin.'
+                            'Yol A: promptlar/tur-2-gemini-yargic.md ile 1 vektör tatlı + 1 şaka malzemesi ekleyin.'
                           else
                             'Lane A: Paste prompts/step-2-custom-dish.md to add 1 vector dish + 1 prank.',
                           if (isTurkishDeck)
@@ -134,7 +134,7 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                             'Raise your hand to demo your live .run.app cafe in 60s for the Pixel Sunglasses!',
                         ],
                         footerText: isTurkishDeck
-                            ? 'Kontrol noktası: prompts/step-3-deploy.md'
+                            ? 'Kontrol noktası: promptlar/tur-3-yayinla.md'
                             : 'Checkpoint: prompts/step-3-deploy.md',
                       ),
                     ),
@@ -143,8 +143,10 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         QrCodeCard(
-                          assetPath: 'assets/images/starter_repo_qr.png',
-                          caption: isTurkishDeck ? "Repo ve prompt'lar" : 'Starter repo & prompts',
+                          assetPath: isTurkishDeck
+                              ? 'assets/images/gaziantep_atolye_qr.png'
+                              : 'assets/images/starter_repo_qr.png',
+                          caption: isTurkishDeck ? "Türkçe prompt'lar" : 'Starter repo & prompts',
                           size: 205,
                         ),
                         SizedBox(height: _gap),
