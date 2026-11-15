@@ -68,7 +68,6 @@ Berlin günü akşamı Gaziantep uçuşu 20:40: Vibe Lounge 15:00'te biter, hava
 - Sahne laptopunda: deck (`flutter run -d chrome` veya `build/web`), canlı oyun sekmesi, `ai_studio_lane_a/index.html` (49.5 KB) ve PDF yedeği açık olsun. Lane A dosyasını reponun içinden aç: görselleri `../flutter_client/assets/` yolundan okur, tek başına kopyalanırsa görseller internetten gelir.
 - Telefon hotspot'unu hazırla; salon Wi-Fi'ına güvenme.
 - Kendi Gemini anahtarını **sadece yerel** çalıştırmada kullan. Asla `--dart-define=GEMINI_API_KEY` ile public bir web build'i Cloud Run'a deploy etme: dart-define değerleri tarayıcının indirdiği JavaScript'e gömülür.
-- Ödülleri (piksel gözlükler, Dash) sahneye koy; slayt 3'te gösterilecek.
 
 ## T-15 dakika
 
@@ -130,5 +129,5 @@ Her slaytın sağ üstündeki hikaye şeridi salona nerede olduğumuzu gösterir
 
 ## Sonrası
 
-- Kazanan `.run.app` linklerini topla, etkinlik sonrası paylaşım için not al.
+- Demo yapılan `.run.app` linklerini topla, etkinlik sonrası paylaşım için not al.
 - Sahnede kendi anahtarını kullandıysan AI Studio'da anahtarı döndür (yenisini oluştur, eskisini sil).
