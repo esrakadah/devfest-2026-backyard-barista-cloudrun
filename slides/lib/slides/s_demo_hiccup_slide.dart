@@ -11,9 +11,9 @@ class DemoHiccupSlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? 'Yedek: demo aksarsa, çevrimdışı mod' : 'Backup: Demo Hiccup & Offline Mode',
             speakerNotes: isTurkishDeck
                 ? "BEAT  [YEDEK] Salon Wi-Fi'ı kesilirse cankurtaran slaytı.\n"
-                    'SAY   "Wi-Fi kısa bir çay molası verdi. Sorun değil, mimariyi tam bu an için kurduk. Uygulamayı OFFLINE_MODE=true ile çalıştırıyorum. Gemini atlanıyor. Yerel jüri açıksa kararı bu laptoptaki Gemma 4 veriyor, değilse paketteki mock_responses.json devreye giriyor. Oyuna kaldığımız yerden devam ediyoruz."\n'
-                    'HOLD  Sakin kal, gülümse, yerel sekmedeki çevrimdışı Flutter Web örneğine geç. Komut ekranda yazıyor, ezberden yazma. Sahneden önce bu komutla açılmış yerel sekme hazır beklesin.\n'
-                    'NEXT  "Canlı yapım panosuna (/live-build-dashboard) geri dön."'
+                    'SAY   "Wi-Fi kısa bir çay molası verdi. Sorun değil, mimariyi tam bu an için kurduk. Uygulamayı OFFLINE_MODE=true ile çalıştırıyorum. Bulut çağrısı atlanıyor; kararı doğrudan bu laptoptaki Gemma 4 veriyor, o da yetişmezse paketteki mock_responses.json devreye giriyor. Oyuna kaldığımız yerden devam ediyoruz."\n'
+                    'HOLD  Sakin kal, gülümse, sahneden önce hazırlanan yerel çevrimdışı Flutter Web sekmesine geç.\n'
+                    'NEXT  "Canlı sahne demosu slaytına (/live-build-dashboard) geri dön."'
                 : 'BEAT  [BACKUP] Konferans Wi-Fi Bağlantısı Kesildiğinde Cankurtaran Slaydı.\n'
                     'SAY   "Konferans Wi-Fi ağımız şu an 300 kişinin yüklenmesiyle kısa bir mola verdi; ama mimarimizi tam da bu an için tasarladık! Şimdi uygulamayı OFFLINE_MODE=true ile çalıştırıyorum: Gemini atlanıyor, kararı bu laptoptaki Gemma 4 veriyor, o da yetişmezse paketteki mock_responses.json devreye giriyor. 4 şehrin tamamında şaka testlerimize kesintisiz devam ediyoruz."\n'
                     'HOLD  Sakin kal, gülümse ve yerel sekmedeki çevrimdışı çalışan Flutter Web örneğine geç.\n'
@@ -30,7 +30,7 @@ class DemoHiccupSlide extends FlutterDeckSlideWidget {
                 'Çevrimdışı yedeğe geçiyoruz:\n'
                 'flutter run -d chrome\n'
                 '--dart-define=OFFLINE_MODE=true\n'
-                '--dart-define=DEFAULT_CITY=gaziantep\n'
+                '--dart-define=DEFAULT_CITY=${isIzmirDeck ? "istanbul" : "konya"}\n'
                 '--dart-define=LOCAL_JUDGE_URL=http://localhost:11434/api/chat'
             : 'Conference Wi-Fi took a coffee break!\n'
                 'Switch to offline fallback:\n'

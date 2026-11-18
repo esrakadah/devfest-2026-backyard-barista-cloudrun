@@ -86,9 +86,8 @@ enum CityConfigSourceLayer {
 /// 2. Priority 2: Firebase Remote Config (`active_city_id` / `--dart-define=DEFAULT_CITY`)
 /// 3. Priority 3: Bundled `assets/editions/city_editions.json` Fallback
 class CityEditionController extends ChangeNotifier {
-  CityEditionController({
-    String? remoteConfigCityCode,
-  }) : _remoteConfigCityId = remoteConfigCityCode != null && remoteConfigCityCode.trim().isNotEmpty
+  CityEditionController({String? remoteConfigCityCode})
+      : _remoteConfigCityId = remoteConfigCityCode != null && remoteConfigCityCode.trim().isNotEmpty
             ? CityEditionId.fromCode(remoteConfigCityCode)
             : null;
 
@@ -148,12 +147,12 @@ class CityEditionController extends ChangeNotifier {
       cityName: 'Konya',
       flagEmoji: '🇹🇷',
       eventTitle: 'DevFest Konya 2026 Edition',
-      cafeSubtitle: 'Backyard Barista on Cloud Run',
+      cafeSubtitle: 'Alaaddin Kahve & Tatlı Durağı',
       defaultLanguage: 'tr',
-      signatureSpecialty: 'Baklava & Espresso',
-      saltPrankRoast: 'Tatlı siparişe şeker yerine tuz konmuş! 1 Yıldız!',
-      chiliPrankRoast: 'Tatlı siparişe acı sos dökülmüş! 1 Yıldız!',
-      sweetCompliment: 'Şekeri doğru, tepsi tam: 5 Yıldız!',
+      signatureSpecialty: 'Fıstıklı Baklava & Espresso',
+      saltPrankRoast: "Baklavaya şeker yerine tuz atılır mı? Alaaddin Tepesi'nde misafire böyle ikram olmaz! 1 Yıldız!",
+      chiliPrankRoast: 'Tatlı tabağına acı sos dökmüşsün, Mevlana şekeri beklerken ağzımız yandı! 1 Yıldız!',
+      sweetCompliment: "Ellerine sağlık! Alaaddin'e karşı bundan güzel kahve ve tatlı ikilisi olmaz, 5 Yıldız!",
     ),
   };
 

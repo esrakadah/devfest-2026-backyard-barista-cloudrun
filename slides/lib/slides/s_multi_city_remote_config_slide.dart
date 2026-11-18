@@ -11,13 +11,13 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/multi-city-remote-config',
             title: isTurkishDeck
-                ? '10. Firebase Remote Config ile çok şehirli mimari'
+                ? '10. Beş DevFest şehri: 3 katmanlı yapılandırma'
                 : '10. Multi-City Architecture with Firebase Remote Config',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [18:30 - 20:30] Firebase Remote Config ile şehir sürümleri: Berlin, Gaziantep, Adana, İstanbul.\n'
-                    'SAY   "Tek kod, dört şehir. Bu oyunun Berlin, Gaziantep, Adana ve İstanbul sürümleri var ve her şehir için ayrı uygulama derlemiyoruz. Remote Config, uygulamayı yeniden yayınlamadan ayar değiştirmeyi sağlayan bir Firebase servisi. Dürüst olayım: atölyede kurulum gerekmesin diye Firebase SDK\'sını bağlamadık, şablonu repoda hazır. Bugün aynı işi adres satırındaki remote_city parametresi ve DEFAULT_CITY ayarı yapıyor. CityEditionController üç yere sırayla bakıyor. Bir: uygulamadaki Ayarlar menüsü. İki: adres satırı ya da dart-define ile gelen şehir. Üç: uygulamanın içindeki city_editions.json dosyası. Yani tek bir ayarla menüyü Gaziantep baklavası ve menengiç kahvesi moduna geçirebiliyoruz."\n'
-                    "HOLD  Sağdaki kodda activeCityId satırını göster (city_edition_controller.dart:160-180): üç öncelik tek satırda, ?? ile. Kodda yedek şehir Gaziantep, bunu gülümseyerek söyle. Not: kodda 13 Kasım'dan beri 5. sürüm de var (Konya); slayt 4 şehir gösteriyor, sorulursa söyle.\n"
-                    'NEXT  "Şimdi oyunun en eğlenceli kısmı: Tatlı mı, tuzlu mu?"'
+                ? 'BEAT  [11:30 - 12:45] Beş DevFest şehri için 3 katmanlı CityEditionController mimarisi.\n'
+                    'SAY   "Tek kod tabanı, beş DevFest şehri: Berlin, Gaziantep, Konya, Adana ve İstanbul. Her durak için ayrı uygulama derlemiyoruz. CityEditionController üç katmana sırayla bakıyor. Birinci öncelik uygulama içindeki Ayarlar çekmecesi. İkinci öncelik dışarıdan gelen şehir parametresi: repoda Firebase Remote Config şablonumuz hazır, sıfır kurulum için bugün aynı katmanı URL\'deki remote_city parametresi ve derleme anındaki DEFAULT_CITY ayarı besliyor. Üçüncü öncelik ise paketin içindeki city_editions.json dosyası. Yani tek bir parametreyle tüm sahne bugün Alaaddin Kahve ve Tatlı Durağı modunda açılıyor."\n'
+                    'HOLD  Sağdaki kodda activeCityId satırını göster (city_edition_controller.dart:166): ?? operatörüyle üç öncelik tek satırda çözülüyor.\n'
+                    'NEXT  "Şimdi kaputun altındaki en eğlenceli parçaya bakalım: tatlı mı tuzlu mu mekaniği ve Web NFC."'
                 : 'BEAT  [18:30 - 20:30] Firebase Remote Config ile 4 Şehir (Berlin, Gaziantep, Adana, İstanbul) Mimarisi.\n'
                     'SAY   "Bu oyunu 14 Kasım\'da Berlin\'de, 15 Kasım\'da Gaziantep\'te, 11 Aralık\'ta Adana\'da ve 19 Aralık\'ta İstanbul\'da sahneye taşıyoruz. Her şehir için ayrı bir uygulama derlemek yerine CityEditionController içinde 3 katmanlı bir öncelik mimarisi kurduk: birinci öncelik uygulama içi Ayarlar çekmecesi (_manualOverrideCityId), ikinci öncelik Firebase Remote Config veya dart-define üzerindeki active_city_id parametresi (_remoteConfigCityId), üçüncü öncelik ise çevrimdışı çalışan city_editions.json dosyamız (_fallbackCityId). Böylece sahnede tek bir Remote Config anahtarını değiştirerek tüm salonun menüsünü ve şaka yanıtlarını Gaziantep Baklavası ve Menengiç Kahvesi moduna geçirebiliyoruz!"\n'
                     'HOLD  Sağdaki activeCityId / activeEdition getter kodunu (city_edition_controller.dart:147-168) ve 3 öncelik katmanını göster.\n'
@@ -48,13 +48,15 @@ CityEditionConfig get activeEdition =>
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: 'FIREBASE REMOTE CONFIG (firebase/monitoring/remote-config)',
+          eyebrow: isTurkishDeck
+              ? 'ÇOK ŞEHİRLİ YAPILANDIRMA (CITYEDITIONCONTROLLER + REMOTE CONFIG ŞABLONU)'
+              : 'FIREBASE REMOTE CONFIG (firebase/monitoring/remote-config)',
           title: isTurkishDeck
-              ? 'Tek kod, dört DevFest şehri: Remote Config'
+              ? 'Tek kod, beş DevFest şehri: 3 katmanlı yapılandırma'
               : 'One Codebase, Four DevFest Cities via Remote Config',
           act: StoryAct.underTheHood,
           subtitle: isTurkishDeck
-              ? 'CityEditionController 3 yere sırayla bakar: uygulama içi seçim -> Remote Config -> yerel JSON'
+              ? 'CityEditionController 3 yere sırayla bakar: uygulama içi seçim -> URL / Remote Config -> yerel JSON'
               : '3-Layer resolution in CityEditionController: UI Override -> Remote Config -> Local JSON',
           accentColor: DeckColors.halftoneBlue,
           child: Column(
@@ -71,7 +73,7 @@ CityEditionConfig get activeEdition =>
                   SizedBox(width: 14),
                   Expanded(
                     child: StatChip(
-                      value: '2 · Remote Config',
+                      value: isTurkishDeck ? '2 · URL / Remote Config' : '2 · Remote Config',
                       label: '_remoteConfigCityId',
                       accentColor: DeckColors.halftoneBlue,
                     ),
@@ -93,27 +95,27 @@ CityEditionConfig get activeEdition =>
                     Expanded(
                       flex: 5,
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'TEK REPODA 4 ŞEHİR SÜRÜMÜ' : '4 CITY EDITIONS IN 1 REPO',
+                        badge: isTurkishDeck ? 'TEK REPODA 5 ŞEHİR SÜRÜMÜ' : '4 CITY EDITIONS IN 1 REPO',
                         badgeIcon: Icons.public,
                         title: isTurkishDeck
-                            ? 'Yeniden yayınlamadan şehir değiştirme'
+                            ? 'Yeniden derlemeden şehir değiştirme'
                             : 'Live City Switching Without Redeploying',
                         accentColor: DeckColors.halftoneBlue,
                         bullets: [
                           if (isTurkishDeck)
-                            'DE · Berlin: Kreuzberg Späti & Kiez Roasters · Berliner Pfannkuchen & Späti Club-Mate.'
+                            'DE · Berlin (14 Kas): Kreuzberg Späti & Kiez Roasters · Berliner Pfannkuchen.'
                           else
                             'DE · Berlin (14 Nov): Kreuzberg Späti & Kiez Roasters · Berliner Pfannkuchen & Späti Club-Mate.',
                           if (isTurkishDeck)
-                            'TR · Gaziantep (bugün): Şehitkamil Baklava & Menengiç Kahvesi · "Şehitkamil\'de kapıdan sokmazlar!"'
+                            'TR · Gaziantep (15 Kas): Şehitkamil Baklava & Menengiç Kahvesi.'
                           else
                             'TR · Gaziantep (15 Nov): Şehitkamil Baklava & Menengiç Kahvesi · "Şehitkamil\'de kapıdan sokmazlar!"',
                           if (isTurkishDeck)
-                            'TR · Adana: Gar Kahvesi & Bici Bici Durağı · Bici Bici & Gar Kahvesi ("Şalgam suyu mu sandın?").'
+                            'TR · Konya (${isIzmirDeck ? "21 Kas" : "bugün"}): Alaaddin Kahve & Tatlı Durağı · "Alaaddin Tepesi\'nde böyle ikram olmaz!"'
                           else
                             'TR · Adana (11 Dec): Gar Kahvesi & Bici Bici Durağı · Bici Bici & Gar Kahvesi ("Şalgam suyu mu sandın?").',
                           if (isTurkishDeck)
-                            'TR · İstanbul: Galata & Vapur Kafe · Galata San Sebastian & Vapur Çayı.'
+                            'TR · Adana (11 Ara) ve İstanbul (19 Ara): Gar Kahvesi & Galata Vapur Kafe.'
                           else
                             'TR · Istanbul (19 Dec): Galata & Vapur Kafe · Galata San Sebastian & Vapur Çayı.',
                         ],

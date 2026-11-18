@@ -14,10 +14,10 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
                 ? '12. Hibrit görseller: 14 hazır PNG + anında üretilen AI vektörleri'
                 : '12. Hybrid Asset Pipeline: 14 Studio PNGs + On-the-Fly AI SVGs',
             speakerNotes: isTurkishDeck
-                ? "BEAT  [22:30 - 25:00] Hibrit görseller: 14 hazır stüdyo PNG'si + turda üretilen AI vektörleri.\n"
-                    'SAY   "Atölyede en çok vakit görsel aramaya gider. Biz bunu ikiye böldük. Hazır kısım: birinci tur için 12 görsel, yani 3 içecek, 3 yiyecek, 3 şaka malzemesi ve 3 müşteri yüzü. İkinci tur için 2 özel görsel daha. Toplam 14 PNG, hepsi repoda hazır. Üretilen kısım: ikinci turda herkes kendi imza tatlısını ve şaka malzemesini AI Studio ya da Antigravity\'ye çizdiriyor. Resim dosyası olarak değil, CustomPaint koduyla. Yüklenecek dosya olmayınca yükleme hatası da olmuyor."\n'
-                    "HOLD  Solda hazır PNG'ler, sağda kodla çizilen iki örnek. [Olgu (flutter_client/assets/): assets/base/ içinde 14 PNG (12 + 2), assets/animations/ içinde 5 Lottie JSON, assets/audio/ içinde 10 WAV + Web Audio API].\n"
-                    'NEXT  "Şimdi bilgisayarları ve telefonları açıyoruz: 3 turluk canlı yapım başlıyor!"'
+                ? "BEAT  [14:00 - 15:00] Hibrit görseller: 14 hazır stüdyo PNG'si + kod olarak üretilen AI vektörleri. (Geç kalındıysa 20 saniyede özetle.)\n"
+                    'SAY   "Yapay zekayla uygulama geliştirirken en sık kırılan yer dış görsel dosyalarıdır. Biz bunu hibrit bir boru hattıyla çözdük: 12 temel kafe görseli, 2 özel ürün, 5 Lottie animasyonu ve 10 ses efekti doğrudan reponun içinde paketli geliyor. Yeni eklenen özel tatlı ve şaka malzemelerini ise AI Studio ya da Antigravity resim dosyası olarak değil, doğrudan CustomPainter vektör çizim kodu olarak üretiyor. Yüklenecek dış dosya olmayınca Cloud Run paketinde kırık görsel de olmuyor."\n'
+                    'HOLD  Solda hazır PNG vitrinini, sağda CustomPainter ile çizilen katmer ve isot vektörlerini göster. [Olgu: assets/base/ içinde 14 PNG, 5 Lottie JSON, 10 WAV + Web Audio API].\n'
+                    'NEXT  "Artık sözü koda ve size bırakma zamanı: telefonlarınızı çıkarın, canlı sahne demosuna geçiyoruz!"'
                 : 'BEAT  [22:30 - 25:00] Hibrit Görsel Boru Hattı: 14 Hazır Stüdyo PNG + Yolda Üretilen AI Vektörleri.\n'
                     'SAY   "Bir oyun atölyesinde en çok vakit kaybettiren şey görsel bulmak ve yüklemektir. Biz bunu hibrit bir boru hattıyla çözdük: 3 içecek, 3 tatlı, 3 şaka malzemesi ve 3 müşteri tepkisinden oluşan toplam 12 adet yüksek çözünürlüklü 1. Tur PNG görselini ve 2 adet 2. Tur özel PNG görselini doğrudan GitHub repomuzun içinde hazır veriyoruz. Ardından 2. Turda herkes kendi özel imza tatlısını ve kendi şaka malzemesini Google AI Studio veya Antigravity ile anında CustomPaint vektör kodu olarak üretiyor. Sıfır dosya yükleme hatası, anında görsel sonuç!"\n'
                     'HOLD  Soldaki hazır PNG vitrinini ve sağdaki yolda üretilen CustomPaint vektör akışını göster. [Fact (flutter_client/assets/): 14 PNGs in assets/base/ (12 Round-1 + 2 Round-2), 5 Lottie JSONs in assets/animations/, 10 audio WAVs + Web Audio API synth in assets/audio/].\n'
@@ -40,7 +40,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
               : '14 Pre-Generated Studio PNGs + On-the-Fly AI Vector Dishes',
           act: StoryAct.underTheHood,
           subtitle: isTurkishDeck
-              ? "GitHub'dan gelen hazır görseller ile 2. turdaki canlı üretimi birleştiriyoruz"
+              ? 'Repodaki hazır stüdyo görselleri ile Dart CustomPainter vektör üretimini birleştiriyoruz'
               : 'Combining instant visual polish from GitHub with live generative creativity in Round 2',
           accentColor: DeckColors.googleBlue,
           child: Row(
@@ -129,19 +129,19 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
                     SizedBox(height: 14),
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? '2. TUR · CANLI ÜRETİM' : 'ROUND 2 · LIVE GENERATIVE EXTENSION',
+                        badge: isTurkishDeck ? 'KOD OLARAK VEKTÖR ÜRETİMİ' : 'ROUND 2 · LIVE GENERATIVE EXTENSION',
                         badgeIcon: Icons.auto_awesome,
                         title: isTurkishDeck
-                            ? '300 kişilik salonda hibrit görsel neden kazanır?'
+                            ? 'Üretimde hibrit görsel boru hattı neden kazanır?'
                             : 'Why Hybrid Assets Win in a 300-Seat Hall',
                         accentColor: DeckColors.googleYellow,
                         bullets: [
                           if (isTurkishDeck)
-                            "1. kısım (GitHub'da 14 PNG): flutter_client/assets/base/ içinde 12 + 2 PNG, yanında 5 Lottie JSON ve 10 WAV + Web Audio API kafe sesi."
+                            '1. kısım (Repoda 14 PNG): flutter_client/assets/base/ içinde 12 + 2 PNG, yanında 5 Lottie JSON ve 10 WAV + Web Audio API kafe sesi.'
                           else
                             'Part 1 (14 Studio PNGs in GitHub): 12 Round-1 base PNGs + 2 Round-2 custom PNGs in flutter_client/assets/base/ alongside 5 Lottie JSONs and 10 Web Audio API + WAV cafe sounds.',
                           if (isTurkishDeck)
-                            "2. kısım (anında AI kodu): herkes AI Studio ya da Antigravity'ye kendi imza tatlısını CustomVectorIngredientGraphic koduyla çizdirir."
+                            '2. kısım (AI çizim kodu): yeni imza tatlıları AI Studio ya da Antigravity ile CustomVectorIngredientGraphic kodu olarak üretilir.'
                           else
                             'Part 2 (On-the-Fly AI Codegen): Builders prompt AI Studio or Antigravity to generate custom signature dishes as CustomVectorIngredientGraphic code.',
                           if (isTurkishDeck)

@@ -14,11 +14,10 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                 ? '14. Bugün ne kurduk? (mimari özeti)'
                 : '14. En Son Mimaride Ne Yaptık? (Architecture Recap)',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [60:00 - 65:00] Demolardan önce mimari özeti: bugün ne kurduk?\n'
-                    'SAY   "Bugün bir oyun yaptık ama aslında dört katmanlı gerçek bir mimari kurduk. Bir, sahne: Flame ile çizilen 3 şeritli sahne, Flutter tezgah ve NFC ile sahne şakası. İki, ayar: CityEditionController sayesinde uygulamayı yeniden derlemeden şehir değiştirdik, Ayarlar menüsünden ya da adres satırındaki şehir parametresiyle. Remote Config şablonu repoda hazır. Üç, AI ve güvenlik ağı: gemini-3.5-flash-lite şemalı JSON döndürüyor, 8 saniyede cevap gelmezse yedek devreye giriyor. Dört, bulut: durum tutmayan bir container\'ı, yani uygulamayı taşıyan hazır paketi, Cloud Run\'da canlı bir .run.app adresine ve GitHub\'a taşıdık. Bu dört katmanı yarın kendi projenizde de kullanabilirsiniz."\n'
-                    'HOLD  4 katmanı yukarıdan aşağıya say, her bantta bir nefes al. Sağdaki sonuç sütununu ritim olarak kullan. "60fps" [HEDEF], "1 çağrı ≈ 270 token" [YAKLAŞIK HESAP].\n'
-                    'NEWS  [Bu hafta, yalnız sözlü, ödev] "Bizim jüri aslında bir karar veriyor: tatlı mı tuzlu mu, kaç yıldız? Bu hafta duyurulan Gemini Decisions API tam bunu metin üretmeden yapıyor: soruları puanlıyor ve olasılık döndürüyor. Atölyeden sonra deneyebileceğiniz bir ödev. Şimdilik Dart SDK\'sı yok, REST ile çağrılıyor." [Olgu (aistudio.google.com/docs/decisions-api, 13 Kasım 2026\'da okundu): model gemini-decision-1; evet/hayır, seçim ve puan soruları; istek başına en fazla 1.000 soru; 0 çıktı token\'ı; SDK: Python, JavaScript, REST. Gecikme ve fiyat söyleme].\n'
-                    'NEXT  "Şimdi sahne sizin: linkini yayınlayanları 60 saniyelik demolar için sahneye alıyoruz!"'
+                ? 'BEAT  [25:30 - 27:00] 4 katmanlı üretim mimarisi özeti.\n'
+                    'SAY   "Az önce oynadığınız eğlenceli kafe oyununun arkasında dört katmanlı gerçek bir üretim mimarisi çalışıyor. Birinci katman sunum: 3 şeritli Flame sahnesi, 2x2 duyarlı Flutter tezgahı ve Web NFC tetikleyicisi. İkinci katman yapılandırma: CityEditionController sayesinde sıfır yeniden derlemeyle 5 DevFest şehri. Üçüncü katman yapay zeka ve korumalar: gemini-3.5-flash-lite şemalı JSON, 8 saniye bulut sınırı, 15 saniye yerel Gemma 4 ve 250 milisaniye çevrimdışı paket. Dördüncü katman ise sunucusuz bulut: API anahtarını sunucuda tutan nginx:alpine container\'ımız PORT 8080 üzerinde Google Cloud Run\'da çalışıyor. Bu dört katmanı pazartesi günü kendi Flutter ürününüze birebir taşıyabilirsiniz."\n'
+                    'HOLD  4 katmanı yukarıdan aşağıya say, sağdaki sonuç sütununu ritim olarak kullan. "60fps" [HEDEF], "1 çağrı ≈ 270 token" [YAKLAŞIK HESAP].\n'
+                    'NEXT  "Kapatmadan önce bu mimariden cebinize koymanızı istediğim 4 mühendislik kuralını özetleyelim."'
                 : 'BEAT  [60:00 - 65:00] "En Son Mimaride Ne Yaptık?" (Ödül Töreni Öncesi Tam Mimari Özeti).\n'
                     'SAY   "Ödüllerimizi dağıtmadan önce herkesin ekrana bakmasını istiyorum: bugün eğlenceli bir kafe oyunu yaptık ama aslında arkada dört katmanlı, gerçek bir prodüksiyon bulut mimarisi kurduk! 1. Katmanda BaristaFlameGame 60fps 3-koridorlu sahnemizi, 2x2 Flutter Overlay HUD tezgahımızı ve NfcTagController (NDEFReader, masaüstünde kart dokunuşu) sahne tetikleyicimizi birleştirdik. 2. Katmanda 3 öncelikli CityEditionController ve Firebase Remote Config şablonu ile uygulamamızı yeniden derlemeden farklı DevFest şehirlerine uyarladık. 3. Katmanda gemini-3.5-flash-lite ve yapılandırılmış JSON şeması (CafeReview) ile deterministik bir jüri kurup çevrimdışı yedeklemeyle koruduk. 4. Katmanda ise durumsuz konteynerimizi Google Cloud Run üzerinde canlı bir .run.app adresine ve GitHub\'a taşıdık!"\n'
                     'HOLD  4 katmanı yukarıdan aşağıya, her bant için bir nefes vererek say; sağdaki sonuç sütununu (60fps + Web NFC, 0 yeniden derleme, 1 çağrı, 0 sunucu durumu) ritim olarak kullan.\n'
@@ -40,7 +39,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
               : 'What We Just Built: A 4-Layer Production Architecture',
           act: StoryAct.buildAndShip,
           subtitle: isTurkishDeck
-              ? 'Bugün yayınladığınız her katman gerçek bir Flutter ve Cloud ürününde aynen kullanılır'
+              ? 'Bu oyundaki her katman gerçek bir Flutter ve Cloud ürününde aynen kullanılır'
               : 'Every layer you shipped today transfers directly to a real Flutter and Cloud product',
           accentColor: DeckColors.halftoneBlue,
           child: Column(
@@ -71,7 +70,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                     '2 · Remote Config active_city_id',
                     '3 · city_editions.json',
                   ],
-                  outcome: isTurkishDeck ? '4 şehir,\n0 derleme' : '4 cities, 0 rebuilds',
+                  outcome: isTurkishDeck ? '5 şehir,\n0 derleme' : '4 cities, 0 rebuilds',
                 ),
               ),
               SizedBox(height: _gap),

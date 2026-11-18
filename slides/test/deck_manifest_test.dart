@@ -4,7 +4,7 @@ import 'package:backyard_barista_deck/plugins/presenter_menu_plugin.dart';
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Locked 15-slide main running order + 2 backup slides (`/demo-hiccup`, `/generate-vs-decide`).
+/// Locked 16-slide main running order + 2 backup slides (`/demo-hiccup`, `/generate-vs-decide`).
 const List<String> expectedRunningOrder = [
   '/title',
   '/sweet-or-salty',
@@ -21,16 +21,17 @@ const List<String> expectedRunningOrder = [
   '/live-build-dashboard',
   '/architecture-recap',
   '/winner-podium-closing',
+  '/bana-ulasin',
   '/demo-hiccup',
   '/generate-vs-decide',
 ];
 
 void main() {
   group('the Backyard Barista deck manifest', () {
-    test('has exactly 15 main slides and 2 backup slides', () {
-      expect(mainSlides.length, 15);
+    test('has exactly 16 main slides and 2 backup slides', () {
+      expect(mainSlides.length, 16);
       expect(backupSlides.length, 2);
-      expect(deckSlides.length, 17);
+      expect(deckSlides.length, 18);
     });
 
     test('every slide declares a configuration with a route', () {
@@ -97,8 +98,9 @@ void main() {
       expect(slideNumberForRoute('/title'), 1);
       expect(slideNumberForRoute('/architecture-recap'), 14);
       expect(slideNumberForRoute('/winner-podium-closing'), 15);
-      expect(slideNumberForRoute('/demo-hiccup'), 16);
-      expect(slideNumberForRoute('/generate-vs-decide'), 17);
+      expect(slideNumberForRoute('/bana-ulasin'), 16);
+      expect(slideNumberForRoute('/demo-hiccup'), 17);
+      expect(slideNumberForRoute('/generate-vs-decide'), 18);
       expect(slideNumberForRoute('/does-not-exist'), isNull);
     });
   });

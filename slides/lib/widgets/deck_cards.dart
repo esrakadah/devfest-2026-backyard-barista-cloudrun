@@ -35,10 +35,7 @@ class SlideFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = FlutterDeckTheme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: _outerHorizontalPadding,
-        vertical: _outerVerticalPadding,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: _outerHorizontalPadding, vertical: _outerVerticalPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -109,10 +106,7 @@ class DeckCard extends StatelessWidget {
                   width: 48,
                   height: 4,
                   margin: const EdgeInsets.only(bottom: 12),
-                  decoration: BoxDecoration(
-                    color: accentStripeColor,
-                    borderRadius: BorderRadius.circular(999),
-                  ),
+                  decoration: BoxDecoration(color: accentStripeColor, borderRadius: BorderRadius.circular(999)),
                 ),
                 Flexible(child: child),
               ],
@@ -123,12 +117,7 @@ class DeckCard extends StatelessWidget {
 
 /// Metric callout chip with tabular figures.
 class StatChip extends StatelessWidget {
-  const StatChip({
-    required this.value,
-    required this.label,
-    this.accentColor = DeckColors.googleBlue,
-    super.key,
-  });
+  const StatChip({required this.value, required this.label, this.accentColor = DeckColors.googleBlue, super.key});
 
   final String value;
   final String label;
@@ -175,12 +164,7 @@ class StatChip extends StatelessWidget {
 
 /// Reusable category or topic pill with optional vector icon (replaces unbundled Unicode emojis).
 class PillTag extends StatelessWidget {
-  const PillTag({
-    required this.label,
-    this.color = DeckColors.googleBlue,
-    this.icon,
-    super.key,
-  });
+  const PillTag({required this.label, this.color = DeckColors.googleBlue, this.icon, super.key});
 
   final String label;
   final Color color;
@@ -198,10 +182,7 @@ class PillTag extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[
-            Icon(icon, size: 15, color: color),
-            const SizedBox(width: 6),
-          ],
+          if (icon != null) ...[Icon(icon, size: 15, color: color), const SizedBox(width: 6)],
           Text(
             label,
             style: TextStyle(
@@ -220,12 +201,7 @@ class PillTag extends StatelessWidget {
 
 /// Pill badge used for topic tags, city editions, and fact/target indicators.
 class DeckBadge extends StatelessWidget {
-  const DeckBadge({
-    required this.label,
-    this.color = DeckColors.googleYellow,
-    this.icon,
-    super.key,
-  });
+  const DeckBadge({required this.label, this.color = DeckColors.googleYellow, this.icon, super.key});
 
   static const double _horizontalPadding = 14;
   static const double _verticalPadding = 6;
@@ -241,10 +217,7 @@ class DeckBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: _horizontalPadding,
-        vertical: _verticalPadding,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding, vertical: _verticalPadding),
       decoration: BoxDecoration(
         color: color.withValues(alpha: _fillOpacity),
         borderRadius: BorderRadius.circular(_cornerRadius),
@@ -253,10 +226,7 @@ class DeckBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[
-            Icon(icon, size: 16, color: color),
-            const SizedBox(width: 6),
-          ],
+          if (icon != null) ...[Icon(icon, size: 16, color: color), const SizedBox(width: 6)],
           Text(
             label,
             style: TextStyle(
@@ -287,74 +257,28 @@ class GdeBadgeStrip extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: DeckColors.outlineLight),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const CustomPaint(size: Size(34, 24), painter: _GdeBracketsPainter()),
-          const SizedBox(width: 12),
-          Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Google Developer Expert · Flutter & Dart',
-                  style: TextStyle(
-                    fontFamily: DeckFonts.sans,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: DeckColors.offWhite,
-                  ),
-                ),
-                if (!compact) ...[
-                  const SizedBox(height: 2),
-                  const Text(
-                    isTurkishDeck
-                        ? 'Kendi görüşlerim, Google adına konuşmuyorum'
-                        : 'Google Developer Expert, does not speak for Google',
-                    style: TextStyle(
-                      fontFamily: DeckFonts.sans,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: DeckColors.mutedText,
-                    ),
-                  ),
-                ],
-              ],
+          Image.asset('assets/images/gde_lockup.png', height: 44),
+          Text(
+            compact
+                ? 'Flutter & Dart'
+                : (isTurkishDeck
+                    ? 'Flutter & Dart · kendi görüşlerim, Google adına konuşmuyorum'
+                    : 'Flutter & Dart · does not speak for Google'),
+            style: const TextStyle(
+              fontFamily: DeckFonts.sans,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: DeckColors.offWhite,
             ),
           ),
         ],
       ),
     );
   }
-}
-
-class _GdeBracketsPainter extends CustomPainter {
-  const _GdeBracketsPainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final stroke = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.2
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-
-    final midY = size.height / 2;
-
-    stroke.color = DeckColors.coreRed;
-    canvas.drawLine(const Offset(11, 3), Offset(2, midY), stroke);
-    stroke.color = DeckColors.coreBlue;
-    canvas.drawLine(Offset(2, midY), Offset(11, size.height - 3), stroke);
-
-    stroke.color = DeckColors.coreGreen;
-    canvas.drawLine(Offset(size.width - 11, 3), Offset(size.width - 2, midY), stroke);
-    stroke.color = DeckColors.coreYellow;
-    canvas.drawLine(Offset(size.width - 2, midY), Offset(size.width - 11, size.height - 3), stroke);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 /// Surface card with colored top accent stripe for lanes, layers, and comparisons.
@@ -402,11 +326,7 @@ class DeckFeatureCard extends StatelessWidget {
           ],
           Text(
             title,
-            style: textTheme.subtitle.copyWith(
-              color: DeckColors.offWhite,
-              fontSize: 26,
-              fontWeight: FontWeight.w700,
-            ),
+            style: textTheme.subtitle.copyWith(color: DeckColors.offWhite, fontSize: 26, fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: _titleGap),
           for (final bullet in bullets)
@@ -424,9 +344,7 @@ class DeckFeatureCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: _dotRightGap),
-                  Expanded(
-                    child: Text(bullet, style: textTheme.bodyMedium.copyWith(height: 1.32)),
-                  ),
+                  Expanded(child: Text(bullet, style: textTheme.bodyMedium.copyWith(height: 1.32))),
                 ],
               ),
             ),
@@ -442,11 +360,7 @@ class DeckFeatureCard extends StatelessWidget {
               ),
               child: Text(
                 footerText!,
-                style: const TextStyle(
-                  fontFamily: DeckFonts.mono,
-                  fontSize: 13,
-                  color: DeckColors.googleYellow,
-                ),
+                style: const TextStyle(fontFamily: DeckFonts.mono, fontSize: 13, color: DeckColors.googleYellow),
               ),
             ),
           ],
@@ -514,10 +428,7 @@ class DeckCodeCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (badgeLabel != null) ...[
-                  const SizedBox(width: 10),
-                  PillTag(label: badgeLabel!, color: accentColor),
-                ],
+                if (badgeLabel != null) ...[const SizedBox(width: 10), PillTag(label: badgeLabel!, color: accentColor)],
               ],
             ),
           ),
@@ -589,9 +500,7 @@ class CafeAssetThumb extends StatelessWidget {
         color: DeckColors.surfaceElevated,
         borderRadius: BorderRadius.circular(_cornerRadius),
         border: Border.all(color: borderColor, width: 1.5),
-        boxShadow: const [
-          BoxShadow(color: DeckColors.specularTop, offset: Offset(0, -1)),
-        ],
+        boxShadow: const [BoxShadow(color: DeckColors.specularTop, offset: Offset(0, -1))],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -625,11 +534,7 @@ class CafeAssetThumb extends StatelessWidget {
             const SizedBox(height: 3),
             Text(
               badgeText!,
-              style: TextStyle(
-                fontFamily: DeckFonts.mono,
-                fontSize: 13,
-                color: badgeColor ?? borderColor,
-              ),
+              style: TextStyle(fontFamily: DeckFonts.mono, fontSize: 13, color: badgeColor ?? borderColor),
             ),
           ],
         ],
@@ -696,33 +601,30 @@ class _AiStudioPipelinePainter extends CustomPainter {
 
     final steps = [
       (
-        isTurkishDeck ? '01 · PROMPT' : '01 · SEED + ASSETS',
-        isTurkishDeck ? 'tur-1-barista.md' : 'step-1-base-cafe.md + 12 PNGs',
-        DeckColors.googleBlue
+        isTurkishDeck ? '01 · PROMPT + GÖRSEL' : '01 · SEED + ASSETS',
+        isTurkishDeck ? 'step-1-base-cafe.md + 12 PNG' : 'step-1-base-cafe.md + 12 PNGs',
+        DeckColors.googleBlue,
       ),
       (
-        isTurkishDeck ? '02 · ÖNİZLEME' : '02 · BUILD PREVIEW',
-        isTurkishDeck ? 'Gemini baristalı web uygulaması' : '2-Player Counter + CafeReview JSON',
-        DeckColors.googleGreen
+        isTurkishDeck ? '02 · CANLI ÖNİZLEME' : '02 · BUILD PREVIEW',
+        isTurkishDeck ? '2 oyunculu tezgah + CafeReview JSON' : '2-Player Counter + CafeReview JSON',
+        DeckColors.googleGreen,
       ),
       (
         isTurkishDeck ? '03 · GITHUB' : '03 · GITHUB SYNC',
         isTurkishDeck ? 'İki yönlü commit + ZIP yedeği' : 'Two-Way Commits + ZIP Backup',
-        DeckColors.googleYellow
+        DeckColors.googleYellow,
       ),
       (
         '04 · CLOUD RUN',
         isTurkishDeck ? 'Sunucusuz *.run.app container' : 'Serverless *.run.app Container',
-        DeckColors.googleRed
+        DeckColors.googleRed,
       ),
     ];
 
     for (var i = 0; i < steps.length; i++) {
       final left = i * (boxW + 32);
-      final rect = RRect.fromRectAndRadius(
-        Rect.fromLTWH(left, topY, boxW, boxH),
-        const Radius.circular(12),
-      );
+      final rect = RRect.fromRectAndRadius(Rect.fromLTWH(left, topY, boxW, boxH), const Radius.circular(12));
       final color = steps[i].$3;
 
       canvas.drawRRect(rect, Paint()..color = color.withValues(alpha: 0.14));
@@ -737,12 +639,7 @@ class _AiStudioPipelinePainter extends CustomPainter {
       final tp1 = TextPainter(
         text: TextSpan(
           text: steps[i].$1,
-          style: TextStyle(
-            fontFamily: DeckFonts.mono,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            color: color,
-          ),
+          style: TextStyle(fontFamily: DeckFonts.mono, fontSize: 12, fontWeight: FontWeight.w700, color: color),
         ),
         textDirection: TextDirection.ltr,
       )..layout();
@@ -836,31 +733,31 @@ class _LatencyBarsPainter extends CustomPainter {
         isTurkishDeck ? 'Statik sayfa p50, ısınmış' : 'Static Page p50 Warm',
         isTurkishDeck ? '53,81 ms (ölçüldü)' : '53.81 ms (Measured)',
         0.14,
-        DeckColors.googleGreen
+        DeckColors.googleGreen,
       ),
       (
         isTurkishDeck ? 'Statik sayfa p95, ısınmış' : 'Static Page p95 Warm',
         isTurkishDeck ? '75,52 ms (ölçüldü)' : '75.52 ms (Measured)',
         0.20,
-        DeckColors.halftoneBlue
+        DeckColors.halftoneBlue,
       ),
       (
         isTurkishDeck ? 'Çevrimdışı JSON yedeği' : 'Offline JSON Fallback',
         '250 ms (_offlineBundleLoadTimeout)',
         0.36,
-        DeckColors.googleYellow
+        DeckColors.googleYellow,
       ),
       (
         isTurkishDeck ? 'İlk çağrı (TLS + soğuk)' : 'Initial TLS + Cold Start',
         isTurkishDeck ? '528,95 ms (ölçüldü)' : '528.95 ms (Measured)',
         0.52,
-        DeckColors.halftonePink
+        DeckColors.halftonePink,
       ),
       (
         isTurkishDeck ? 'Canlı Gemini sınırı' : 'Live Gemini Guardrail',
         isTurkishDeck ? '8 sn (_geminiRequestTimeout)' : '8,000 ms (_geminiRequestTimeout)',
         0.96,
-        DeckColors.googleRed
+        DeckColors.googleRed,
       ),
     ];
 
@@ -876,12 +773,7 @@ class _LatencyBarsPainter extends CustomPainter {
         TextPainter(
           text: TextSpan(
             text: row.$2,
-            style: TextStyle(
-              fontFamily: DeckFonts.mono,
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              color: row.$4,
-            ),
+            style: TextStyle(fontFamily: DeckFonts.mono, fontSize: 12, fontWeight: FontWeight.w700, color: row.$4),
           ),
           textDirection: TextDirection.ltr,
         )..layout(),
@@ -989,10 +881,7 @@ class _QuotaComparisonPainter extends CustomPainter {
       required String outcome,
       required Color color,
     }) {
-      final rect = RRect.fromRectAndRadius(
-        Rect.fromLTWH(left, 2, halfW, h),
-        const Radius.circular(14),
-      );
+      final rect = RRect.fromRectAndRadius(Rect.fromLTWH(left, 2, halfW, h), const Radius.circular(14));
       canvas.drawRRect(rect, Paint()..color = color.withValues(alpha: 0.12));
       canvas.drawRRect(
         rect,
@@ -1005,12 +894,7 @@ class _QuotaComparisonPainter extends CustomPainter {
       final tp1 = TextPainter(
         text: TextSpan(
           text: badge,
-          style: TextStyle(
-            fontFamily: DeckFonts.mono,
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            color: color,
-          ),
+          style: TextStyle(fontFamily: DeckFonts.mono, fontSize: 12, fontWeight: FontWeight.w700, color: color),
         ),
         textDirection: TextDirection.ltr,
       )..layout();
@@ -1033,11 +917,7 @@ class _QuotaComparisonPainter extends CustomPainter {
       final tp3 = TextPainter(
         text: TextSpan(
           text: outcome,
-          style: const TextStyle(
-            fontFamily: DeckFonts.mono,
-            fontSize: 12,
-            color: DeckColors.mutedText,
-          ),
+          style: const TextStyle(fontFamily: DeckFonts.mono, fontSize: 12, color: DeckColors.mutedText),
         ),
         textDirection: TextDirection.ltr,
       )..layout();
@@ -1088,10 +968,7 @@ class RoundTwoVectorPreviewCard extends StatelessWidget {
       borderColor: DeckColors.googleYellow.withValues(alpha: 0.5),
       child: const Row(
         children: [
-          CustomPaint(
-            size: Size(68, 68),
-            painter: _RoundTwoVectorPainter(isKatmer: true),
-          ),
+          CustomPaint(size: Size(68, 68), painter: _RoundTwoVectorPainter(isKatmer: true)),
           SizedBox(width: 14),
           Expanded(
             child: Column(
@@ -1115,20 +992,13 @@ class RoundTwoVectorPreviewCard extends StatelessWidget {
                 ),
                 Text(
                   isTurkishDeck ? 'Çıtır Yufka · Kaymak & Boz Fıstık' : 'Crispy Phyllo · Kaymak & Boz Fıstık',
-                  style: TextStyle(
-                    fontFamily: DeckFonts.sans,
-                    fontSize: 13,
-                    color: DeckColors.mutedText,
-                  ),
+                  style: TextStyle(fontFamily: DeckFonts.sans, fontSize: 13, color: DeckColors.mutedText),
                 ),
               ],
             ),
           ),
           SizedBox(width: 14),
-          CustomPaint(
-            size: Size(68, 68),
-            painter: _RoundTwoVectorPainter(isKatmer: false),
-          ),
+          CustomPaint(size: Size(68, 68), painter: _RoundTwoVectorPainter(isKatmer: false)),
           SizedBox(width: 14),
           Expanded(
             child: Column(
@@ -1152,11 +1022,7 @@ class RoundTwoVectorPreviewCard extends StatelessWidget {
                 ),
                 Text(
                   isTurkishDeck ? 'İsli Urfa İsotu' : 'Smoky Urfa & Antep Chili Flakes',
-                  style: TextStyle(
-                    fontFamily: DeckFonts.sans,
-                    fontSize: 13,
-                    color: DeckColors.mutedText,
-                  ),
+                  style: TextStyle(fontFamily: DeckFonts.sans, fontSize: 13, color: DeckColors.mutedText),
                 ),
               ],
             ),
@@ -1206,11 +1072,7 @@ class _RoundTwoVectorPainter extends CustomPainter {
           ..strokeWidth = 2.5,
       );
       final bodyRect = RRect.fromRectAndRadius(
-        Rect.fromCenter(
-          center: Offset(center.dx, center.dy + 4),
-          width: size.width * 0.44,
-          height: size.height * 0.52,
-        ),
+        Rect.fromCenter(center: Offset(center.dx, center.dy + 4), width: size.width * 0.44, height: size.height * 0.52),
         const Radius.circular(8),
       );
       canvas.drawRRect(bodyRect, Paint()..color = const Color(0xFF6A1B1A));
@@ -1282,15 +1144,20 @@ class QrCodeCard extends StatelessWidget {
   }
 }
 
-/// A proportional timeline of the live-build rounds: each segment's width is its share of the minutes.
+/// A proportional timeline of the live-build or demo steps: each segment's width is its share of the minutes.
 class RoundTimelineBar extends StatelessWidget {
-  const RoundTimelineBar({required this.rounds, super.key});
+  const RoundTimelineBar({required this.rounds, this.captionText, super.key});
 
   final List<({String label, int minutes, Color color})> rounds;
+  final String? captionText;
 
   @override
   Widget build(BuildContext context) {
     final totalMinutes = rounds.fold<int>(0, (sum, round) => sum + round.minutes);
+    final effectiveCaption = captionText ??
+        (isTurkishDeck
+            ? 'Toplam $totalMinutes dakikalık 3 adımlı canlı sahne demosu: QR kodu okutup telefondan katılabilirsiniz'
+            : '$totalMinutes minutes · fall behind? jump to the next checkpoint, never finish the old round');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1320,9 +1187,7 @@ class RoundTimelineBar extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          isTurkishDeck
-              ? 'Hedef $totalMinutes dakika · geride mi kaldınız? eski turu bitirmeye çalışmayın, sıradaki kontrol noktasına atlayın'
-              : '$totalMinutes minutes · fall behind? jump to the next checkpoint, never finish the old round',
+          effectiveCaption,
           style: const TextStyle(
             fontFamily: DeckFonts.mono,
             fontSize: DeckTypeScale.bodySmall,

@@ -14,11 +14,10 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                 ? "4. Google AI Studio'dan bugün ne çıkıyor?"
                 : '4. What Comes Out of Google AI Studio Today',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [05:00 - 07:30] "AI Studio\'dan ne çıkar?" sorusunun somut cevabı.\n'
-                    'SAY   "AI Studio artık sadece prompt denediğimiz bir ekran değil. En çok sorulan şey bu: bugün tam olarak ne çıkıyor? Build modu size çalışan bir web uygulaması üretiyor: bugün sizin barista uygulamanız. Kodu GitHub ile iki yönlü eşitliyor. Starter Tier\'da, kredi kartı ve fatura hesabı açmadan, 2 uygulamaya kadar tek tıkla Cloud Run\'da canlı bir .run.app adresine yayınlıyor. Bir uyarı: eski Firebase Studio kapanıyor ve yeni kayıt almıyor. Doğru adres Google AI Studio ve Google Antigravity."\n'
-                    "HOLD  Slayttaki 4 adımı soldan sağa göster, her adımda bir nefes. [Olgu (Ekim 2026, ai.google.dev): Starter Tier = 2 Cloud Run uygulaması; Firebase Studio kayıtları 22 Haziran 2026'da kapandı, Mart 2027'de tamamen kapanıyor].\n"
-                    'ANTEP [15 Kasım] Bu slayt 1 dakika. Terimleri kısaca aç: Build modu = AI Studio\'nun uygulama yazan modu, Starter Tier = kartsız ücretsiz başlangıç katmanı (Ekim 2026 dokümanına göre), .run.app = Cloud Run\'ın verdiği canlı adres. Sonra Stage Navigator ile 13. slayta (/live-build-dashboard) geç, 5 ile 12 arası bugün yok, alttaki NEXT satırını söyleme. Geçiş cümlesi: "Yeter konuştuk, şimdi kuruyoruz." Altyazıdaki "tek tıkla" sorulursa: "Kod yazmadan, birkaç tıkla. Ekranlar sırayla çıkar, Tur 3\'te birlikte geçeceğiz."\n'
-                    'NEXT  "Peki çok dosyalı Flutter tarafında Google Antigravity bize ne kazandırıyor?"'
+                ? 'BEAT  [03:15 - 04:30] "AI Studio\'dan bugün ne çıkar?" sorusunun somut cevabı.\n'
+                    'SAY   "Google AI Studio eskiden sadece prompt denediğimiz bir metin kutusuydu. Bugün Build moduna başlangıç promptumuzu verdiğimizde bize çalışan bir web uygulaması ve arka uç üretiyor, kodu GitHub hesabımızla çift yönlü eşitliyor ve Starter Tier kapsamında kredi kartı ya da fatura hesabı açmadan 2 uygulamaya kadar Cloud Run üzerinde canlı bir .run.app adresine yayınlıyor. En güzel yanı da şu: GEMINI_API_KEY sunucu tarafındaki container içinde kalıyor, tarayıcıdaki JavaScript paketine sızmıyor. Küçük ama kritik bir 2026 notu: eski Firebase Studio, yani Project IDX yeni kayıtları kapattı ve Mart 2027\'de tamamen kapanıyor; tarayıcıda AI Studio, masaüstünde ise Antigravity ile ilerliyoruz."\n'
+                    "HOLD  Üstteki 4 adımı soldan sağa göster. [Olgu (Ekim 2026, ai.google.dev): Starter Tier = 2 Cloud Run uygulaması; Firebase Studio kayıtları 22 Haziran 2026'da kapandı, Mart 2027'de kapanıyor].\n"
+                    'NEXT  "Tarayıcıda prototip hızlı; peki gerçek ve çok dosyalı bir Flutter kod tabanında Google Antigravity bize ne kazandırıyor?"'
                 : 'BEAT  [05:00 - 07:30] "AI Studio\'dan ne gelir?" sorusunun somut cevabı.\n'
                     'SAY   "Mustafa ile konuşurken en önemli soru şuydu: Google AI Studio\'dan bugün tam olarak ne çıkıyor? Eskiden sadece bir prompt test ekranıydı. Bugün ise AI Studio Build modu size çalışan tam yığın bir web uygulaması üretiyor, çift yönlü GitHub senkronizasyonu yapıyor ve Starter Tier kapsamında kredi kartı veya fatura hesabı açmadan 2 adede kadar tam yığın uygulamayı tek tıkla Google Cloud Run üzerinde canlı bir .run.app adresine yayınlıyor. Dikkat etmeniz gereken tek önemli kural: eski Firebase Studio kapandı, yeni kayıt almıyor; doğru adres doğrudan Google AI Studio ve Google Antigravity."\n'
                     'HOLD  Slayttaki 4 adımlı boru hattını soldan sağa doğru işaret et. [Fact (Oct 2026, ai.google.dev): Starter Tier = 2 Cloud Run apps; Firebase Studio sign-ups disabled 22 Jun 2026 ahead of Mar 2027 sunset].\n'
@@ -49,20 +48,20 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                   children: [
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'ADIM 1 · PROMPT' : 'STEP 1 · SEED + ASSETS',
+                        badge: isTurkishDeck ? 'ADIM 1 · PROMPT + GÖRSEL' : 'STEP 1 · SEED + ASSETS',
                         badgeIcon: Icons.description,
-                        title: isTurkishDeck ? "Türkçe başlangıç prompt'u" : 'Prompt + GitHub PNGs',
+                        title: isTurkishDeck ? 'Prompt + hazır PNG seti' : 'Prompt + GitHub PNGs',
                         bullets: [
                           if (isTurkishDeck)
-                            'promptlar/tur-1-barista.md dosyasını Build moduna yapıştırın.'
+                            'prompts/step-1-base-cafe.md dosyası AI Studio Build moduna verilir.'
                           else
                             'Paste prompts/step-1-base-cafe.md in AI Studio Build mode.',
                           if (isTurkishDeck)
-                            'Önerilen tasarımlardan birini seçin, ilk sürüm birkaç dakikada gelir.'
+                            '12 hazır kafe PNG görseli doğrudan GitHub Raw adreslerinden çekilir.'
                           else
                             'Loads our 12 studio cafe PNGs directly from GitHub Raw URLs.',
                           if (isTurkishDeck)
-                            'Gemini Flash baristanız: zevkinize göre çekirdek, kavrum ve süt önerir.'
+                            'Varsayılan model olarak gemini-3.5-flash-lite ya da gemini-3.8-flash hedeflenir.'
                           else
                             'Targets gemini-3.5-flash-lite or gemini-3.8-flash.',
                         ],
@@ -77,15 +76,15 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                         accentColor: DeckColors.googleGreen,
                         bullets: [
                           if (isTurkishDeck)
-                            'Barista uygulamasını ve arka ucunu üretir.'
+                            '2 oyunculu kafe tezgahı arayüzünü ve arka uç servisini üretir.'
                           else
                             'Generates interactive 2-player cafe counter UI + backend.',
                           if (isTurkishDeck)
-                            'Gaziantep teması ve Türkçe arayüz.'
+                            '5 şehir sürümü seçicisi içerir (Berlin, Gaziantep, Konya, Adana, İstanbul).'
                           else
                             'Includes 4-City Edition switcher (Berlin, Gaziantep, Adana, Istanbul).',
                           if (isTurkishDeck)
-                            "Code sekmesinde kodu ve AI'ın gerekçesini görürsünüz."
+                            'Tepsileri yapılandırılmış JSON şemasıyla (CafeReview) değerlendirir.'
                           else
                             'Evaluates trays via structured JSON schema (CafeReview).',
                         ],
@@ -152,7 +151,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: Text(
                         isTurkishDeck
-                            ? "DOĞRULANDI (2026): Eski Firebase Studio (Project IDX) 22 Haziran 2026'da yeni kayıtları kapattı, Mart 2027'de kapanıyor. Tarayıcıda AI Studio (Yol A), IDE'de Antigravity (Yol B) kullanın."
+                            ? "DOĞRULANDI (2026): Eski Firebase Studio (Project IDX) 22 Haziran 2026'da yeni kayıtları kapattı, Mart 2027'de kapanıyor. Tarayıcıda Google AI Studio, masaüstünde Google Antigravity kullanıyoruz."
                             : 'VERIFIED 2026 GUARDRAIL: Legacy Firebase Studio (Project IDX) disabled new sign-ups on 22 June 2026 ahead of its March 2027 sunset. Use Google AI Studio (Browser Lane A) and Google Antigravity (IDE Lane B).',
                         style: TextStyle(
                           fontFamily: DeckFonts.sans,

@@ -9,12 +9,7 @@ import 'package:flutter_deck/flutter_deck.dart';
 /// A jump target in the presenter menu.
 @immutable
 class PresenterSection {
-  const PresenterSection({
-    required this.icon,
-    required this.label,
-    required this.route,
-    this.highlighted = false,
-  });
+  const PresenterSection({required this.icon, required this.label, required this.route, this.highlighted = false});
 
   final IconData icon;
   final String label;
@@ -33,7 +28,7 @@ const List<PresenterSection> presenterSections = [
   ),
   PresenterSection(
     icon: Icons.emoji_events,
-    label: isTurkishDeck ? '3. Üç yol' : '3. Workshop Lanes & Prizes',
+    label: isTurkishDeck ? '3. Üç seviye, tek oyun' : '3. Workshop Lanes & Prizes',
     route: '/workshop-contract',
   ),
   PresenterSection(
@@ -48,7 +43,7 @@ const List<PresenterSection> presenterSections = [
   ),
   PresenterSection(
     icon: Icons.public,
-    label: isTurkishDeck ? '10. Çok şehirli Remote Config' : '10. Multi-City Remote Config',
+    label: isTurkishDeck ? '10. Beş şehirli yapılandırma' : '10. Multi-City Remote Config',
     route: '/multi-city-remote-config',
   ),
   PresenterSection(
@@ -58,7 +53,7 @@ const List<PresenterSection> presenterSections = [
   ),
   PresenterSection(
     icon: Icons.timer,
-    label: isTurkishDeck ? '13. Canlı yapım panosu' : '13. Live Build Dashboard',
+    label: isTurkishDeck ? '13. Canlı sahne demosu ve QR' : '13. Live Build Dashboard',
     route: '/live-build-dashboard',
   ),
   PresenterSection(
@@ -68,8 +63,13 @@ const List<PresenterSection> presenterSections = [
   ),
   PresenterSection(
     icon: Icons.celebration,
-    label: isTurkishDeck ? '15. Demolar ve sorular' : '15. Winner Podium & Badge',
+    label: isTurkishDeck ? '15. 4 mühendislik kuralı' : '15. Winner Podium & Badge',
     route: '/winner-podium-closing',
+  ),
+  PresenterSection(
+    icon: Icons.qr_code_2,
+    label: isTurkishDeck ? '16. Bana ulaşın' : '16. Find me',
+    route: '/bana-ulasin',
   ),
   PresenterSection(
     icon: Icons.wifi_tethering_error,
@@ -237,7 +237,7 @@ class _PresenterHelpDialogState extends State<PresenterHelpDialog> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        isTurkishDeck ? 'ATÖLYE BÖLÜMLERİ' : 'WORKSHOP & VIBE LOUNGE SECTIONS',
+                        isTurkishDeck ? 'KONUŞMA BÖLÜMLERİ' : 'WORKSHOP & VIBE LOUNGE SECTIONS',
                         style: _labelStyle(DeckColors.halftoneBlue),
                       ),
                       const SizedBox(height: _labelGap),
@@ -379,10 +379,7 @@ class _SectionButton extends StatelessWidget {
                     horizontal: _badgeHorizontalPadding,
                     vertical: _badgeVerticalPadding,
                   ),
-                  decoration: BoxDecoration(
-                    color: DeckColors.navy,
-                    borderRadius: BorderRadius.circular(_badgeRadius),
-                  ),
+                  decoration: BoxDecoration(color: DeckColors.navy, borderRadius: BorderRadius.circular(_badgeRadius)),
                   child: Text(
                     isTurkishDeck
                         ? 'Slayt ${slideNumberForRoute(section.route) ?? "?"}'

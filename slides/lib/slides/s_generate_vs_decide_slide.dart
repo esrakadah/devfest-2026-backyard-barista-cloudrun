@@ -14,10 +14,10 @@ class GenerateVsDecideSlide extends FlutterDeckSlideWidget {
                 ? 'Yedek: üretmek mi, karar vermek mi? CafeReview ve Decisions API'
                 : 'Backup: Generate or Decide? CafeReview vs Decisions API',
             speakerNotes:
-                "BEAT  [BACKUP · Konya, 60 sn] Slayt 11'den Stage Navigator ile gelinir. Aynı jüri, iki API: üretmek mi, karar vermek mi?\n"
-                'SAY   "Bizim jüri iki iş yapıyor. Birincisi komik yorumu yazmak: bu üretim işi, metin lazım. İkincisi tatlı mı tuzlu mu demek: bu bir karar, cevabı üç seçenekten biri. Bugün ikisini tek generateContent çağrısında yapıyoruz ve kararı JSON\'dan okuyoruz. Google\'ın Decisions API\'si kararı ayrı soruyor: metin üretmiyor, her seçenek için olasılık döndürüyor, çıktı tokenı sıfır. Dart SDK\'sı yok, package:http ile REST çağrısı yeterli. Oyuna bağlamadım, çünkü tuz kontrolünü zaten Dart yapıyor. Kodla yazamadığınız kararlarda deneyin."\n'
-                "HOLD  Önce soldaki 'tasteVerdict' satırını, sonra sağdaki 'type': 'choice' satırını göster. Gecikme ve fiyat rakamı söyleme. [Fact (cafe_judge_service.dart:203, 220-241): generateContent + responseSchema; cafe_judge_service.dart:369-379: _verdictMatchesPranks]. [Fact (aistudio.google.com/docs/decisions-api, 13 Nov 2026): gemini-decision-1; noul, choice, score; 1 to 1,000 questions per request; output tokens always 0, only input tokens billed; SDK tabs Python and JavaScript (3.2+) and REST; v1beta only].\n"
-                'NEXT  "Stage Navigator ile akışa dön: Konya akışında sıradaki adım canlı demo."',
+                "BEAT  [BACKUP · Konya, 45 sn] Slayt 11'den Stage Navigator ile gelinir (Slayt 18). Aynı jüri, iki API: üretmek mi, karar vermek mi?\n"
+                'SAY   "Bizim jüri iki iş yapıyor. Birincisi esprili yorumu yazmak: bu bir üretim işi, metin lazım. İkincisi tatlı mı tuzlu mu demek: bu ise kapalı uçlu bir karar. Bugün ikisini tek generateContent çağrısında yapıyoruz. Google\'ın yeni Decisions API\'si kararı ayrı soruyor: metin üretmiyor, her seçenek için kalibre edilmiş olasılık döndürüyor ve çıktı token\'ı sıfır. Henüz Dart SDK\'sı yok, package:http ile düz REST çağrısı yeterli. Bu oyuna bağlamadım çünkü tuz kontrolünü zaten Dart kodumuz kesin olarak biliyor; ama kuralla yazamadığınız sınıflandırmalarda mutlaka deneyin."\n'
+                "HOLD  Önce soldaki 'tasteVerdict' satırını, sonra sağdaki 'type': 'choice' satırını göster. Gecikme rakamı söyleme. [Fact (aistudio.google.com/docs/decisions-api, 13 Nov 2026): gemini-decision-1; noul, choice, score; 1 to 1,000 questions per request; output tokens always 0, only input tokens billed; SDKs: Python, JS 3.2+, REST; v1beta only].\n"
+                'NEXT  "Stage Navigator ile 12. ya da 13. slayta geri dön."',
           ),
         );
 
@@ -105,8 +105,8 @@ POST v1beta/decisions
                   SizedBox(width: _chipGap),
                   Expanded(
                     child: StatChip(
-                      value: isTurkishDeck ? '0 çıktı tokenı' : '0 Output Tokens',
-                      label: isTurkishDeck ? 'YALNIZCA GİRDİ TOKENI ÜCRETLİ' : 'Only Input Tokens Billed',
+                      value: isTurkishDeck ? "0 çıktı token'ı" : '0 Output Tokens',
+                      label: isTurkishDeck ? "YALNIZCA GİRDİ TOKEN'I ÜCRETLİ" : 'Only Input Tokens Billed',
                       accentColor: DeckColors.googleYellow,
                     ),
                   ),

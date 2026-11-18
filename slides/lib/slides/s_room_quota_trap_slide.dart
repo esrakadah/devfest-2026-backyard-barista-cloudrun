@@ -11,13 +11,13 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/room-quota-trap',
             title: isTurkishDeck
-                ? '9. Gerçek rakamlar #3: 300 kişilik salonda kota tuzağı'
+                ? '9. Gerçek rakamlar #3: kalabalık salonda kota tuzağı'
                 : '9. Gerçek Rakamlar #3: The 300-Person Quota Trap',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [16:30 - 18:30] Gerçek Rakamlar #3: 300 kişilik salonda HTTP 429 tuzağı ve çözümümüz.\n'
-                    'SAY   "Bir atölyeyi batıran klasik hata şu: konuşmacı kendi API anahtarını bütün salonla paylaşır. Ücretsiz katmanda hız sınırı anahtar başına değil, Google Cloud projesi başına. Dakikada 5 ile 15 istek kadar. 300 kişi tek projeye yüklenirse birkaç saniyede HTTP 429 alırsınız, yani \'kotanız doldu\' hatası. Sanal laboratuvarlar da etkinlik başına 100 kişiyle sınırlı. Biz bunu dört katmanla aşıyoruz. Bir: herkes kendi ücretsiz AI Studio anahtarını kullanıyor. İki: sipariş başına tek istek atıyoruz. Üç: AI Studio Starter Tier ile Cloud Run\'a yayınlıyoruz. Dört: ağ giderse uygulama çevrimdışı yedeğe, yani hazır cevaplara düşüyor."\n'
-                    'HOLD  Önce soldaki kırmızı "3 saniyede 429" kutusunu, sonra sağdaki 4 katmanı göster. "3 saniye" bir [HESAP] (dakikada 15 istek sınırına 300 kişi), salonda ölçülmedi. [Olgu (ai.google.dev/gemini-api/docs/rate-limits): ücretsiz katman = GCP projesi başına 5-15 RPM; GEAR laboratuvarları 100 eşzamanlı VM ile sınırlı].\n'
-                    'NEXT  "Peki aynı kodu yeniden derlemeden Berlin, Gaziantep, Adana ve İstanbul\'a nasıl uyarlıyoruz?"'
+                ? 'BEAT  [10:00 - 11:30] Gerçek Rakamlar #3: kalabalık salonda HTTP 429 tuzağı ve 4 katmanlı savunma.\n'
+                    'SAY   "Canlı demoları ve atölyeleri batıran klasik hata şudur: tek bir ücretsiz API anahtarını bütün salonla paylaşmak. Ücretsiz katmanda hız sınırı anahtar başına değil, Google Cloud projesi başına uygulanır: dakikada 5 ile 15 istek. Yüzlerce kişi tek projeye yüklendiğinde birkaç saniyede HTTP 429, yani kota doldu hatası alırsınız. Biz bunu dört katmanla koruyoruz: kendi uygulamasını kuran herkes kendi AI Studio projesini kullanıyor; sipariş başına tek çağrı gidiyor; canlı Cloud Run sunucumuzda nginx saniyede 10 istek sınırı koyuyor; ve limit dolup 429 dönse bile istemci çökmeden 250 milisaniyede şehre özel yerel yanıt paketine düşüyor."\n'
+                    'HOLD  Önce soldaki kırmızı "3 saniyede HTTP 429" kutusunu, sonra sağdaki 4 katmanı göster. "3 saniye" [HESAP] (15 RPM sınırına 300+ kişi), nginx sınırı 10r/s + burst 20 [KOD SABİTİ: nginx/default.conf.template].\n'
+                    'NEXT  "Peki tek bir kod tabanını yeniden derlemeden Berlin, Gaziantep, Konya, Adana ve İstanbul\'a nasıl uyarlıyoruz?"'
                 : 'BEAT  [16:30 - 18:30] Gerçek Rakamlar #3: 300 kişilik salonda HTTP 429 RESOURCE_EXHAUSTED tuzağı ve çözümümüz.\n'
                     'SAY   "Bir konferans atölyesini batıran en klasik hata nedir? Konuşmacının kendi API anahtarını 300 kişiyle paylaşması! Ücretsiz katman hız sınırları API anahtarı başına değil, Google Cloud projesi başına uygulanır ve dakikada 5 ila 15 istek seviyesindedir. Yani 300 kişi tek bir projeye yüklenirse 3 saniye içinde HTTP 429 RESOURCE_EXHAUSTED hatası alırsınız. Ayrıca GEAR ve Qwiklabs sanal laboratuvarları etkinlik başına 100 katılımcı ile sınırlıdır. Biz bu iki engeli dört katmanlı savunmayla aşıyoruz: herkes kendi ücretsiz AI Studio anahtarını kullanıyor, sipariş başına sadece 1 JSON isteği atıyoruz, AI Studio Starter Tier ile sanal makine sınırına takılmadan Cloud Run yayını yapıyoruz ve ağ kesilirse uygulama otomatik olarak çevrimdışı şaka yanıtlarına düşüyor."\n'
                     'HOLD  Sol karttaki kırmızı "3 Saniyede 429" uyarısını ve sağ karttaki 4 katmanlı çözümü göster. [Fact (ai.google.dev/gemini-api/docs/rate-limits): Free tier = 5-15 RPM per GCP project; GEAR labs cap at 100 concurrent VMs].\n'
@@ -36,7 +36,7 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
               ? 'GERÇEK RAKAMLAR #3 (KOTA VE HIZ SINIRLARI)'
               : 'GERÇEK RAKAMLAR #3 (QUOTAS & RATE LIMITS)',
           title: isTurkishDeck
-              ? 'Gerçek rakamlar #3: 300 kişilik salonda HTTP 429 almadan'
+              ? 'Gerçek rakamlar #3: kalabalık salonda HTTP 429 almadan'
               : 'Real Numbers #3: Surviving a 300-Person Room Without HTTP 429',
           act: StoryAct.realNumbers,
           subtitle: isTurkishDeck
@@ -57,7 +57,7 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
                             : 'THE STAGE TRAP · HTTP 429 IN 3 SECONDS',
                         badgeIcon: Icons.error_outline,
                         title: isTurkishDeck
-                            ? 'Kalabalık atölyelerde ne bozulur?'
+                            ? 'Kalabalık salonlarda ne bozulur?'
                             : 'What Breaks in Big Hands-On Workshops',
                         accentColor: DeckColors.googleRed,
                         bullets: [

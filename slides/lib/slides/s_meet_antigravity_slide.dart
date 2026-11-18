@@ -12,10 +12,10 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
             route: '/meet-antigravity',
             title: isTurkishDeck ? '5. Google Antigravity ile tanışın' : '5. Meet Google Antigravity',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [07:30 - 09:30] Google Antigravity: tek istekle birden çok dosyayı değiştiren, AI ajanlı kod editörü.\n'
-                    'SAY   "Tarayıcıda prototip yapmak güzel. Peki gerçek bir Flutter projesinde üç dosyayı aynı anda nasıl güncelleriz? Burada Google Antigravity devreye giriyor: içinde AI ajanı olan bir kod editörü. Cmd+I ya da Agent Mode ile \'kafeye yeni bir imza tatlısı ekle\' diyoruz. Dışarıdan resim aramıyor. Çizim kodunu, yani CustomVectorIngredientGraphic\'i kendisi yazıyor ve ingredients_catalog.dart içindeki roundTwoCustomItems listesine bağlıyor."\n'
-                    'HOLD  Sağdaki kodda roundTwoCustomItems listesini (custom_katmer_roll ve custom_isot_pepper) göster. İsot satırında bir an dur, salon gülümser.\n'
-                    'NEXT  "Bir mimari kararımız var: sahne için oyun motoru, tezgah için Flutter widget\'ları. Neden?"'
+                ? 'BEAT  [04:30 - 05:45] Google Antigravity: tek istekle birden çok dosyayı değiştiren, AI ajanlı kod editörü.\n'
+                    'SAY   "Tarayıcıda ilk prototipi ayağa kaldırmak güzel; peki gerçek bir Flutter projesinde hem veri kataloğunu, hem çizim sınıfını, hem de testleri tek seferde nasıl güncelliyoruz? Burada Google Antigravity devreye giriyor. Cmd+I ya da Agent Mode ile \'kafeye yeni bir imza tatlısı ya da yeni bir şehir ekle\' dediğimizde, dışarıdan kırık bir resim dosyası aramıyor; doğrudan CustomVectorIngredientGraphic çizim kodunu üretip ingredients_catalog.dart listesine bağlıyor ve testleri koşturuyor. Birazdan demoda Konya sürümünün de aynı şekilde 11 dosyada nasıl eklendiğini göreceğiz."\n'
+                    'HOLD  Sağdaki kodda roundTwoCustomItems listesini (custom_katmer_roll ve custom_isot_pepper) göster. İsot satırında bir saniye dur, salon gülümser.\n'
+                    'NEXT  "Burada kritik bir mimari kararımız var: neden sahneyi oyun motoruyla, tezgahı ise Flutter widget\'larıyla çizdik?"'
                 : 'BEAT  [07:30 - 09:30] Google Antigravity ile çoklu dosya düzenleme ve yerinde vektör/widget üretimi.\n'
                     'SAY   "Tarayıcıda prototiplemek harika; peki gerçek bir Flutter projesinde aynı anda hem veri kataloğunu, hem özel çizim sınıfını, hem de JSON şemasını nasıl güncelliyoruz? İşte burada Google Antigravity devreye giriyor. Antigravity içinde Cmd+I veya Agent Mode kullanarak kafemize yeni bir imza tatlısı ekle dediğimizde, dışarıdan kırık bir resim dosyası aramak yerine doğrudan CustomVectorIngredientGraphic çizim kodunu üretip ingredients_catalog.dart içindeki roundTwoCustomItems listesine bağlıyor."\n'
                     'HOLD  Sağ taraftaki roundTwoCustomItems (custom_katmer_roll ve custom_isot_pepper) ve CustomVectorArtworkKind kod kutusunu işaret et.\n'
@@ -71,9 +71,9 @@ static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
               Expanded(
                 flex: 5,
                 child: DeckFeatureCard(
-                  badge: isTurkishDeck ? "YOL B'NİN GÜCÜ" : 'LANE B SUPERPOWER',
+                  badge: isTurkishDeck ? 'AJAN DESTEKLİ FLUTTER HIZI' : 'LANE B SUPERPOWER',
                   title: isTurkishDeck
-                      ? "2. turda Antigravity'yi nasıl kullanıyoruz"
+                      ? "Çok dosyalı değişiklikte Antigravity'yi nasıl kullanıyoruz"
                       : 'How We Use Antigravity in Round 2',
                   accentColor: DeckColors.googleYellow,
                   bullets: [
@@ -86,7 +86,7 @@ static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
                     else
                       'Agent Mode: Updates ingredients_catalog.dart, custom_svg_items.dart, and cafe_judge_service.dart in one pass.',
                     if (isTurkishDeck)
-                      "Resim yükleme derdi yok: çizim CustomPainter / SVG kodu olarak Dart'ta üretilir, 300 laptopta aynı çalışır."
+                      "Resim yükleme derdi yok: çizim CustomPainter / SVG kodu olarak Dart'ta üretilir, kırık URL çıkmaz."
                     else
                       'Zero Asset-Hosting Failures: Generates CustomPainter / SVG code directly in Dart so 300 laptops never fail on image uploads.',
                     if (isTurkishDeck)
@@ -95,7 +95,7 @@ static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
                       'Cross-Platform Ready: Runs on Windows 10/11 (x64 & ARM64), macOS, and Linux.',
                   ],
                   footerText: isTurkishDeck
-                      ? "İpucu: Kurulu değilse beklemeyin, salon Wi-Fi'ında Yol A ile devam edin!"
+                      ? 'Canlı örnek: Konya sürümü tek promptla 11 dosyada eklendi ve 32 testi geçti'
                       : 'Tip: Pre-install before the workshop; use Lane A on conference Wi-Fi!',
                 ),
               ),
