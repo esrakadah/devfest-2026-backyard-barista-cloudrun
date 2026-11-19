@@ -11,11 +11,11 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/architecture-recap',
             title: isTurkishDeck
-                ? '14. Bugün ne kurduk? (mimari özeti)'
+                ? '14. Oyunun arkasındaki mimari (özet)'
                 : '14. En Son Mimaride Ne Yaptık? (Architecture Recap)',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [25:30 - 27:00] 4 katmanlı üretim mimarisi özeti.\n'
-                    'SAY   "Az önce oynadığınız eğlenceli kafe oyununun arkasında dört katmanlı gerçek bir üretim mimarisi çalışıyor. Birinci katman sunum: 3 şeritli Flame sahnesi, 2x2 duyarlı Flutter tezgahı ve Web NFC tetikleyicisi. İkinci katman yapılandırma: CityEditionController sayesinde sıfır yeniden derlemeyle 5 DevFest şehri. Üçüncü katman yapay zeka ve korumalar: gemini-3.5-flash-lite şemalı JSON, 8 saniye bulut sınırı, 15 saniye yerel Gemma 4 ve 250 milisaniye çevrimdışı paket. Dördüncü katman ise sunucusuz bulut: API anahtarını sunucuda tutan nginx:alpine container\'ımız PORT 8080 üzerinde Google Cloud Run\'da çalışıyor. Bu dört katmanı pazartesi günü kendi Flutter ürününüze birebir taşıyabilirsiniz."\n'
+                    'SAY   "Az önce oynadığınız oyunun arkasında dört katman var. Birincisi sahne: arka planı Flame çiziyor, tezgah bildiğimiz Flutter widget\'ları. İkincisi ayar: tek kod, beş şehir, yeniden derleme yok. Üçüncüsü yapay zeka ve korumaları: tek bir şemalı JSON çağrısı, her çağrıda zaman aşımı ve çevrimdışı yedek. Dördüncüsü bulut: anahtar sunucuda kalıyor, uygulama Cloud Run\'da çalışıyor. Bu dört katmanı pazartesi günü kendi Flutter ürününüze taşıyabilirsiniz."\n'
                     'HOLD  4 katmanı yukarıdan aşağıya say, sağdaki sonuç sütununu ritim olarak kullan. "60fps" [HEDEF], "1 çağrı ≈ 270 token" [YAKLAŞIK HESAP].\n'
                     'NEXT  "Kapatmadan önce bu mimariden cebinize koymanızı istediğim 4 mühendislik kuralını özetleyelim."'
                 : 'BEAT  [60:00 - 65:00] "En Son Mimaride Ne Yaptık?" (Ödül Töreni Öncesi Tam Mimari Özeti).\n'
@@ -33,9 +33,9 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: isTurkishDeck ? 'BUGÜN NE KURDUK?' : 'EN SON MİMARİDE NE YAPTIK?',
+          eyebrow: isTurkishDeck ? 'MİMARİ ÖZETİ' : 'EN SON MİMARİDE NE YAPTIK?',
           title: isTurkishDeck
-              ? 'Bugün kurduğumuz: 4 katmanlı production mimarisi'
+              ? 'Oyunun arkasında: 4 katmanlı üretim mimarisi'
               : 'What We Just Built: A 4-Layer Production Architecture',
           act: StoryAct.buildAndShip,
           subtitle: isTurkishDeck
@@ -54,7 +54,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                     if (isTurkishDeck) '2x2 arayüz + 3 gözlü tepsi' else '2x2 HUD + 3-Slot Tray',
                     'NfcTagController (NDEFReader)',
                     if (isTurkishDeck) 'Karta dokunma yedeği' else 'Card-Tap Fallback',
-                    if (isTurkishDeck) '14 PNG · 5 Lottie · 10 WAV' else '14 PNGs · 5 Lottie · 10 WAV',
+                    if (isTurkishDeck) '14 PNG · 5 Lottie · 9 WAV' else '14 PNGs · 5 Lottie · 9 WAV',
                   ],
                   outcome: isTurkishDeck ? '60fps hedefi\n+ Web NFC' : '60fps + Web NFC',
                 ),
@@ -67,7 +67,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                   color: DeckColors.googleYellow,
                   chips: [
                     if (isTurkishDeck) '1 · Uygulama içi seçim' else '1 · In-app override',
-                    '2 · Remote Config active_city_id',
+                    if (isTurkishDeck) '2 · remote_city parametresi' else '2 · Remote Config active_city_id',
                     '3 · city_editions.json',
                   ],
                   outcome: isTurkishDeck ? '5 şehir,\n0 derleme' : '4 cities, 0 rebuilds',
@@ -82,7 +82,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                   chips: [
                     'gemini-3.5-flash-lite',
                     if (isTurkishDeck) 'CafeReview JSON şeması' else 'CafeReview JSON schema',
-                    if (isTurkishDeck) '8 sn timeout' else '8 s timeout',
+                    if (isTurkishDeck) '8 sn zaman aşımı' else '8 s timeout',
                     if (isTurkishDeck) 'yerel Gemma 15 sn' else 'local Gemma 15 s',
                     if (isTurkishDeck) '250 ms çevrimdışı yedek' else '250 ms offline fallback',
                   ],

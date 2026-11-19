@@ -9,7 +9,7 @@ enum StoryAct {
   tools(isTurkishDeck ? 'ARAÇLAR' : 'TOOLS', DeckColors.halftoneBlue),
   realNumbers('GERÇEK RAKAMLAR', DeckColors.googleRed),
   underTheHood(isTurkishDeck ? 'KAPUTUN ALTI' : 'UNDER THE HOOD', DeckColors.googleGreen),
-  buildAndShip(isTurkishDeck ? 'YAPIM VE YAYIN' : 'BUILD & SHIP', DeckColors.googleBlue);
+  buildAndShip(isTurkishDeck ? 'DEMO VE KAPANIŞ' : 'BUILD & SHIP', DeckColors.googleBlue);
 
   const StoryAct(this.label, this.color);
 

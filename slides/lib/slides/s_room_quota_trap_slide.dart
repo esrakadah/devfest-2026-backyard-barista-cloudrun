@@ -17,7 +17,7 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
                 ? 'BEAT  [10:00 - 11:30] Gerçek Rakamlar #3: kalabalık salonda HTTP 429 tuzağı ve 4 katmanlı savunma.\n'
                     'SAY   "Canlı demoları ve atölyeleri batıran klasik hata şudur: tek bir ücretsiz API anahtarını bütün salonla paylaşmak. Ücretsiz katmanda hız sınırı anahtar başına değil, Google Cloud projesi başına uygulanır: dakikada 5 ile 15 istek. Yüzlerce kişi tek projeye yüklendiğinde birkaç saniyede HTTP 429, yani kota doldu hatası alırsınız. Biz bunu dört katmanla koruyoruz: kendi uygulamasını kuran herkes kendi AI Studio projesini kullanıyor; sipariş başına tek çağrı gidiyor; canlı Cloud Run sunucumuzda nginx saniyede 10 istek sınırı koyuyor; ve limit dolup 429 dönse bile istemci çökmeden 250 milisaniyede şehre özel yerel yanıt paketine düşüyor."\n'
                     'HOLD  Önce soldaki kırmızı "3 saniyede HTTP 429" kutusunu, sonra sağdaki 4 katmanı göster. "3 saniye" [HESAP] (15 RPM sınırına 300+ kişi), nginx sınırı 10r/s + burst 20 [KOD SABİTİ: nginx/default.conf.template].\n'
-                    'NEXT  "Peki tek bir kod tabanını yeniden derlemeden Berlin, Gaziantep, Konya, Adana ve İstanbul\'a nasıl uyarlıyoruz?"'
+                    'NEXT  "Tek bir kod tabanını yeniden derlemeden beş ayrı şehre nasıl uyarlıyoruz?"'
                 : 'BEAT  [16:30 - 18:30] Gerçek Rakamlar #3: 300 kişilik salonda HTTP 429 RESOURCE_EXHAUSTED tuzağı ve çözümümüz.\n'
                     'SAY   "Bir konferans atölyesini batıran en klasik hata nedir? Konuşmacının kendi API anahtarını 300 kişiyle paylaşması! Ücretsiz katman hız sınırları API anahtarı başına değil, Google Cloud projesi başına uygulanır ve dakikada 5 ila 15 istek seviyesindedir. Yani 300 kişi tek bir projeye yüklenirse 3 saniye içinde HTTP 429 RESOURCE_EXHAUSTED hatası alırsınız. Ayrıca GEAR ve Qwiklabs sanal laboratuvarları etkinlik başına 100 katılımcı ile sınırlıdır. Biz bu iki engeli dört katmanlı savunmayla aşıyoruz: herkes kendi ücretsiz AI Studio anahtarını kullanıyor, sipariş başına sadece 1 JSON isteği atıyoruz, AI Studio Starter Tier ile sanal makine sınırına takılmadan Cloud Run yayını yapıyoruz ve ağ kesilirse uygulama otomatik olarak çevrimdışı şaka yanıtlarına düşüyor."\n'
                     'HOLD  Sol karttaki kırmızı "3 Saniyede 429" uyarısını ve sağ karttaki 4 katmanlı çözümü göster. [Fact (ai.google.dev/gemini-api/docs/rate-limits): Free tier = 5-15 RPM per GCP project; GEAR labs cap at 100 concurrent VMs].\n'
@@ -102,7 +102,7 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
                           else
                             '2. Single-Shot Structured JSON: Only 1 generateContent call when clicking "Serve Order!" (1-2 RPM per player).',
                           if (isTurkishDeck)
-                            '3. AI Studio Starter Tier + Cloud Run: hesap başına 2 uygulama, fatura kartı ve VM sınırı yok.'
+                            '3. Cloud Run üzerinde nginx hız sınırı: Gemini çağrılarına saniyede 10 istek + 20 burst, fazlası 429.'
                           else
                             '3. AI Studio Starter Tier Cloud Run: Deploys up to 2 apps per account with zero billing card or VM lab cap.',
                           if (isTurkishDeck)

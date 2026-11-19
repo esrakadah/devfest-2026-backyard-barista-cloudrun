@@ -36,10 +36,10 @@ this.geminiModel = const String.fromEnvironment(
   defaultValue: 'gemini-3.5-flash-lite',
 ),
 
-// Per completed tray order (~270 tokens total):
-// - Input promptText: ~150 tokens (active city + tray ingredients + prank flags)
-// - Output CafeReview JSON: ~120 tokens (6 strictly typed schema properties)
-// - 1,000 cafe orders = ~150K input tokens + ~120K output tokens''';
+// ${isTurkishDeck ? 'Tamamlanan her sipariş (toplam ~270 token):' : 'Per completed tray order (~270 tokens total):'}
+// ${isTurkishDeck ? '- Girdi promptText: ~150 token (aktif şehir + tepsi + şaka bayrakları)' : '- Input promptText: ~150 tokens (active city + tray ingredients + prank flags)'}
+// ${isTurkishDeck ? '- Çıktı CafeReview JSON: ~120 token (6 tipli şema alanı)' : '- Output CafeReview JSON: ~120 tokens (6 strictly typed schema properties)'}
+// ${isTurkishDeck ? '- 1.000 sipariş = ~150 bin girdi + ~120 bin çıktı token' : '- 1,000 cafe orders = ~150K input tokens + ~120K output tokens'}''';
 
   @override
   FlutterDeckSlide build(BuildContext context) {
@@ -50,7 +50,7 @@ this.geminiModel = const String.fromEnvironment(
               ? 'GERÇEK RAKAMLAR #2 (TOKEN HESABI VE 2026 MODEL TUZAĞI)'
               : 'GERÇEK RAKAMLAR #2 (TOKEN MATH & 2026 MODEL GUARD)',
           title: isTurkishDeck
-              ? 'Gerçek rakamlar #2: sipariş başına ~270 token ve eski model tuzağı'
+              ? 'Gerçek rakamlar #2: sipariş başına ~270 token'
               : 'Real Numbers #2: ~270 Tokens per Order & The 2.5 Trap',
           act: StoryAct.realNumbers,
           subtitle: isTurkishDeck
@@ -118,7 +118,7 @@ this.geminiModel = const String.fromEnvironment(
                           else
                             'Legacy Model Restriction (Oct 2026): New Google Cloud projects are restricted from gemini-2.5-flash and gemini-2.5-flash-lite.',
                           if (isTurkishDeck)
-                            "Kullanın: gemini-3.5-flash-lite (varsayılan) ya da gemini-3.8-flash; production'da firebase_ai (^5.1.0) + App Check."
+                            'Kullanın: gemini-3.5-flash-lite (varsayılan) ya da gemini-3.8-flash; üretimde firebase_ai (^5.1.0) + App Check.'
                           else
                             'Always Use: gemini-3.5-flash-lite (default) or gemini-3.8-flash; pair with firebase_ai (^5.1.0) + App Check in production.',
                         ],

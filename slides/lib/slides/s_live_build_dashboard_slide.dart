@@ -13,8 +13,8 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? '13. Canlı sahne demosu ve seyirci QR testi' : '13. Live Build Dashboard (3 Rounds)',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [15:00 - 25:30] 3 adımlı canlı sahne demosu (10 dk) + tüm salonun telefondan canlı QR ile oynaması.\n'
-                    'SAY   "Şimdi telefonlarınızı çıkarın, sağ alttaki yeşil QR kodu okutun! Arka sıralar için tam ekran QR sekmemi de hemen açıyorum. Üç adımlı canlı demomuza başlıyoruz. Birinci adım: canlı Cloud Run servisimizdeyiz. Önce doğru bir tatlı tepsi servis edip Gemini 3.5 Flash-Lite\'tan 5 yıldızı alıyoruz; hemen ardından şeker yerine tuz atıp 1 yıldızlı Alaaddin Tepesi yorumunu canlı görüyoruz. İkinci adım: tek bir Antigravity Agent Mode isteğiyle Konya sürümünün 11 dosyada nasıl eklendiğine ve 32 testi nasıl geçtiğine bakıyoruz. Üçüncü adım ise kaos testi: sahnede Wi-Fi\'ı kapatıyorum, aynı tuzlu tepsiyi tekrar gönderiyorum ve oyunun çökmeden laptoptaki yerel Gemma 4 ve 250 milisaniyelik çevrimdışı paketle nasıl devam ettiğini kanıtlıyoruz."\n'
-                    "HOLD  Önce tam ekran QR sekmesini 15 saniye göster ki arka sıralar okutsun. Sonra sırayla: 1) Canlı Cloud Run sekmesi (tatlı 5 yıldız -> tuzlu 1 yıldız), 2) Terminalde git diff --stat ve Ayarlar çekmecesinden şehir geçişi, 3) Wi-Fi kapalı yerel Gemma sekmesi. Süre 24:00'ü geçerse 3. adımı 30 saniyede gösterip 14. slayta dön.\n"
+                    'SAY   "Şimdi telefonlarınızı çıkarın, sağ alttaki yeşil QR kodu okutun! Arka sıralar için tam ekran QR sekmemi de hemen açıyorum. Üç adımlı canlı demomuza başlıyoruz. Birinci adım: canlı Cloud Run servisimizdeyiz. Önce doğru bir tatlı tepsi servis edip Gemini 3.5 Flash-Lite\'tan 5 yıldızı alıyoruz; hemen ardından şeker yerine tuz atıp 1 yıldızlı Alaaddin Tepesi yorumunu canlı görüyoruz. Aynısını siz de telefonunuzdan deneyin, iki dakikanız var. İkinci adım: Antigravity Agent Mode ile Konya sürümünün 11 dosyada nasıl eklendiğine ve 32 testi nasıl geçtiğine bakıyoruz. Üçüncü adım ise kaos testi: sahnede Wi-Fi\'ı kapatıyorum, aynı tuzlu tepsiyi tekrar gönderiyorum ve oyunun çökmeden laptoptaki yerel Gemma 4 ve 250 milisaniyelik çevrimdışı paketle nasıl devam ettiğini kanıtlıyoruz."\n'
+                    "HOLD  Önce tam ekran QR sekmesini 15 saniye göster ki arka sıralar okutsun. Sonra sırayla: 1) 5 dk: canlı Cloud Run sekmesi (tatlı 5 yıldız -> tuzlu 1 yıldız), sonra salon 2 dakika oynarken sus ve bekle, salondan bir yorumu sesli oku. 2) 2 dk: tek ekran git show --stat adfcb45, ardından Ayarlar çekmecesinden bir şehir geçişi. 3) 3 dk: Wi-Fi kapalı yerel Gemma sekmesi. Süre 24:00'ü geçerse 3. adımı 30 saniyede gösterip 14. slayta dön.\n"
                     'NEXT  "Canlı demoyu ve çevrimdışı yedeği gördük; şimdi arkadaki 4 katmanlı mimariyi 90 saniyede toparlayalım."'
                 : 'BEAT  [25:00 - 60:00] Canlı Kodlama ve Vibe Lounge Görev Panosu (Bu slayt inşa süresince ekranda açık kalır).\n'
                     'SAY   "Şimdi 3 turluk inşa maratonumuz başlıyor! Bu slayt boyunca ekranda kalacak. 1. Turda (10 dakika) 12 hazır görselimizi çekip şehir modumuzu seçiyoruz. 2. Turda (15 dakika) kendi özel imza tatlımızı ve şaka malzememizi üretip Gemini JSON jürisine bağlıyoruz. 3. Turda (10 dakika) ise sağ üstteki Deploy to Cloud Run butonuna veya gcloud run deploy komutuna basıp canlı .run.app linkimizi ve GitHub repomuzu alıyoruz. Herhangi bir adımda geride kalan olursa QR kodundaki Türkçe repodan promptlar/tur-1, tur-2, tur-3 dosyalarından veya uygulama içi Round 2 AI SVGs anahtarından anında yakalayabilir!"\n'
@@ -44,17 +44,17 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
               RoundTimelineBar(
                 rounds: [
                   (
-                    label: isTurkishDeck ? 'ADIM 1 · CANLI CLOUD RUN' : 'ROUND 1 · BASE CAFE',
-                    minutes: isTurkishDeck ? 3 : 10,
+                    label: isTurkishDeck ? '1 · CANLI CLOUD RUN' : 'ROUND 1 · BASE CAFE',
+                    minutes: isTurkishDeck ? 5 : 10,
                     color: DeckColors.googleBlue,
                   ),
                   (
-                    label: isTurkishDeck ? 'ADIM 2 · KONYA KODU' : 'ROUND 2 · YOUR DISH',
-                    minutes: isTurkishDeck ? 4 : 15,
+                    label: isTurkishDeck ? '2 · KOD' : 'ROUND 2 · YOUR DISH',
+                    minutes: isTurkishDeck ? 2 : 15,
                     color: DeckColors.googleYellow,
                   ),
                   (
-                    label: isTurkishDeck ? 'ADIM 3 · WI-FI KAPALI' : 'ROUND 3 · SHIP',
+                    label: isTurkishDeck ? '3 · WI-FI KAPALI' : 'ROUND 3 · SHIP',
                     minutes: isTurkishDeck ? 3 : 10,
                     color: DeckColors.googleGreen,
                   ),
@@ -66,7 +66,7 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                   children: [
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'ADIM 1 · 3 DK (BULUT)' : 'ROUND 1 · 10 MIN (STEP 1)',
+                        badge: isTurkishDeck ? 'ADIM 1 · 5 DK (BULUT + SALON)' : 'ROUND 1 · 10 MIN (STEP 1)',
                         title: isTurkishDeck ? 'Canlı Cloud Run ve Gemini jürisi' : 'Base Cafe & City Switcher',
                         bullets: [
                           if (isTurkishDeck)
@@ -90,9 +90,9 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                     SizedBox(width: _gap),
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'ADIM 2 · 4 DK (AJAN + KOD)' : 'ROUND 2 · 15 MIN (STEP 2)',
+                        badge: isTurkishDeck ? 'ADIM 2 · 2 DK (AJAN + KOD)' : 'ROUND 2 · 15 MIN (STEP 2)',
                         title: isTurkishDeck
-                            ? (isIzmirDeck ? 'Çok dosyalı şehir sürümü farkı' : 'Konya sürümü: tek istek, 11 dosya')
+                            ? (isIzmirDeck ? 'Çok dosyalı şehir sürümü farkı' : 'Konya sürümü: 11 dosya, 32 test')
                             : 'Custom AI Dish & Prank Judge',
                         accentColor: DeckColors.googleYellow,
                         bullets: [

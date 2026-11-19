@@ -28,15 +28,15 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
   static const double _columnGap = 24;
 
   static const String _cityControllerSnippet = '''
-// flutter_client/lib/config/city_edition_controller.dart (Lines 147-168)
+// flutter_client/lib/config/city_edition_controller.dart (Lines 159-180)
 Map<CityEditionId, CityEditionConfig> _editionsByCity = _builtInDefaults;
 CityEditionId _fallbackCityId = CityEditionId.gaziantep;
 CityEditionId? _remoteConfigCityId;
 CityEditionId? _manualOverrideCityId;
 
-/// Priority 1: In-App Settings Switcher (_manualOverrideCityId)
-/// Priority 2: Firebase Remote Config / --dart-define (_remoteConfigCityId)
-/// Priority 3: Local city_editions.json Fallback (_fallbackCityId)
+/// ${isTurkishDeck ? '1. öncelik: uygulama içi Ayarlar seçimi (_manualOverrideCityId)' : 'Priority 1: In-App Settings Switcher (_manualOverrideCityId)'}
+/// ${isTurkishDeck ? '2. öncelik: URL / Remote Config / --dart-define (_remoteConfigCityId)' : 'Priority 2: Firebase Remote Config / --dart-define (_remoteConfigCityId)'}
+/// ${isTurkishDeck ? '3. öncelik: yerel city_editions.json yedeği (_fallbackCityId)' : 'Priority 3: Local city_editions.json Fallback (_fallbackCityId)'}
 CityEditionId get activeCityId =>
     _manualOverrideCityId ?? _remoteConfigCityId ?? _fallbackCityId;
 
@@ -56,7 +56,7 @@ CityEditionConfig get activeEdition =>
               : 'One Codebase, Four DevFest Cities via Remote Config',
           act: StoryAct.underTheHood,
           subtitle: isTurkishDeck
-              ? 'CityEditionController 3 yere sırayla bakar: uygulama içi seçim -> URL / Remote Config -> yerel JSON'
+              ? 'CityEditionController 3 yere sırayla bakar: uygulama içi seçim -> URL parametresi -> yerel JSON'
               : '3-Layer resolution in CityEditionController: UI Override -> Remote Config -> Local JSON',
           accentColor: DeckColors.halftoneBlue,
           child: Column(
@@ -73,7 +73,7 @@ CityEditionConfig get activeEdition =>
                   SizedBox(width: 14),
                   Expanded(
                     child: StatChip(
-                      value: isTurkishDeck ? '2 · URL / Remote Config' : '2 · Remote Config',
+                      value: isTurkishDeck ? '2 · URL parametresi' : '2 · Remote Config',
                       label: '_remoteConfigCityId',
                       accentColor: DeckColors.halftoneBlue,
                     ),
@@ -111,7 +111,7 @@ CityEditionConfig get activeEdition =>
                           else
                             'TR · Gaziantep (15 Nov): Şehitkamil Baklava & Menengiç Kahvesi · "Şehitkamil\'de kapıdan sokmazlar!"',
                           if (isTurkishDeck)
-                            'TR · Konya (${isIzmirDeck ? "21 Kas" : "bugün"}): Alaaddin Kahve & Tatlı Durağı · "Alaaddin Tepesi\'nde böyle ikram olmaz!"'
+                            'TR · Konya (${isIzmirDeck ? "21 Kas" : "bugün"}): Alaaddin Kahve & Tatlı Durağı · "Alaaddin Tepesi\'nde misafire böyle ikram olmaz!"'
                           else
                             'TR · Adana (11 Dec): Gar Kahvesi & Bici Bici Durağı · Bici Bici & Gar Kahvesi ("Şalgam suyu mu sandın?").',
                           if (isTurkishDeck)

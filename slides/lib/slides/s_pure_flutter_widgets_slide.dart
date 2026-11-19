@@ -33,7 +33,7 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         return const SlideFrame(
           eyebrow: isTurkishDeck
-              ? 'MİMARİ KARAR (flutter/one-codebase · package:flame)'
+              ? 'MİMARİ KARAR'
               : 'ARCHITECTURAL DECISION (flutter/one-codebase · package:flame)',
           title: isTurkishDeck
               ? 'Flame sahnesi + Flutter arayüzü: hibrit mimari'

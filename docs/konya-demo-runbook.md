@@ -23,7 +23,7 @@
 | `10:00 - 11:30` | 9 | `/room-quota-trap` | GCP projesi başına 5-15 RPM tuzağı, nginx `10r/s` sınırı ve 429'da 250 ms yerel yedek |
 | `11:30 - 12:45` | 10 | `/multi-city-remote-config` | `CityEditionController` 3 katmanlı öncelik; 5 şehir (bugün: Alaaddin Kahve & Tatlı Durağı) |
 | `12:45 - 14:00` | 11 | `/salt-sugar-mechanic` | Android Chrome `NDEFReader` Web NFC + `_verdictMatchesPranks` Dart doğrulaması |
-| `14:00 - 15:00` | 12 | `/hybrid-asset-pipeline` | Pakette 14 PNG + 5 Lottie + 10 ses, uzantılarda `CustomPainter` kodu |
+| `14:00 - 15:00` | 12 | `/hybrid-asset-pipeline` | Pakette 14 PNG + 5 Lottie + 9 ses, uzantılarda `CustomPainter` kodu |
 | `15:00 - 25:30` | 13 | `/live-build-dashboard` | **3 adımlı canlı sahne demosu** (aşağıda) + 850 kişiye canlı QR oyunu |
 | `25:30 - 27:00` | 14 | `/architecture-recap` | 4 katmanlı üretim mimarisi özeti |
 | `27:00 - 28:15` | 15 | `/winner-podium-closing` | Eve götürülecek 4 mühendislik kuralı + açık kaynak repo QR'ı |
@@ -44,18 +44,18 @@
 ### Hazırlık (00:15 sn): Arka Sıralar İçin Tam Ekran QR
 Tarayıcıdaki `konya-qr-2026-11-21.html` sekmesini 15 saniye ekranda tut: salondakiler `backyard-barista-389486729482.europe-west3.run.app/?remote_city=konya` adresine telefonlarından girsin.
 
-### Adım 1 (3 dk): Canlı Cloud Run ve Gemini Jürisi
+### Adım 1 (5 dk): Canlı Cloud Run ve Gemini Jürisi + Salon Oynuyor
 1. Canlı `europe-west3` sekmesine geç (`Alaaddin Kahve & Tatlı Durağı` başlığını göster).
 2. `Espresso` + `Fıstıklı Baklava` + `Şeker` diz ve **Servis Et**: 5 yıldız ve kart altındaki `Canlı Gemini 3.5 Flash-Lite` rozetini göster.
 3. `Şeker` yerine `Tuz` koyup **Servis Et**: 1 yıldız ve *"Alaaddin Tepesi'nde misafire böyle ikram olmaz!"* yanıtını göster.
+4. Salona 2 dakika ver: "Aynısını siz de telefonunuzdan deneyin." Sus, bekle, salondan gelen bir yorumu sesli oku.
 
-### Adım 2 (4 dk): Konya Sürümü (Çok Dosyalı Ajan Çıktısı + 3 Katmanlı Geçiş)
-1. Sahnede canlı kod üretimi beklemek yerine terminal sekmesinde Konya sürümü farkını göster:
+### Adım 2 (2 dk): Konya Sürümü (Çok Dosyalı Ajan Çıktısı + 3 Katmanlı Geçiş)
+1. Sahnede canlı kod üretimi beklemek yerine terminal sekmesinde Konya sürümü farkını tek ekranda göster:
    ```bash
-   git log --grep="konya" --oneline -n 3
    git show --stat adfcb45
    ```
-2. Uygulamada üst bardaki bayrak rozetine tıkla: `CitySettingsSheet` çekmecesinden `Berlin`, `Gaziantep`, `Konya`, `Adana` ve `İstanbul` geçişini canlı göster.
+2. Uygulamada üst bardaki bayrak rozetine tıkla: `CitySettingsSheet` çekmecesinden tek bir şehir geçişini canlı göster (örneğin `Konya` -> `Berlin` -> `Konya`).
 
 ### Adım 3 (3 dk): Wi-Fi Kapalı Kaos Testi (Yerel Gemma 4 + 250 ms Paket)
 1. macOS üst menüden Wi-Fi'ı kapat.

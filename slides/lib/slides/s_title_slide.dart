@@ -12,7 +12,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? "1. Cloud Run'da Backyard Barista" : '1. Backyard Barista on Cloud Run',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [00:00 - 01:15] Ana salon açılışı. Salonu selamla, iki cümleyle kendini tanıt, 30 dakikanın sözünü ver.\n'
-                    'SAY   "Merhaba ${isIzmirDeck ? "İzmir" : "Konya"}, hoş geldiniz! Ben Esra Kadah. Berlin\'de Antigua Mobile\'da Tech Lead ve Senior Flutter, AI Engineer olarak çalışıyorum; aynı zamanda Flutter ve Dart alanında Google Developer Expert\'im. Bugün bu salonda size sadece slayt anlatmayacağım: Google AI Studio, Antigravity ve Flutter ile kurduğumuz iki oyunculu bir AI kafe oyununu, gerçek üretim rakamlarıyla birlikte parçalara ayıracağız ve birazdan telefonlarınızdan canlı oynayacağız. Baştan söyleyeyim: anlatacaklarım sahadaki kendi mühendislik deneyimlerimdir, Google adına konuşmuyorum."\n'
+                    'SAY   "Merhaba ${isIzmirDeck ? "İzmir" : "Konya"}, hoş geldiniz! Ben Esra Kadah. Berlin\'de Antigua Mobile\'da Tech Lead ve Senior Flutter ve AI Engineer olarak çalışıyorum; aynı zamanda Flutter ve Dart alanında Google Developer Expert\'im. Bugün bu salonda size sadece slayt anlatmayacağım: Google AI Studio, Antigravity ve Flutter ile kurduğumuz iki oyunculu bir AI kafe oyununu, gerçek üretim rakamlarıyla birlikte parçalara ayıracağız ve birazdan telefonlarınızdan canlı oynayacağız. Baştan söyleyeyim: anlatacaklarım sahadaki kendi mühendislik deneyimlerimdir, Google adına konuşmuyorum."\n'
                     'HOLD  İlk cümleyi ekrana değil doğrudan salona bakarak söyle, 2 saniye durakla. Slayttaki 53,81 ms ölçüm, 270 token yaklaşık hesap, 60fps ise hedefimizdir; kesinlik derecelerini karıştırma.\n'
                     'NEXT  "Koda geçmeden önce bütün salonla küçük bir oyun oynayalım."'
                 : 'BEAT  [00:00 - 02:00] Enerjik Açılış ve Sözleşme. Salonu selamla, iki cümlelik GDE girişini yap ve herkesin bugün çalışan bir oyunla çıkacağını ilan et.\n'
@@ -144,7 +144,8 @@ class TitleSlide extends FlutterDeckSlideWidget {
                               color: DeckColors.offWhite,
                             ),
                           ),
-                          SizedBox(height: 6),
+                          if (!isTurkishDeck) SizedBox(height: 6),
+                          if (!isTurkishDeck)
                           Text(
                             'Topics: ai/ai-dev-tools/ai-studio · cloud/serverless-containers/cloud-run · firebase/monitoring/remote-config',
                             style: TextStyle(

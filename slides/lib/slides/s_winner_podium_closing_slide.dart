@@ -47,9 +47,9 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                   children: [
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? '1 · 4 MÜHENDİSLİK KURALI' : '1. STAGE DEMO & PRIZES',
+                        badge: isTurkishDeck ? '4 MÜHENDİSLİK KURALI' : '1. STAGE DEMO & PRIZES',
                         badgeIcon: isTurkishDeck ? Icons.lightbulb : Icons.emoji_events,
-                        title: isTurkishDeck ? 'Yarın kendi projenize taşıyın' : '60-Second Live Showcase',
+                        title: isTurkishDeck ? 'Pazartesi kendi projenize taşıyın' : '60-Second Live Showcase',
                         accentColor: DeckColors.googleYellow,
                         bullets: [
                           if (isTurkishDeck)
@@ -75,7 +75,7 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: isTurkishDeck
                           ? DeckFeatureCard(
-                              badge: '2 · KOD, SLAYTLAR VE YAZILAR',
+                              badge: 'KOD, SLAYTLAR VE YAZILAR',
                               badgeIcon: Icons.code,
                               title: 'Klonlayın, kurcalayın, kendi şehrinizi ekleyin',
                               accentColor: DeckColors.halftoneBlue,

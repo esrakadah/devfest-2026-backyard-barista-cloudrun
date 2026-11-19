@@ -26,25 +26,25 @@ class GenerateVsDecideSlide extends FlutterDeckSlideWidget {
   static const double _rowGap = 16;
 
   static const String _generateSnippet = '''
-// Today: one call writes the joke AND the verdict
+// ${isTurkishDeck ? 'Bugün: tek çağrı hem espriyi hem kararı yazıyor' : 'Today: one call writes the joke AND the verdict'}
 POST v1beta/models/gemini-3.5-flash-lite:generateContent
 'generationConfig': {
   'responseMimeType': 'application/json',
   'responseSchema': {            // CafeReview
-    'tasteVerdict': STRING,      // the decision
+    'tasteVerdict': STRING,      // ${isTurkishDeck ? 'karar' : 'the decision'}
     'ratingStars': INTEGER,
     'customerFace': STRING,
-    'headline': STRING,          // the joke
-    'customerReaction': STRING,  // the joke
+    'headline': STRING,          // ${isTurkishDeck ? 'espri' : 'the joke'}
+    'customerReaction': STRING,  // ${isTurkishDeck ? 'espri' : 'the joke'}
     'cityBonusTip': INTEGER,
   },
 }
-// Dart still checks the verdict against the
-// salt and chili flags (_verdictMatchesPranks)''';
+// ${isTurkishDeck ? 'Dart kararı yine de tuz ve acı bayraklarıyla' : 'Dart still checks the verdict against the'}
+// ${isTurkishDeck ? 'karşılaştırır (_verdictMatchesPranks)' : 'salt and chili flags (_verdictMatchesPranks)'}''';
 
   static const String _decideSnippet = '''
-// Proposal: ask the decision on its own (not in the game)
-// No Dart SDK: plain REST from package:http
+// ${isTurkishDeck ? 'Öneri: kararı ayrı sor (oyunda yok)' : 'Proposal: ask the decision on its own (not in the game)'}
+// ${isTurkishDeck ? 'Dart SDK yok: package:http ile düz REST' : 'No Dart SDK: plain REST from package:http'}
 POST v1beta/decisions
 {
   'model': 'gemini-decision-1',
@@ -61,7 +61,7 @@ POST v1beta/decisions
     },
   },
 }
-// answers.taste_verdict: choice, probabilities, confidence''';
+// ${isTurkishDeck ? 'answers.taste_verdict: seçim, olasılıklar, güven' : 'answers.taste_verdict: choice, probabilities, confidence'}''';
 
   @override
   FlutterDeckSlide build(BuildContext context) {

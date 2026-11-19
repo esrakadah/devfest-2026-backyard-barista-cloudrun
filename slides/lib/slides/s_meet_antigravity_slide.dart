@@ -13,7 +13,7 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? '5. Google Antigravity ile tanışın' : '5. Meet Google Antigravity',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [04:30 - 05:45] Google Antigravity: tek istekle birden çok dosyayı değiştiren, AI ajanlı kod editörü.\n'
-                    'SAY   "Tarayıcıda ilk prototipi ayağa kaldırmak güzel; peki gerçek bir Flutter projesinde hem veri kataloğunu, hem çizim sınıfını, hem de testleri tek seferde nasıl güncelliyoruz? Burada Google Antigravity devreye giriyor. Cmd+I ya da Agent Mode ile \'kafeye yeni bir imza tatlısı ya da yeni bir şehir ekle\' dediğimizde, dışarıdan kırık bir resim dosyası aramıyor; doğrudan CustomVectorIngredientGraphic çizim kodunu üretip ingredients_catalog.dart listesine bağlıyor ve testleri koşturuyor. Birazdan demoda Konya sürümünün de aynı şekilde 11 dosyada nasıl eklendiğini göreceğiz."\n'
+                    'SAY   "Gerçek bir Flutter projesinde değişiklik tek dosyada kalmaz: veri kataloğu, çizim sınıfı ve testler birlikte değişir. Google Antigravity tam burada devreye giriyor. Cmd+I ya da Agent Mode ile \'kafeye yeni bir imza tatlısı ya da yeni bir şehir ekle\' dediğimizde, dışarıdan kırık bir resim dosyası aramıyor; doğrudan CustomVectorIngredientGraphic çizim kodunu üretip ingredients_catalog.dart listesine bağlıyor ve testleri koşturuyor. Birazdan demoda Konya sürümünün de aynı şekilde 11 dosyada nasıl eklendiğini göreceğiz."\n'
                     'HOLD  Sağdaki kodda roundTwoCustomItems listesini (custom_katmer_roll ve custom_isot_pepper) göster. İsot satırında bir saniye dur, salon gülümser.\n'
                     'NEXT  "Burada kritik bir mimari kararımız var: neden sahneyi oyun motoruyla, tezgahı ise Flutter widget\'larıyla çizdik?"'
                 : 'BEAT  [07:30 - 09:30] Google Antigravity ile çoklu dosya düzenleme ve yerinde vektör/widget üretimi.\n'
@@ -26,7 +26,7 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
   static const double _columnGap = 28;
 
   static const String _antigravitySnippet = '''
-// flutter_client/lib/data/ingredients_catalog.dart (Lines 183-208)
+// flutter_client/lib/data/ingredients_catalog.dart (Lines 185-209)
 static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
   CafeIngredient(
     id: 'custom_katmer_roll',
@@ -57,7 +57,7 @@ static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
       builder: (context) {
         return const SlideFrame(
           eyebrow: isTurkishDeck
-              ? 'AI AJANLI KOD EDİTÖRÜ (ai/ai-dev-tools/antigravity)'
+              ? 'AI AJANLI KOD EDİTÖRÜ'
               : 'AI-FIRST AGENTIC IDE (ai/ai-dev-tools/antigravity)',
           title: isTurkishDeck
               ? 'Google Antigravity: tek istekle birden çok dosya'
@@ -95,7 +95,7 @@ static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
                       'Cross-Platform Ready: Runs on Windows 10/11 (x64 & ARM64), macOS, and Linux.',
                   ],
                   footerText: isTurkishDeck
-                      ? 'Canlı örnek: Konya sürümü tek promptla 11 dosyada eklendi ve 32 testi geçti'
+                      ? 'Canlı örnek: Konya sürümü Agent Mode ile 11 dosyada eklendi, 32 test yeşil'
                       : 'Tip: Pre-install before the workshop; use Lane A on conference Wi-Fi!',
                 ),
               ),

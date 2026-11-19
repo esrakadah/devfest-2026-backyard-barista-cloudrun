@@ -697,7 +697,7 @@ class LatencyBudgetChartCard extends StatelessWidget {
             children: [
               Text(
                 isTurkishDeck
-                    ? 'ÖLÇÜLEN CLOUD RUN SÜRELERİ ve KODDAKİ TIMEOUT SINIRLARI (LOGARİTMİK GÖRSEL)'
+                    ? 'ÖLÇÜLEN CLOUD RUN SÜRELERİ ve KODDAKİ ZAMAN AŞIMI SINIRLARI (LOGARİTMİK GÖRSEL)'
                     : 'MEASURED CLOUD RUN BENCHMARKS vs BOUNDED TIMEOUT GUARDRAILS (LOG-SCALE VISUAL)',
                 style: TextStyle(
                   fontFamily: DeckFonts.mono,

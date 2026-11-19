@@ -91,7 +91,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                             'Deploy container via gcloud run deploy --source .',
                         ],
                         footerText: isTurkishDeck
-                            ? 'Flame + Flutter HUD · 5 şehir sürümü'
+                            ? 'Flame + Flutter arayüzü · 5 şehir sürümü'
                             : 'Pure Flutter widgets · 4 City Editions',
                       ),
                     ),
@@ -143,7 +143,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: Text(
                         isTurkishDeck
-                            ? 'CANLI SAHNE TESTİ: Konuşmanın 5. perdesinde ekrandaki QR kodu okutup tatlı siparişe gizlice tuz atacaksınız!'
+                            ? 'CANLI SAHNE TESTİ: Konuşmanın son bölümünde ekrandaki QR kodu okutup tatlı siparişe gizlice tuz atacaksınız!'
                             : 'STAGE PRIZES: 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts for builders who publish (.run.app / GitHub) & demo in 60 seconds!',
                         style: textTheme.bodyLarge.copyWith(
                           color: DeckColors.googleYellow,
