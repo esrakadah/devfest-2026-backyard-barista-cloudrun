@@ -10,12 +10,12 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/live-build-dashboard',
-            title: isTurkishDeck ? '13. Canlı sahne demosu ve seyirci QR testi' : '13. Live Build Dashboard (3 Rounds)',
+            title: isTurkishDeck ? '13. Canlı demo ve salon QR testi' : '13. Live Build Dashboard (3 Rounds)',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [15:00 - 25:30] 3 adımlı canlı sahne demosu (10 dk) + tüm salonun telefondan canlı QR ile oynaması.\n'
-                    'SAY   "Şimdi telefonlarınızı çıkarın, sağ alttaki yeşil QR kodu okutun! Arka sıralar için tam ekran QR sekmemi de hemen açıyorum. Üç adımlı canlı demomuza başlıyoruz. Birinci adım: canlı Cloud Run servisimizdeyiz. Önce doğru bir tatlı tepsi servis edip Gemini 3.5 Flash-Lite\'tan 5 yıldızı alıyoruz; hemen ardından şeker yerine tuz atıp 1 yıldızlı Alaaddin Tepesi yorumunu canlı görüyoruz. Aynısını siz de telefonunuzdan deneyin, iki dakikanız var. İkinci adım: Antigravity Agent Mode ile Konya sürümünün 11 dosyada nasıl eklendiğine ve 32 testi nasıl geçtiğine bakıyoruz. Üçüncü adım ise kaos testi: sahnede Wi-Fi\'ı kapatıyorum, aynı tuzlu tepsiyi tekrar gönderiyorum ve oyunun çökmeden laptoptaki yerel Gemma 4 ve 250 milisaniyelik çevrimdışı paketle nasıl devam ettiğini kanıtlıyoruz."\n'
-                    "HOLD  Önce tam ekran QR sekmesini 15 saniye göster ki arka sıralar okutsun. Sonra sırayla: 1) 5 dk: canlı Cloud Run sekmesi (tatlı 5 yıldız -> tuzlu 1 yıldız), sonra salon 2 dakika oynarken sus ve bekle, salondan bir yorumu sesli oku. 2) 2 dk: tek ekran git show --stat adfcb45, ardından Ayarlar çekmecesinden bir şehir geçişi. 3) 3 dk: Wi-Fi kapalı yerel Gemma sekmesi. Süre 24:00'ü geçerse 3. adımı 30 saniyede gösterip 14. slayta dön.\n"
-                    'NEXT  "Canlı demoyu ve çevrimdışı yedeği gördük; şimdi arkadaki 4 katmanlı mimariyi 90 saniyede toparlayalım."'
+                ? 'BEAT  [15:00 - 25:30] 3 adımlı canlı demo (5 + 2 + 3 dk). Önce kendi iki tepsin, sonra QR.\n'
+                    'SAY   "Üç adımlı canlı demoya geçiyoruz. Birinci adım: canlı Cloud Run servisimizdeyiz. Önce ben doğru bir tatlı tepsi servis ediyorum: Gemini 3.5 Flash-Lite\'tan 5 yıldız. Şimdi şeker yerine tuz: 1 yıldız ve Alaaddin Tepesi yorumu. Sıra sizde: telefonlarınızı çıkarın, ekrandaki büyük QR kodu okutun, iki dakikanız var. Kartın altındaki rozete bakın. \'Canlı Gemini\' yerine \'Yerel JSON Şeması\' yazıyorsa bir şey bozulmadı: 850 kişi tek anahtarı zorladı ve az önce anlattığım son önlem şu an sizin telefonunuzda çalışıyor."\n'
+                    'HOLD  1) 5 dk: önce kendi iki tepsin (tatlı 5 yıldız, tuzlu 1 yıldız), SONRA slayta dönüp QR. Salon oynarken sus ve bekle, salondan bir yorumu sesli oku, "Tamam, devam" de. 2) 2 dk: "İkinci adım: Konya sürümü 11 dosyalık bir değişiklikti." Tek ekran: runbook Adım 2 komutu (git show --stat, yalnızca başlık ve dosya listesi), sonra bayrak rozetinden bir şehir geçişi. 3) 3 dk: "Üçüncü adım kaos testi." Wi-Fi\'ı kapat, aynı tuzlu tepsiyi gönder. Gemma düşünürken söyle: "Gemma şu an düşünüyor, 8 saniyeye kadar sürebilir; 15 saniyelik sınırımız bunun için var." Süre 24:00\'ü geçerse 3. adımı 30 saniyede göster ve 14. slayta dön. QR arkadan okunmuyorsa tam ekran QR sekmesini aç.\n'
+                    'NEXT  "Canlı demoyu ve çevrimdışı yedeği gördük. Şimdi arkadaki mimariyi 90 saniyede toparlayalım."'
                 : 'BEAT  [25:00 - 60:00] Canlı Kodlama ve Vibe Lounge Görev Panosu (Bu slayt inşa süresince ekranda açık kalır).\n'
                     'SAY   "Şimdi 3 turluk inşa maratonumuz başlıyor! Bu slayt boyunca ekranda kalacak. 1. Turda (10 dakika) 12 hazır görselimizi çekip şehir modumuzu seçiyoruz. 2. Turda (15 dakika) kendi özel imza tatlımızı ve şaka malzememizi üretip Gemini JSON jürisine bağlıyoruz. 3. Turda (10 dakika) ise sağ üstteki Deploy to Cloud Run butonuna veya gcloud run deploy komutuna basıp canlı .run.app linkimizi ve GitHub repomuzu alıyoruz. Herhangi bir adımda geride kalan olursa QR kodundaki Türkçe repodan promptlar/tur-1, tur-2, tur-3 dosyalarından veya uygulama içi Round 2 AI SVGs anahtarından anında yakalayabilir!"\n'
                     'HOLD  Sahnedeki zamanlayıcıyı (Stage Navigator -> Timer) başlat ve mentörlerle birlikte salonda dolaşarak katılımcıların ekranlarını kontrol et. [Slot kesim kuralı: 80dk atölyede 35dk tam tur; 45dk Vibe Lounge dalgasında 20dk 2-tur sprint; 30+10dk Adana ana salon konuşmasında ise bu slaytı 60 saniyede özetleyip doğrudan kendi 3 adımlı canlı sahne demona geç].\n'
@@ -30,13 +30,13 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: isTurkishDeck ? 'CANLI SAHNE DEMOSU · TELEFONUNUZLA KATILIN' : 'KEEP ON SCREEN · MINUTES 25 TO 60',
+          eyebrow: isTurkishDeck ? 'CANLI DEMO · TELEFONUNUZLA KATILIN' : 'KEEP ON SCREEN · MINUTES 25 TO 60',
           title: isTurkishDeck
-              ? 'Canlı sahne demosu: QR kodu okutun ve tatlıya tuz atın!'
+              ? 'Canlı demo: QR kodu okutun ve tatlıya tuz atın!'
               : 'Live Build Dashboard: 3 Rounds to Cloud Run & GitHub',
           act: StoryAct.buildAndShip,
           subtitle: isTurkishDeck
-              ? 'Yeşil QR canlı oyunu telefonunuzda açar; sarı QR açık kaynak repoyu ve slaytları verir'
+              ? 'QR canlı oyunu telefonunuzda açar; kod ve slaytlar kapanış slaytındaki QR kodda'
               : 'Fall behind? Use prompts/step-1..3.md or toggle the in-app Round 2 AI SVGs switch!',
           accentColor: DeckColors.googleGreen,
           child: Column(
@@ -62,114 +62,132 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
               ),
               SizedBox(height: _gap),
               Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'ADIM 1 · 5 DK (BULUT + SALON)' : 'ROUND 1 · 10 MIN (STEP 1)',
-                        title: isTurkishDeck ? 'Canlı Cloud Run ve Gemini jürisi' : 'Base Cafe & City Switcher',
-                        bullets: [
-                          if (isTurkishDeck)
-                            'Yeşil QR ile europe-west3 Cloud Run servisine telefonunuzdan bağlanın.'
-                          else
-                            'Lane A: Paste prompts/step-1-base-cafe.md in AI Studio Build mode.',
-                          if (isTurkishDeck)
-                            'Tatlı tepsiye 5 yıldız, tuzlu sabotaja 1 yıldızlı JSON yanıtı gelir.'
-                          else
-                            'Lane B: Run flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep.',
-                          if (isTurkishDeck)
-                            "Kartın altındaki rozet kararın canlı Gemini 3.5 Flash-Lite'tan geldiğini gösterir."
-                          else
-                            'Verify all 12 base PNGs load and switch City Edition in the top bar.',
+                child: isTurkishDeck
+                    ? _TalkDemoBody()
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: DeckFeatureCard(
+                              badge: 'ROUND 1 · 10 MIN (STEP 1)',
+                              title: 'Base Cafe & City Switcher',
+                              bullets: [
+                                'Lane A: Paste prompts/step-1-base-cafe.md in AI Studio Build mode.',
+                                'Lane B: Run flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep.',
+                                'Verify all 12 base PNGs load and switch City Edition in the top bar.',
+                              ],
+                              footerText: 'Checkpoint: prompts/step-1-base-cafe.md',
+                            ),
+                          ),
+                          SizedBox(width: _gap),
+                          Expanded(
+                            child: DeckFeatureCard(
+                              badge: 'ROUND 2 · 15 MIN (STEP 2)',
+                              title: 'Custom AI Dish & Prank Judge',
+                              accentColor: DeckColors.googleYellow,
+                              bullets: [
+                                'Lane A: Paste prompts/step-2-custom-dish.md to add 1 vector dish + 1 prank.',
+                                'Lane B: Use Antigravity Cmd+I to add roundTwoCustomItems in ingredients_catalog.dart.',
+                                'Test sneaking Salt (Tuz) onto the tray and verify the 1-star JSON roast!',
+                              ],
+                              footerText: 'Checkpoint: Round 2 AI SVGs switch ON',
+                            ),
+                          ),
+                          SizedBox(width: _gap),
+                          Expanded(
+                            child: DeckFeatureCard(
+                              badge: 'ROUND 3 · 10 MIN (STEP 3)',
+                              title: 'Ship to Cloud Run & GitHub',
+                              accentColor: DeckColors.googleGreen,
+                              bullets: [
+                                'Lane A: Click Deploy to Cloud Run (.run.app) + Sync to GitHub in AI Studio.',
+                                'Lane B: Run gcloud run deploy backyard-barista --source . inside flutter_client/.',
+                                'Raise your hand to demo your live .run.app cafe in 60s for the Pixel Sunglasses!',
+                              ],
+                              footerText: 'Checkpoint: prompts/step-3-deploy.md',
+                            ),
+                          ),
+                          SizedBox(width: _gap),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              QrCodeCard(
+                                assetPath: 'assets/images/starter_repo_qr.png',
+                                caption: 'Starter repo & prompts',
+                                size: 205,
+                              ),
+                              SizedBox(height: _gap),
+                              QrCodeCard(
+                                assetPath: 'assets/images/backyard_barista_cloudrun_qr.png',
+                                caption: 'Play the reference cafe',
+                                size: 205,
+                                accentColor: DeckColors.googleGreen,
+                              ),
+                            ],
+                          ),
                         ],
-                        footerText: isTurkishDeck
-                            ? 'Ağ yolu: /api/gemini/generate (nginx proxy, anahtar sunucuda)'
-                            : 'Checkpoint: prompts/step-1-base-cafe.md',
                       ),
-                    ),
-                    SizedBox(width: _gap),
-                    Expanded(
-                      child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'ADIM 2 · 2 DK (AJAN + KOD)' : 'ROUND 2 · 15 MIN (STEP 2)',
-                        title: isTurkishDeck
-                            ? (isIzmirDeck ? 'Çok dosyalı şehir sürümü farkı' : 'Konya sürümü: 11 dosya, 32 test')
-                            : 'Custom AI Dish & Prank Judge',
-                        accentColor: DeckColors.googleYellow,
-                        bullets: [
-                          if (isTurkishDeck)
-                            'Antigravity Agent Mode ile CityEditionId, JSON paketleri ve müşteri kuyruğu tek seferde güncellendi.'
-                          else
-                            'Lane A: Paste prompts/step-2-custom-dish.md to add 1 vector dish + 1 prank.',
-                          if (isTurkishDeck)
-                            'Üst bardaki bayrak rozetinden 5 DevFest şehri canlı değiştirilir.'
-                          else
-                            'Lane B: Use Antigravity Cmd+I to add roundTwoCustomItems in ingredients_catalog.dart.',
-                          if (isTurkishDeck)
-                            '32 birim ve widget testi kırılmadan yeşil kalır (flutter analyze + flutter test).'
-                          else
-                            'Test sneaking Salt (Tuz) onto the tray and verify the 1-star JSON roast!',
-                        ],
-                        footerText: isTurkishDeck
-                            ? 'Kanıt: city_editions.json + cafe_judge_service_test.dart'
-                            : 'Checkpoint: Round 2 AI SVGs switch ON',
-                      ),
-                    ),
-                    SizedBox(width: _gap),
-                    Expanded(
-                      child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'ADIM 3 · 3 DK (ÇEVRİMDIŞI)' : 'ROUND 3 · 10 MIN (STEP 3)',
-                        title: isTurkishDeck ? 'Wi-Fi kapalı: yerel Gemma 4 ve paket' : 'Ship to Cloud Run & GitHub',
-                        accentColor: DeckColors.googleGreen,
-                        bullets: [
-                          if (isTurkishDeck)
-                            'Sahnede Wi-Fi kapatılır; aynı tuzlu tepsi yeniden servis edilir.'
-                          else
-                            'Lane A: Click Deploy to Cloud Run (.run.app) + Sync to GitHub in AI Studio.',
-                          if (isTurkishDeck)
-                            'Laptoptaki Ollama üzerinden gemma4:12b-it-qat Türkçe JSON kararını üretir.'
-                          else
-                            'Lane B: Run gcloud run deploy backyard-barista --source . inside flutter_client/.',
-                          if (isTurkishDeck)
-                            'Yerel model kapalıysa ya da 15 saniyeyi aşarsa mock_responses.json anında devralır.'
-                          else
-                            'Raise your hand to demo your live .run.app cafe in 60s for the Pixel Sunglasses!',
-                        ],
-                        footerText: isTurkishDeck
-                            ? 'Koruma zinciri: Canlı Gemini (8 sn) -> Yerel Gemma (15 sn) -> Paket (250 ms)'
-                            : 'Checkpoint: prompts/step-3-deploy.md',
-                      ),
-                    ),
-                    SizedBox(width: _gap),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        QrCodeCard(
-                          assetPath: 'assets/images/starter_repo_qr.png',
-                          caption: isTurkishDeck ? 'Kod ve slaytlar' : 'Starter repo & prompts',
-                          size: 205,
-                        ),
-                        SizedBox(height: _gap),
-                        QrCodeCard(
-                          assetPath: isTurkishDeck
-                              ? (isIzmirDeck
-                                  ? 'assets/images/backyard_barista_cloudrun_qr.png'
-                                  : 'assets/images/backyard_barista_konya_qr.png')
-                              : 'assets/images/backyard_barista_cloudrun_qr.png',
-                          caption: isTurkishDeck
-                              ? (isIzmirDeck ? 'Canlı kafeyi oyna' : 'Konya kafesini oyna')
-                              : 'Play the reference cafe',
-                          size: 205,
-                          accentColor: DeckColors.googleGreen,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
         );
       },
+    );
+  }
+}
+
+/// Turkish talk layout: three one-line demo steps and one QR large enough for the back rows.
+class _TalkDemoBody extends StatelessWidget {
+  const _TalkDemoBody();
+
+  static const double _gap = 20;
+  static const double _playQrSize = 400;
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: DeckFeatureCard(
+                  badge: 'ADIM 1 · 5 DK',
+                  title: 'Canlı Cloud Run: önce ben, sonra siz',
+                  bullets: ['Tatlı tepsiye 5 yıldız, tuzlu tepsiye 1 yıldız. Rozet yanıtın nereden geldiğini söyler.'],
+                ),
+              ),
+              SizedBox(height: _gap),
+              Expanded(
+                child: DeckFeatureCard(
+                  badge: 'ADIM 2 · 2 DK',
+                  title: isIzmirDeck ? 'Şehir sürümü: çok dosyalı değişiklik' : 'Konya sürümü: 11 dosyalık değişiklik',
+                  accentColor: DeckColors.googleYellow,
+                  bullets: ['Tek ekranda fark, ardından üst bardaki bayrak rozetinden şehir geçişi.'],
+                ),
+              ),
+              SizedBox(height: _gap),
+              Expanded(
+                child: DeckFeatureCard(
+                  badge: 'ADIM 3 · 3 DK',
+                  title: 'Wi-Fi kapalı: yerel Gemma 4 ve hazır yanıtlar',
+                  accentColor: DeckColors.googleGreen,
+                  bullets: ['Canlı Gemini (8 sn) -> yerel Gemma (15 sn) -> paket (250 ms).'],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: _gap),
+        QrCodeCard(
+          assetPath: isIzmirDeck
+              ? 'assets/images/backyard_barista_cloudrun_qr.png'
+              : 'assets/images/backyard_barista_konya_qr.png',
+          caption: isIzmirDeck ? 'Canlı kafeyi oyna' : 'Konya kafesini oyna',
+          size: _playQrSize,
+          accentColor: DeckColors.googleGreen,
+        ),
+      ],
     );
   }
 }

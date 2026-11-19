@@ -15,9 +15,9 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                 : '14. En Son Mimaride Ne Yaptık? (Architecture Recap)',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [25:30 - 27:00] 4 katmanlı üretim mimarisi özeti.\n'
-                    'SAY   "Az önce oynadığınız oyunun arkasında dört katman var. Birincisi sahne: arka planı Flame çiziyor, tezgah bildiğimiz Flutter widget\'ları. İkincisi ayar: tek kod, beş şehir, yeniden derleme yok. Üçüncüsü yapay zeka ve korumaları: tek bir şemalı JSON çağrısı, her çağrıda zaman aşımı ve çevrimdışı yedek. Dördüncüsü bulut: anahtar sunucuda kalıyor, uygulama Cloud Run\'da çalışıyor. Bu dört katmanı pazartesi günü kendi Flutter ürününüze taşıyabilirsiniz."\n'
-                    'HOLD  4 katmanı yukarıdan aşağıya say, sağdaki sonuç sütununu ritim olarak kullan. "60fps" [HEDEF], "1 çağrı ≈ 270 token" [YAKLAŞIK HESAP].\n'
-                    'NEXT  "Kapatmadan önce bu mimariden cebinize koymanızı istediğim 4 mühendislik kuralını özetleyelim."'
+                    'SAY   "Az önce oynadığınız oyunun arkasında dört katman var. Birincisi sahne: arka planı Flame çiziyor, tezgah bildiğimiz Flutter widget\'ları. İkincisi yapılandırma: tek kod, beş şehir, yeniden derleme yok. Üçüncüsü yapay zeka ve korumaları: tek bir şemalı JSON çağrısı, her çağrıda zaman aşımı, çevrimdışı yedek ve kararı doğrulayan kod. Dördüncüsü bulut: anahtar sunucuda kalıyor, uygulama Cloud Run\'da çalışıyor. Bu dört katmanı pazartesi günü kendi Flutter ürününüze taşıyabilirsiniz."\n'
+                    'HOLD  4 katmanı yukarıdan aşağıya say, sağdaki sonuç sütununu ritim olarak kullan.\n'
+                    'NEXT  "Kapatmadan önce, bu mimariden çıkan dört kurala bakalım."'
                 : 'BEAT  [60:00 - 65:00] "En Son Mimaride Ne Yaptık?" (Ödül Töreni Öncesi Tam Mimari Özeti).\n'
                     'SAY   "Ödüllerimizi dağıtmadan önce herkesin ekrana bakmasını istiyorum: bugün eğlenceli bir kafe oyunu yaptık ama aslında arkada dört katmanlı, gerçek bir prodüksiyon bulut mimarisi kurduk! 1. Katmanda BaristaFlameGame 60fps 3-koridorlu sahnemizi, 2x2 Flutter Overlay HUD tezgahımızı ve NfcTagController (NDEFReader, masaüstünde kart dokunuşu) sahne tetikleyicimizi birleştirdik. 2. Katmanda 3 öncelikli CityEditionController ve Firebase Remote Config şablonu ile uygulamamızı yeniden derlemeden farklı DevFest şehirlerine uyarladık. 3. Katmanda gemini-3.5-flash-lite ve yapılandırılmış JSON şeması (CafeReview) ile deterministik bir jüri kurup çevrimdışı yedeklemeyle koruduk. 4. Katmanda ise durumsuz konteynerimizi Google Cloud Run üzerinde canlı bir .run.app adresine ve GitHub\'a taşıdık!"\n'
                     'HOLD  4 katmanı yukarıdan aşağıya, her bant için bir nefes vererek say; sağdaki sonuç sütununu (60fps + Web NFC, 0 yeniden derleme, 1 çağrı, 0 sunucu durumu) ritim olarak kullan.\n'
@@ -51,7 +51,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                   color: DeckColors.googleBlue,
                   chips: [
                     if (isTurkishDeck) 'BaristaFlameGame 60fps 3 şerit' else 'BaristaFlameGame 60fps 3-Lane',
-                    if (isTurkishDeck) '2x2 arayüz + 3 gözlü tepsi' else '2x2 HUD + 3-Slot Tray',
+                    if (isTurkishDeck) '3 raf + 3 gözlü tepsi' else '2x2 HUD + 3-Slot Tray',
                     'NfcTagController (NDEFReader)',
                     if (isTurkishDeck) 'Karta dokunma yedeği' else 'Card-Tap Fallback',
                     if (isTurkishDeck) '14 PNG · 5 Lottie · 9 WAV' else '14 PNGs · 5 Lottie · 9 WAV',
@@ -63,14 +63,14 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
               Expanded(
                 child: _LayerBand(
                   number: 2,
-                  name: isTurkishDeck ? 'AYAR' : 'CONFIG',
+                  name: isTurkishDeck ? 'YAPILANDIRMA' : 'CONFIG',
                   color: DeckColors.googleYellow,
                   chips: [
                     if (isTurkishDeck) '1 · Uygulama içi seçim' else '1 · In-app override',
                     if (isTurkishDeck) '2 · remote_city parametresi' else '2 · Remote Config active_city_id',
                     '3 · city_editions.json',
                   ],
-                  outcome: isTurkishDeck ? '5 şehir,\n0 derleme' : '4 cities, 0 rebuilds',
+                  outcome: isTurkishDeck ? '5 şehir,\nderleme yok' : '4 cities, 0 rebuilds',
                 ),
               ),
               SizedBox(height: _gap),
@@ -101,7 +101,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                     'Cloud Run *.run.app',
                     if (isTurkishDeck) 'GitHub eşitleme' else 'GitHub sync',
                   ],
-                  outcome: isTurkishDeck ? 'Sunucuda\n0 durum' : '0 server state',
+                  outcome: isTurkishDeck ? 'Sunucuda\ndurum yok' : '0 server state',
                 ),
               ),
             ],

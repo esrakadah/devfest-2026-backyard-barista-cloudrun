@@ -12,10 +12,10 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
             route: '/meet-antigravity',
             title: isTurkishDeck ? '5. Google Antigravity ile tanışın' : '5. Meet Google Antigravity',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [04:30 - 05:45] Google Antigravity: tek istekle birden çok dosyayı değiştiren, AI ajanlı kod editörü.\n'
-                    'SAY   "Gerçek bir Flutter projesinde değişiklik tek dosyada kalmaz: veri kataloğu, çizim sınıfı ve testler birlikte değişir. Google Antigravity tam burada devreye giriyor. Cmd+I ya da Agent Mode ile \'kafeye yeni bir imza tatlısı ya da yeni bir şehir ekle\' dediğimizde, dışarıdan kırık bir resim dosyası aramıyor; doğrudan CustomVectorIngredientGraphic çizim kodunu üretip ingredients_catalog.dart listesine bağlıyor ve testleri koşturuyor. Birazdan demoda Konya sürümünün de aynı şekilde 11 dosyada nasıl eklendiğini göreceğiz."\n'
-                    'HOLD  Sağdaki kodda roundTwoCustomItems listesini (custom_katmer_roll ve custom_isot_pepper) göster. İsot satırında bir saniye dur, salon gülümser.\n'
-                    'NEXT  "Burada kritik bir mimari kararımız var: neden sahneyi oyun motoruyla, tezgahı ise Flutter widget\'larıyla çizdik?"'
+                ? 'BEAT  [04:30 - 05:45] Google Antigravity: tek istekle birden çok dosyayı değiştiren AI ajanlı kod editörü.\n'
+                    'SAY   "Gerçek bir Flutter projesinde değişiklik tek dosyada kalmaz: veri kataloğu, çizim sınıfı ve testler birlikte değişir. Google Antigravity tam burada devreye giriyor. Cmd+I ya da Agent Mode ile \'kafeye yeni bir imza tatlısı ekle\' dediğimizde dışarıdan resim dosyası aramıyor. Doğrudan CustomVectorIngredientGraphic çizim kodunu üretiyor, ingredients_catalog.dart listesine bağlıyor ve testleri koşturuyor. Birazdan demoda Konya sürümünün de bir AI ajanıyla, 11 dosyada nasıl eklendiğini göreceğiz."\n'
+                    'HOLD  Sağdaki kodda roundTwoCustomItems listesini göster (custom_katmer_roll ve custom_isot_pepper). İsot satırında bir saniye dur, salon gülümser.\n'
+                    'NEXT  "Burada bir mimari karar var: sahneyi neden oyun motoruyla, tezgahı neden Flutter widget\'larıyla çizdik?"'
                 : 'BEAT  [07:30 - 09:30] Google Antigravity ile çoklu dosya düzenleme ve yerinde vektör/widget üretimi.\n'
                     'SAY   "Tarayıcıda prototiplemek harika; peki gerçek bir Flutter projesinde aynı anda hem veri kataloğunu, hem özel çizim sınıfını, hem de JSON şemasını nasıl güncelliyoruz? İşte burada Google Antigravity devreye giriyor. Antigravity içinde Cmd+I veya Agent Mode kullanarak kafemize yeni bir imza tatlısı ekle dediğimizde, dışarıdan kırık bir resim dosyası aramak yerine doğrudan CustomVectorIngredientGraphic çizim kodunu üretip ingredients_catalog.dart içindeki roundTwoCustomItems listesine bağlıyor."\n'
                     'HOLD  Sağ taraftaki roundTwoCustomItems (custom_katmer_roll ve custom_isot_pepper) ve CustomVectorArtworkKind kod kutusunu işaret et.\n'
@@ -95,7 +95,7 @@ static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
                       'Cross-Platform Ready: Runs on Windows 10/11 (x64 & ARM64), macOS, and Linux.',
                   ],
                   footerText: isTurkishDeck
-                      ? 'Canlı örnek: Konya sürümü Agent Mode ile 11 dosyada eklendi, 32 test yeşil'
+                      ? 'Canlı örnek: Konya sürümü bir AI ajanıyla 11 dosyada eklendi, testler yeşil'
                       : 'Tip: Pre-install before the workshop; use Lane A on conference Wi-Fi!',
                 ),
               ),

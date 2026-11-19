@@ -14,10 +14,10 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
                 ? '10. Beş DevFest şehri: 3 katmanlı yapılandırma'
                 : '10. Multi-City Architecture with Firebase Remote Config',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [11:30 - 12:45] Beş DevFest şehri için 3 katmanlı CityEditionController mimarisi.\n'
-                    'SAY   "Tek kod tabanı, beş DevFest şehri: Berlin, Gaziantep, Konya, Adana ve İstanbul. Her durak için ayrı uygulama derlemiyoruz. CityEditionController üç katmana sırayla bakıyor. Birinci öncelik uygulama içindeki Ayarlar çekmecesi. İkinci öncelik dışarıdan gelen şehir parametresi: repoda Firebase Remote Config şablonumuz hazır, sıfır kurulum için bugün aynı katmanı URL\'deki remote_city parametresi ve derleme anındaki DEFAULT_CITY ayarı besliyor. Üçüncü öncelik ise paketin içindeki city_editions.json dosyası. Yani tek bir parametreyle tüm sahne bugün Alaaddin Kahve ve Tatlı Durağı modunda açılıyor."\n'
-                    'HOLD  Sağdaki kodda activeCityId satırını göster (city_edition_controller.dart:166): ?? operatörüyle üç öncelik tek satırda çözülüyor.\n'
-                    'NEXT  "Şimdi kaputun altındaki en eğlenceli parçaya bakalım: tatlı mı tuzlu mu mekaniği ve Web NFC."'
+                ? 'BEAT  [11:30 - 12:45] Beş DevFest şehri için 3 katmanlı CityEditionController.\n'
+                    'SAY   "Beş DevFest şehri: Berlin, Gaziantep, Konya, Adana ve İstanbul. Her şehir için ayrı uygulama derlemiyoruz. CityEditionController üç yere sırayla bakıyor. Birinci öncelik uygulama içindeki şehir seçici: üst bardaki bayrak rozetine dokununca açılıyor. İkinci öncelik dışarıdan gelen şehir parametresi. Repoda Firebase Remote Config şablonumuz hazır, ama sıfır kurulum için bugün bu katmanı URL\'deki remote_city parametresi ve derleme anındaki DEFAULT_CITY ayarı sağlıyor. Üçüncü öncelik paketin içindeki city_editions.json dosyası. Yani tek bir parametreyle bütün oyun bugün Alaaddin Kahve ve Tatlı Durağı olarak açılıyor."\n'
+                    'HOLD  Sağdaki kodda activeCityId satırını göster (city_edition_controller.dart:165): ?? operatörüyle üç öncelik tek satırda çözülüyor.\n'
+                    'NEXT  "Şimdi kaputun altındaki en eğlenceli parçaya bakalım: tatlı mı tuzlu mu mekaniği."'
                 : 'BEAT  [18:30 - 20:30] Firebase Remote Config ile 4 Şehir (Berlin, Gaziantep, Adana, İstanbul) Mimarisi.\n'
                     'SAY   "Bu oyunu 14 Kasım\'da Berlin\'de, 15 Kasım\'da Gaziantep\'te, 11 Aralık\'ta Adana\'da ve 19 Aralık\'ta İstanbul\'da sahneye taşıyoruz. Her şehir için ayrı bir uygulama derlemek yerine CityEditionController içinde 3 katmanlı bir öncelik mimarisi kurduk: birinci öncelik uygulama içi Ayarlar çekmecesi (_manualOverrideCityId), ikinci öncelik Firebase Remote Config veya dart-define üzerindeki active_city_id parametresi (_remoteConfigCityId), üçüncü öncelik ise çevrimdışı çalışan city_editions.json dosyamız (_fallbackCityId). Böylece sahnede tek bir Remote Config anahtarını değiştirerek tüm salonun menüsünü ve şaka yanıtlarını Gaziantep Baklavası ve Menengiç Kahvesi moduna geçirebiliyoruz!"\n'
                     'HOLD  Sağdaki activeCityId / activeEdition getter kodunu (city_edition_controller.dart:147-168) ve 3 öncelik katmanını göster.\n'
@@ -28,13 +28,13 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
   static const double _columnGap = 24;
 
   static const String _cityControllerSnippet = '''
-// flutter_client/lib/config/city_edition_controller.dart (Lines 159-180)
+// flutter_client/lib/config/city_edition_controller.dart (Lines 159-179)
 Map<CityEditionId, CityEditionConfig> _editionsByCity = _builtInDefaults;
 CityEditionId _fallbackCityId = CityEditionId.gaziantep;
 CityEditionId? _remoteConfigCityId;
 CityEditionId? _manualOverrideCityId;
 
-/// ${isTurkishDeck ? '1. öncelik: uygulama içi Ayarlar seçimi (_manualOverrideCityId)' : 'Priority 1: In-App Settings Switcher (_manualOverrideCityId)'}
+/// ${isTurkishDeck ? '1. öncelik: uygulama içi şehir seçici (_manualOverrideCityId)' : 'Priority 1: In-App Settings Switcher (_manualOverrideCityId)'}
 /// ${isTurkishDeck ? '2. öncelik: URL / Remote Config / --dart-define (_remoteConfigCityId)' : 'Priority 2: Firebase Remote Config / --dart-define (_remoteConfigCityId)'}
 /// ${isTurkishDeck ? '3. öncelik: yerel city_editions.json yedeği (_fallbackCityId)' : 'Priority 3: Local city_editions.json Fallback (_fallbackCityId)'}
 CityEditionId get activeCityId =>

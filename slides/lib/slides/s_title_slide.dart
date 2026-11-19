@@ -11,9 +11,9 @@ class TitleSlide extends FlutterDeckSlideWidget {
             route: '/title',
             title: isTurkishDeck ? "1. Cloud Run'da Backyard Barista" : '1. Backyard Barista on Cloud Run',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [00:00 - 01:15] Ana salon açılışı. Salonu selamla, iki cümleyle kendini tanıt, 30 dakikanın sözünü ver.\n'
-                    'SAY   "Merhaba ${isIzmirDeck ? "İzmir" : "Konya"}, hoş geldiniz! Ben Esra Kadah. Berlin\'de Antigua Mobile\'da Tech Lead ve Senior Flutter ve AI Engineer olarak çalışıyorum; aynı zamanda Flutter ve Dart alanında Google Developer Expert\'im. Bugün bu salonda size sadece slayt anlatmayacağım: Google AI Studio, Antigravity ve Flutter ile kurduğumuz iki oyunculu bir AI kafe oyununu, gerçek üretim rakamlarıyla birlikte parçalara ayıracağız ve birazdan telefonlarınızdan canlı oynayacağız. Baştan söyleyeyim: anlatacaklarım sahadaki kendi mühendislik deneyimlerimdir, Google adına konuşmuyorum."\n'
-                    'HOLD  İlk cümleyi ekrana değil doğrudan salona bakarak söyle, 2 saniye durakla. Slayttaki 53,81 ms ölçüm, 270 token yaklaşık hesap, 60fps ise hedefimizdir; kesinlik derecelerini karıştırma.\n'
+                ? 'BEAT  [00:00 - 01:15] Ana salon açılışı. Salonu selamla, kendini iki cümleyle tanıt, 30 dakikanın sözünü ver.\n'
+                    'SAY   "Merhaba ${isIzmirDeck ? "İzmir" : "Konya"}, hoş geldiniz! Ben Esra Kadah. Berlin\'de Antigua Mobile\'da Tech Lead ve Senior Flutter ve AI Engineer olarak çalışıyorum, bir de Flutter ve Dart alanında Google Developer Expert\'im. Bugün size sadece slayt göstermeyeceğim. Google AI Studio, Antigravity ve Flutter ile kurduğumuz iki oyunculu bir AI kafe oyununun içine gerçek üretim rakamlarıyla bakacağız; sonra da telefonlarınızdan canlı oynayacağız. Bir not: anlatacaklarım benim saha deneyimim, Google adına konuşmuyorum."\n'
+                    'HOLD  İlk cümleyi ekrana değil salona bakarak söyle, 2 saniye bekle. 53,81 ms ölçüm, 270 token yaklaşık hesap, 60fps hedef: üçünü karıştırma.\n'
                     'NEXT  "Koda geçmeden önce bütün salonla küçük bir oyun oynayalım."'
                 : 'BEAT  [00:00 - 02:00] Enerjik Açılış ve Sözleşme. Salonu selamla, iki cümlelik GDE girişini yap ve herkesin bugün çalışan bir oyunla çıkacağını ilan et.\n'
                     'SAY   "Ben Esra Kadah, Berlin\'de Antigua Mobile\'da Tech Lead, Senior Flutter ve AI Engineer olarak çalışıyorum ve Flutter ile Dart alanında Google Developer Expert\'im. Önümüzdeki oturumda size sadece slayt göstermeyeceğim: Google AI Studio, Antigravity ve Flutter ile çok oyunculu bir AI kafe oyununu Google Cloud Run üzerinde canlıya alacağız ve gerçek rakamları konuşacağız. Söyleyeceklerim kendi görüşlerim, Google adına konuşmuyorum."\n'
@@ -110,7 +110,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                           accentColor: DeckColors.googleGreen,
                         ),
                         StatChip(
-                          value: '~270 tok',
+                          value: '~270 token',
                           label: isTurkishDeck ? 'SİPARİŞ BAŞINA 1 JSON ÇAĞRISI' : '1 JSON Call / Order',
                         ),
                         StatChip(

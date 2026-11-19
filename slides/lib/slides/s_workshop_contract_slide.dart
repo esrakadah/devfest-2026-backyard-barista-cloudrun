@@ -12,9 +12,9 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
             route: '/workshop-contract',
             title: isTurkishDeck ? '3. Üç seviye, tek canlı oyun' : '3. The Workshop Contract & Prizes',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [02:30 - 03:15] 30 dakikanın yol haritası: başlangıç, orta ve ileri seviye için ne var + canlı QR sözü.\n'
-                    'SAY   "Bu salonda hem ilk uygulamasını kurmak isteyen öğrenci arkadaşlar hem de üretimde sistem yaşatan kıdemli mühendisler var; konuşmayı üç katmanlı kurdum. Birinci katman sıfır kurulum: tarayıcıda Google AI Studio Build modundan GitHub\'a ve kredi kartsız Cloud Run yayınına nasıl çıkılır. İkinci katman mimari: Google Antigravity ile tek seferde çok dosyalı Flutter değişiklikleri ve neden sahneyi Flame oyun motoruyla, tezgahı ise saf Flutter widget\'larıyla ayırdığımız. Üçüncü katman gerçek üretim sınırları: gecikme, token faturası, 429 kota tuzağı ve çevrimdışı yerel Gemma yedeği. Ve söz veriyorum: konuşmanın son bölümünde QR kodu okutup bu oyunu kendi telefonunuzdan canlı test edeceksiniz."\n'
-                    'HOLD  Üç kartı soldan sağa elinle göster, 45 saniyeyi geçirme; asıl et bir sonraki slaytta başlıyor.\n'
+                ? 'BEAT  [02:30 - 03:15] 30 dakikanın yol haritası: üç katman ve canlı QR sözü. 45 saniyeyi geçme.\n'
+                    'SAY   "Bu salonda ilk uygulamasını kurmak isteyen öğrenciler de var, üretimde sistem yaşatan kıdemli mühendisler de. O yüzden konuşmayı üç katmanlı kurdum. Birincisi sıfır kurulum: tarayıcıdan AI Studio ile kredi kartsız Cloud Run yayını. İkincisi mimari: Antigravity ile çok dosyalı Flutter değişiklikleri, Flame sahnesi ve Flutter tezgahı. Üçüncüsü gerçek üretim sınırları: gecikme, token faturası, 429 kota tuzağı ve çevrimdışı yedek. Ve söz: on beşinci dakikada QR kodu okutup oyunu kendi telefonunuzdan deneyeceksiniz."\n'
+                    'HOLD  Üç kartı soldan sağa elinle göster. Ayrıntıya girme, hepsi sonraki slaytlarda.\n'
                     'NEXT  "İlk katmanla başlayalım: Google AI Studio\'dan bugün tam olarak ne çıkıyor?"'
                 : 'BEAT  [03:30 - 05:00] Üç Kulvar (Lane A, B, C) ve Ödül Sözleşmesi. Salondaki hiç kimsenin dışarıda kalmayacağını garanti et.\n'
                     'SAY   "Bugünkü anlaşmamız çok net: bu salondaki hiç kimse sadece izleyici olarak kalmayacak. Bilgisayarında hiçbir kurulum olmayanlar Yol A ile doğrudan tarayıcıda Google AI Studio üzerinden oyununu kurup kredi kartı gerekmeden Cloud Run üzerinde canlıya alacak. Bilgisayarında Flutter ve Antigravity yüklü olanlar Yol B ile başlangıç repomuzdan ilerleyecek. Sadece telefonuyla katılanlar bile Yol C ile sahnedeki QR kodları okutup arkadaşlarının kafelerinde şaka malzemelerini test edecek. Ve en güzeli: oyununu canlıya alıp sahnede 60 saniyede gösteren katılımcılarımıza yanımızda getirdiğimiz 4 adet Google renkli piksel gözlüğü ve Dash ödüllerini hediye ediyoruz!"\n'
@@ -62,7 +62,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                           else
                             'Paste step-1-base-cafe.md + load 12 base PNGs from GitHub.',
                           if (isTurkishDeck)
-                            'Starter Tier ile kredi kartı gerekmeden 2 adede kadar canlı .run.app yayını.'
+                            'Starter Tier ile kredi kartı olmadan 2 uygulamaya kadar canlı .run.app yayını.'
                           else
                             'Click Deploy to Cloud Run (.run.app) & Sync to GitHub.',
                         ],
@@ -82,7 +82,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                           else
                             'Clone devfest-2026-backyard-barista-cloudrun/flutter_client.',
                           if (isTurkishDeck)
-                            'Arka planda Flame 3 şeritli sahne, önde 2x2 reaktif Flutter widget tezgahı.'
+                            "Arka planda Flame ile 3 şeritli sahne, önde Flutter widget'larıyla tezgah."
                           else
                             'Use Antigravity Agent Mode to generate custom SVG dishes.',
                           if (isTurkishDeck)
@@ -111,12 +111,12 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                           else
                             'Scan deployed .run.app QR codes from the stage wall.',
                           if (isTurkishDeck)
-                            'Kalabalık salonda HTTP 429 savunması: birazdan telefonunuzdan bizzat deneyeceksiniz.'
+                            'Kalabalık salonda HTTP 429 savunması: demoda telefonunuzdan bizzat deneyeceksiniz.'
                           else
                             'Sneak Salt (Tuz) into sweet orders to test the AI Judge!',
                         ],
                         footerText: isTurkishDeck
-                            ? '<620px telefonda 2 sütunlu duyarlı tezgah'
+                            ? '700 px altında tek sütunlu duyarlı tezgah'
                             : '<620px responsive 2-column mobile counter',
                       ),
                     ),
@@ -143,7 +143,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: Text(
                         isTurkishDeck
-                            ? 'CANLI SAHNE TESTİ: Konuşmanın son bölümünde ekrandaki QR kodu okutup tatlı siparişe gizlice tuz atacaksınız!'
+                            ? 'CANLI TEST: Konuşmanın ikinci yarısında ekrandaki QR kodu okutup tatlı siparişe gizlice tuz atacaksınız!'
                             : 'STAGE PRIZES: 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts for builders who publish (.run.app / GitHub) & demo in 60 seconds!',
                         style: textTheme.bodyLarge.copyWith(
                           color: DeckColors.googleYellow,

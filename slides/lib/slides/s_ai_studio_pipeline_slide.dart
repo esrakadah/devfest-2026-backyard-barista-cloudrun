@@ -15,9 +15,9 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                 : '4. What Comes Out of Google AI Studio Today',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [03:15 - 04:30] "AI Studio\'dan bugün ne çıkar?" sorusunun somut cevabı.\n'
-                    'SAY   "Google AI Studio eskiden sadece prompt denediğimiz bir metin kutusuydu. Bugün Build moduna başlangıç promptumuzu verdiğimizde bize çalışan bir web uygulaması ve arka uç üretiyor, kodu GitHub hesabımızla çift yönlü eşitliyor ve Starter Tier kapsamında kredi kartı ya da fatura hesabı açmadan 2 uygulamaya kadar Cloud Run üzerinde canlı bir .run.app adresine yayınlıyor. En güzel yanı da şu: GEMINI_API_KEY sunucu tarafındaki container içinde kalıyor, tarayıcıdaki JavaScript paketine sızmıyor. Küçük ama kritik bir 2026 notu: eski Firebase Studio, yani Project IDX yeni kayıtları kapattı ve Mart 2027\'de tamamen kapanıyor; tarayıcıda AI Studio, masaüstünde ise Antigravity ile ilerliyoruz."\n'
-                    "HOLD  Üstteki 4 adımı soldan sağa göster. [Olgu (Ekim 2026, ai.google.dev): Starter Tier = 2 Cloud Run uygulaması; Firebase Studio kayıtları 22 Haziran 2026'da kapandı, Mart 2027'de kapanıyor].\n"
-                    'NEXT  "Tarayıcıda prototip hızlı. Gerçek ve çok dosyalı bir Flutter kod tabanında ise sahneye Google Antigravity çıkıyor."'
+                    'SAY   "Google AI Studio eskiden sadece prompt denediğimiz bir metin kutusuydu. Bugün Build moduna başlangıç promptumuzu veriyoruz, bize çalışan bir web uygulaması ve arka uç üretiyor. Kodu GitHub hesabımızla iki yönlü eşitliyor. Starter Tier kapsamında, kredi kartı ya da fatura hesabı açmadan Cloud Run\'da canlı bir .run.app adresine yayınlıyor. En güzel yanı: GEMINI_API_KEY sunucudaki container\'da kalıyor, tarayıcıdaki JavaScript paketine sızmıyor."\n'
+                    'HOLD  Üstteki 4 adımı soldan sağa göster. [Olgu (Ekim 2026, ai.google.dev): Starter Tier = 2 Cloud Run uygulaması.]\n'
+                    'NEXT  "Tarayıcıda prototip hızlı. Gerçek, çok dosyalı bir Flutter projesinde ne oluyor?"'
                 : 'BEAT  [05:00 - 07:30] "AI Studio\'dan ne gelir?" sorusunun somut cevabı.\n'
                     'SAY   "Mustafa ile konuşurken en önemli soru şuydu: Google AI Studio\'dan bugün tam olarak ne çıkıyor? Eskiden sadece bir prompt test ekranıydı. Bugün ise AI Studio Build modu size çalışan tam yığın bir web uygulaması üretiyor, çift yönlü GitHub senkronizasyonu yapıyor ve Starter Tier kapsamında kredi kartı veya fatura hesabı açmadan 2 adede kadar tam yığın uygulamayı tek tıkla Google Cloud Run üzerinde canlı bir .run.app adresine yayınlıyor. Dikkat etmeniz gereken tek önemli kural: eski Firebase Studio kapandı, yeni kayıt almıyor; doğru adres doğrudan Google AI Studio ve Google Antigravity."\n'
                     'HOLD  Slayttaki 4 adımlı boru hattını soldan sağa doğru işaret et. [Fact (Oct 2026, ai.google.dev): Starter Tier = 2 Cloud Run apps; Firebase Studio sign-ups disabled 22 Jun 2026 ahead of Mar 2027 sunset].\n'
@@ -60,8 +60,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                             '12 hazır kafe PNG görseli doğrudan GitHub Raw adreslerinden çekilir.'
                           else
                             'Loads our 12 studio cafe PNGs directly from GitHub Raw URLs.',
-                          if (!isTurkishDeck)
-                            'Targets gemini-3.5-flash-lite or gemini-3.8-flash.',
+                          if (!isTurkishDeck) 'Targets gemini-3.5-flash-lite or gemini-3.8-flash.',
                         ],
                       ),
                     ),
@@ -77,8 +76,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                             '2 oyunculu kafe tezgahı arayüzünü ve arka uç servisini üretir.'
                           else
                             'Generates interactive 2-player cafe counter UI + backend.',
-                          if (!isTurkishDeck)
-                            'Includes 4-City Edition switcher (Berlin, Gaziantep, Adana, Istanbul).',
+                          if (!isTurkishDeck) 'Includes 4-City Edition switcher (Berlin, Gaziantep, Adana, Istanbul).',
                           if (isTurkishDeck)
                             'Tepsileri yapılandırılmış JSON şemasıyla (CafeReview) değerlendirir.'
                           else
@@ -102,8 +100,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                             'Commit mesajlarını kendisi yazar.'
                           else
                             'Generates clean commit messages automatically.',
-                          if (!isTurkishDeck)
-                            'Full ZIP download available as an offline backup.',
+                          if (!isTurkishDeck) 'Full ZIP download available as an offline backup.',
                         ],
                       ),
                     ),
@@ -112,15 +109,14 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                       child: DeckFeatureCard(
                         badge: isTurkishDeck ? 'ADIM 4 · CLOUD RUN' : 'STEP 4 · CLOUD RUN',
                         badgeIcon: Icons.cloud_done,
-                        title: isTurkishDeck ? 'Kartsız .run.app yayını' : 'No-Card .run.app Deploy',
+                        title: isTurkishDeck ? 'Kredi kartsız .run.app yayını' : 'No-Card .run.app Deploy',
                         accentColor: DeckColors.googleRed,
                         bullets: [
                           if (isTurkishDeck)
                             "Starter Tier 2 uygulamaya kadar Cloud Run'da yayınlar."
                           else
                             'Starter Tier publishes up to 2 full-stack apps to Cloud Run.',
-                          if (!isTurkishDeck)
-                            'Zero manual GCP billing setup or credit card required.',
+                          if (!isTurkishDeck) 'Zero manual GCP billing setup or credit card required.',
                           if (isTurkishDeck)
                             'GEMINI_API_KEY sunucuda kalır, tarayıcıya çıkmaz.'
                           else
@@ -131,31 +127,30 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                   ],
                 ),
               ),
-              SizedBox(height: _gap),
-              DeckCard(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                backgroundColor: DeckColors.surfaceInset,
-                borderColor: DeckColors.halftonePink,
-                child: Row(
-                  children: [
-                    Icon(Icons.info_outline, color: DeckColors.halftonePink, size: 22),
-                    SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        isTurkishDeck
-                            ? "DOĞRULANDI (2026): Eski Firebase Studio (Project IDX) 22 Haziran 2026'da yeni kayıtları kapattı, Mart 2027'de kapanıyor. Tarayıcıda Google AI Studio, masaüstünde Google Antigravity kullanıyoruz."
-                            : 'VERIFIED 2026 GUARDRAIL: Legacy Firebase Studio (Project IDX) disabled new sign-ups on 22 June 2026 ahead of its March 2027 sunset. Use Google AI Studio (Browser Lane A) and Google Antigravity (IDE Lane B).',
-                        style: TextStyle(
-                          fontFamily: DeckFonts.sans,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: DeckColors.offWhite,
+              if (!isTurkishDeck) SizedBox(height: _gap),
+              if (!isTurkishDeck)
+                DeckCard(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  backgroundColor: DeckColors.surfaceInset,
+                  borderColor: DeckColors.halftonePink,
+                  child: Row(
+                    children: [
+                      Icon(Icons.info_outline, color: DeckColors.halftonePink, size: 22),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          'VERIFIED 2026 GUARDRAIL: Legacy Firebase Studio (Project IDX) disabled new sign-ups on 22 June 2026 ahead of its March 2027 sunset. Use Google AI Studio (Browser Lane A) and Google Antigravity (IDE Lane B).',
+                          style: TextStyle(
+                            fontFamily: DeckFonts.sans,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: DeckColors.offWhite,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         );

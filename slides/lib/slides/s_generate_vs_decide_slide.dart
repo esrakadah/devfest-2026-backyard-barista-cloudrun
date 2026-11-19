@@ -15,9 +15,9 @@ class GenerateVsDecideSlide extends FlutterDeckSlideWidget {
                 : 'Backup: Generate or Decide? CafeReview vs Decisions API',
             speakerNotes:
                 "BEAT  [BACKUP · Konya, 45 sn] Slayt 11'den Stage Navigator ile gelinir (Slayt 18). Aynı jüri, iki API: üretmek mi, karar vermek mi?\n"
-                'SAY   "Bizim jüri iki iş yapıyor. Birincisi esprili yorumu yazmak: bu bir üretim işi, metin lazım. İkincisi tatlı mı tuzlu mu demek: bu ise kapalı uçlu bir karar. Bugün ikisini tek generateContent çağrısında yapıyoruz. Google\'ın yeni Decisions API\'si kararı ayrı soruyor: metin üretmiyor, her seçenek için kalibre edilmiş olasılık döndürüyor ve çıktı token\'ı sıfır. Henüz Dart SDK\'sı yok, package:http ile düz REST çağrısı yeterli. Bu oyuna bağlamadım çünkü tuz kontrolünü zaten Dart kodumuz kesin olarak biliyor; ama kuralla yazamadığınız sınıflandırmalarda mutlaka deneyin."\n'
+                'SAY   "Bizim jüri iki iş yapıyor. Birincisi esprili yorumu yazmak: bu bir üretim işi, metin lazım. İkincisi tatlı mı tuzlu mu demek: bu ise kapalı uçlu bir karar. Bugün ikisini tek generateContent çağrısında yapıyoruz. Google\'ın yeni Decisions API\'si kararı ayrı soruyor: metin üretmiyor, her seçenek için kalibre edilmiş olasılık döndürüyor ve çıktı token\'ı sıfır. Henüz Dart SDK\'sı yok, package:http ile düz REST çağrısı yeterli. Bu oyuna bağlamadım çünkü tuz kontrolünü zaten Dart kodumuz kesin olarak yapıyor; ama kuralla yazamadığınız sınıflandırmalarda mutlaka deneyin."\n'
                 "HOLD  Önce soldaki 'tasteVerdict' satırını, sonra sağdaki 'type': 'choice' satırını göster. Gecikme rakamı söyleme. [Fact (aistudio.google.com/docs/decisions-api, 13 Nov 2026): gemini-decision-1; noul, choice, score; 1 to 1,000 questions per request; output tokens always 0, only input tokens billed; SDKs: Python, JS 3.2+, REST; v1beta only].\n"
-                'NEXT  "Stage Navigator ile 12. ya da 13. slayta geri dön."',
+                'NEXT  "Kaldığımız yere dönelim." (Stage Navigator ile 12. slayt.)',
           ),
         );
 
@@ -74,7 +74,7 @@ POST v1beta/decisions
               : 'Generate or Decide? Same Judge, Two APIs',
           act: StoryAct.underTheHood,
           subtitle: isTurkishDeck
-              ? 'Laf sokma için üretilmiş metin gerekir. Tatlı mı tuzlu mu ise sabit bir listeden seçilen bir karardır.'
+              ? 'Espri için metin üretmek gerekir. Tatlı mı tuzlu mu ise sabit bir listeden seçilen bir karardır.'
               : 'The roast needs generated text. Sweet or salty is a decision from a fixed list.',
           accentColor: DeckColors.googleGreen,
           child: Column(
@@ -92,7 +92,7 @@ POST v1beta/decisions
                   Expanded(
                     child: StatChip(
                       value: isTurkishDeck ? '3 soru tipi' : '3 Question Types',
-                      label: isTurkishDeck ? 'NOUL (EVET/HAYIR) · CHOICE · SCORE' : 'noul (yes/no) · choice · score',
+                      label: isTurkishDeck ? 'noul (evet/hayır) · choice · score' : 'noul (yes/no) · choice · score',
                     ),
                   ),
                   SizedBox(width: _chipGap),

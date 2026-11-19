@@ -12,10 +12,10 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
             route: '/winner-podium-closing',
             title: isTurkishDeck ? '15. Üretime çıkan AI için 4 kural' : '15. Winner Podium, Vibe Lounge Badge & Q&A',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [27:00 - 28:15] Eve götürülecek 4 mühendislik kuralı ve açık kaynak repo daveti.\n'
-                    'SAY   "Bugünkü konuşmadan kendi projelerinize taşımanızı istediğim dört net kural var. Bir: modelden düz sohbet metni değil, her zaman responseSchema ile tipli JSON isteyin. İki: her yapay zeka çağrısına kesin bir zaman aşımı sınırı ve çevrimdışı bir yedek katman koyun ki salon Wi-Fi\'ı gittiğinde arayüzünüz donmasın. Üç: API anahtarını tarayıcıya gömmeyin, sunucu tarafında tutun ve hız sınırlarını izole edin. Ve dördüncüsü, en önemlisi: espriyi ve metni model yazsın ama iş kuralı kararını her zaman sizin Dart kodunuz doğrulasın. Tüm kaynak kodlar, testler ve bu sunumun slaytları sağdaki QR kodda açık kaynak olarak sizi bekliyor."\n'
-                    'HOLD  Dört kuralı slayttan okumak yerine salona bakarak tane tane say. Son kural olan "Öneriyi model yazsın, kararı kodunuz versin" cümlesinde yarım saniye dur.\n'
-                    'NEXT  "Son slayt: iletişim ve fuaye daveti."'
+                ? 'BEAT  [27:00 - 28:15] Eve götürülecek dört kural ve açık kaynak repo daveti.\n'
+                    'SAY   "Eve götürmenizi istediğim dört kural var. Bir: her yapay zeka çağrısına bir zaman aşımı ve bir yedek koyun; salonun Wi-Fi\'ı gittiğinde arayüzünüz donmasın. İki: API anahtarını tarayıcıya gömmeyin, sunucuda tutun. Üç: şema bir istektir, garanti değil; modelden her zaman şemalı JSON isteyin ama gelen cevaba körü körüne güvenmeyin. Dört, en önemlisi: şakayı model yazsın, kararı kodunuz versin. Bu dört kuralın hepsi repoda, testleriyle birlikte duruyor. Kodlar ve slaytlar açık kaynak; sağdaki QR kodda sizi bekliyor."\n'
+                    'HOLD  Dört kuralı slayttan okuma, salona bakarak tane tane say. "Şakayı model yazsın, kararı kodunuz versin" cümlesinden sonra yarım saniye dur.\n'
+                    'NEXT  "Ve son olarak: bana nasıl ulaşırsınız?"'
                 : 'BEAT  [65:00 - 80:00] 60 Saniyelik Sahne Demoları, Google Piksel Gözlük + Dash Ödül Töreni, Vibe Lounge Rozeti ve Q&A.\n'
                     'SAY   "Şimdi en heyecanlı an! Oyununu Cloud Run (.run.app) veya GitHub üzerinde yayınlayan arkadaşlarımızı 60 saniyelik canlı demoları için sahneye davet ediyorum. Tatlı siparişine tuz şakası yapıp 1 yıldızlı yorumu canlı gösteren en yaratıcı kafelere 4 adet Google renkli piksel gözlüğümüzü ve Dash hediyelerimizi takdim ediyoruz! Ayrıca herkes ekrandaki goo.gle/devfest26-vibe-lounge adresinden resmi DevFest 2026 Vibe Lounge rozetini alabilir. Bugünden aklınızda tek cümle kalsın: modeli şakayı yazmak için kullanın, puanı kodunuz versin. Hepinize enerjiniz ve harika oyunlarınız için çok teşekkür ederim, şimdi sorularınızı alabiliriz!"\n'
                     'HOLD  Kazananlara gözlüklerini takdim ettikten sonra tüm salonla birlikte gözlükleri takıp büyük bir grup fotoğrafı çek. Ardından Q&A sorularını mikrofonda tekrar ederek yanıtla.\n'
@@ -38,7 +38,7 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
               : 'Teşekkürler! Show Us Your Cafe & Claim Your Prizes',
           act: StoryAct.buildAndShip,
           subtitle: isTurkishDeck
-              ? 'Öneriyi ve şakayı model yazsın; sınırı ve son kararı kodunuz versin'
+              ? 'Şakayı model yazsın; sınırı ve son kararı kodunuz versin'
               : '60-second live demos -> Google Pixel Sunglasses + Dash Gifts -> Official Vibe Lounge Badge',
           child: Column(
             children: [
@@ -53,18 +53,18 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                         accentColor: DeckColors.googleYellow,
                         bullets: [
                           if (isTurkishDeck)
-                            'Şemalı çıktı isteyin: düz metin ayrıştırmak yerine responseSchema ile tipli JSON alın.'
+                            'Her çağrıya zaman aşımı ve yedek: 8 sn, 15 sn, 250 ms. 429 testi yedeğe düşer.'
                           else
                             'Open your deployed *.run.app URL or GitHub repo on stage.',
                           if (isTurkishDeck)
-                            'Süre sınırı koyun: 8 sn canlı model sınırı + 250 ms çevrimdışı yedek arayüzü korur.'
+                            'Anahtar sunucuda: nginx ekler, web paketinde yok (anahtarsız istek testi).'
                           else
                             'Show your custom Round 2 signature dish & trigger the Salt-instead-of-Sugar 1-star roast!',
                           if (isTurkishDeck)
-                            'Anahtarı gizleyin, kotayı koruyun: GEMINI_API_KEY sunucuda kalır, 429 yedekle karşılanır.'
+                            'Şema istektir, garanti değil: boş yanıt tuzlu tepsiye 5 yıldız veremez (testli).'
                           else
                             'Win 1 of 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts.',
-                          if (isTurkishDeck) 'Öneriyi model yazsın, kararı kodunuz doğrulasın (_verdictMatchesPranks).',
+                          if (isTurkishDeck) 'Şakayı model yazsın, kararı kodunuz versin: _verdictMatchesPranks, 2 testle sabit.',
                         ],
                         footerText: isTurkishDeck
                             ? 'Kural: AI çıktısı her zaman güvenilmeyen dış girdidir'

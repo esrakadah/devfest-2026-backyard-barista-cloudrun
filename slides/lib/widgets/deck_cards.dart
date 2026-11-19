@@ -927,7 +927,7 @@ class _QuotaComparisonPainter extends CustomPainter {
     drawLane(
       left: 0,
       badge: isTurkishDeck
-          ? 'TUZAK · ORTAK KONUŞMACI ANAHTARI YA DA 100 KİŞİLİK LAB'
+          ? 'TUZAK · ORTAK KONUŞMACI ANAHTARI'
           : 'TRAP · SHARED SPEAKER KEY OR 100-SEAT LAB',
       flow: isTurkishDeck
           ? '300 kişi -> 1 ortak GCP projesi (15 RPM sınırı)'
@@ -941,12 +941,12 @@ class _QuotaComparisonPainter extends CustomPainter {
     drawLane(
       left: halfW + 28,
       badge:
-          isTurkishDeck ? 'ÇÖZÜM · AYRI ANAHTARLAR + SERVİSTE 1 ÇAĞRI' : 'SOLUTION · ISOLATED KEYS + 1 CALL ON SERVE',
+          isTurkishDeck ? 'ÇÖZÜM · AYRI ANAHTARLAR + SİPARİŞ BAŞINA 1 ÇAĞRI' : 'SOLUTION · ISOLATED KEYS + 1 CALL ON SERVE',
       flow: isTurkishDeck
           ? '300 kişi -> 300 kişisel proje (300 x 15 RPM)'
           : '300 Builders -> 300 Personal Projects (300 x 15 RPM)',
       outcome: isTurkishDeck
-          ? 'Oyuncu başına 1-2 RPM + 250 ms mock_responses.json ağı'
+          ? 'Oyuncu başına 1-2 RPM + 250 ms mock_responses.json yedeği'
           : '1-2 RPM per player + 250ms mock_responses.json net',
       color: DeckColors.googleGreen,
     );
@@ -1156,7 +1156,7 @@ class RoundTimelineBar extends StatelessWidget {
     final totalMinutes = rounds.fold<int>(0, (sum, round) => sum + round.minutes);
     final effectiveCaption = captionText ??
         (isTurkishDeck
-            ? 'Toplam $totalMinutes dakikalık 3 adımlı canlı sahne demosu: QR kodu okutup telefondan katılabilirsiniz'
+            ? 'Toplam $totalMinutes dakikalık 3 adımlı canlı demo: QR kodu okutup telefonunuzdan katılın'
             : '$totalMinutes minutes · fall behind? jump to the next checkpoint, never finish the old round');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

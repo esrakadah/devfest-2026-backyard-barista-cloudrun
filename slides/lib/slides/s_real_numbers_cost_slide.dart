@@ -14,10 +14,10 @@ class RealNumbersCostSlide extends FlutterDeckSlideWidget {
                 ? '8. Gerçek rakamlar #2: token hesabı ve model tuzağı'
                 : '8. Gerçek Rakamlar #2: Token Math & Model Trap',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [08:30 - 10:00] Gerçek Rakamlar #2: token hesabı ve 2026 model kısıtlaması tuzağı.\n'
-                    'SAY   "İkinci rakam maliyet ve model seçimi. Tepsiyi dizerken, yani kahveye, baklavaya ya da tuza dokunurken modele hiç gitmiyoruz: sıfır token. Yalnızca Servis Et\'e basıldığında tek bir JSON çağrısı gidiyor. Yaklaşık 150 girdi, 120 çıktı, toplam 270 token. Liste fiyatından hesapladığımızda 1.000 sipariş 5 sentin altında, yaklaşık 4,7 sent tutuyor. Bir de Ekim 2026 tuzağı var: yeni açılan Google Cloud projelerinde eski gemini-2.5-flash modelleri kapalı. Eski eğitim yazılarından model adı kopyalarsanız yeni proje anında hata alır; biz varsayılanı gemini-3.5-flash-lite olarak sabitledik."\n'
-                    "HOLD  Sağdaki kodda defaultValue: 'gemini-3.5-flash-lite' satırını göster. 270 token ve 1.000 sipariş = 0,0468 dolar [YAKLAŞIK HESAP]. Süre rahatsa bir cümleyle ekle: geçen hafta Gemini 4 Hydrogen da genel kullanıma açıldı (1,50 dolar girdi / 7,50 dolar çıktı), ama çalışan sistemi ölçmeden aynı gün değiştirmiyoruz.\n"
-                    'NEXT  "Peki bu 850 kişilik salonda yüzlerce kişi aynı anda Servis Et butonuna basarsa ne olur?"'
+                ? 'BEAT  [08:30 - 10:00] Gerçek rakamlar #2: token hesabı ve eski model tuzağı.\n'
+                    'SAY   "Sıra maliyette ve model seçiminde. Tepsiyi dizerken, yani kahveye, baklavaya ya da tuza dokunurken modele hiç gitmiyoruz: sıfır token. Yalnızca Servis Et\'e basıldığında tek bir JSON çağrısı gidiyor. Yaklaşık 150 girdi, 120 çıktı, toplam 270 token. Liste fiyatıyla 1.000 sipariş 5 sentin altında, yaklaşık 4,7 sent. Bir de Ekim 2026\'dan kalan bir tuzak var: yeni açılan Google Cloud projelerinde eski gemini-2.5-flash modelleri kapalı. Eski yazılardan model adı kopyalarsanız yeni proje anında hata verir. Biz varsayılanı gemini-3.5-flash-lite olarak sabitledik."\n'
+                    "HOLD  Sağdaki kodda defaultValue: 'gemini-3.5-flash-lite' satırını göster. 270 token ve 1.000 sipariş = 0,0468 dolar [YAKLAŞIK HESAP].\n"
+                    'NEXT  "Peki bu 850 kişilik salonda yüzlerce kişi aynı anda Servis Et\'e basarsa ne olur?"'
                 : 'BEAT  [14:00 - 16:30] Gerçek Rakamlar #2: Token matematiği ve 2026 model kısıtlaması tuzağı.\n'
                     'SAY   "İkinci gerçek rakamımız doğrudan cüzdanımızı ve yeni hesapları ilgilendiriyor. Bizim oyunumuzda her malzeme tıklamasında yapay zekaya gitmiyoruz; yalnızca tepsi hazır olup Servis Et butonuna basıldığında tek bir JSON çağrısı yapıyoruz. Bu çağrı yaklaşık 150 girdi token\'ı ve 120 çıktı token\'ı tüketiyor, yani toplamda sipariş başına 270 token! Ve çok kritik bir 2026 gerçeği: yeni açılan Google Cloud projelerinde eski gemini-2.5-flash modelleri kısıtlandı. Eğer atölyede eski model adını yazarsanız yeni hesaplar anında hata alır. Bu yüzden kodumuzda varsayılan model doğrudan gemini-3.5-flash-lite olarak sabitlendi."\n'
                     "HOLD  Sağdaki kod kutusunda defaultValue: 'gemini-3.5-flash-lite' satırını işaret et. [Fact (cafe_judge_service.dart:20-25 & ai.google.dev/gemini-api/docs/models): REST generateContent via package:http for zero-setup workshop; firebase_ai + App Check in production].\n"
@@ -38,7 +38,7 @@ this.geminiModel = const String.fromEnvironment(
 
 // ${isTurkishDeck ? 'Tamamlanan her sipariş (toplam ~270 token):' : 'Per completed tray order (~270 tokens total):'}
 // ${isTurkishDeck ? '- Girdi promptText: ~150 token (aktif şehir + tepsi + şaka bayrakları)' : '- Input promptText: ~150 tokens (active city + tray ingredients + prank flags)'}
-// ${isTurkishDeck ? '- Çıktı CafeReview JSON: ~120 token (6 tipli şema alanı)' : '- Output CafeReview JSON: ~120 tokens (6 strictly typed schema properties)'}
+// ${isTurkishDeck ? '- Çıktı CafeReview JSON: ~120 token (6 alanlı şema)' : '- Output CafeReview JSON: ~120 tokens (6 strictly typed schema properties)'}
 // ${isTurkishDeck ? '- 1.000 sipariş = ~150 bin girdi + ~120 bin çıktı token' : '- 1,000 cafe orders = ~150K input tokens + ~120K output tokens'}''';
 
   @override
@@ -54,7 +54,7 @@ this.geminiModel = const String.fromEnvironment(
               : 'Real Numbers #2: ~270 Tokens per Order & The 2.5 Trap',
           act: StoryAct.realNumbers,
           subtitle: isTurkishDeck
-              ? 'Sipariş başına tek JSON çağrısı maliyeti sıfıra yakın tutar, eski model engeline de takılmaz'
+              ? 'Sipariş başına tek JSON çağrısı maliyeti sıfıra yakın tutar, eski model kısıtına da takılmaz'
               : 'Why 1 structured JSON call per order keeps costs near zero and avoids legacy model blocks',
           accentColor: DeckColors.googleGreen,
           child: Column(
@@ -106,7 +106,7 @@ this.geminiModel = const String.fromEnvironment(
                         accentColor: DeckColors.googleGreen,
                         bullets: [
                           if (isTurkishDeck)
-                            "Tepsiyi hazırlarken 0 token: Espresso, Süt, Baklava ya da Tuz'a dokunmak tamamen Flutter'da, yerelde çalışır."
+                            "Tepsiyi hazırlarken 0 token: Espresso, Süt, Baklava ya da Tuz'a dokunmak tamamen Flutter'da, cihazda çalışır."
                           else
                             '0 Tokens During Tray Assembly: Tapping Espresso, Milk, Baklava, or Salt runs 100% locally in Flutter at 60fps.',
                           if (isTurkishDeck)
@@ -118,7 +118,7 @@ this.geminiModel = const String.fromEnvironment(
                           else
                             'Legacy Model Restriction (Oct 2026): New Google Cloud projects are restricted from gemini-2.5-flash and gemini-2.5-flash-lite.',
                           if (isTurkishDeck)
-                            'Kullanın: gemini-3.5-flash-lite (varsayılan) ya da gemini-3.8-flash; üretimde firebase_ai (^5.1.0) + App Check.'
+                            'Kullanın: gemini-3.5-flash-lite (varsayılan) ya da gemini-3.8-flash; üretimde firebase_ai + App Check.'
                           else
                             'Always Use: gemini-3.5-flash-lite (default) or gemini-3.8-flash; pair with firebase_ai (^5.1.0) + App Check in production.',
                         ],

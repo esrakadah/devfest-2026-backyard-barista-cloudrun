@@ -45,11 +45,11 @@ void main() {
         findsOneWidget,
       );
       expect(find.textContaining('BaristaFlameGame'), findsWidgets);
-      expect(find.textContaining(isTurkishDeck ? '2x2 tezgah' : '2x2 Counter Grid'), findsWidgets);
+      expect(find.textContaining(isTurkishDeck ? '3 raf' : '2x2 Counter Grid'), findsWidgets);
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('SaltSugarMechanicSlide renders Web NFC Stage Trigger and CafeReview schema', (tester) async {
+    testWidgets('SaltSugarMechanicSlide renders the CafeReview schema and the verdict guard', (tester) async {
       const slide = SaltSugarMechanicSlide();
       expect(slide.configuration?.route, '/salt-sugar-mechanic');
 
@@ -57,7 +57,7 @@ void main() {
 
       expect(find.textContaining('Web NFC'), findsWidgets);
       expect(find.textContaining('NDEFReader'), findsWidgets);
-      expect(find.textContaining('nfcController.startScanning'), findsWidgets);
+      expect(find.textContaining('_verdictMatchesPranks'), findsWidgets);
       expect(tester.takeException(), isNull);
     });
 

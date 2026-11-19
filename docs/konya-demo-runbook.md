@@ -17,7 +17,7 @@
 | `02:30 - 03:15` | 3 | `/workshop-contract` | 3 deneyim katmanı (AI Studio, Flutter + Antigravity, gerçek rakamlar + canlı QR sözü) |
 | `03:15 - 04:30` | 4 | `/ai-studio-pipeline` | Prompt -> önizleme -> GitHub -> kartsız Cloud Run (`GEMINI_API_KEY` sunucuda); IDX kapanışı |
 | `04:30 - 05:45` | 5 | `/meet-antigravity` | Agent Mode ile çok dosyalı değişiklik ve `CustomPainter` vektör üretimi |
-| `05:45 - 07:00` | 6 | `/pure-flutter-widgets` | 3 şeritli `BaristaFlameGame` sahnesi + 2x2 duyarlı Flutter widget tezgahı |
+| `05:45 - 07:00` | 6 | `/pure-flutter-widgets` | 3 şeritli `BaristaFlameGame` sahnesi + Flutter widget'larıyla 3 raf ve 3 gözlü tepsi |
 | `07:00 - 08:30` | 7 | `/real-numbers-latency` | 8 sn Gemini / 15 sn Gemma / 250 ms paket sınırları; 53,81 ms p50, 1,4 sn ort. Gemini |
 | `08:30 - 10:00` | 8 | `/real-numbers-cost` | Tepside 0 token, serviste ~270 token (~4,7 sent / 1.000 sipariş); Ekim 2026 `2.5` kısıtı |
 | `10:00 - 11:30` | 9 | `/room-quota-trap` | GCP projesi başına 5-15 RPM tuzağı, nginx `10r/s` sınırı ve 429'da 250 ms yerel yedek |
@@ -41,19 +41,17 @@
 
 ## 2. Canlı Sahne Demosu (Slayt 13 · 15:00 - 25:30)
 
-### Hazırlık (00:15 sn): Arka Sıralar İçin Tam Ekran QR
-Tarayıcıdaki `konya-qr-2026-11-21.html` sekmesini 15 saniye ekranda tut: salondakiler `backyard-barista-389486729482.europe-west3.run.app/?remote_city=konya` adresine telefonlarından girsin.
-
 ### Adım 1 (5 dk): Canlı Cloud Run ve Gemini Jürisi + Salon Oynuyor
-1. Canlı `europe-west3` sekmesine geç (`Alaaddin Kahve & Tatlı Durağı` başlığını göster).
+1. Canlı `europe-west3` sekmesine geç (`Alaaddin Kahve & Tatlı Durağı` başlığını göster). QR henüz ekranda değil: canlı Gemini kanıtı senin iki tepsin.
 2. `Espresso` + `Fıstıklı Baklava` + `Şeker` diz ve **Servis Et**: 5 yıldız ve kart altındaki `Canlı Gemini 3.5 Flash-Lite` rozetini göster.
 3. `Şeker` yerine `Tuz` koyup **Servis Et**: 1 yıldız ve *"Alaaddin Tepesi'nde misafire böyle ikram olmaz!"* yanıtını göster.
-4. Salona 2 dakika ver: "Aynısını siz de telefonunuzdan deneyin." Sus, bekle, salondan gelen bir yorumu sesli oku.
+4. Slayt 13'e dön: büyük QR ekranda. Salona 2 dakika ver. Arka sıralar okutamıyorsa `konya-qr-2026-11-21.html` sekmesini aç.
+5. Söyle: rozet `Canlı Gemini` yerine `Yerel JSON Şeması` diyorsa bir şey bozulmadı, 850 kişi tek anahtarı zorladı ve son önlem çalışıyor. Salondan bir yorumu sesli oku, "Tamam, devam" de.
 
-### Adım 2 (2 dk): Konya Sürümü (Çok Dosyalı Ajan Çıktısı + 3 Katmanlı Geçiş)
+### Adım 2 (2 dk): Konya Sürümü (AI Ajanıyla 11 Dosya + Şehir Geçişi)
 1. Sahnede canlı kod üretimi beklemek yerine terminal sekmesinde Konya sürümü farkını tek ekranda göster:
    ```bash
-   git show --stat adfcb45
+   git show --stat --format='%h %s' adfcb45
    ```
 2. Uygulamada üst bardaki bayrak rozetine tıkla: `CitySettingsSheet` çekmecesinden tek bir şehir geçişini canlı göster (örneğin `Konya` -> `Berlin` -> `Konya`).
 
@@ -62,6 +60,16 @@ Tarayıcıdaki `konya-qr-2026-11-21.html` sekmesini 15 saniye ekranda tut: salon
 2. Yerel sekmede (`localhost`, `OFFLINE_MODE=true` + `LOCAL_JUDGE_URL=http://localhost:11434/api/chat`) tuzlu tepsiyi servis et.
 3. Yanıtın 5-8 saniyede bu laptoptaki `gemma4:12b-it-qat` modelinden (`localGemma` rozeti) geldiğini, Ollama kapalıysa bile `250 ms` içinde `mock_responses.json` paketinin devraldığını göster.
 4. Wi-Fi'ı tekrar aç ve Slayt 14'e dön.
+
+### Sorun olursa (her satır tek hamle)
+| Ne oldu | Ne yap |
+|---|---|
+| Salon Wi-Fi'ı gitti | Slayt 17, sonra hazır yerel çevrimdışı sekme. Sahnede komut çalıştırma. |
+| Canlı sekme 8 saniyeden uzun bekliyor | "8 saniyelik sınırımız tam bunun için var" de, yedek yanıtı göster, devam et. |
+| Gemma 15 saniyede dönmedi | Paket yanıtı ekrana gelir: "Üçüncü katman devraldı" de. |
+| QR arkadan okunmuyor | Tam ekran QR sekmesi; adresi sesli söyleme, çok uzun. |
+| HDMI görüntüsü kırpık | Önceki arada 1920x1080 ve 16:9 kontrolü; sahnede ise tarayıcıyı tam ekran yap (Cmd+Ctrl+F). |
+| Süre 24:00'ü geçti | Adım 3'ü 30 saniyede göster, slayt 14'e dön. |
 
 ---
 

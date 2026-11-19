@@ -11,13 +11,13 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/hybrid-asset-pipeline',
             title: isTurkishDeck
-                ? '12. Hibrit görseller: 14 hazır PNG + anında üretilen AI vektörleri'
+                ? '12. Hibrit görseller: 14 hazır PNG + AI ile üretilen vektörler'
                 : '12. Hybrid Asset Pipeline: 14 Studio PNGs + On-the-Fly AI SVGs',
             speakerNotes: isTurkishDeck
-                ? "BEAT  [14:00 - 15:00] Hibrit görseller: 14 hazır stüdyo PNG'si + kod olarak üretilen AI vektörleri. (Geç kalındıysa 20 saniyede özetle.)\n"
-                    'SAY   "Yapay zekayla uygulama geliştirirken en sık kırılan yer dış görsel dosyalarıdır. Biz bunu hibrit bir yöntemle çözdük: 12 temel kafe görseli, 2 özel ürün, 5 Lottie animasyonu ve 9 ses efekti doğrudan reponun içinde paketli geliyor. Yeni eklenen özel tatlı ve şaka malzemelerini ise AI Studio ya da Antigravity resim dosyası olarak değil, doğrudan CustomPainter vektör çizim kodu olarak üretiyor. Yüklenecek dış dosya olmayınca Cloud Run paketinde kırık görsel de olmuyor."\n'
-                    'HOLD  Solda hazır PNG vitrinini, sağda CustomPainter ile çizilen katmer ve isot vektörlerini göster. [Olgu: assets/base/ içinde 14 PNG, 5 Lottie JSON, 9 WAV + Web Audio API].\n'
-                    'NEXT  "Artık sözü koda ve size bırakma zamanı: canlı sahne demosuna geçiyoruz!"'
+                ? 'BEAT  [14:00 - 15:00] Hibrit görseller: 14 hazır PNG + kod olarak üretilen vektörler. Geç kalındıysa 15 saniyede, tek cümleyle geç.\n'
+                    'SAY   "Yapay zekayla uygulama geliştirirken en sık kırılan yer dış görsel dosyalarıdır. Biz bunu hibrit bir yöntemle çözdük. Repoda hazır geliyor: 14 PNG, 5 Lottie animasyonu ve 9 ses efekti. Yeni eklenen özel tatlıları ve şaka malzemelerini ise AI Studio ya da Antigravity resim dosyası olarak değil, doğrudan CustomPainter çizim kodu olarak üretiyor. Yüklenecek dış dosya olmayınca Cloud Run paketinde kırık görsel de olmuyor."\n'
+                    'HOLD  Solda hazır PNG vitrinini, sağda CustomPainter ile çizilen katmer ve isot vektörlerini göster. [Olgu: assets/base/ içinde 14 PNG, 5 Lottie JSON, 9 WAV.]\n'
+                    'NEXT  "Buraya kadar anlattım. Artık sıra kodda ve sizde."'
                 : 'BEAT  [22:30 - 25:00] Hibrit Görsel Boru Hattı: 14 Hazır Stüdyo PNG + Yolda Üretilen AI Vektörleri.\n'
                     'SAY   "Bir oyun atölyesinde en çok vakit kaybettiren şey görsel bulmak ve yüklemektir. Biz bunu hibrit bir boru hattıyla çözdük: 3 içecek, 3 tatlı, 3 şaka malzemesi ve 3 müşteri tepkisinden oluşan toplam 12 adet yüksek çözünürlüklü 1. Tur PNG görselini ve 2 adet 2. Tur özel PNG görselini doğrudan GitHub repomuzun içinde hazır veriyoruz. Ardından 2. Turda herkes kendi özel imza tatlısını ve kendi şaka malzemesini Google AI Studio veya Antigravity ile anında CustomPaint vektör kodu olarak üretiyor. Sıfır dosya yükleme hatası, anında görsel sonuç!"\n'
                     'HOLD  Soldaki hazır PNG vitrinini ve sağdaki yolda üretilen CustomPaint vektör akışını göster. [Fact (flutter_client/assets/): 14 PNGs in assets/base/ (12 Round-1 + 2 Round-2), 5 Lottie JSONs in assets/animations/, 9 audio WAVs + Web Audio API synth in assets/audio/].\n'
@@ -36,7 +36,7 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
           eyebrow:
               isTurkishDeck ? 'HİBRİT GÖRSELLER (YÜKLEME HATASI YOK)' : 'HYBRID ASSET PIPELINE (ZERO UPLOAD FAILURES)',
           title: isTurkishDeck
-              ? "14 hazır stüdyo PNG'si + anında üretilen AI vektör tatlılar"
+              ? "14 hazır stüdyo PNG'si + AI ile üretilen vektör tatlılar"
               : '14 Pre-Generated Studio PNGs + On-the-Fly AI Vector Dishes',
           act: StoryAct.underTheHood,
           subtitle: isTurkishDeck
