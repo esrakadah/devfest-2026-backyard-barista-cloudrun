@@ -110,24 +110,24 @@
         "tasteVerdict": "salty_sabotage",
         "customerFace": "salty_disgusted",
         "headline": "Konya: Tepside Tuz Var!",
-        "customerReaction": "Tatlı siparişe şeker yerine tuz konmuş! 1 Yıldız!",
+        "customerReaction": "Baklavaya şeker yerine tuz atılır mı? Alaaddin Tepesi'nde misafire böyle ikram olmaz! 1 Yıldız!",
         "cityBonusTip": 0
       },
       "spicy_chaos": {
         "ratingStars": 1,
         "tasteVerdict": "spicy_chaos",
         "customerFace": "shocked",
-        "headline": "Konya: Tepside Acı Sos Var!",
-        "customerReaction": "Tatlı siparişe acı sos dökülmüş! 1 Yıldız!",
+        "headline": "Konya: Acı Sos Şoku!",
+        "customerReaction": "Tatlı tabağına acı sos dökmüşsün, Mevlana şekeri beklerken ağzımız yandı! 1 Yıldız!",
         "cityBonusTip": 0
       },
       "sweet_perfection": {
         "ratingStars": 5,
         "tasteVerdict": "sweet_perfection",
         "customerFace": "happy",
-        "headline": "Konya: 5 Yıldızlı Servis!",
-        "customerReaction": "Şekeri doğru, tepsi tam: 5 Yıldız!",
-        "cityBonusTip": 40
+        "headline": "Alaaddin Ustası Onayladı!",
+        "customerReaction": "Ellerine sağlık! Alaaddin'e karşı bundan güzel kahve ve tatlı ikilisi olmaz, 5 Yıldız!",
+        "cityBonusTip": 42
       }
     }
   }

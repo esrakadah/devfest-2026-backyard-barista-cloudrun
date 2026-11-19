@@ -4,7 +4,7 @@ FROM ghcr.io/cirruslabs/flutter:stable AS build
 WORKDIR /app
 COPY . .
 
-ARG DEFAULT_CITY=gaziantep
+ARG DEFAULT_CITY=konya
 ARG GEMINI_MODEL=gemini-3.5-flash-lite
 
 RUN flutter pub get && \

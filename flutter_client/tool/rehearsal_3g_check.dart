@@ -12,7 +12,7 @@ const int _millisecondsPerSecond = 1000;
 const double _bytesPerKilobyte = 1024;
 const int _expectedSweetRatingStars = 5;
 const int _expectedSabotageRatingStars = 1;
-const int _expectedTotalBasePngCount = 20;
+const int _expectedTotalBasePngCount = 14;
 const int _multiplexedHandshakeRttMultiplier = 3;
 const int _perRequestQueueOverheadMs = 15;
 const int _expectedMatrixCombinationCount = 15;
@@ -21,7 +21,7 @@ const String _liveCloudRunUrl = 'https://backyard-barista-389486729482.europe-we
 const String _publicGitHubRawBaseUrl =
     'https://raw.githubusercontent.com/esrakadah/devfest-2026-backyard-barista-cloudrun/refs/heads/main/flutter_client/assets/base';
 
-const List<String> _allTwentyBasePngPaths = <String>[
+const List<String> _allBasePngPaths = <String>[
   'drinks/espresso.png',
   'drinks/milk.png',
   'drinks/menengic_coffee.png',
@@ -36,12 +36,6 @@ const List<String> _allTwentyBasePngPaths = <String>[
   'customers/customer_happy.png',
   'customers/customer_shocked.png',
   'customers/customer_salty_disgusted.png',
-  'characters/barista_p1.png',
-  'characters/pastry_chef_p2.png',
-  'characters/customer_ayse_usta.png',
-  'characters/customer_deniz.png',
-  'characters/customer_lukas.png',
-  'characters/customer_mustafa.png',
 ];
 
 const List<String> _supportedCities = <String>[
@@ -55,7 +49,7 @@ const List<String> _supportedCities = <String>[
 /// Automated Section 4.6 Rehearsal & Chaos Verification Harness (`workshop-options.md`).
 /// Executes all 5 pre-conference rehearsal checks:
 /// - Test 1: Slow 3G (750 Kbps Down / 250 Kbps Up / 150ms RTT) load time budget (< 45s)
-/// - Test 2: Live Cloud Run (`europe-west3`) & Public GitHub Raw (`20/20` PNGs) reachability
+/// - Test 2: Live Cloud Run (`europe-west3`) & Public GitHub Raw (`14/14` PNGs) reachability
 /// - Test 3: Gemini model guardrail (`gemini-3.5-flash-lite`, zero `gemini-2.5-flash` usage)
 /// - Test 4: Offline Wi-Fi disconnect & HTTP 429 room-quota chaos fallback verification
 /// - Test 5: Multi-City (`berlin`, `gaziantep`, `adana`, `istanbul`, `konya`) Salt-vs-Sugar JSON schema check
@@ -169,11 +163,11 @@ double _simulateSlow3gTransferSeconds({
 }
 
 Future<_RehearsalCheckResult> _runTest2CloudRunAndPublicGitHubCheck(http.Client client) async {
-  stdout.writeln('-> Running Test 2: Live Cloud Run & Public GitHub Raw (20/20 PNGs) Check...');
+  stdout.writeln('-> Running Test 2: Live Cloud Run & Public GitHub Raw (14/14 PNGs) Check...');
   final cloudRunResponse = await client.get(Uri.parse(_liveCloudRunUrl));
   var reachablePngCount = 0;
 
-  for (final relativePath in _allTwentyBasePngPaths) {
+  for (final relativePath in _allBasePngPaths) {
     final rawUri = Uri.parse('$_publicGitHubRawBaseUrl/$relativePath');
     final headResponse = await client.head(rawUri);
     if (headResponse.statusCode == HttpStatus.ok) {

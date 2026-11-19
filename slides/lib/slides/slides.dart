@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/slides/s_ai_studio_pipeline_slide.dart';
 import 'package:backyard_barista_deck/slides/s_architecture_recap_slide.dart';
+import 'package:backyard_barista_deck/slides/s_bana_ulasin_slide.dart';
 import 'package:backyard_barista_deck/slides/s_demo_hiccup_slide.dart';
 import 'package:backyard_barista_deck/slides/s_generate_vs_decide_slide.dart';
 import 'package:backyard_barista_deck/slides/s_hybrid_asset_pipeline_slide.dart';
@@ -19,6 +20,7 @@ import 'package:flutter_deck/flutter_deck.dart';
 
 export 's_ai_studio_pipeline_slide.dart';
 export 's_architecture_recap_slide.dart';
+export 's_bana_ulasin_slide.dart';
 export 's_demo_hiccup_slide.dart';
 export 's_generate_vs_decide_slide.dart';
 export 's_hybrid_asset_pipeline_slide.dart';
@@ -35,7 +37,7 @@ export 's_title_slide.dart';
 export 's_winner_podium_closing_slide.dart';
 export 's_workshop_contract_slide.dart';
 
-/// Main 15-slide workshop & Vibe Lounge presentation order.
+/// Main 16-slide presentation order.
 const List<FlutterDeckSlideWidget> mainSlides = [
   TitleSlide(),
   SweetOrSaltySlide(),
@@ -52,19 +54,14 @@ const List<FlutterDeckSlideWidget> mainSlides = [
   LiveBuildDashboardSlide(),
   ArchitectureRecapSlide(),
   WinnerPodiumClosingSlide(),
+  BanaUlasinSlide(),
 ];
 
 /// Backup slides after the closing slide, reachable via PresenterMenuPlugin.
-const List<FlutterDeckSlideWidget> backupSlides = [
-  DemoHiccupSlide(),
-  GenerateVsDecideSlide(),
-];
+const List<FlutterDeckSlideWidget> backupSlides = [DemoHiccupSlide(), GenerateVsDecideSlide()];
 
-/// Full running order (15 main slides + 2 backup slides).
-const List<FlutterDeckSlideWidget> deckSlides = [
-  ...mainSlides,
-  ...backupSlides,
-];
+/// Full running order (16 main slides + 2 backup slides).
+const List<FlutterDeckSlideWidget> deckSlides = [...mainSlides, ...backupSlides];
 
 /// One-based slide number of [route], as `flutterDeck.goToSlide` counts them.
 int? slideNumberForRoute(String route) {

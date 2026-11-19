@@ -43,10 +43,7 @@ class CustomerOrderTicket {
 
   String localizedRole(String languageCode) => languageCode == 'en' ? customerRoleEn : customerRoleTr;
 
-  String localizedBubble(
-    String languageCode, {
-    bool includeRoundTwoItems = true,
-  }) {
+  String localizedBubble(String languageCode, {bool includeRoundTwoItems = true}) {
     final rawText = languageCode == 'en' ? orderBubbleEn : orderBubbleTr;
     if (includeRoundTwoItems) {
       return rawText;
@@ -58,9 +55,7 @@ class CustomerOrderTicket {
 
   /// Resolves requested ingredient IDs, gracefully substituting `baklava` for `custom_katmer_roll`
   /// when the Round-2 custom items toggle is turned off so tickets are never soft-locked.
-  List<String> effectiveRequestedIngredientIds({
-    required bool includeRoundTwoItems,
-  }) {
+  List<String> effectiveRequestedIngredientIds({required bool includeRoundTwoItems}) {
     if (includeRoundTwoItems) {
       return requestedIngredientIds;
     }
@@ -222,10 +217,10 @@ class CustomerOrderTicket {
           CustomerOrderTicket(
             ticketNumber: 1,
             customerName: 'Deniz',
-            customerRoleEn: 'DevFest Konya Attendee',
-            customerRoleTr: 'DevFest Konya Katılımcısı',
-            orderBubbleEn: 'Double Espresso + Pistachio Baklava + Sweet Sugar please!',
-            orderBubbleTr: 'Çift Shot Espresso + Fıstıklı Baklava + Tatlı Şeker lütfen!',
+            customerRoleEn: 'Selçuklu Cloud Engineer',
+            customerRoleTr: 'Selçuklu Bulut Mühendisi',
+            orderBubbleEn: 'Double Espresso + Pistachio Baklava + Sweet Sugar opposite Alaaddin Hill please!',
+            orderBubbleTr: "Alaaddin'e karşı Çift Shot Espresso + Fıstıklı Baklava + Tatlı Şeker lütfen!",
             requestedIngredientIds: <String>['espresso', 'baklava', 'sugar_jar'],
             portraitAssetPath: CafeCharacterAssets.customerDeniz,
             characterBadgeEmoji: '☕🎟️',
@@ -233,21 +228,21 @@ class CustomerOrderTicket {
           CustomerOrderTicket(
             ticketNumber: 2,
             customerName: 'Zeynep',
-            customerRoleEn: 'Flutter Student Builder',
-            customerRoleTr: 'Flutter Öğrenci Geliştirici',
-            orderBubbleEn: 'Steamed Milk + Butter Croissant + Sweet Sugar!',
-            orderBubbleTr: 'Köpüklü Süt + Tereyağlı Kruvasan + Tatlı Şeker!',
+            customerRoleEn: 'Selçuk Univ. Flutter Builder',
+            customerRoleTr: 'Selçuk Üniv. Flutter Geliştirici',
+            orderBubbleEn: 'Steamed Milk + Butter Croissant + Sweet Sugar between DevFest sessions!',
+            orderBubbleTr: 'Oturum arasında Köpüklü Süt + Tereyağlı Kruvasan + Tatlı Şeker lütfen!',
             requestedIngredientIds: <String>['milk', 'croissant', 'sugar_jar'],
             portraitAssetPath: CafeCharacterAssets.customerZeynepHappy,
             characterBadgeEmoji: '🦋☕',
           ),
           CustomerOrderTicket(
             ticketNumber: 3,
-            customerName: 'Mustafa',
-            customerRoleEn: 'DevFest Speaker',
-            customerRoleTr: 'DevFest Konuşmacısı',
-            orderBubbleEn: 'Menengiç Coffee + AI Custom Katmer Roll + Sweet Sugar!',
-            orderBubbleTr: 'Menengiç Kahvesi + AI Özel Katmer Sarma + Tatlı Şeker lütfen!',
+            customerName: 'Emre',
+            customerRoleEn: 'DevFest Konya Speaker',
+            customerRoleTr: 'DevFest Konya Konuşmacısı',
+            orderBubbleEn: 'Menengiç Coffee + AI Custom Katmer Roll + Sweet Sugar before stage time!',
+            orderBubbleTr: 'Sahneye çıkmadan Menengiç Kahvesi + AI Özel Katmer Sarma + Tatlı Şeker!',
             requestedIngredientIds: <String>['menengic_coffee', 'custom_katmer_roll', 'sugar_jar'],
             portraitAssetPath: CafeCharacterAssets.customerMustafa,
             characterBadgeEmoji: '🎤🔥',
