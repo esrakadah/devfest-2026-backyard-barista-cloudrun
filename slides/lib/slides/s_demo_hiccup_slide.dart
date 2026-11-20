@@ -13,7 +13,7 @@ class DemoHiccupSlide extends FlutterDeckSlideWidget {
             speakerNotes: isTurkishDeck
                 ? "BEAT  [YEDEK] Salon Wi-Fi'ı kesilirse cankurtaran slaytı.\n"
                     'SAY   "Wi-Fi kısa bir çay molası verdi. Sorun değil, mimariyi tam bu an için kurduk. Hazırladığım yerel sekmeye geçiyorum: kod aynı, sadece bulut kapalı. Kararı bu laptoptaki Gemma 4 veriyor; o da yetişmezse paketteki hazır yanıtlar devreye giriyor. Oyuna kaldığımız yerden devam ediyoruz."\n'
-                    'HOLD  Sakin kal, gülümse, sahneden önce açtığın yerel çevrimdışı sekmeye geç. Sahnede komut çalıştırma. Bittiğinde canlı demo slaytına (/live-build-dashboard) geri dön.\n'
+                    'HOLD  Sakin kal, gülümse, sahneden önce açtığın yerel çevrimdışı sekmeye geç. Sahnede komut çalıştırma. Bittiğinde canlı oyun slaytına (/hall-plays) geri dön.\n'
                     'NEXT  "Kaldığımız yerden devam edelim."'
                 : 'BEAT  [BACKUP] Konferans Wi-Fi Bağlantısı Kesildiğinde Cankurtaran Slaydı.\n'
                     'SAY   "Konferans Wi-Fi ağımız şu an 300 kişinin yüklenmesiyle kısa bir mola verdi; ama mimarimizi tam da bu an için tasarladık! Şimdi uygulamayı OFFLINE_MODE=true ile çalıştırıyorum: Gemini atlanıyor, kararı bu laptoptaki Gemma 4 veriyor, o da yetişmezse paketteki mock_responses.json devreye giriyor. 4 şehrin tamamında şaka testlerimize kesintisiz devam ediyoruz."\n'
