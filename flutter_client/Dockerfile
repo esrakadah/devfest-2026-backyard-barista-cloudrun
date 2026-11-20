@@ -20,10 +20,16 @@ RUN flutter pub get && \
 
 FROM nginx:alpine
 ARG GEMINI_MODEL=gemini-3.5-flash-lite
+ARG LEADERBOARD_PROJECT=devfest-backyard-barista-2026
 ENV GEMINI_MODEL=${GEMINI_MODEL}
 ENV GEMINI_RATE_LIMIT=10r/s
+ENV LEADERBOARD_PROJECT=${LEADERBOARD_PROJECT}
+RUN apk add --no-cache python3 && mkdir -p /opt/barista
 COPY --from=build /app/build/web /usr/share/nginx/html
 COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 COPY nginx/15-gemini-key.envsh /docker-entrypoint.d/15-gemini-key.envsh
+COPY nginx/admin_api.py /opt/barista/admin_api.py
+COPY nginx/25-leaderboard-admin.sh /docker-entrypoint.d/25-leaderboard-admin.sh
+RUN chmod +x /docker-entrypoint.d/25-leaderboard-admin.sh
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]

@@ -7,6 +7,8 @@ import 'package:backyard_barista_cloudrun/data/ingredients_catalog.dart';
 import 'package:backyard_barista_cloudrun/models/cafe_review.dart';
 import 'package:backyard_barista_cloudrun/models/customer_order_ticket.dart';
 import 'package:backyard_barista_cloudrun/models/order_state.dart';
+import 'package:backyard_barista_cloudrun/services/browser_tab_stub.dart'
+    if (dart.library.js_interop) 'package:backyard_barista_cloudrun/services/browser_tab_web.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
 import 'package:backyard_barista_cloudrun/services/leaderboard_service.dart';
@@ -48,6 +50,7 @@ class CafeCounterScreen extends StatefulWidget {
     required this.judgeService,
     this.nfcController,
     this.leaderboardService,
+    this.onOpenLeaderboardTab,
     super.key,
   });
 
@@ -56,6 +59,9 @@ class CafeCounterScreen extends StatefulWidget {
 
   /// The hall leaderboard. Null plays the game without it: no name dialog and no network call.
   final LeaderboardService? leaderboardService;
+
+  /// Optional override for tests when opening the standalone leaderboard tab.
+  final void Function(Uri leaderboardUri)? onOpenLeaderboardTab;
 
   /// Injected in tests; the screen creates and owns a Web NFC controller otherwise.
   final NfcTagController? nfcController;
@@ -157,6 +163,23 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
         ),
       ),
     );
+  }
+
+  void _openLeaderboardInNewTab() {
+    final leaderboardService = widget.leaderboardService;
+    if (leaderboardService == null) {
+      return;
+    }
+    final leaderboardUri = LeaderboardService.buildLeaderboardTabUri(
+      Uri.base,
+      eventId: leaderboardService.eventId,
+    );
+    final customOpener = widget.onOpenLeaderboardTab;
+    if (customOpener != null) {
+      customOpener(leaderboardUri);
+    } else {
+      openUrlInNewTab(leaderboardUri.toString());
+    }
   }
 
   @override
@@ -489,6 +512,26 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
               ],
             ),
             actions: <Widget>[
+              if (widget.leaderboardService != null)
+                Padding(
+                  padding: const EdgeInsets.only(right: 4, top: 6, bottom: 6),
+                  child: FilledButton.tonalIcon(
+                    key: const Key('open_leaderboard_tab_button'),
+                    style: FilledButton.styleFrom(
+                      visualDensity: VisualDensity.compact,
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      backgroundColor: const Color(0xFF1B2440),
+                      foregroundColor: const Color(0xFFF3E5C8),
+                      side: const BorderSide(color: Color(0xFFD4AF37), width: 1.2),
+                    ),
+                    onPressed: _openLeaderboardInNewTab,
+                    icon: const Icon(Icons.leaderboard_rounded, size: 15, color: Color(0xFFD4AF37)),
+                    label: Text(
+                      languageCode == 'en' ? 'Leaderboard' : 'Skor Tablosu',
+                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w800),
+                    ),
+                  ),
+                ),
               _NfcCounterMenuButton(
                 nfcController: _nfcController,
                 languageCode: languageCode,
@@ -582,6 +625,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                           crewLevel: _crewLevel,
                           tipJarTotal: _tipJarTotal,
                           leaderboardService: widget.leaderboardService,
+                          onOpenLeaderboardTab: _openLeaderboardInNewTab,
                           includeRoundTwoItems: _includeRoundTwoCustomItems,
                           onToggleRoundTwoItems: _handleRoundTwoToggle,
                           onOpenCitySettings: _openCityEditionSheet,
@@ -1460,6 +1504,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
     required this.crewLevel,
     required this.tipJarTotal,
     required this.leaderboardService,
+    required this.onOpenLeaderboardTab,
     required this.includeRoundTwoItems,
     required this.onToggleRoundTwoItems,
     required this.onOpenCitySettings,
@@ -1473,6 +1518,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
   final int crewLevel;
   final int tipJarTotal;
   final LeaderboardService? leaderboardService;
+  final VoidCallback onOpenLeaderboardTab;
   final bool includeRoundTwoItems;
   final ValueChanged<bool> onToggleRoundTwoItems;
   final VoidCallback onOpenCitySettings;
@@ -1631,7 +1677,11 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                   textColor: const Color(0xFFD4AF37),
                 ),
                 if (leaderboardService case final activeLeaderboard?)
-                  LeaderboardStatusPill(leaderboardService: activeLeaderboard, languageCode: languageCode),
+                  LeaderboardStatusPill(
+                    leaderboardService: activeLeaderboard,
+                    languageCode: languageCode,
+                    onTap: onOpenLeaderboardTab,
+                  ),
                 Container(
                   padding: const EdgeInsets.only(left: 10, right: 4, top: 2, bottom: 2),
                   decoration: BoxDecoration(

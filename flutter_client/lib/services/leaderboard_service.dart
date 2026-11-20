@@ -48,6 +48,8 @@ class LeaderboardService extends ChangeNotifier {
   static const int playerIdLength = 20;
   static const String defaultEventId = 'konya-2026';
   static const String eventQueryParameter = 'board';
+  static const String pageQueryParameter = 'page';
+  static const String leaderboardPageValue = 'leaderboard';
 
   static const String _playerIdAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   static const String _firestoreHost = 'firestore.googleapis.com';
@@ -108,6 +110,39 @@ class LeaderboardService extends ChangeNotifier {
       return requestedEventId;
     }
     return _eventIdPattern.hasMatch(configuredEventId) ? configuredEventId : defaultEventId;
+  }
+
+  /// True when [uri] requests the standalone hall leaderboard page (`?page=leaderboard`).
+  static bool isLeaderboardPageUri(Uri uri) => uri.queryParameters[pageQueryParameter] == leaderboardPageValue;
+
+  /// Builds the URL for opening the standalone hall leaderboard in a separate browser tab.
+  static Uri buildLeaderboardTabUri(Uri currentUri, {required String eventId}) {
+    final updatedParameters = Map<String, String>.of(currentUri.queryParameters)
+      ..[eventQueryParameter] = eventId
+      ..[pageQueryParameter] = leaderboardPageValue;
+    return _replaceQueryParameters(currentUri, updatedParameters);
+  }
+
+  /// Builds the URL for returning from the standalone hall leaderboard tab back to the cafe game.
+  static Uri buildGameTabUri(Uri currentUri, {required String eventId}) {
+    final updatedParameters = Map<String, String>.of(currentUri.queryParameters)
+      ..[eventQueryParameter] = eventId
+      ..remove(pageQueryParameter);
+    return _replaceQueryParameters(currentUri, updatedParameters);
+  }
+
+  static Uri _replaceQueryParameters(Uri baseUri, Map<String, String> queryParameters) {
+    final hasHttpOrigin = baseUri.scheme == 'http' || baseUri.scheme == 'https';
+    if (!hasHttpOrigin || baseUri.host.isEmpty) {
+      return Uri(path: '/', queryParameters: queryParameters.isEmpty ? null : queryParameters);
+    }
+    return Uri(
+      scheme: baseUri.scheme,
+      host: baseUri.host,
+      port: baseUri.hasPort ? baseUri.port : null,
+      path: baseUri.path.isEmpty ? '/' : baseUri.path,
+      queryParameters: queryParameters.isEmpty ? null : queryParameters,
+    );
   }
 
   static String generatePlayerId(math.Random random) {

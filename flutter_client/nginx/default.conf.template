@@ -6,6 +6,7 @@ map "" $gemini_bucket {
 }
 
 limit_req_zone $gemini_bucket zone=gemini_all:1m rate=${GEMINI_RATE_LIMIT};
+limit_req_zone $gemini_bucket zone=admin_auth:1m rate=1r/s;
 
 server {
   listen 8080;
@@ -27,6 +28,26 @@ server {
     proxy_set_header x-goog-api-key "${GEMINI_API_KEY}";
     proxy_set_header Cookie "";
     proxy_read_timeout 10s;
+  }
+
+  location = /api/leaderboard/state {
+    limit_except GET {
+      deny all;
+    }
+    proxy_pass http://127.0.0.1:8081;
+    proxy_read_timeout 10s;
+  }
+
+  location ^~ /api/leaderboard/admin/ {
+    limit_except POST {
+      deny all;
+    }
+    limit_req zone=admin_auth burst=4 nodelay;
+    limit_req_status 429;
+    client_max_body_size 16k;
+
+    proxy_pass http://127.0.0.1:8081;
+    proxy_read_timeout 20s;
   }
 
   location / {
