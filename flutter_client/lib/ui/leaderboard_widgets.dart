@@ -138,11 +138,13 @@ class LeaderboardStatusPill extends StatelessWidget {
   const LeaderboardStatusPill({
     required this.leaderboardService,
     required this.languageCode,
+    this.onTap,
     super.key,
   });
 
   final LeaderboardService leaderboardService;
   final String languageCode;
+  final VoidCallback? onTap;
 
   /// The pill text, or null while the player has no name or plays without the leaderboard.
   static String? labelFor(
@@ -175,7 +177,7 @@ class LeaderboardStatusPill extends StatelessWidget {
     if (label == null) {
       return const SizedBox.shrink();
     }
-    return Container(
+    final pillBody = Container(
       key: const Key('leaderboard_status_pill'),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
@@ -202,6 +204,14 @@ class LeaderboardStatusPill extends StatelessWidget {
           ),
         ],
       ),
+    );
+    if (onTap == null) {
+      return pillBody;
+    }
+    return InkWell(
+      borderRadius: BorderRadius.circular(999),
+      onTap: onTap,
+      child: pillBody,
     );
   }
 }
