@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:backyard_barista_cloudrun/config/city_edition_controller.dart';
@@ -8,10 +9,12 @@ import 'package:backyard_barista_cloudrun/models/customer_order_ticket.dart';
 import 'package:backyard_barista_cloudrun/models/order_state.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
+import 'package:backyard_barista_cloudrun/services/leaderboard_service.dart';
 import 'package:backyard_barista_cloudrun/services/nfc_tag_controller.dart';
 import 'package:backyard_barista_cloudrun/ui/barista_flame_game.dart';
 import 'package:backyard_barista_cloudrun/ui/cafe_character_animations.dart';
 import 'package:backyard_barista_cloudrun/ui/city_settings_drawer.dart';
+import 'package:backyard_barista_cloudrun/ui/leaderboard_widgets.dart';
 import 'package:backyard_barista_cloudrun/ui/nfc_tag_writer_sheet.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +37,8 @@ const int _pranksterRoundPoints = 30;
 const int _incompleteRoundPoints = 15;
 const int _baristaRoundPoints = 50;
 const Duration _cardScaleDuration = Duration(milliseconds: 160);
+const Duration _leaderboardTickInterval = Duration(seconds: 1);
+const Duration _leaderboardFinishedMessageDuration = Duration(seconds: 8);
 
 /// 3-lane arcade cafe scene powered by Flame (`BaristaFlameGame`),
 /// Lottie animations, and `GoogleSans` typography.
@@ -42,11 +47,15 @@ class CafeCounterScreen extends StatefulWidget {
     required this.cityController,
     required this.judgeService,
     this.nfcController,
+    this.leaderboardService,
     super.key,
   });
 
   final CityEditionController cityController;
   final CafeJudgeService judgeService;
+
+  /// The hall leaderboard. Null plays the game without it: no name dialog and no network call.
+  final LeaderboardService? leaderboardService;
 
   /// Injected in tests; the screen creates and owns a Web NFC controller otherwise.
   final NfcTagController? nfcController;
@@ -71,6 +80,8 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   int _playerTwoPastryScore = 0;
   int _tipJarTotal = 0;
   late final NfcTagController _nfcController = widget.nfcController ?? NfcTagController();
+  Timer? _leaderboardTicker;
+  LeaderboardPhase? _lastSeenLeaderboardPhase;
 
   @override
   void initState() {
@@ -82,10 +93,76 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
     )..paused = isRunningInAutomatedWidgetTest;
     widget.cityController.addListener(_handleCityChanged);
     _nfcController.onIngredientTapped = _placeIngredientFromTag;
+    final leaderboardService = widget.leaderboardService;
+    if (leaderboardService != null) {
+      _lastSeenLeaderboardPhase = leaderboardService.phase;
+      leaderboardService.addListener(_handleLeaderboardChanged);
+      if (leaderboardService.phase == LeaderboardPhase.awaitingName) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => _askForLeaderboardName(leaderboardService));
+      }
+    }
+  }
+
+  void _askForLeaderboardName(LeaderboardService leaderboardService) {
+    if (!mounted) {
+      return;
+    }
+    unawaited(
+      showDialog<LeaderboardNameChoice>(
+        context: context,
+        barrierDismissible: false,
+        builder: (dialogContext) => LeaderboardNameDialog(
+          leaderboardService: leaderboardService,
+          languageCode: widget.cityController.activeEdition.defaultLanguage,
+        ),
+      ),
+    );
+  }
+
+  void _handleLeaderboardChanged() {
+    final leaderboardService = widget.leaderboardService;
+    if (!mounted || leaderboardService == null) {
+      return;
+    }
+    final phase = leaderboardService.phase;
+    final didPhaseChange = phase != _lastSeenLeaderboardPhase;
+    _lastSeenLeaderboardPhase = phase;
+    if (didPhaseChange) {
+      _leaderboardTicker?.cancel();
+      _leaderboardTicker = phase == LeaderboardPhase.running
+          ? Timer.periodic(_leaderboardTickInterval, (_) {
+              leaderboardService.refreshWindow();
+              if (mounted) {
+                setState(() {});
+              }
+            })
+          : null;
+      if (phase == LeaderboardPhase.finished) {
+        _announceLeaderboardWindowOver(leaderboardService.score);
+      }
+    }
+    setState(() {});
+  }
+
+  void _announceLeaderboardWindowOver(int finalScore) {
+    final isEnglish = widget.cityController.activeEdition.defaultLanguage == 'en';
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        key: const Key('leaderboard_finished_message'),
+        duration: _leaderboardFinishedMessageDuration,
+        content: Text(
+          isEnglish
+              ? 'Time is up! Your score: $finalScore. Look at the board on stage.'
+              : 'Süre doldu! Puanın: $finalScore. Sahnedeki tabloya bak.',
+        ),
+      ),
+    );
   }
 
   @override
   void dispose() {
+    _leaderboardTicker?.cancel();
+    widget.leaderboardService?.removeListener(_handleLeaderboardChanged);
     widget.cityController.removeListener(_handleCityChanged);
     _nfcController.onIngredientTapped = null;
     if (widget.nfcController == null) {
@@ -329,6 +406,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       return;
     }
     final previousLevel = _crewLevel;
+    final scoreBeforeRound = _playerOneBaristaScore + _playerTwoPastryScore;
     setState(() {
       _order = OrderServed(review);
       _tipJarTotal += review.cityBonusTip;
@@ -353,6 +431,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
         _soundController.play(CafeSoundCue.sweetFanfare);
       }
     });
+    widget.leaderboardService?.recordRound(_playerOneBaristaScore + _playerTwoPastryScore - scoreBeforeRound);
   }
 
   void _openCityEditionSheet() {
@@ -502,6 +581,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                           playerTwoScore: _playerTwoPastryScore,
                           crewLevel: _crewLevel,
                           tipJarTotal: _tipJarTotal,
+                          leaderboardService: widget.leaderboardService,
                           includeRoundTwoItems: _includeRoundTwoCustomItems,
                           onToggleRoundTwoItems: _handleRoundTwoToggle,
                           onOpenCitySettings: _openCityEditionSheet,
@@ -1379,6 +1459,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
     required this.playerTwoScore,
     required this.crewLevel,
     required this.tipJarTotal,
+    required this.leaderboardService,
     required this.includeRoundTwoItems,
     required this.onToggleRoundTwoItems,
     required this.onOpenCitySettings,
@@ -1391,6 +1472,7 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
   final int playerTwoScore;
   final int crewLevel;
   final int tipJarTotal;
+  final LeaderboardService? leaderboardService;
   final bool includeRoundTwoItems;
   final ValueChanged<bool> onToggleRoundTwoItems;
   final VoidCallback onOpenCitySettings;
@@ -1548,6 +1630,8 @@ class _ScoreboardAndConfigBar extends StatelessWidget {
                   backgroundColor: const Color(0xFF332512),
                   textColor: const Color(0xFFD4AF37),
                 ),
+                if (leaderboardService case final activeLeaderboard?)
+                  LeaderboardStatusPill(leaderboardService: activeLeaderboard, languageCode: languageCode),
                 Container(
                   padding: const EdgeInsets.only(left: 10, right: 4, top: 2, bottom: 2),
                   decoration: BoxDecoration(
