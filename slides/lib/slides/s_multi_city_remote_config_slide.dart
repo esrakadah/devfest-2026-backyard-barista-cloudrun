@@ -28,7 +28,7 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
   static const double _columnGap = 24;
 
   static const String _cityControllerSnippet = '''
-// flutter_client/lib/config/city_edition_controller.dart (Lines 159-179)
+// flutter_client/lib/config/city_edition_controller.dart (Lines 159-180)
 Map<CityEditionId, CityEditionConfig> _editionsByCity = _builtInDefaults;
 CityEditionId _fallbackCityId = CityEditionId.gaziantep;
 CityEditionId? _remoteConfigCityId;
@@ -114,8 +114,9 @@ CityEditionConfig get activeEdition =>
                             'TR · Konya (${isIzmirDeck ? "21 Kas" : "bugün"}): Alaaddin Kahve & Tatlı Durağı · "Alaaddin Tepesi\'nde misafire böyle ikram olmaz!"'
                           else
                             'TR · Adana (11 Dec): Gar Kahvesi & Bici Bici Durağı · Bici Bici & Gar Kahvesi ("Şalgam suyu mu sandın?").',
+                          if (isTurkishDeck) 'TR · Adana (11 Ara): Gar Kahvesi & Bici Bici Durağı.',
                           if (isTurkishDeck)
-                            'TR · Adana (11 Ara) ve İstanbul (19 Ara): Gar Kahvesi & Galata Vapur Kafe.'
+                            'TR · İstanbul (19 Ara): Galata & Vapur Kafe.'
                           else
                             'TR · Istanbul (19 Dec): Galata & Vapur Kafe · Galata San Sebastian & Vapur Çayı.',
                         ],

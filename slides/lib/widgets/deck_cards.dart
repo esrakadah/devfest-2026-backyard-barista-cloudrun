@@ -838,7 +838,7 @@ class QuotaComparisonDiagramCard extends StatelessWidget {
             children: [
               Text(
                 isTurkishDeck
-                    ? 'ORTAK ANAHTAR NEDEN BATAR, 300 AYRI AI STUDIO PROJESİ NEDEN AYAKTA KALIR'
+                    ? 'ORTAK ANAHTAR NEDEN BATAR, AYRI AI STUDIO PROJELERİ NEDEN AYAKTA KALIR'
                     : 'WHY SHARED KEYS FAIL vs HOW 300 ISOLATED AI STUDIO PROJECTS STAY GREEN',
                 style: TextStyle(
                   fontFamily: DeckFonts.mono,
@@ -930,10 +930,10 @@ class _QuotaComparisonPainter extends CustomPainter {
           ? 'TUZAK · ORTAK KONUŞMACI ANAHTARI'
           : 'TRAP · SHARED SPEAKER KEY OR 100-SEAT LAB',
       flow: isTurkishDeck
-          ? '300 kişi -> 1 ortak GCP projesi (15 RPM sınırı)'
+          ? '850 kişi -> 1 ortak GCP projesi (15 RPM sınırı)'
           : '300 Builders -> 1 Shared GCP Project (15 RPM Cap)',
       outcome: isTurkishDeck
-          ? '3 saniyeden kısa sürede HTTP 429 RESOURCE_EXHAUSTED'
+          ? 'Birkaç saniyede HTTP 429 RESOURCE_EXHAUSTED'
           : 'HTTP 429 RESOURCE_EXHAUSTED in < 3.0 seconds',
       color: DeckColors.googleRed,
     );
@@ -943,7 +943,7 @@ class _QuotaComparisonPainter extends CustomPainter {
       badge:
           isTurkishDeck ? 'ÇÖZÜM · AYRI ANAHTARLAR + SİPARİŞ BAŞINA 1 ÇAĞRI' : 'SOLUTION · ISOLATED KEYS + 1 CALL ON SERVE',
       flow: isTurkishDeck
-          ? '300 kişi -> 300 kişisel proje (300 x 15 RPM)'
+          ? '850 kişi -> 850 kişisel proje (850 x 15 RPM)'
           : '300 Builders -> 300 Personal Projects (300 x 15 RPM)',
       outcome: isTurkishDeck
           ? 'Oyuncu başına 1-2 RPM + 250 ms mock_responses.json yedeği'

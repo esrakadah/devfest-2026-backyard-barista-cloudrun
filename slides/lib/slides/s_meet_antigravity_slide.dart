@@ -26,7 +26,7 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
   static const double _columnGap = 28;
 
   static const String _antigravitySnippet = '''
-// flutter_client/lib/data/ingredients_catalog.dart (Lines 185-209)
+// flutter_client/lib/data/ingredients_catalog.dart (Lines 185-210)
 static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
   CafeIngredient(
     id: 'custom_katmer_roll',
