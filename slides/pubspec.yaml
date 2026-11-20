@@ -25,6 +25,7 @@ flutter:
   assets:
     - assets/images/
     - assets/cafe/
+    - assets/konya/
   fonts:
     - family: GoogleSansFlex
       fonts:
@@ -35,6 +36,9 @@ flutter:
           weight: 600
         - asset: assets/fonts/PlayfairDisplay-Bold.ttf
           weight: 700
+    - family: NewRocker
+      fonts:
+        - asset: assets/fonts/NewRocker-Regular.ttf
     - family: RobotoMono
       fonts:
         - asset: assets/fonts/RobotoMono.ttf

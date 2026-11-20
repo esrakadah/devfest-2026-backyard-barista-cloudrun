@@ -24,6 +24,11 @@ class SlideFrame extends StatelessWidget {
   static const double _subtitleGap = 8;
   static const double _bodyGap = 22;
 
+  /// The konya edition keeps the bottom of the slide free for the skyline band and starts a little
+  /// higher to give most of that room back to the content.
+  static const double _konyaTopPadding = 30;
+  static const double _konyaBottomPadding = 84;
+
   final String eyebrow;
   final String title;
   final StoryAct act;
@@ -35,19 +40,24 @@ class SlideFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = FlutterDeckTheme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: _outerHorizontalPadding, vertical: _outerVerticalPadding),
+      padding: const EdgeInsets.fromLTRB(
+        _outerHorizontalPadding,
+        isKonyaTheme ? _konyaTopPadding : _outerVerticalPadding,
+        _outerHorizontalPadding,
+        isKonyaTheme ? _konyaBottomPadding : _outerVerticalPadding,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              DeckBadge(label: eyebrow, color: accentColor),
+              if (isKonyaTheme) DeckBadge.crimson(label: eyebrow) else DeckBadge(label: eyebrow, color: accentColor),
               const Spacer(),
               StoryArcStrip(current: act),
             ],
           ),
           const SizedBox(height: _eyebrowGap),
-          Text(title, style: textTheme.header),
+          Text(title, style: textTheme.header.copyWith(color: DeckColors.onGround)),
           if (subtitle != null) ...[
             const SizedBox(height: _subtitleGap),
             Text(subtitle!, style: textTheme.bodyLarge.copyWith(color: DeckColors.subtitleAccent)),
@@ -175,7 +185,7 @@ class PillTag extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.14),
+        color: isKonyaTheme ? DeckColors.surfaceInset : color.withValues(alpha: 0.14),
         borderRadius: BorderRadius.circular(999),
         border: Border.all(color: color.withValues(alpha: 0.34)),
       ),
@@ -201,7 +211,12 @@ class PillTag extends StatelessWidget {
 
 /// Pill badge used for topic tags, city editions, and fact/target indicators.
 class DeckBadge extends StatelessWidget {
-  const DeckBadge({required this.label, this.color = DeckColors.googleYellow, this.icon, super.key});
+  const DeckBadge({required this.label, this.color = DeckColors.googleYellow, this.icon, super.key}) : _solid = false;
+
+  /// The crimson label chip of the konya edition, for badges that sit on the parchment ground.
+  const DeckBadge.crimson({required this.label, this.icon, super.key})
+      : color = DeckColors.crimson,
+        _solid = true;
 
   static const double _horizontalPadding = 14;
   static const double _verticalPadding = 6;
@@ -213,27 +228,36 @@ class DeckBadge extends StatelessWidget {
   final String label;
   final Color color;
   final IconData? icon;
+  final bool _solid;
+
+  /// Tinted glass on the dark decks. The konya ground is light, so the fill turns opaque there:
+  /// the pastel label keeps its dark backing whether the badge sits on a card or on the parchment.
+  Color get _fill {
+    if (_solid) return color;
+    return isKonyaTheme ? DeckColors.surfaceInset : color.withValues(alpha: _fillOpacity);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final foreground = _solid ? DeckColors.offWhite : color;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding, vertical: _verticalPadding),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: _fillOpacity),
+        color: _fill,
         borderRadius: BorderRadius.circular(_cornerRadius),
         border: Border.all(color: color.withValues(alpha: _borderOpacity)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[Icon(icon, size: 16, color: color), const SizedBox(width: 6)],
+          if (icon != null) ...[Icon(icon, size: 16, color: foreground), const SizedBox(width: 6)],
           Text(
             label,
             style: TextStyle(
               fontFamily: DeckFonts.mono,
               fontSize: _fontSize,
               fontWeight: FontWeight.w700,
-              color: color,
+              color: foreground,
             ),
           ),
         ],
@@ -345,13 +369,13 @@ class DeckFeatureCard extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: dotTopOffset),
                     child: Transform.rotate(
-                      angle: isCandleTheme ? math.pi / 4 : 0,
+                      angle: isWizardEdition ? math.pi / 4 : 0,
                       child: Container(
                         width: _dotSize,
                         height: _dotSize,
                         decoration: BoxDecoration(
                           color: accentColor,
-                          shape: isCandleTheme ? BoxShape.rectangle : BoxShape.circle,
+                          shape: isWizardEdition ? BoxShape.rectangle : BoxShape.circle,
                         ),
                       ),
                     ),
@@ -1201,7 +1225,7 @@ class RoundTimelineBar extends StatelessWidget {
           style: const TextStyle(
             fontFamily: DeckFonts.mono,
             fontSize: DeckTypeScale.bodySmall,
-            color: DeckColors.mutedText,
+            color: DeckColors.onGroundMuted,
           ),
         ),
       ],

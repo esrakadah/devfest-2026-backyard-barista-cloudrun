@@ -5,11 +5,17 @@ import 'package:flutter/material.dart';
 /// The five acts of the talk. Every `SlideFrame` names its act, and the strip in its header
 /// shows the audience where they are in the story.
 enum StoryAct {
-  hook(isTurkishDeck ? (isCandleTheme ? 'DAVET' : 'GİRİŞ') : 'HOOK', DeckColors.googleYellow),
-  tools(isTurkishDeck ? (isCandleTheme ? 'ASALAR' : 'ARAÇLAR') : 'TOOLS', DeckColors.halftoneBlue),
-  realNumbers(isTurkishDeck && isCandleTheme ? 'ÖLÇÜM BÜYÜSÜ' : 'GERÇEK RAKAMLAR', DeckColors.googleRed),
-  underTheHood(isTurkishDeck ? (isCandleTheme ? 'PERDE ARKASI' : 'KAPUTUN ALTI') : 'UNDER THE HOOD', DeckColors.googleGreen),
-  buildAndShip(isTurkishDeck ? (isCandleTheme ? 'CANLI BÜYÜ' : 'DEMO VE KAPANIŞ') : 'BUILD & SHIP', DeckColors.googleBlue);
+  hook(isTurkishDeck ? (isWizardEdition ? 'DAVET' : 'GİRİŞ') : 'HOOK', DeckColors.googleYellow),
+  tools(isTurkishDeck ? (isWizardEdition ? 'ASALAR' : 'ARAÇLAR') : 'TOOLS', DeckColors.halftoneBlue),
+  realNumbers(isTurkishDeck && isWizardEdition ? 'ÖLÇÜM BÜYÜSÜ' : 'GERÇEK RAKAMLAR', DeckColors.googleRed),
+  underTheHood(
+    isTurkishDeck ? (isWizardEdition ? 'PERDE ARKASI' : 'KAPUTUN ALTI') : 'UNDER THE HOOD',
+    DeckColors.googleGreen,
+  ),
+  buildAndShip(
+    isTurkishDeck ? (isWizardEdition ? 'CANLI BÜYÜ' : 'DEMO VE KAPANIŞ') : 'BUILD & SHIP',
+    DeckColors.googleBlue,
+  );
 
   const StoryAct(this.label, this.color);
 
@@ -54,6 +60,7 @@ class _ArcSegment extends StatelessWidget {
   Widget build(BuildContext context) {
     final isCurrent = act == current;
     final isPast = act.index < current.index;
+    if (isKonyaTheme) return _KonyaArcSegment(act: act, isCurrent: isCurrent, isPast: isPast);
     return Opacity(
       opacity: isPast ? StoryArcStrip._pastOpacity : 1,
       child: Container(
@@ -75,6 +82,49 @@ class _ArcSegment extends StatelessWidget {
             letterSpacing: 1,
             color: isCurrent || isPast ? DeckColors.navy : DeckColors.mutedText,
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The konya edition sits on parchment: the current act is a crimson chip, past acts are tinted,
+/// future acts are outlined. All three keep dark-on-light or light-on-crimson text at full opacity.
+class _KonyaArcSegment extends StatelessWidget {
+  const _KonyaArcSegment({required this.act, required this.isCurrent, required this.isPast});
+
+  static const double _pastTint = 0.14;
+  static const double _borderTint = 0.55;
+
+  final StoryAct act;
+  final bool isCurrent;
+  final bool isPast;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: StoryArcStrip._horizontalPadding,
+        vertical: StoryArcStrip._verticalPadding,
+      ),
+      decoration: BoxDecoration(
+        color: isCurrent
+            ? DeckColors.crimson
+            : (isPast ? DeckColors.crimson.withValues(alpha: _pastTint) : Colors.transparent),
+        borderRadius: BorderRadius.circular(StoryArcStrip._radius),
+        border: Border.all(
+          color: isCurrent ? DeckColors.crimson : DeckColors.crimson.withValues(alpha: _borderTint),
+          width: 1.5,
+        ),
+      ),
+      child: Text(
+        '${act.index + 1} · ${act.label}',
+        style: TextStyle(
+          fontFamily: DeckFonts.sans,
+          fontSize: StoryArcStrip._labelSize,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 1,
+          color: isCurrent ? DeckColors.offWhite : DeckColors.onGroundMuted,
         ),
       ),
     );

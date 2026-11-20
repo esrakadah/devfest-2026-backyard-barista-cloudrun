@@ -6,16 +6,109 @@ import 'package:flutter/material.dart';
 /// Full-slide backdrop behind every slide.
 ///
 /// The default deck is a flat navy ground. The candle edition paints a warm glow, stars and a
-/// thin gold frame on top of it.
+/// thin gold frame on top of it. The konya edition is a parchment sheet with the city skyline
+/// rising from the bottom edge.
 class DeckBackdrop extends StatelessWidget {
   const DeckBackdrop({super.key});
 
   @override
   Widget build(BuildContext context) {
+    if (isKonyaTheme) return const _KonyaBackdrop();
     return const ColoredBox(
       color: DeckColors.navy,
       child: isCandleTheme ? CustomPaint(painter: _BackdropPainter(), child: SizedBox.expand()) : SizedBox.expand(),
     );
+  }
+}
+
+/// Parchment ground with a low skyline band and a crimson ground line that carries the footer text.
+class _KonyaBackdrop extends StatelessWidget {
+  const _KonyaBackdrop();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Image.asset(KonyaArt.parchment, fit: BoxFit.cover),
+        const Align(alignment: Alignment.bottomCenter, child: KonyaSkyline()),
+      ],
+    );
+  }
+}
+
+/// Generated artwork of the konya edition (original illustrations in the event's print style).
+abstract final class KonyaArt {
+  static const String parchment = 'assets/konya/parchment.jpg';
+  static const String skyline = 'assets/konya/skyline.webp';
+  static const String hero = 'assets/konya/hero.webp';
+  static const String ornament = 'assets/konya/ornament.webp';
+
+  /// Width over height of the skyline artwork.
+  static const double skylineAspect = 2400 / 577;
+}
+
+/// The Konya skyline in front of the sandstone city wall, anchored to the bottom of the slide.
+///
+/// [height] is how much of the band shows, in units of the 1080-high slide; the artwork always
+/// spans the full slide width, so a low band shows the towers and the wall top and a tall band
+/// shows the whole street. [groundLine] adds the crimson strip the footer text sits on.
+class KonyaSkyline extends StatelessWidget {
+  const KonyaSkyline({this.height = lowHeight, this.groundLine = true, super.key});
+
+  static const double lowHeight = 210;
+  static const double tallHeight = 430;
+  static const double _groundLineHeight = 34;
+  static const Color _groundLineColor = Color(0xFF6E111B);
+
+  final double height;
+  final bool groundLine;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final scale = constraints.maxWidth / DeckCanvas.width;
+        final artHeight = constraints.maxWidth / KonyaArt.skylineAspect;
+        return SizedBox(
+          width: constraints.maxWidth,
+          height: height * scale,
+          child: ClipRect(
+            child: Stack(
+              children: [
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  width: constraints.maxWidth,
+                  height: artHeight,
+                  child: Image.asset(KonyaArt.skyline, fit: BoxFit.fill, excludeFromSemantics: true),
+                ),
+                if (groundLine)
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: _groundLineHeight * scale,
+                    child: const ColoredBox(color: _groundLineColor),
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// The cup-and-vine section ornament of the konya edition.
+class KonyaOrnament extends StatelessWidget {
+  const KonyaOrnament({this.height = 64, super.key});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(KonyaArt.ornament, height: height, excludeFromSemantics: true);
   }
 }
 
@@ -48,7 +141,12 @@ class HouseFlourish extends StatelessWidget {
             const SizedBox(width: _gemGap),
           ],
           const SizedBox(width: _gemGap),
-          Expanded(child: Container(height: 2, color: DeckColors.gold.withValues(alpha: 0.7))),
+          Expanded(
+            child: Container(
+              height: 2,
+              color: isKonyaTheme ? DeckColors.crimson : DeckColors.gold.withValues(alpha: 0.7),
+            ),
+          ),
         ],
       ),
     );

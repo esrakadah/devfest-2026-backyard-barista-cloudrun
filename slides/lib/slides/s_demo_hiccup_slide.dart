@@ -1,4 +1,5 @@
 import 'package:backyard_barista_deck/deck_language.dart';
+import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/demo_hiccup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
@@ -25,6 +26,7 @@ class DemoHiccupSlide extends FlutterDeckSlideWidget {
   FlutterDeckSlide build(BuildContext context) {
     return FlutterDeckSlide.blank(
       builder: (context) => const DemoHiccupScreen(
+        ground: !isKonyaTheme,
         message: isTurkishDeck
             ? "Salon Wi-Fi'ı çay molası verdi!\n"
                 'Çevrimdışı yedeğe geçiyoruz:\n'
