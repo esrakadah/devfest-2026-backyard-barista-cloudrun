@@ -316,6 +316,7 @@ class DeckFeatureCard extends StatelessWidget {
     this.footerText,
     this.padding,
     this.talkBulletFontSize,
+    this.talkTitleFontSize,
     super.key,
   });
 
@@ -326,6 +327,13 @@ class DeckFeatureCard extends StatelessWidget {
   static const double _dotSize = 8;
   static const double _dotTopOffset = 9;
   static const double _dotRightGap = 12;
+
+  /// Bullet size of the Turkish talk deck when a card does not set its own: short lines, read from the back row.
+  static const double _talkBulletDefault = 30;
+  static const double _talkTitleDefault = 32;
+  static const double _workshopTitleSize = 26;
+  static const double _talkFooterSize = 15;
+  static const double _workshopFooterSize = 13;
 
   final String title;
   final String? badge;
@@ -339,10 +347,13 @@ class DeckFeatureCard extends StatelessWidget {
   /// The English workshop deck keeps the body size.
   final double? talkBulletFontSize;
 
+  /// Card title size in the Turkish talk deck; dense cards pass a smaller one.
+  final double? talkTitleFontSize;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = FlutterDeckTheme.of(context).textTheme;
-    final bulletStyle = textTheme.bodyMedium.copyWith(height: 1.32, fontSize: isTurkishDeck ? talkBulletFontSize : null);
+    final bulletStyle = textTheme.bodyMedium.copyWith(height: 1.32, fontSize: isTurkishDeck ? (talkBulletFontSize ?? _talkBulletDefault) : null);
     final dotTopOffset = _dotTopOffset * (bulletStyle.fontSize ?? DeckTypeScale.bodyMedium) / DeckTypeScale.bodyMedium;
     return DeckCard(
       padding: padding ?? const EdgeInsets.symmetric(horizontal: _paddingHorizontal, vertical: _paddingVertical),
@@ -357,7 +368,11 @@ class DeckFeatureCard extends StatelessWidget {
           ],
           Text(
             title,
-            style: textTheme.subtitle.copyWith(color: DeckColors.offWhite, fontSize: 26, fontWeight: FontWeight.w700),
+            style: textTheme.subtitle.copyWith(
+              color: DeckColors.offWhite,
+              fontSize: isTurkishDeck ? (talkTitleFontSize ?? _talkTitleDefault) : _workshopTitleSize,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           const SizedBox(height: _titleGap),
           for (final bullet in bullets)
@@ -397,7 +412,11 @@ class DeckFeatureCard extends StatelessWidget {
               ),
               child: Text(
                 footerText!,
-                style: const TextStyle(fontFamily: DeckFonts.mono, fontSize: 13, color: DeckColors.googleYellow),
+                style: const TextStyle(
+                  fontFamily: DeckFonts.mono,
+                  fontSize: isTurkishDeck ? _talkFooterSize : _workshopFooterSize,
+                  color: DeckColors.googleYellow,
+                ),
               ),
             ),
           ],
@@ -414,8 +433,12 @@ class DeckCodeCard extends StatelessWidget {
     required this.code,
     this.accentColor = DeckColors.halftoneBlue,
     this.badgeLabel,
+    this.talkFontSize,
     super.key,
   });
+
+  /// Code size in the Turkish talk deck, for short snippets that can be read from the back row.
+  final double? talkFontSize;
 
   final String filePathLabel;
   final String code;
@@ -474,9 +497,9 @@ class DeckCodeCard extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: FlutterDeckCodeHighlight(
                 code: code,
-                textStyle: const TextStyle(
+                textStyle: TextStyle(
                   fontFamily: DeckFonts.mono,
-                  fontSize: DeckTypeScale.code,
+                  fontSize: isTurkishDeck ? (talkFontSize ?? DeckTypeScale.code) : DeckTypeScale.code,
                   color: DeckColors.offWhite,
                   height: 1.38,
                 ),

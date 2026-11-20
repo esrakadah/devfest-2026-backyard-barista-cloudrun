@@ -15,7 +15,7 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
                 : "11. Today's Game Mechanic: Tatlı mı Tuzlu mu? + Web NFC",
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [12:45 - 14:00] Oyun mekaniği, şemalı JSON ve konuşmanın ana dersi: kararı kod doğrular.\n'
-                    'SAY   "Mekanik çok sade: tezgahta şeker kavanozunun yanında ikizi gibi duran bir tuzluk var. Android Chrome\'da gerçek bir Web NFC okuyucusu da bağladık: telefonu NFC etiketine dokundurduğunuzda tuzluk doğrudan tepsiye düşüyor. Servis Et\'e bastığınızda Gemini\'nin cevabı CafeReview JSON şemasına bağlı geliyor. Ama şema bir istektir, garanti değil. Model tuzu kaçırabilir; boş bir yanıt bile \'tatlı, 5 yıldız\' diye okunabilir. O yüzden sağdaki fonksiyon var: _verdictMatchesPranks. Modelin kararı Dart\'taki bayraklarla uyuşmuyorsa ekrana hiç çıkmıyor, hazır yanıta düşüyoruz. Bunu iki test sabitliyor."\n'
+                    'SAY   "Mekanik çok sade: tezgahta şeker kavanozunun yanında ikizi gibi duran bir tuzluk var. Android Chrome\'da gerçek bir Web NFC okuyucusu da bağladık: telefonu NFC etiketine dokundurduğunuzda tuzluk doğrudan tepsiye düşüyor. Servis Et\'e bastığınızda Gemini\'nin cevabı CafeReview JSON şemasına bağlı geliyor. Şema, modele cevabı hangi kalıpta vermesini söylediğimiz tarif. Ama şema bir istektir, garanti değil. Model tuzu kaçırabilir; boş bir yanıt bile \'tatlı, 5 yıldız\' diye okunabilir. O yüzden sağdaki fonksiyon var: _verdictMatchesPranks. Modelin kararı Dart\'taki bayraklarla uyuşmuyorsa ekrana hiç çıkmıyor, hazır yanıta düşüyoruz. Bunu iki test sabitliyor."\n'
                     'HOLD  Solda baklava, şeker, tuzluk ve 1 yıldızlı müşteriyi göster. Sağda önce şema satırlarını, sonra _verdictMatchesPranks gövdesini işaret et ve bir saniye dur. Süre 13:30 altındaysa Stage Navigator ile 18. slayta (/generate-vs-decide, 45 sn) uğra; değilse devam et.\n'
                     'NEXT  "Sırada görseller var: kırık URL ve yükleme hatası olmadan nasıl paketliyoruz?"'
                 : 'BEAT  [20:30 - 22:30] Oyun Mekaniği ("Tatlı mı Tuzlu mu?"), Web NFC Sahne Tetikleyicisi ve Yapılandırılmış JSON Şeması (CafeReview).\n'
@@ -28,6 +28,8 @@ class SaltSugarMechanicSlide extends FlutterDeckSlideWidget {
 
   static const double _columnGap = 24;
   static const double _thumbGap = 14;
+
+  static const double _talkCodeSize = 21;
 
   static const String _schemaSnippet = '''
 // ${isTurkishDeck ? '1. Şema bir istektir (cafe_judge_service.dart, sadeleştirildi)' : '1. The schema is a request (cafe_judge_service.dart, simplified)'}
@@ -57,14 +59,14 @@ bool _verdictMatchesPranks(
       builder: (context) {
         return const SlideFrame(
           eyebrow: isTurkishDeck
-              ? 'OYUN MEKANİĞİ · WEB NFC (NDEFREADER) VE JSON ŞEMASI'
+              ? 'OYUNUN KALBİ'
               : 'GAME MECHANIC · WEB NFC (NDEFREADER) & STRUCTURED JSON SCHEMA',
           title: isTurkishDeck
-              ? 'Tatlı mı tuzlu mu? Şema istektir, kararı kod doğrular'
+              ? 'Model önerir, son kararı kod verir'
               : 'Tatlı mı Tuzlu mu? Web NFC Stage Pranks Meet Structured JSON',
           act: StoryAct.underTheHood,
           subtitle: isTurkishDeck
-              ? "NFC etiketine dokununca (masaüstü ve iOS'ta karta dokununca) salt_shaker 3 gözlü tepsiye düşer"
+              ? 'Modelden belirli bir kalıpta cevap isteriz (şema). Yine de cevabı kodla kontrol ederiz'
               : 'Physical NFC sticker tap (NfcTagController, card tap on desktop and iOS) drops salt_shaker onto the 3-slot tray',
           child: Row(
             children: [
@@ -102,8 +104,8 @@ bool _verdictMatchesPranks(
                         Expanded(
                           child: CafeAssetThumb(
                             assetFileName: 'salt_shaker.png',
-                            label: isTurkishDeck ? 'Tuz (Web NFC!)' : 'Tuz (Web NFC Tap!)',
-                            badgeText: isTurkishDeck ? 'NDEFReader + kart' : 'NDEFReader + card tap',
+                            label: isTurkishDeck ? 'Tuzluk' : 'Tuz (Web NFC Tap!)',
+                            badgeText: isTurkishDeck ? 'Web NFC (NDEFReader)' : 'NDEFReader + card tap',
                             borderColor: DeckColors.googleYellow,
                           ),
                         ),
@@ -127,6 +129,7 @@ bool _verdictMatchesPranks(
                 child: DeckCodeCard(
                   filePathLabel: 'cafe_judge_service.dart',
                   code: _schemaSnippet,
+                  talkFontSize: _talkCodeSize,
                   accentColor: DeckColors.googleYellow,
                   badgeLabel: isTurkishDeck ? 'ŞEMA + KORUYUCU' : 'SCHEMA + GUARD',
                 ),

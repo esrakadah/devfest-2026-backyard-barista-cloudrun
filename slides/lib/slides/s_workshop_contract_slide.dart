@@ -34,13 +34,13 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         final textTheme = FlutterDeckTheme.of(context).textTheme;
         return SlideFrame(
-          eyebrow: isTurkishDeck ? '30 DAKİKALIK YOL HARİTASI · 3 KATMAN' : 'ZERO-EXCLUSION CONTRACT & PRIZES',
+          eyebrow: isTurkishDeck ? '30 DAKİKADA NE GÖRECEĞİZ' : 'ZERO-EXCLUSION CONTRACT & PRIZES',
           title: isTurkishDeck
-              ? 'Üç farklı deneyim seviyesi, tek canlı oyun'
+              ? 'Sıfırdan canlı oyuna: üç adım'
               : 'Three Lanes, One Finish Line: A Live URL or GitHub Repo',
           act: StoryAct.hook,
           subtitle: isTurkishDeck
-              ? 'İlk prompttan üretime dayanıklı bulut mimarisine ve salonda canlı QR testine'
+              ? 'Yeni başlayan da deneyimli olan da kendine bir şey bulacak'
               : 'Every builder leaves with a deployed multiplayer AI cafe game',
           child: Column(
             children: [
@@ -49,74 +49,68 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                   children: [
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? '1 · HIZLI PROTOTİP' : 'LANE A · BROWSER DEFAULT',
-                        title: isTurkishDeck ? 'Kurulumsuz: AI Studio' : 'Zero-Install AI Studio',
+                        badge: isTurkishDeck ? '1 · BAŞLANGIÇ' : 'LANE A · BROWSER DEFAULT',
+                        title: isTurkishDeck ? 'Kurulum yok, tarayıcı yeter' : 'Zero-Install AI Studio',
                         accentColor: DeckColors.googleGreen,
                         bullets: [
                           if (isTurkishDeck)
-                            'Tarayıcıda aistudio.google.com -> Build modu ile tek prompttan çalışan web uygulaması.'
+                            'AI Studio: isteğini yaz, çalışan uygulamayı al.'
                           else
                             'Open aistudio.google.com -> Build mode in any browser.',
                           if (isTurkishDeck)
-                            'Çift yönlü GitHub senkronizasyonu ve sunucu tarafında gizli API anahtarı.'
+                            'Kredi kartı olmadan internette yayınla.'
                           else
                             'Paste step-1-base-cafe.md + load 12 base PNGs from GitHub.',
-                          if (isTurkishDeck)
-                            'Starter Tier ile kredi kartı olmadan 2 uygulamaya kadar canlı .run.app yayını.'
-                          else
+                          if (!isTurkishDeck)
                             'Click Deploy to Cloud Run (.run.app) & Sync to GitHub.',
                         ],
                         footerText: isTurkishDeck
-                            ? "0 kurulum · Starter Tier'da kredi kartı yok"
+                            ? 'İleri seviye: Starter Tier, 2 Cloud Run uygulaması'
                             : '0 installs · No credit card on Starter Tier',
                       ),
                     ),
                     SizedBox(width: _columnGap),
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? '2 · ÇOK DOSYALI MİMARİ' : 'LANE B · FLUTTER + ANTIGRAVITY',
-                        title: isTurkishDeck ? 'Flutter + Antigravity' : 'Full-Stack Flutter Client',
+                        badge: isTurkishDeck ? '2 · ORTA' : 'LANE B · FLUTTER + ANTIGRAVITY',
+                        title: isTurkishDeck ? 'Flutter ile gerçek proje' : 'Full-Stack Flutter Client',
                         bullets: [
                           if (isTurkishDeck)
-                            'Antigravity Agent Mode ile katalog, çizim kodu ve testleri tek seferde güncelleme.'
+                            'Antigravity: tek istekle birçok dosyayı değiştiren AI editör.'
                           else
                             'Clone devfest-2026-backyard-barista-cloudrun/flutter_client.',
                           if (isTurkishDeck)
-                            "Arka planda Flame ile 3 şeritli sahne, önde Flutter widget'larıyla tezgah."
+                            'Oyun sahnesi Flame, butonlar Flutter.'
                           else
                             'Use Antigravity Agent Mode to generate custom SVG dishes.',
-                          if (isTurkishDeck)
-                            '3 katmanlı CityEditionController ile yeniden derlemeden 5 DevFest şehri.'
-                          else
+                          if (!isTurkishDeck)
                             'Deploy container via gcloud run deploy --source .',
                         ],
                         footerText: isTurkishDeck
-                            ? 'Flame + Flutter arayüzü · 5 şehir sürümü'
+                            ? 'İleri seviye: tek kod, 5 şehir sürümü'
                             : 'Pure Flutter widgets · 4 City Editions',
                       ),
                     ),
                     SizedBox(width: _columnGap),
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? '3 · GERÇEK RAKAMLAR' : 'LANE C · PHONE PLAY-TESTER',
-                        title: isTurkishDeck ? 'Üretim korumaları + QR' : 'Mobile Cafe Saboteur',
+                        badge: isTurkishDeck ? '3 · İLERİ' : 'LANE C · PHONE PLAY-TESTER',
+                        title: isTurkishDeck ? 'Kalabalıkta çökmeyen uygulama' : 'Mobile Cafe Saboteur',
                         accentColor: DeckColors.googleYellow,
                         bullets: [
                           if (isTurkishDeck)
-                            '8 sn canlı Gemini sınırı, 15 sn yerel Gemma 4 ve 250 ms çevrimdışı paket yedeği.'
+                            'Yapay zeka geç kalırsa yedek cevap hazır.'
                           else
                             'No laptop required: join from mobile Safari or Chrome.',
                           if (isTurkishDeck)
-                            'Sipariş başına tek JSON çağrısı (~270 token) ve 1.000 siparişte 5 sentin altı.'
+                            '1.000 sipariş 5 sentten ucuz.'
                           else
                             'Scan deployed .run.app QR codes from the stage wall.',
-                          if (isTurkishDeck)
-                            'Kalabalık salonda HTTP 429 savunması: demoda telefonunuzdan bizzat deneyeceksiniz.'
-                          else
+                          if (!isTurkishDeck)
                             'Sneak Salt (Tuz) into sweet orders to test the AI Judge!',
                         ],
                         footerText: isTurkishDeck
-                            ? '700 px altında tek sütunlu duyarlı tezgah'
+                            ? 'İleri seviye: zaman aşımı, HTTP 429, çevrimdışı yedek'
                             : '<620px responsive 2-column mobile counter',
                       ),
                     ),
@@ -143,7 +137,7 @@ class WorkshopContractSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: Text(
                         isTurkishDeck
-                            ? 'CANLI TEST: Konuşmanın ikinci yarısında ekrandaki QR kodu okutup tatlı siparişe gizlice tuz atacaksınız!'
+                            ? 'CANLI TEST: 15. dakikada QR kodu okutun, tatlı siparişe gizlice tuz atın!'
                             : 'STAGE PRIZES: 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts for builders who publish (.run.app / GitHub) & demo in 60 seconds!',
                         style: textTheme.bodyLarge.copyWith(
                           color: DeckColors.googleYellow,

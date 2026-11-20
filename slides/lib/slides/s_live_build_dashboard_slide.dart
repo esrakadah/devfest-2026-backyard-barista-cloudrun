@@ -70,7 +70,9 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                             child: DeckFeatureCard(
                               badge: 'ROUND 1 · 10 MIN (STEP 1)',
                               title: 'Base Cafe & City Switcher',
-                              bullets: [
+                              talkBulletFontSize: DeckTypeScale.bodyMedium,
+                  talkTitleFontSize: DeckTypeScale.bodyLarge,
+                  bullets: [
                                 'Lane A: Paste prompts/step-1-base-cafe.md in AI Studio Build mode.',
                                 'Lane B: Run flutter run -d chrome --dart-define=DEFAULT_CITY=gaziantep.',
                                 'Verify all 12 base PNGs load and switch City Edition in the top bar.',
@@ -84,7 +86,9 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                               badge: 'ROUND 2 · 15 MIN (STEP 2)',
                               title: 'Custom AI Dish & Prank Judge',
                               accentColor: DeckColors.googleYellow,
-                              bullets: [
+                              talkBulletFontSize: DeckTypeScale.bodyMedium,
+                  talkTitleFontSize: DeckTypeScale.bodyLarge,
+                  bullets: [
                                 'Lane A: Paste prompts/step-2-custom-dish.md to add 1 vector dish + 1 prank.',
                                 'Lane B: Use Antigravity Cmd+I to add roundTwoCustomItems in ingredients_catalog.dart.',
                                 'Test sneaking Salt (Tuz) onto the tray and verify the 1-star JSON roast!',
@@ -98,7 +102,9 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
                               badge: 'ROUND 3 · 10 MIN (STEP 3)',
                               title: 'Ship to Cloud Run & GitHub',
                               accentColor: DeckColors.googleGreen,
-                              bullets: [
+                              talkBulletFontSize: DeckTypeScale.bodyMedium,
+                  talkTitleFontSize: DeckTypeScale.bodyLarge,
+                  bullets: [
                                 'Lane A: Click Deploy to Cloud Run (.run.app) + Sync to GitHub in AI Studio.',
                                 'Lane B: Run gcloud run deploy backyard-barista --source . inside flutter_client/.',
                                 'Raise your hand to demo your live .run.app cafe in 60s for the Pixel Sunglasses!',
@@ -154,6 +160,8 @@ class _TalkDemoBody extends StatelessWidget {
                 child: DeckFeatureCard(
                   badge: 'ADIM 1 · 5 DK',
                   title: 'Canlı Cloud Run: önce ben, sonra siz',
+                  talkBulletFontSize: DeckTypeScale.bodyMedium,
+                  talkTitleFontSize: DeckTypeScale.bodyLarge,
                   bullets: ['Tatlı tepsiye 5 yıldız, tuzlu tepsiye 1 yıldız. Rozet yanıtın nereden geldiğini söyler.'],
                 ),
               ),
@@ -163,6 +171,8 @@ class _TalkDemoBody extends StatelessWidget {
                   badge: 'ADIM 2 · 2 DK',
                   title: isIzmirDeck ? 'Şehir sürümü: çok dosyalı değişiklik' : 'Konya sürümü: 11 dosyalık değişiklik',
                   accentColor: DeckColors.googleYellow,
+                  talkBulletFontSize: DeckTypeScale.bodyMedium,
+                  talkTitleFontSize: DeckTypeScale.bodyLarge,
                   bullets: ['Tek ekranda fark, ardından üst bardaki bayrak rozetinden şehir geçişi.'],
                 ),
               ),
@@ -172,6 +182,8 @@ class _TalkDemoBody extends StatelessWidget {
                   badge: 'ADIM 3 · 3 DK',
                   title: 'Wi-Fi kapalı: yerel Gemma 4 ve hazır yanıtlar',
                   accentColor: DeckColors.googleGreen,
+                  talkBulletFontSize: DeckTypeScale.bodyMedium,
+                  talkTitleFontSize: DeckTypeScale.bodyLarge,
                   bullets: ['Canlı Gemini (8 sn) -> yerel Gemma (15 sn) -> paket (250 ms).'],
                 ),
               ),

@@ -33,13 +33,13 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
-          eyebrow: isTurkishDeck ? 'MİMARİ ÖZETİ' : 'EN SON MİMARİDE NE YAPTIK?',
+          eyebrow: isTurkishDeck ? 'ÖZET' : 'EN SON MİMARİDE NE YAPTIK?',
           title: isTurkishDeck
-              ? 'Oyunun arkasında: 4 katmanlı üretim mimarisi'
+              ? 'Oynadığınız oyunun arkasında dört katman var'
               : 'What We Just Built: A 4-Layer Production Architecture',
           act: StoryAct.buildAndShip,
           subtitle: isTurkishDeck
-              ? 'Bu oyundaki her katman gerçek bir Flutter ve Cloud ürününde aynen kullanılır'
+              ? 'Her katmanı kendi Flutter projenizde aynen kullanabilirsiniz'
               : 'Every layer you shipped today transfers directly to a real Flutter and Cloud product',
           accentColor: DeckColors.halftoneBlue,
           child: Column(
@@ -47,7 +47,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
               Expanded(
                 child: _LayerBand(
                   number: 1,
-                  name: isTurkishDeck ? 'SAHNE VE WEB NFC' : 'STAGE & WEB NFC',
+                  name: isTurkishDeck ? 'EKRAN' : 'STAGE & WEB NFC',
                   color: DeckColors.googleBlue,
                   chips: [
                     if (isTurkishDeck) 'BaristaFlameGame 60fps 3 şerit' else 'BaristaFlameGame 60fps 3-Lane',
@@ -56,14 +56,14 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                     if (isTurkishDeck) 'Karta dokunma yedeği' else 'Card-Tap Fallback',
                     if (isTurkishDeck) '14 PNG · 5 Lottie · 9 WAV' else '14 PNGs · 5 Lottie · 9 WAV',
                   ],
-                  outcome: isTurkishDeck ? '60fps hedefi\n+ Web NFC' : '60fps + Web NFC',
+                  outcome: isTurkishDeck ? 'Akıcı sahne,\nsağlam arayüz' : '60fps + Web NFC',
                 ),
               ),
               SizedBox(height: _gap),
               Expanded(
                 child: _LayerBand(
                   number: 2,
-                  name: isTurkishDeck ? 'YAPILANDIRMA' : 'CONFIG',
+                  name: isTurkishDeck ? 'AYARLAR' : 'CONFIG',
                   color: DeckColors.googleYellow,
                   chips: [
                     if (isTurkishDeck) '1 · Uygulama içi seçim' else '1 · In-app override',
@@ -77,7 +77,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
               Expanded(
                 child: _LayerBand(
                   number: 3,
-                  name: isTurkishDeck ? 'AI VE KORUMALAR' : 'AI & GUARDRAILS',
+                  name: isTurkishDeck ? 'AI VE YEDEKLER' : 'AI & GUARDRAILS',
                   color: DeckColors.googleGreen,
                   chips: [
                     'gemini-3.5-flash-lite',
@@ -93,7 +93,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
               Expanded(
                 child: _LayerBand(
                   number: 4,
-                  name: isTurkishDeck ? 'SUNUCUSUZ BULUT' : 'SERVERLESS CLOUD',
+                  name: isTurkishDeck ? 'BULUT' : 'SERVERLESS CLOUD',
                   color: DeckColors.googleRed,
                   chips: [
                     if (isTurkishDeck) 'Çok aşamalı Dockerfile' else 'Multi-stage Dockerfile',
@@ -101,7 +101,7 @@ class ArchitectureRecapSlide extends FlutterDeckSlideWidget {
                     'Cloud Run *.run.app',
                     if (isTurkishDeck) 'GitHub eşitleme' else 'GitHub sync',
                   ],
-                  outcome: isTurkishDeck ? 'Sunucuda\ndurum yok' : '0 server state',
+                  outcome: isTurkishDeck ? 'Anahtar\nsunucuda gizli' : '0 server state',
                 ),
               ),
             ],

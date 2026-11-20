@@ -27,6 +27,21 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
 
   static const double _columnGap = 24;
 
+  static const double _talkCodeSize = 26;
+  static const double _cityListSize = 22;
+  static const double _cityTitleSize = 28;
+
+  /// The one getter that resolves the three places, without the fields around it.
+  static const String _talkSnippet = '''
+// city_edition_controller.dart:165
+// 1. uygulamadaki seçici
+// 2. adresteki parametre
+// 3. paketteki dosya
+CityEditionId get activeCityId =>
+    _manualOverrideCityId ??
+    _remoteConfigCityId ??
+    _fallbackCityId;''';
+
   static const String _cityControllerSnippet = '''
 // flutter_client/lib/config/city_edition_controller.dart (Lines 159-180)
 Map<CityEditionId, CityEditionConfig> _editionsByCity = _builtInDefaults;
@@ -49,14 +64,14 @@ CityEditionConfig get activeEdition =>
       builder: (context) {
         return const SlideFrame(
           eyebrow: isTurkishDeck
-              ? 'ÇOK ŞEHİRLİ YAPILANDIRMA (CITYEDITIONCONTROLLER + REMOTE CONFIG ŞABLONU)'
+              ? 'TEK KOD, ÇOK ŞEHİR'
               : 'FIREBASE REMOTE CONFIG (firebase/monitoring/remote-config)',
           title: isTurkishDeck
-              ? 'Tek kod, beş DevFest şehri: 3 katmanlı yapılandırma'
+              ? 'Tek uygulama, beş şehir'
               : 'One Codebase, Four DevFest Cities via Remote Config',
           act: StoryAct.underTheHood,
           subtitle: isTurkishDeck
-              ? 'CityEditionController 3 yere sırayla bakar: uygulama içi seçim -> URL parametresi -> yerel JSON'
+              ? 'Şehri bir ayar belirler; uygulamayı yeniden derlemek gerekmez. Ayar üç yerde sırayla aranır'
               : '3-Layer resolution in CityEditionController: UI Override -> Remote Config -> Local JSON',
           accentColor: DeckColors.halftoneBlue,
           child: Column(
@@ -65,7 +80,7 @@ CityEditionConfig get activeEdition =>
                 children: [
                   Expanded(
                     child: StatChip(
-                      value: isTurkishDeck ? '1 · Uygulama içi seçim' : '1 · UI Override',
+                      value: isTurkishDeck ? '1 · Uygulamadaki seçici' : '1 · UI Override',
                       label: '_manualOverrideCityId',
                       accentColor: DeckColors.googleYellow,
                     ),
@@ -73,7 +88,7 @@ CityEditionConfig get activeEdition =>
                   SizedBox(width: 14),
                   Expanded(
                     child: StatChip(
-                      value: isTurkishDeck ? '2 · URL parametresi' : '2 · Remote Config',
+                      value: isTurkishDeck ? '2 · Adresteki parametre' : '2 · Remote Config',
                       label: '_remoteConfigCityId',
                       accentColor: DeckColors.halftoneBlue,
                     ),
@@ -81,7 +96,7 @@ CityEditionConfig get activeEdition =>
                   SizedBox(width: 14),
                   Expanded(
                     child: StatChip(
-                      value: isTurkishDeck ? '3 · Yerel JSON' : '3 · Local JSON',
+                      value: isTurkishDeck ? '3 · Paketteki dosya' : '3 · Local JSON',
                       label: '_fallbackCityId (Gaziantep)',
                       accentColor: DeckColors.googleGreen,
                     ),
@@ -95,10 +110,12 @@ CityEditionConfig get activeEdition =>
                     Expanded(
                       flex: 5,
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'TEK REPODA 5 ŞEHİR SÜRÜMÜ' : '4 CITY EDITIONS IN 1 REPO',
+                        badge: isTurkishDeck ? '5 ŞEHİR SÜRÜMÜ' : '4 CITY EDITIONS IN 1 REPO',
                         badgeIcon: Icons.public,
+                        talkBulletFontSize: _cityListSize,
+                        talkTitleFontSize: _cityTitleSize,
                         title: isTurkishDeck
-                            ? 'Yeniden derlemeden şehir değiştirme'
+                            ? 'Aynı oyun, şehre özel menü'
                             : 'Live City Switching Without Redeploying',
                         accentColor: DeckColors.halftoneBlue,
                         bullets: [
@@ -121,7 +138,7 @@ CityEditionConfig get activeEdition =>
                             'TR · Istanbul (19 Dec): Galata & Vapur Kafe · Galata San Sebastian & Vapur Çayı.',
                         ],
                         footerText: isTurkishDeck
-                            ? 'Şablon: flutter_client/remote_config_template.json'
+                            ? 'İleri seviye: Remote Config şablonu repoda · remote_config_template.json'
                             : 'Template: flutter_client/remote_config_template.json',
                       ),
                     ),
@@ -130,7 +147,8 @@ CityEditionConfig get activeEdition =>
                       flex: 6,
                       child: DeckCodeCard(
                         filePathLabel: 'flutter_client/lib/config/city_edition_controller.dart',
-                        code: _cityControllerSnippet,
+                        code: isTurkishDeck ? _talkSnippet : _cityControllerSnippet,
+                        talkFontSize: _talkCodeSize,
                         badgeLabel: isTurkishDeck ? '3 KATMANLI ÖNCELİK' : '3-TIER CASCADE',
                       ),
                     ),

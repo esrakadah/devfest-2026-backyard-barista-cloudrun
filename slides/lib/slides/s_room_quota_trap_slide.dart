@@ -33,14 +33,14 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         return const SlideFrame(
           eyebrow: isTurkishDeck
-              ? 'GERÇEK RAKAMLAR #3 (KOTA VE HIZ SINIRLARI)'
+              ? 'GERÇEK RAKAMLAR 3 · KALABALIK'
               : 'GERÇEK RAKAMLAR #3 (QUOTAS & RATE LIMITS)',
           title: isTurkishDeck
-              ? "Gerçek rakamlar #3: salonda HTTP 429'a takılmadan"
+              ? '850 kişi aynı anda basarsa ne olur?'
               : 'Real Numbers #3: Surviving a 300-Person Room Without HTTP 429',
           act: StoryAct.realNumbers,
           subtitle: isTurkishDeck
-              ? 'Ortak anahtar neden yetmez, bizim mimari neden ayakta kalır'
+              ? 'HTTP 429, sunucunun "çok fazla istek geldi, yavaşla" demesidir'
               : 'Why shared keys and 100-seat lab VMs fail at scale, and how our architecture stays green',
           accentColor: DeckColors.googleRed,
           child: Column(
@@ -53,31 +53,29 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: isTurkishDeck
-                            ? 'SAHNE TUZAĞI · BİRKAÇ SANİYEDE HTTP 429'
+                            ? 'TUZAK'
                             : 'THE STAGE TRAP · HTTP 429 IN 3 SECONDS',
                         badgeIcon: Icons.error_outline,
                         title: isTurkishDeck
-                            ? 'Kalabalık salonlarda ne bozulur?'
+                            ? 'Tek ücretsiz anahtarı herkes paylaşırsa'
                             : 'What Breaks in Big Hands-On Workshops',
                         accentColor: DeckColors.googleRed,
                         bullets: [
                           if (isTurkishDeck)
-                            'Kota proje başına (olgu): Gemini API ücretsiz katman sınırı API anahtarına değil Google Cloud projesine uygulanır (Ekim 2026: genelde dakikada 5-15 istek).'
+                            'Ücretsiz sınır: dakikada 5-15 istek.'
                           else
                             'Per-Project Quota Enforcement (Fact): Gemini API free-tier rate limits apply per Google Cloud project (typically 5 to 15 RPM, ~250K TPM), not per API key.',
                           if (isTurkishDeck)
-                            'Ortak anahtar = anında 429: 850 kişi tek projeye yüklenince 15 RPM kotası birkaç saniyede biter.'
+                            '850 kişi bu sınırı birkaç saniyede doldurur.'
                           else
                             'Shared Key = Instant 429: 300 builders hitting 1 project exhausts the 15 RPM bucket in under 3 seconds.',
-                          if (isTurkishDeck)
-                            'Salon tek ağın arkasında: nginx sınırı IP başına değil, bütün servis için tek kova.'
-                          else
+                          if (!isTurkishDeck)
                             'GEAR Lab VM Cap (<100 Seats): Hosted Qwiklabs sandboxes throttle above 100 concurrent starts.',
                           if (!isTurkishDeck)
                             'Shared Venue NAT IP: Creating 300 keys simultaneously on one Wi-Fi router triggers CAPTCHA throttles.',
                         ],
                         footerText: isTurkishDeck
-                            ? 'Kaynak: ai.google.dev/gemini-api/docs/rate-limits'
+                            ? 'İleri seviye: kota anahtara değil projeye bağlı · ai.google.dev/gemini-api/docs/rate-limits'
                             : 'Source: ai.google.dev/gemini-api/docs/rate-limits',
                       ),
                     ),
@@ -87,29 +85,29 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
                         badge: isTurkishDeck ? 'DÖRT ÖNLEMİMİZ' : 'OUR 4-LAYER DEFENSE · 100% SURVIVABLE',
                         badgeIcon: Icons.shield,
                         title: isTurkishDeck
-                            ? 'Backyard Barista 850 kişiyle nasıl ayakta kalır?'
+                            ? 'Oyun nasıl ayakta kalır?'
                             : 'How Backyard Barista Stays Up for 300 Builders',
                         accentColor: DeckColors.googleGreen,
                         bullets: [
                           if (isTurkishDeck)
-                            '1. Herkese kendi AI Studio projesi: tek ortak kota yerine herkese ayrı kota.'
+                            '1. Herkes kendi AI Studio projesini kullanır.'
                           else
                             '1. One Personal AI Studio Project per Builder: 300 isolated RPM buckets instead of 1 shared bottleneck.',
                           if (isTurkishDeck)
-                            '2. Tek seferlik JSON çağrısı: sadece "Servis Et!" tıklanınca 1 generateContent (oyuncu başına 1-2 RPM).'
+                            '2. Sipariş başına tek çağrı gider.'
                           else
                             '2. Single-Shot Structured JSON: Only 1 generateContent call when clicking "Serve Order!" (1-2 RPM per player).',
                           if (isTurkishDeck)
-                            '3. Cloud Run üzerinde nginx hız sınırı: Gemini çağrılarına saniyede 10 istek + 20 burst, fazlası 429.'
+                            '3. Sunucu saniyede 10 isteğe izin verir.'
                           else
                             '3. AI Studio Starter Tier Cloud Run: Deploys up to 2 apps per account with zero billing card or VM lab cap.',
                           if (isTurkishDeck)
-                            '4. Çevrimdışı yedek: Wi-Fi ya da kota takılınca mock_responses.json devreye girer.'
+                            '4. Sınır dolarsa hazır yanıtlar devreye girer.'
                           else
                             '4. Deterministic Offline Net: Automatic fallback to mock_responses.json when Wi-Fi or quota hiccups.',
                         ],
                         footerText: isTurkishDeck
-                            ? "Hedef: salon Wi-Fi'ı ne yaparsa yapsın herkes bitirip yayınlasın."
+                            ? 'İleri seviye: nginx 10 istek/sn + 20 burst · mock_responses.json yedeği'
                             : 'Result: Every builder finishes & deploys regardless of venue Wi-Fi.',
                       ),
                     ),
