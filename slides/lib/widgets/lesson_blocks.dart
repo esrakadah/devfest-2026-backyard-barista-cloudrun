@@ -106,8 +106,8 @@ class LessonCodeCard extends StatelessWidget {
     super.key,
   });
 
-  /// Read from the back row of a 850 seat hall; a card holds about nine lines at this size.
-  static const double defaultFontSize = 26;
+  /// Read from the back row of a 850 seat hall; a card holds about ten lines at this size.
+  static const double defaultFontSize = 30;
   static const double _cornerRadius = 18;
   static const double _headerHorizontalPadding = 20;
   static const double _headerVerticalPadding = 12;
@@ -223,7 +223,11 @@ class LessonCodeCard extends StatelessWidget {
 
 /// The test that proves a lesson: its name as it stands in the repo, and what it showed.
 class ProofStrip extends StatelessWidget {
-  const ProofStrip({required this.testName, required this.outcome, this.label = 'TEST', super.key});
+  const ProofStrip({required this.testName, required this.outcome, this.label = 'TEST', super.key}) : _isFailing = false;
+
+  /// The same test at the moment it caught the bug, drawn in red.
+  const ProofStrip.failing({required this.testName, required this.outcome, this.label = 'TEST', super.key})
+      : _isFailing = true;
 
   static const double _horizontalPadding = 22;
   static const double _verticalPadding = 14;
@@ -238,29 +242,31 @@ class ProofStrip extends StatelessWidget {
   final String label;
   final String testName;
   final String outcome;
+  final bool _isFailing;
 
   @override
   Widget build(BuildContext context) {
+    final accentColor = _isFailing ? DeckColors.googleRed : DeckColors.googleGreen;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: _horizontalPadding, vertical: _verticalPadding),
       decoration: BoxDecoration(
         color: DeckColors.surface,
         borderRadius: BorderRadius.circular(_cornerRadius),
-        border: Border.all(color: DeckColors.googleGreen.withValues(alpha: _borderOpacity), width: 1.5),
+        border: Border.all(color: accentColor.withValues(alpha: _borderOpacity), width: 1.5),
       ),
       child: Row(
         children: [
-          const Icon(Icons.verified, size: _iconSize, color: DeckColors.googleGreen),
+          Icon(_isFailing ? Icons.cancel : Icons.verified, size: _iconSize, color: accentColor),
           const SizedBox(width: _gap),
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: DeckFonts.sans,
               fontSize: _labelSize,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.2,
-              color: DeckColors.googleGreen,
+              color: accentColor,
             ),
           ),
           const SizedBox(width: _gap),
@@ -273,11 +279,11 @@ class ProofStrip extends StatelessWidget {
           const SizedBox(width: _gap),
           Text(
             outcome,
-            style: const TextStyle(
+            style: TextStyle(
               fontFamily: DeckFonts.sans,
               fontSize: _outcomeSize,
               fontWeight: FontWeight.w700,
-              color: DeckColors.googleGreen,
+              color: accentColor,
             ),
           ),
         ],

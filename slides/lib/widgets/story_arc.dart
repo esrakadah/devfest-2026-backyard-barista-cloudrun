@@ -2,20 +2,15 @@ import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:flutter/material.dart';
 
-/// The five acts of the talk. Every `SlideFrame` names its act, and the strip in its header
-/// shows the audience where they are in the story.
+/// The five acts of the deck. Every `SlideFrame` names its act, and the strip in its header
+/// shows the audience where they are in the story. The Turkish talk reads: opening, the game the
+/// hall plays, the two rules about the model's answer, the three rules about the app itself, closing.
 enum StoryAct {
   hook(isTurkishDeck ? (isWizardEdition ? 'DAVET' : 'GİRİŞ') : 'HOOK', DeckColors.googleYellow),
-  tools(isTurkishDeck ? (isWizardEdition ? 'ASALAR' : 'ARAÇLAR') : 'TOOLS', DeckColors.halftoneBlue),
-  realNumbers(isTurkishDeck && isWizardEdition ? 'ÖLÇÜM BÜYÜSÜ' : 'GERÇEK RAKAMLAR', DeckColors.googleRed),
-  underTheHood(
-    isTurkishDeck ? (isWizardEdition ? 'PERDE ARKASI' : 'KAPUTUN ALTI') : 'UNDER THE HOOD',
-    DeckColors.googleGreen,
-  ),
-  buildAndShip(
-    isTurkishDeck ? (isWizardEdition ? 'CANLI BÜYÜ' : 'DEMO VE KAPANIŞ') : 'BUILD & SHIP',
-    DeckColors.googleBlue,
-  );
+  tools(isTurkishDeck ? (isWizardEdition ? 'CANLI BÜYÜ' : 'OYUN') : 'TOOLS', DeckColors.halftoneBlue),
+  realNumbers(isTurkishDeck ? 'MODELİN CEVABI' : 'GERÇEK RAKAMLAR', DeckColors.googleRed),
+  underTheHood(isTurkishDeck ? 'UYGULAMANIN KENDİSİ' : 'UNDER THE HOOD', DeckColors.googleGreen),
+  buildAndShip(isTurkishDeck ? 'KAPANIŞ' : 'BUILD & SHIP', DeckColors.googleBlue);
 
   const StoryAct(this.label, this.color);
 

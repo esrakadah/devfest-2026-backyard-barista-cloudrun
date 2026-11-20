@@ -71,7 +71,8 @@ void main() {
         mainAxisSize: MainAxisSize.min,
         children: [
           NewWordCard(word: 'Enum', definition: 'İzin verilen değerlerin kapalı listesi.'),
-          ProofStrip(testName: 'a reply with no fields does not score', outcome: 'kırmızı → yeşil'),
+          ProofStrip(testName: 'a reply with no fields does not score', outcome: 'artık yeşil'),
+          ProofStrip.failing(testName: 'a late verdict is dropped', outcome: 'kırmızı'),
           AdvancedNote('exhaustive switch'),
         ],
       ),

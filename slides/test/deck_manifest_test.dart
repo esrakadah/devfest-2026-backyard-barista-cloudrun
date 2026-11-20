@@ -27,30 +27,33 @@ const List<String> expectedWorkshopOrder = [
   '/generate-vs-decide',
 ];
 
-/// Locked running order of the Turkish talk (`--dart-define=DECK_LANG=tr`): 16 main slides + 2 backup slides.
+/// Locked running order of the Turkish talk (`--dart-define=DECK_LANG=tr`): 19 main slides + 2 backup slides.
 const List<String> expectedTalkOrder = [
   '/title',
   '/sweet-or-salty',
-  '/workshop-contract',
-  '/ai-studio-pipeline',
-  '/meet-antigravity',
-  '/pure-flutter-widgets',
-  '/real-numbers-latency',
-  '/real-numbers-cost',
-  '/room-quota-trap',
-  '/multi-city-remote-config',
-  '/salt-sugar-mechanic',
-  '/hybrid-asset-pipeline',
-  '/live-build-dashboard',
-  '/architecture-recap',
-  '/winner-podium-closing',
+  '/hall-plays',
+  '/how-it-was-built',
+  '/five-lessons',
+  '/guard-rule',
+  '/guard-before-after',
+  '/typed-output-rule',
+  '/enum-feeds-schema',
+  '/empty-reply',
+  '/order-state-rule',
+  '/forgotten-line',
+  '/sealed-order',
+  '/fallback-rule',
+  '/hall-load-test',
+  '/key-rule',
+  '/cost-honest',
+  '/lesson-recap',
   '/bana-ulasin',
   '/demo-hiccup',
-  '/generate-vs-decide',
+  '/wifi-off-gemma',
 ];
 
 const List<String> expectedRunningOrder = isTurkishDeck ? expectedTalkOrder : expectedWorkshopOrder;
-const int expectedMainSlideCount = 16;
+const int expectedMainSlideCount = isTurkishDeck ? 19 : 16;
 const int expectedBackupSlideCount = 2;
 
 void main() {
@@ -108,6 +111,26 @@ void main() {
         expect(notes.contains('—'), isFalse, reason: '$route speakerNotes contains an em-dash');
         expect(notes.contains('–'), isFalse, reason: '$route speakerNotes contains an en-dash');
       }
+    });
+
+    test('the BEAT stamps of the Turkish talk run from 00:00 without a gap and end inside the 30 minute slot', () {
+      if (!isTurkishDeck) {
+        return;
+      }
+      const slotSeconds = 30 * 60;
+      final beatStamp = RegExp(r'^BEAT  \[(\d\d):(\d\d) - (\d\d):(\d\d)\]');
+      var expectedStart = 0;
+      for (final slide in mainSlides) {
+        final route = slide.configuration!.route;
+        final match = beatStamp.firstMatch(slide.configuration!.speakerNotes);
+        expect(match, isNotNull, reason: '$route has no BEAT [mm:ss - mm:ss] stamp');
+        final start = int.parse(match!.group(1)!) * 60 + int.parse(match.group(2)!);
+        final end = int.parse(match.group(3)!) * 60 + int.parse(match.group(4)!);
+        expect(start, expectedStart, reason: '$route does not start where the previous slide ends');
+        expect(end, greaterThan(start), reason: '$route ends before it starts');
+        expectedStart = end;
+      }
+      expect(expectedStart, lessThanOrEqualTo(slotSeconds));
     });
 
     test('every slide class is named after its route', () {

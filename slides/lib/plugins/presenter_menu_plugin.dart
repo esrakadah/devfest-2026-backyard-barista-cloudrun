@@ -17,9 +17,8 @@ class PresenterSection {
   final bool highlighted;
 }
 
-/// The sections the presenter menu offers. Every route here must exist in [deckSlides];
-/// `deck_manifest_test.dart` asserts it.
-const List<PresenterSection> presenterSections = [
+/// Jump targets of the English workshop deck.
+const List<PresenterSection> workshopPresenterSections = [
   PresenterSection(icon: Icons.title, label: isTurkishDeck ? '1. Başlık' : '1. Title & City Editions', route: '/title'),
   PresenterSection(
     icon: Icons.how_to_vote,
@@ -83,6 +82,33 @@ const List<PresenterSection> presenterSections = [
     route: '/generate-vs-decide',
   ),
 ];
+
+/// Jump targets of the Turkish talk: the opening, the hall game, each of the five rules, the closing
+/// and the two backup slides.
+const List<PresenterSection> talkPresenterSections = [
+  PresenterSection(icon: Icons.title, label: '1. Başlık', route: '/title'),
+  PresenterSection(icon: Icons.how_to_vote, label: '2. Açılış: hangisi şeker?', route: '/sweet-or-salty'),
+  PresenterSection(icon: Icons.qr_code_2, label: '3. Salon oynuyor (QR)', route: '/hall-plays', highlighted: true),
+  PresenterSection(icon: Icons.auto_awesome, label: '4. Bu oyun nasıl yazıldı', route: '/how-it-was-built'),
+  PresenterSection(icon: Icons.verified_user, label: '6. Kural 1: kararı kod verir', route: '/guard-rule'),
+  PresenterSection(icon: Icons.list_alt, label: '8. Kural 2: kapalı liste', route: '/typed-output-rule'),
+  PresenterSection(icon: Icons.lock, label: '11. Kural 3: sealed OrderState', route: '/order-state-rule'),
+  PresenterSection(icon: Icons.timer, label: '14. Kural 4: model susarsa', route: '/fallback-rule'),
+  PresenterSection(icon: Icons.key, label: '16. Kural 5: anahtar ve maliyet', route: '/key-rule'),
+  PresenterSection(icon: Icons.layers, label: '18. Özet: beş kural', route: '/lesson-recap'),
+  PresenterSection(icon: Icons.celebration, label: '19. Bana ulaşın', route: '/bana-ulasin'),
+  PresenterSection(
+    icon: Icons.wifi_tethering_error,
+    label: 'Demo aksadı (çevrimdışı yedek)',
+    route: '/demo-hiccup',
+    highlighted: true,
+  ),
+  PresenterSection(icon: Icons.wifi_off, label: 'Yedek: Wi-Fi kapalı, Gemma', route: '/wifi-off-gemma'),
+];
+
+/// The sections the presenter menu offers for the deck being built. Every route here must exist in
+/// [deckSlides]; `deck_manifest_test.dart` asserts it.
+const List<PresenterSection> presenterSections = isTurkishDeck ? talkPresenterSections : workshopPresenterSections;
 
 /// Quick jumps across the talk sections, the keyboard cheat sheet and an on-stage talk timer.
 class PresenterMenuPlugin extends FlutterDeckPlugin {
