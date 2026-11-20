@@ -15,7 +15,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                 : '4. What Comes Out of Google AI Studio Today',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [03:15 - 04:30] "AI Studio\'dan bugün ne çıkar?" sorusunun somut cevabı.\n'
-                    'SAY   "Google AI Studio eskiden sadece prompt denediğimiz bir metin kutusuydu. Bugün Build moduna başlangıç promptumuzu veriyoruz, bize çalışan bir web uygulaması ve arka uç üretiyor. Kodu GitHub hesabımızla iki yönlü eşitliyor. Starter Tier kapsamında, kredi kartı ya da fatura hesabı açmadan Cloud Run\'da canlı bir .run.app adresine yayınlıyor. En güzel yanı: GEMINI_API_KEY sunucudaki container\'da kalıyor, tarayıcıdaki JavaScript paketine sızmıyor."\n'
+                    'SAY   "Google AI Studio eskiden sadece prompt denediğimiz bir metin kutusuydu. Bugün Build moduna başlangıç promptumuzu veriyoruz, bize çalışan bir web uygulaması ve arka uç üretiyor. Kodu GitHub hesabımızla iki yönlü eşitliyor. Starter Tier kapsamında, kredi kartı ya da fatura hesabı açmadan Cloud Run\'da canlı bir .run.app adresine yayınlıyor. Cloud Run, uygulamanızı internette çalıştıran Google servisi. En güzel yanı: GEMINI_API_KEY sunucudaki container\'da kalıyor, tarayıcıdaki JavaScript paketine sızmıyor."\n'
                     'HOLD  Dört kartı soldan sağa göster. [Olgu (Ekim 2026, ai.google.dev): Starter Tier = 2 Cloud Run uygulaması.]\n'
                     'NEXT  "Tarayıcıda prototip hızlı. Gerçek, çok dosyalı bir Flutter projesinde ne oluyor?"'
                 : 'BEAT  [05:00 - 07:30] "AI Studio\'dan ne gelir?" sorusunun somut cevabı.\n'
