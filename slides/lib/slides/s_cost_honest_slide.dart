@@ -5,8 +5,8 @@ import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
-/// Lesson 5, second slide: cost as a decision. Counted numbers are tested; the one estimate is
-/// labelled as an estimate.
+/// Lesson 5, second slide: cost as a decision. Counted numbers are tested; the token count is one
+/// measurement from the live game, shown next to the estimate it replaced.
 class CostHonestSlide extends FlutterDeckSlideWidget {
   const CostHonestSlide({super.key})
       : super(
@@ -14,9 +14,9 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
             route: '/cost-honest',
             title: '17. Kural 5, maliyet: model boşuna çağrılmaz',
             speakerNotes:
-                'BEAT  [22:45 - 24:00] Kural 5, maliyet. Sayılan rakamlar ve tek tahmin; tahmini tahmin diye söyle.\n'
-                'SAY   "Token, modelin okuduğu ve yazdığı kelime parçası; fatura token sayısına göre kesiliyor. O yüzden en ucuz çağrı, hiç yapmadığınız çağrı. Tepsiyi dizerken modele gitmiyoruz: sıfır çağrı. Eksik tepside, içinde tuz ya da acı yoksa, yine gitmiyoruz; cevabı kod veriyor. Tepsi servis edilince tek çağrı gidiyor. Bu üçünün testi var. Sağdaki rakama dikkat: servis başına yaklaşık 270 token. Bu bir tahmin; ölçmedim, o yüzden üstünde tahmin yazıyor. Ölçmediğiniz rakamı ölçmüş gibi göstermeyin."\n'
-                'HOLD  Soldan sağa dört kutu. Son kutudaki "TAHMİN" etiketini göster ve bir saniye dur.\n'
+                'BEAT  [22:45 - 24:00] Kural 5, maliyet. Sayılan rakamlar ve bir ölçüm; eski tahminin tutmadığını söyle.\n'
+                'SAY   "Token, modelin okuduğu ve yazdığı kelime parçası; fatura token sayısına göre kesiliyor. O yüzden en ucuz çağrı, hiç yapmadığınız çağrı. Tepsiyi dizerken modele gitmiyoruz: sıfır çağrı. Eksik tepside, içinde tuz ya da acı yoksa, yine gitmiyoruz; cevabı kod veriyor. Tepsi servis edilince tek çağrı gidiyor. Bu üçünün testi var. Sağdaki rakama dikkat: 322 token. Bunu 20 Kasım\'da tek bir tepside ölçtüm. O güne kadar slaytımda 270 yazıyordu ve bir tahmindi; elli token eksik tahmin etmişim. Ölçmediğiniz rakamı ölçmüş gibi göstermeyin."\n'
+                'HOLD  Soldan sağa dört kutu. Son kutudaki "ÖLÇÜLDÜ" etiketini göster ve bir saniye dur.\n'
                 'NEXT  "Toparlayalım."',
           ),
         );
@@ -71,10 +71,10 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
                     SizedBox(width: _gap),
                     Expanded(
                       child: _CountTile(
-                        value: '~270',
+                        value: '322',
                         unit: 'token',
-                        caption: 'Servis başına: yaklaşık 150 girdi, 120 çıktı',
-                        tag: 'TAHMİN · ÖLÇMEDİM',
+                        caption: 'Bir tatlı tepsi: 223 girdi, 99 çıktı. Eski tahmin 270 idi',
+                        tag: 'ÖLÇÜLDÜ · 1 TEPSİ · 20 KAS',
                         color: DeckColors.googleYellow,
                       ),
                     ),
@@ -88,7 +88,7 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
               ),
               SizedBox(height: _gap),
               AdvancedNote(
-                '152 + 118 token, benchmark aracındaki sabitler; gerçek sayı cevaptaki usageMetadata alanında, henüz okunmadı',
+                'tek ölçüm: canlı oyun, Konya sürümü, gemini-3.5-flash-lite, usageMetadata 223 + 99; eski tahmin benchmark aracındaki 152 + 118 sabitiydi',
               ),
             ],
           ),
