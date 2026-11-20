@@ -29,10 +29,9 @@ class TitleSlide extends FlutterDeckSlideWidget {
   static const double _gap = 16;
   static const double _largeGap = 24;
   static const double _badgeSpacing = 12;
-  static const double _photoSize = 230;
-  static const double _photoRadius = 26;
-  static const double _portraitWidth = 250;
-  static const double _portraitHeight = 300;
+  static const double _photoSize = 248;
+  static const double _photoRadius = 20;
+  static const double _portraitSize = 256;
   static const double _candleTitleSize = 100;
   static const double _konyaTitleSize = 104;
   static const double _konyaContentBottom = 372;
@@ -193,34 +192,44 @@ class TitleSlide extends FlutterDeckSlideWidget {
                     children: [
                       if (isWizardEdition)
                         Container(
-                          padding: const EdgeInsets.all(6),
+                          padding: const EdgeInsets.all(5),
                           decoration: const ShapeDecoration(
                             color: DeckColors.gold,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(_portraitWidth),
-                                bottom: Radius.circular(6),
+                                top: Radius.circular(_portraitSize),
+                                bottom: Radius.circular(8),
                               ),
                             ),
                           ),
                           child: ClipPath(
                             clipper: const ArchClipper(),
-                            child: Image.asset(
-                              'assets/images/esra.png',
-                              width: _portraitWidth,
-                              height: _portraitHeight,
-                              fit: BoxFit.cover,
+                            child: ColoredBox(
+                              color: DeckColors.surfaceInset,
+                              child: Image.asset(
+                                'assets/images/esra.png',
+                                width: _portraitSize,
+                                height: _portraitSize,
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                         )
                       else
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(_photoRadius),
-                          child: Image.asset(
-                            'assets/images/esra.png',
-                            width: _photoSize,
-                            height: _photoSize,
-                            fit: BoxFit.cover,
+                        Container(
+                          decoration: BoxDecoration(
+                            color: DeckColors.surfaceInset,
+                            borderRadius: BorderRadius.circular(_photoRadius),
+                            border: Border.all(color: DeckColors.outlineLight, width: 1.5),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(_photoRadius - 1),
+                            child: Image.asset(
+                              'assets/images/esra.png',
+                              width: _photoSize,
+                              height: _photoSize,
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       const SizedBox(height: _gap),

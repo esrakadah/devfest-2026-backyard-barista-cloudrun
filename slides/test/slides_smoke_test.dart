@@ -2,6 +2,7 @@ import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/lesson_blocks.dart';
+import 'package:backyard_barista_deck/widgets/lesson_diagrams.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -73,6 +74,84 @@ void main() {
         expect(tester.takeException(), isNull);
       });
     }
+
+    testWidgets(
+      'OrderStateRuleSlide steps from neutral combinations to red invalid rows to crossed-out sealed states at 2560x1440',
+      (tester) async {
+        const slide = OrderStateRuleSlide();
+        expect(slide.configuration?.steps, 3);
+
+        await pumpSlide(tester, slide);
+
+        // Step 1: all 5 combinations neutral, right panel waiting.
+        expect(find.text('5 KOMBİNASYON'), findsOneWidget);
+        expect(find.text('BİRAZDAN'), findsOneWidget);
+        expect(find.textContaining('Hangileri gerçekte olmamalı?'), findsOneWidget);
+        expect(find.byIcon(Icons.check_circle_rounded), findsNothing);
+        expect(find.byIcon(Icons.error_rounded), findsNothing);
+        expect(find.byIcon(Icons.block_rounded), findsNothing);
+        expect(find.text('OrderIdle'), findsNothing);
+        expect(find.text('YAZILAMAZ'), findsNothing);
+        expect(tester.takeException(), isNull);
+
+        // Step 2: valid rows turn green, 2 invalid rows light up red, right panel stays dimmed.
+        tester.element(find.byType(OrderStateDiagram)).flutterDeck.next();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 100));
+
+        expect(find.text('2 SAÇMA DURUM YAZILABİLİYORDU'), findsOneWidget);
+        expect(find.text('BİRAZDAN'), findsOneWidget);
+        expect(find.byIcon(Icons.check_circle_rounded), findsNWidgets(3));
+        expect(find.byIcon(Icons.error_rounded), findsNWidgets(2));
+        expect(find.text('Jüride ama kart ekranda?'), findsOneWidget);
+        expect(find.text('Boş tepsiye 5 yıldız!'), findsOneWidget);
+        expect(find.textContaining('bir unutulan sıfırlama satırı yetiyor.'), findsOneWidget);
+        expect(find.text('OrderIdle'), findsNothing);
+        expect(tester.takeException(), isNull);
+
+        // Step 3: invalid rows are crossed out as YAZILAMAZ and the 3 sealed subtypes appear.
+        tester.element(find.byType(OrderStateDiagram)).flutterDeck.next();
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 100));
+
+        expect(find.text('SEALED İLE 2 SAÇMA DURUM YAZILAMAZ'), findsOneWidget);
+        expect(find.text('3 HAL'), findsOneWidget);
+        expect(find.byIcon(Icons.check_circle_rounded), findsNWidgets(3));
+        expect(find.byIcon(Icons.block_rounded), findsNWidgets(2));
+        expect(find.text('YAZILAMAZ'), findsNWidgets(2));
+        expect(find.text('OrderIdle'), findsOneWidget);
+        expect(find.text('OrderEvaluating'), findsOneWidget);
+        expect(find.text('OrderServed + kart'), findsOneWidget);
+        expect(find.text('Dördüncü hal yok: yazmaya kalkarsan derlenmez.'), findsOneWidget);
+        final crossedOutTexts = tester
+            .widgetList<Text>(find.byType(Text))
+            .where((text) => text.style?.decoration == TextDecoration.lineThrough)
+            .toList();
+        expect(crossedOutTexts, hasLength(2));
+        expect(tester.takeException(), isNull);
+      },
+    );
+
+    testWidgets('standalone OrderStateDiagram defaults to sealedStates cleanly at 2560x1440', (tester) async {
+      tester.view.physicalSize = const Size(2560, 1440);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            backgroundColor: DeckColors.navy,
+            body: SizedBox(width: 1760, height: 620, child: OrderStateDiagram()),
+          ),
+        ),
+      );
+      await tester.pump();
+
+      expect(find.text('SEALED İLE 2 SAÇMA DURUM YAZILAMAZ'), findsOneWidget);
+      expect(find.text('OrderIdle'), findsOneWidget);
+      expect(find.text('YAZILAMAZ'), findsNWidgets(2));
+      expect(tester.takeException(), isNull);
+    });
   });
 
   group('Updated Slides Smoke Tests', () {
@@ -84,9 +163,7 @@ void main() {
 
       expect(
         find.text(
-          isTurkishDeck
-              ? 'Oyun sahnesi Flame, butonlar Flutter'
-              : 'Hybrid Flame Engine + Flutter HUD Architecture',
+          isTurkishDeck ? 'Oyun sahnesi Flame, butonlar Flutter' : 'Hybrid Flame Engine + Flutter HUD Architecture',
         ),
         findsOneWidget,
       );
