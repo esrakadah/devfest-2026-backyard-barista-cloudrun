@@ -15,7 +15,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                 : '7. Gerçek Rakamlar #1: Latency & Cold Starts',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [07:00 - 08:30] Gerçek rakamlar #1: gecikme, zaman aşımı sınırları ve Cloud Run soğuk başlangıcı.\n'
-                    'SAY   "Üretimde yapay zekadan söz ediyorsak rakamları ortaya koymalıyız. CafeJudgeService\'te hiçbir ağ çağrısı sonsuza kadar beklemiyor. Canlı Gemini çağrısı en fazla 8 saniye bekliyor. Yanıt gelmezse yerel Gemma 4\'e geçiyor, ona da en fazla 15 saniye veriyor. O da olmazsa 250 milisaniyede paketteki hazır yanıtlara düşüyor. Peki ölçümler ne diyor? 12 tepsiyle ölçtük: gemini-3.5-flash-lite kararı ortalama 1,4 saniyede veriyor. Bu laptoptaki Gemma 4 ısınmışken 5 ile 8,4 saniye arasında dönüyor. Cloud Run\'da, europe-west3 bölgesinde 50 istek attık: statik sayfa ısınmışken medyan yaklaşık 54 milisaniye, TLS dahil ilk soğuk çağrı yarım saniye civarında. Tam rakamlar ekranda."\n'
+                    'SAY   "Üretimde yapay zekadan söz ediyorsak rakamları ortaya koymalıyız. CafeJudgeService\'te hiçbir ağ çağrısı sonsuza kadar beklemiyor. Canlı Gemini çağrısı en fazla 8 saniye bekliyor. Bu laptoptaki sekmede yanıt gelmezse yerel Gemma 4\'e geçiyor, ona da en fazla 15 saniye veriyor. O da olmazsa en fazla 250 milisaniye bekleyip paketteki hazır yanıtlara düşüyor. Peki ölçümler ne diyor? 12 tepside ölçtük: Gemini kararı ortalama 1,4 saniyede veriyor. Bu laptoptaki Gemma 4 ısınmışken 5 ile 8,4 saniye arasında dönüyor. Cloud Run\'a 50 istek attık. Isınmış sayfa yaklaşık 54 milisaniyede geliyor. İlk soğuk çağrı yarım saniye civarında. Tam rakamlar ekranda."\n'
                     'HOLD  Önce üstteki çubukları, sonra üç kartı göster. [KOD SABİTİ] 8 sn ve 250 ms (cafe_judge_service.dart:11-12). [ÖLÇÜLDÜ] 53,81 ms p50 ve 528,95 ms ilk çağrı (24 Ekim); Gemini 1,0-1,8 sn, Gemma 5-8,4 sn (11 Kasım, 12 tepsi).\n'
                     'NEXT  "Hız güzel. 1.000 sipariş değerlendirdiğimizde cüzdanımıza ne yazıyor?"'
                 : 'BEAT  [11:30 - 14:00] Gerçek Rakamlar #1: Gecikme, zaman aşımı koruyucuları ve Cloud Run soğuk başlangıçları.\n'
@@ -62,7 +62,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                           else
                             'Defined in lib/services/cafe_judge_service.dart:11 (_geminiRequestTimeout = Duration(seconds: 8)).',
                           if (isTurkishDeck)
-                            'Yanıt gelmezse yerel Gemma 4: 5-8,4 sn, sınırı 15 sn.'
+                            'Bu laptopta yerel Gemma 4: 5-8,4 sn, sınırı 15 sn.'
                           else
                             'Calls gemini-3.5-flash-lite with responseMimeType: application/json and 6 required schema keys.',
                           if (!isTurkishDeck)
