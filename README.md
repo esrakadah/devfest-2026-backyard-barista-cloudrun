@@ -17,7 +17,7 @@
   - `gaziantep` (🇹🇷 DevFest Gaziantep, 15 Nov 2026)
   - `adana` (🇹🇷 DevFest Adana, 11 Dec 2026)
   - `istanbul` (🇹🇷 DevFest Istanbul, 19 Dec 2026)
-  - `konya` (🇹🇷 DevFest Konya, 21 Nov 2026; neutral texts, no local menu yet)
+  - `konya` (🇹🇷 DevFest Konya, 21 Nov 2026)
 
 ![Backyard Barista 2x2 Desktop Counter](docs/visuals/game-counter-desktop.png)
 
@@ -98,13 +98,13 @@ devfest-2026-backyard-barista-cloudrun/
 │   ├── step-1-base-cafe.md    # AI Studio Build mode seed prompt (Base Cafe + 4-City Switcher + 5s Tea Sip)
 │   ├── step-2-custom-dish.md  # On-the-fly custom SVG dish + prank icon + Gemini JSON judge
 │   └── step-3-deploy.md       # One-click Cloud Run (.run.app) & GitHub sync guide
-├── slides/                    # 15-slide flutter_deck presentation (5-act story arc) + Stage Navigator + Turkish speaker notes
+├── slides/                    # flutter_deck presentation: 16-slide English workshop deck and 19-slide Turkish talk (DECK_LANG=tr) + Stage Navigator + speaker notes
 │   ├── pubspec.yaml
 │   ├── lib/
 │   │   ├── main.dart
 │   │   ├── theme.dart
 │   │   ├── plugins/presenter_menu_plugin.dart
-│   │   └── slides/            # Slides 1..15 + /demo-hiccup and /generate-vs-decide backup slides
+│   │   └── slides/            # Workshop and talk slides plus backup slides; running orders in slides.dart
 │   ├── test/
 │   │   ├── deck_manifest_test.dart
 │   │   └── slides_render_test.dart  # Renders every slide with the real fonts and fails on any overflow
