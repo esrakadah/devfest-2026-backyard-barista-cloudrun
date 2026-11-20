@@ -25,6 +25,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
           ),
         );
 
+  static const double _talkBulletSize = 26;
   static const double _gap = 16;
 
   @override
@@ -54,6 +55,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                         badge: isTurkishDeck ? 'OLGU · KOD SABİTİ' : 'FACT · CODE CONSTANT',
                         badgeIcon: Icons.verified,
                         title: isTurkishDeck ? 'Canlı Gemini zaman aşımı: 8 saniye' : 'Live Gemini JSON Timeout: 8,000 ms',
+                        talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
                             'Ölçüldü (11 Kasım, 12 tepsi): karar ortalama 1,4 sn.'
@@ -78,6 +80,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                         badgeIcon: Icons.speed,
                         title: isTurkishDeck ? "Cloud Run'da statik sayfa: 53,81 ms" : 'Stateless Container on PORT 8080',
                         accentColor: DeckColors.googleGreen,
+                        talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
                             'Ölçüldü (50 istek, europe-west3): p50 53,81 ms, p95 75,52 ms.'
@@ -102,6 +105,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                         badgeIcon: Icons.bolt,
                         title: isTurkishDeck ? "Salon Wi-Fi'ı giderse: 250 ms" : 'Conference Wi-Fi Guard: 250 ms',
                         accentColor: DeckColors.googleYellow,
+                        talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
                             'mock_responses.json bir kez yüklenir, bellekte tutulur.'

@@ -24,6 +24,7 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
           ),
         );
 
+  static const double _talkBulletSize = 30;
   static const double _gap = 24;
 
   @override
@@ -51,6 +52,7 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                         badgeIcon: isTurkishDeck ? Icons.lightbulb : Icons.emoji_events,
                         title: isTurkishDeck ? 'Pazartesi kendi projenize taşıyın' : '60-Second Live Showcase',
                         accentColor: DeckColors.googleYellow,
+                        talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
                             'Her çağrıya zaman aşımı ve yedek: 8 sn, 15 sn, 250 ms. 429 testi yedeğe düşer.'
@@ -64,43 +66,31 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                             'Şema istektir, garanti değil: boş yanıt tuzlu tepsiye 5 yıldız veremez (testli).'
                           else
                             'Win 1 of 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts.',
-                          if (isTurkishDeck) 'Şakayı model yazsın, kararı kodunuz versin: _verdictMatchesPranks, 2 testle sabit.',
+                          if (isTurkishDeck)
+                            'Şakayı model yazsın, kararı kodunuz versin: _verdictMatchesPranks, 2 testle sabit.',
                         ],
                         footerText: isTurkishDeck
                             ? 'Kural: AI çıktısı her zaman güvenilmeyen dış girdidir'
                             : '2 winners per 45-min Vibe Lounge wave / 4 winners in 80-min workshop',
                       ),
                     ),
-                    SizedBox(width: _gap),
-                    Expanded(
-                      child: isTurkishDeck
-                          ? DeckFeatureCard(
-                              badge: 'KOD, SLAYTLAR VE YAZILAR',
-                              badgeIcon: Icons.code,
-                              title: 'Klonlayın, kurcalayın, kendi şehrinizi ekleyin',
-                              accentColor: DeckColors.halftoneBlue,
-                              bullets: [
-                                'Tam kaynak kod ve prompt seti: github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
-                                'Web slaytları: esrakadah.github.io/devfest-2026-backyard-barista-cloudrun',
-                                'Canlı oyun: backyard-barista-389486729482.europe-west3.run.app/?remote_city=konya',
-                                'Teknik yazılar ve iletişim: esratech.com · @esrakadah',
-                              ],
-                              footerText: 'Sorular ve sohbet için konuşma sonrası fuayede buluşalım!',
-                            )
-                          : DeckFeatureCard(
-                              badge: '2. CLAIM BADGE & STAY IN TOUCH',
-                              badgeIcon: Icons.verified,
-                              title: 'Official Badge & Starter Repo',
-                              accentColor: DeckColors.halftoneBlue,
-                              bullets: [
-                                'Claim your DevFest 2026 Vibe Lounge Badge: goo.gle/devfest26-vibe-lounge',
-                                'Starter Repo & Slides: github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
-                                'Speaker: Esra Kadah · Tech Lead, Senior Flutter & AI Engineer · @esrakadah · esra.tech',
-                                'Google Developer Expert, Flutter & Dart · Does not speak for Google',
-                              ],
-                              footerText: "Questions? Let's talk Cloud Run, Firebase AI Logic & Flutter!",
-                            ),
-                    ),
+                    if (!isTurkishDeck) SizedBox(width: _gap),
+                    if (!isTurkishDeck)
+                      Expanded(
+                        child: DeckFeatureCard(
+                          badge: '2. CLAIM BADGE & STAY IN TOUCH',
+                          badgeIcon: Icons.verified,
+                          title: 'Official Badge & Starter Repo',
+                          accentColor: DeckColors.halftoneBlue,
+                          bullets: [
+                            'Claim your DevFest 2026 Vibe Lounge Badge: goo.gle/devfest26-vibe-lounge',
+                            'Starter Repo & Slides: github.com/esrakadah/devfest-2026-backyard-barista-cloudrun',
+                            'Speaker: Esra Kadah · Tech Lead, Senior Flutter & AI Engineer · @esrakadah · esra.tech',
+                            'Google Developer Expert, Flutter & Dart · Does not speak for Google',
+                          ],
+                          footerText: "Questions? Let's talk Cloud Run, Firebase AI Logic & Flutter!",
+                        ),
+                      ),
                     SizedBox(width: _gap),
                     QrCodeCard(
                       assetPath: 'assets/images/starter_repo_qr.png',

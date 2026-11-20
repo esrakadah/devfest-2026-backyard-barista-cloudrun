@@ -13,7 +13,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [00:00 - 01:15] Ana salon açılışı. Salonu selamla, kendini iki cümleyle tanıt, 30 dakikanın sözünü ver.\n'
                     'SAY   "Merhaba ${isIzmirDeck ? "İzmir" : "Konya"}, hoş geldiniz! Ben Esra Kadah. Berlin\'de Antigua Mobile\'da Tech Lead ve Senior Flutter ve AI Engineer olarak çalışıyorum, bir de Flutter ve Dart alanında Google Developer Expert\'im. Bugün size sadece slayt göstermeyeceğim. Google AI Studio, Antigravity ve Flutter ile kurduğumuz iki oyunculu bir AI kafe oyununun içine gerçek üretim rakamlarıyla bakacağız; sonra da telefonlarınızdan canlı oynayacağız. Bir not: anlatacaklarım benim saha deneyimim, Google adına konuşmuyorum."\n'
-                    'HOLD  İlk cümleyi ekrana değil salona bakarak söyle, 2 saniye bekle. 53,81 ms ölçüm, 270 token yaklaşık hesap, 60fps hedef: üçünü karıştırma.\n'
+                    'HOLD  İlk cümleyi ekrana değil salona bakarak söyle, 2 saniye bekle.\n'
                     'NEXT  "Koda geçmeden önce bütün salonla küçük bir oyun oynayalım."'
                 : 'BEAT  [00:00 - 02:00] Enerjik Açılış ve Sözleşme. Salonu selamla, iki cümlelik GDE girişini yap ve herkesin bugün çalışan bir oyunla çıkacağını ilan et.\n'
                     'SAY   "Ben Esra Kadah, Berlin\'de Antigua Mobile\'da Tech Lead, Senior Flutter ve AI Engineer olarak çalışıyorum ve Flutter ile Dart alanında Google Developer Expert\'im. Önümüzdeki oturumda size sadece slayt göstermeyeceğim: Google AI Studio, Antigravity ve Flutter ile çok oyunculu bir AI kafe oyununu Google Cloud Run üzerinde canlıya alacağız ve gerçek rakamları konuşacağız. Söyleyeceklerim kendi görüşlerim, Google adına konuşmuyorum."\n'
@@ -99,32 +99,33 @@ class TitleSlide extends FlutterDeckSlideWidget {
                           : 'TR: AI Studio, Antigravity ve Flutter ile Kendi AI Kafe Oyununu Canlıya Al (Tatlı mı Tuzlu mu?)',
                       style: textTheme.bodyLarge.copyWith(color: DeckColors.googleYellow),
                     ),
-                    const SizedBox(height: _largeGap),
-                    const Wrap(
-                      spacing: 14,
-                      runSpacing: 12,
-                      children: [
-                        StatChip(
-                          value: isTurkishDeck ? '53,81 ms' : '53.81 ms',
-                          label: isTurkishDeck ? 'STATİK SAYFA P50 · ÖLÇÜLDÜ' : 'Static Page p50 Warm',
-                          accentColor: DeckColors.googleGreen,
-                        ),
-                        StatChip(
-                          value: '~270 token',
-                          label: isTurkishDeck ? 'SİPARİŞ BAŞINA 1 JSON ÇAĞRISI' : '1 JSON Call / Order',
-                        ),
-                        StatChip(
-                          value: isTurkishDeck ? '60fps hedefi + NFC' : '60fps + NFC',
-                          label: isTurkishDeck ? 'FLAME 3 ŞERİT · NDEFREADER' : 'Flame 3-Lane · NDEFReader',
-                          accentColor: DeckColors.googleYellow,
-                        ),
-                        StatChip(
-                          value: isTurkishDeck ? '5 şehir sürümü' : '4 City Editions',
-                          label: isTurkishDeck ? '3 KATMANLI YAPILANDIRMA' : 'Remote Config + GDE Tour',
-                          accentColor: DeckColors.halftonePink,
-                        ),
-                      ],
-                    ),
+                    if (!isTurkishDeck) const SizedBox(height: _largeGap),
+                    if (!isTurkishDeck)
+                      const Wrap(
+                        spacing: 14,
+                        runSpacing: 12,
+                        children: [
+                          StatChip(
+                            value: isTurkishDeck ? '53,81 ms' : '53.81 ms',
+                            label: isTurkishDeck ? 'STATİK SAYFA P50 · ÖLÇÜLDÜ' : 'Static Page p50 Warm',
+                            accentColor: DeckColors.googleGreen,
+                          ),
+                          StatChip(
+                            value: '~270 token',
+                            label: isTurkishDeck ? 'SİPARİŞ BAŞINA 1 JSON ÇAĞRISI' : '1 JSON Call / Order',
+                          ),
+                          StatChip(
+                            value: isTurkishDeck ? '60fps hedefi + NFC' : '60fps + NFC',
+                            label: isTurkishDeck ? 'FLAME 3 ŞERİT · NDEFREADER' : 'Flame 3-Lane · NDEFReader',
+                            accentColor: DeckColors.googleYellow,
+                          ),
+                          StatChip(
+                            value: isTurkishDeck ? '5 şehir sürümü' : '4 City Editions',
+                            label: isTurkishDeck ? '3 KATMANLI YAPILANDIRMA' : 'Remote Config + GDE Tour',
+                            accentColor: DeckColors.halftonePink,
+                          ),
+                        ],
+                      ),
                     const SizedBox(height: _gap),
                     const DeckCard(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -146,14 +147,14 @@ class TitleSlide extends FlutterDeckSlideWidget {
                           ),
                           if (!isTurkishDeck) SizedBox(height: 6),
                           if (!isTurkishDeck)
-                          Text(
-                            'Topics: ai/ai-dev-tools/ai-studio · cloud/serverless-containers/cloud-run · firebase/monitoring/remote-config',
-                            style: TextStyle(
-                              fontFamily: DeckFonts.mono,
-                              fontSize: DeckTypeScale.bodySmall,
-                              color: DeckColors.halftoneBlue,
+                            Text(
+                              'Topics: ai/ai-dev-tools/ai-studio · cloud/serverless-containers/cloud-run · firebase/monitoring/remote-config',
+                              style: TextStyle(
+                                fontFamily: DeckFonts.mono,
+                                fontSize: DeckTypeScale.bodySmall,
+                                color: DeckColors.halftoneBlue,
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
