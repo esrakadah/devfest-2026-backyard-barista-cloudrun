@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/theme.dart';
+import 'package:backyard_barista_deck/widgets/deck_backdrop.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
@@ -30,13 +31,16 @@ class TitleSlide extends FlutterDeckSlideWidget {
   static const double _badgeSpacing = 12;
   static const double _photoSize = 230;
   static const double _photoRadius = 26;
+  static const double _portraitWidth = 250;
+  static const double _portraitHeight = 300;
+  static const double _candleTitleSize = 100;
 
   @override
   FlutterDeckSlide build(BuildContext context) {
     return FlutterDeckSlide.blank(
       builder: (context) {
         final textTheme = FlutterDeckTheme.of(context).textTheme;
-        return Padding(
+        final content = Padding(
           padding: const EdgeInsets.symmetric(horizontal: _outerHorizontalPadding, vertical: _outerVerticalPadding),
           child: Row(
             children: [
@@ -46,6 +50,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (isCandleTheme) const SizedBox(height: 150),
                     const Wrap(
                       spacing: _badgeSpacing,
                       runSpacing: _badgeSpacing,
@@ -83,8 +88,9 @@ class TitleSlide extends FlutterDeckSlideWidget {
                     const SizedBox(height: _largeGap),
                     Text(
                       isTurkishDeck ? 'Backyard Barista\non Cloud Run' : 'Backyard Barista on Cloud Run',
-                      style: textTheme.display,
+                      style: isCandleTheme ? textTheme.display.copyWith(fontSize: _candleTitleSize) : textTheme.display,
                     ),
+                    if (isCandleTheme) ...[const SizedBox(height: _gap), const HouseFlourish(width: 560)],
                     const SizedBox(height: _gap),
                     Text(
                       isTurkishDeck
@@ -170,15 +176,38 @@ class TitleSlide extends FlutterDeckSlideWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(_photoRadius),
-                        child: Image.asset(
-                          'assets/images/esra.png',
-                          width: _photoSize,
-                          height: _photoSize,
-                          fit: BoxFit.cover,
+                      if (isCandleTheme)
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: const ShapeDecoration(
+                            color: DeckColors.gold,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(_portraitWidth),
+                                bottom: Radius.circular(6),
+                              ),
+                            ),
+                          ),
+                          child: ClipPath(
+                            clipper: const ArchClipper(),
+                            child: Image.asset(
+                              'assets/images/esra.png',
+                              width: _portraitWidth,
+                              height: _portraitHeight,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )
+                      else
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(_photoRadius),
+                          child: Image.asset(
+                            'assets/images/esra.png',
+                            width: _photoSize,
+                            height: _photoSize,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
                       const SizedBox(height: _gap),
                       Text('Esra Kadah', style: textTheme.title),
                       const SizedBox(height: 6),
@@ -195,6 +224,13 @@ class TitleSlide extends FlutterDeckSlideWidget {
               ),
             ],
           ),
+        );
+        if (!isCandleTheme) return content;
+        return Stack(
+          children: [
+            const Positioned(left: 60, right: 60, top: 34, child: CandleRow()),
+            content,
+          ],
         );
       },
     );

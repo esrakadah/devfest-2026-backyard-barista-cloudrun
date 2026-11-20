@@ -4,7 +4,7 @@
 - **Mekân ve Salon:** Selçuk Üniversitesi Sultan Alparslan Kültür Merkezi, **850 kişilik ana salon** (yalnızca HDMI çıkışı: kendi adaptörünü götür, önceki 15 dk arada test et)
 - **Başlık:** *Backyard Barista on Cloud Run: AI Studio, Antigravity ve Flutter ile Çok Oyunculu AI Kafe Oyunu Yap ve Canlıya Al*
 - **Format:** 30 dakika tek parça konuşma ve canlı sahne demosu; salonda ayrı soru-cevap süresi yok (sorular konuşma bitiminde fuayede)
-- **Deste Modu:** `--dart-define=DECK_LANG=tr` (`DECK_CITY` varsayılanı `konya`; 5 Aralık İzmir için `--dart-define=DECK_LANG=tr --dart-define=DECK_CITY=izmir`)
+- **Deste Modu:** `--dart-define=DECK_LANG=tr --dart-define=DECK_THEME=candle` (Konya'nın büyücü okulu temasına uygun mum ışığı sürümü; `DECK_THEME` verilmezse standart GDE lacivert deste açılır. `DECK_CITY` varsayılanı `konya`; 5 Aralık İzmir için `--dart-define=DECK_LANG=tr --dart-define=DECK_CITY=izmir`)
 
 ---
 

@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 /// The five acts of the talk. Every `SlideFrame` names its act, and the strip in its header
 /// shows the audience where they are in the story.
 enum StoryAct {
-  hook(isTurkishDeck ? 'GİRİŞ' : 'HOOK', DeckColors.googleYellow),
-  tools(isTurkishDeck ? 'ARAÇLAR' : 'TOOLS', DeckColors.halftoneBlue),
-  realNumbers('GERÇEK RAKAMLAR', DeckColors.googleRed),
-  underTheHood(isTurkishDeck ? 'KAPUTUN ALTI' : 'UNDER THE HOOD', DeckColors.googleGreen),
-  buildAndShip(isTurkishDeck ? 'DEMO VE KAPANIŞ' : 'BUILD & SHIP', DeckColors.googleBlue);
+  hook(isTurkishDeck ? (isCandleTheme ? 'DAVET' : 'GİRİŞ') : 'HOOK', DeckColors.googleYellow),
+  tools(isTurkishDeck ? (isCandleTheme ? 'ASALAR' : 'ARAÇLAR') : 'TOOLS', DeckColors.halftoneBlue),
+  realNumbers(isTurkishDeck && isCandleTheme ? 'ÖLÇÜM BÜYÜSÜ' : 'GERÇEK RAKAMLAR', DeckColors.googleRed),
+  underTheHood(isTurkishDeck ? (isCandleTheme ? 'PERDE ARKASI' : 'KAPUTUN ALTI') : 'UNDER THE HOOD', DeckColors.googleGreen),
+  buildAndShip(isTurkishDeck ? (isCandleTheme ? 'CANLI BÜYÜ' : 'DEMO VE KAPANIŞ') : 'BUILD & SHIP', DeckColors.googleBlue);
 
   const StoryAct(this.label, this.color);
 

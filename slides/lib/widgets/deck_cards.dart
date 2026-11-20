@@ -50,7 +50,7 @@ class SlideFrame extends StatelessWidget {
           Text(title, style: textTheme.header),
           if (subtitle != null) ...[
             const SizedBox(height: _subtitleGap),
-            Text(subtitle!, style: textTheme.bodyLarge.copyWith(color: DeckColors.googleBlue)),
+            Text(subtitle!, style: textTheme.bodyLarge.copyWith(color: DeckColors.subtitleAccent)),
           ],
           const SizedBox(height: _bodyGap),
           Expanded(child: child),
@@ -344,10 +344,16 @@ class DeckFeatureCard extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top: dotTopOffset),
-                    child: Container(
-                      width: _dotSize,
-                      height: _dotSize,
-                      decoration: BoxDecoration(color: accentColor, shape: BoxShape.circle),
+                    child: Transform.rotate(
+                      angle: isCandleTheme ? math.pi / 4 : 0,
+                      child: Container(
+                        width: _dotSize,
+                        height: _dotSize,
+                        decoration: BoxDecoration(
+                          color: accentColor,
+                          shape: isCandleTheme ? BoxShape.rectangle : BoxShape.circle,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: _dotRightGap),

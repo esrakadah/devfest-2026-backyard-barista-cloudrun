@@ -1,5 +1,6 @@
 import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/theme.dart';
+import 'package:backyard_barista_deck/widgets/deck_backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -28,73 +29,80 @@ class BanaUlasinSlide extends FlutterDeckSlideWidget {
   @override
   FlutterDeckSlide build(BuildContext context) {
     return FlutterDeckSlide.blank(
-      builder: (context) => Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              isTurkishDeck ? 'Bana ulaşın' : 'Find me',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: DeckFonts.sans,
-                fontSize: DeckTypeScale.header,
-                fontWeight: FontWeight.w800,
-                color: DeckColors.offWhite,
-              ),
-            ),
-            const SizedBox(height: 40),
-            DecoratedBox(
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(24)),
-              child: Padding(
-                padding: const EdgeInsets.all(_qrPadding),
-                child: Image.asset(
-                  'assets/images/esratech_qr.png',
-                  height: _qrHeight,
-                  filterQuality: FilterQuality.none,
-                  semanticLabel: isTurkishDeck ? 'esratech.com için QR kod' : 'QR code for esratech.com',
+      builder: (context) => Stack(
+        fit: StackFit.expand,
+        alignment: Alignment.center,
+        children: [
+          if (isCandleTheme) const Positioned(left: 60, right: 60, top: 34, child: CandleRow(clearCenter: true)),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  isTurkishDeck ? 'Bana ulaşın' : 'Find me',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: DeckFonts.display,
+                    fontSize: DeckTypeScale.header,
+                    fontWeight: FontWeight.w800,
+                    color: DeckColors.offWhite,
+                  ),
                 ),
-              ),
-            ),
-            if (isTurkishDeck) ...[
-              const SizedBox(height: 32),
-              const Text(
-                'Şakayı model yazsın, kararı kodunuz versin.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: DeckFonts.sans,
-                  fontSize: DeckTypeScale.title,
-                  fontWeight: FontWeight.w700,
-                  color: DeckColors.googleYellow,
+                const SizedBox(height: 40),
+                DecoratedBox(
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(24)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(_qrPadding),
+                    child: Image.asset(
+                      'assets/images/esratech_qr.png',
+                      height: _qrHeight,
+                      filterQuality: FilterQuality.none,
+                      semanticLabel: isTurkishDeck ? 'esratech.com için QR kod' : 'QR code for esratech.com',
+                    ),
+                  ),
                 ),
-              ),
-            ],
-            const SizedBox(height: 32),
-            const Text(
-              isTurkishDeck ? (isIzmirDeck ? 'Teşekkürler İzmir!' : 'Teşekkürler Konya!') : 'Thank you!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: DeckFonts.sans,
-                fontSize: DeckTypeScale.header,
-                fontWeight: FontWeight.w800,
-                color: DeckColors.offWhite,
-              ),
+                if (isTurkishDeck) ...[
+                  const SizedBox(height: 32),
+                  const Text(
+                    'Şakayı model yazsın, kararı kodunuz versin.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: DeckFonts.display,
+                      fontSize: DeckTypeScale.title,
+                      fontWeight: FontWeight.w700,
+                      color: DeckColors.googleYellow,
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 32),
+                const Text(
+                  isTurkishDeck ? (isIzmirDeck ? 'Teşekkürler İzmir!' : 'Teşekkürler Konya!') : 'Thank you!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: DeckFonts.display,
+                    fontSize: DeckTypeScale.header,
+                    fontWeight: FontWeight.w800,
+                    color: DeckColors.offWhite,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  isTurkishDeck
+                      ? (isIzmirDeck
+                          ? 'esratech.com · @esrakadah · DevFest İzmir 2026'
+                          : 'esratech.com · @esrakadah · Flutter & Dart GDE, kendi görüşlerim')
+                      : 'esratech.com · @esrakadah',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: DeckFonts.sans,
+                    fontSize: DeckTypeScale.bodyLarge,
+                    color: DeckColors.mutedText,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
-            const Text(
-              isTurkishDeck
-                  ? (isIzmirDeck
-                      ? 'esratech.com · @esrakadah · DevFest İzmir 2026'
-                      : 'esratech.com · @esrakadah · Flutter & Dart GDE, kendi görüşlerim')
-                  : 'esratech.com · @esrakadah',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: DeckFonts.sans,
-                fontSize: DeckTypeScale.bodyLarge,
-                color: DeckColors.mutedText,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
