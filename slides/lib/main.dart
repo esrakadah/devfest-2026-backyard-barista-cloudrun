@@ -11,6 +11,7 @@ import 'package:flutter_deck_web_client/flutter_deck_web_client.dart';
 void main() {
   ErrorWidget.builder = (details) {
     return DemoHiccupScreen(
+      ground: true,
       message: isTurkishDeck
           ? 'Sayfayı yenile ya da --dart-define=OFFLINE_MODE=true ile çalıştır.\n${details.exceptionAsString()}'
           : 'Reload or run with --dart-define=OFFLINE_MODE=true.\n${details.exceptionAsString()}',
@@ -29,14 +30,15 @@ class BackyardBaristaDeckApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlutterDeckApp(
       client: _presenterClient,
-      configuration: const FlutterDeckConfiguration(
+      configuration: FlutterDeckConfiguration(
         slideSize: DeckCanvas.slideSize,
-        transition: FlutterDeckTransition.fade(),
-        background: FlutterDeckBackgroundConfiguration(
+        transition: const FlutterDeckTransition.fade(),
+        progressIndicator: PresentationTheme.progressIndicator,
+        background: const FlutterDeckBackgroundConfiguration(
           light: FlutterDeckBackground.custom(child: DeckBackdrop()),
           dark: FlutterDeckBackground.custom(child: DeckBackdrop()),
         ),
-        footer: FlutterDeckFooterConfiguration(showSlideNumbers: true, showSocialHandle: true),
+        footer: const FlutterDeckFooterConfiguration(showSlideNumbers: true, showSocialHandle: true),
       ),
       themeMode: ThemeMode.dark,
       lightTheme: PresentationTheme.lightTheme,

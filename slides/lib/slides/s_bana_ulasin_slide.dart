@@ -23,7 +23,10 @@ class BanaUlasinSlide extends FlutterDeckSlideWidget {
           ),
         );
 
-  static const double _qrHeight = 440;
+  static const double _qrHeight = isKonyaTheme ? 360 : 440;
+  static const double _konyaBottomPadding = 170;
+  static const FontWeight _headingWeight = isKonyaTheme ? FontWeight.w400 : FontWeight.w800;
+  static const FontWeight _quoteWeight = isKonyaTheme ? FontWeight.w400 : FontWeight.w700;
   static const double _qrPadding = 24;
 
   @override
@@ -34,72 +37,76 @@ class BanaUlasinSlide extends FlutterDeckSlideWidget {
         alignment: Alignment.center,
         children: [
           if (isCandleTheme) const Positioned(left: 60, right: 60, top: 34, child: CandleRow(clearCenter: true)),
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  isTurkishDeck ? 'Bana ulaşın' : 'Find me',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: DeckFonts.display,
-                    fontSize: DeckTypeScale.header,
-                    fontWeight: FontWeight.w800,
-                    color: DeckColors.offWhite,
-                  ),
-                ),
-                const SizedBox(height: 40),
-                DecoratedBox(
-                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(24)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(_qrPadding),
-                    child: Image.asset(
-                      'assets/images/esratech_qr.png',
-                      height: _qrHeight,
-                      filterQuality: FilterQuality.none,
-                      semanticLabel: isTurkishDeck ? 'esratech.com için QR kod' : 'QR code for esratech.com',
-                    ),
-                  ),
-                ),
-                if (isTurkishDeck) ...[
-                  const SizedBox(height: 32),
+          Padding(
+            padding: isKonyaTheme ? const EdgeInsets.only(bottom: _konyaBottomPadding) : EdgeInsets.zero,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
                   const Text(
-                    'Şakayı model yazsın, kararı kodunuz versin.',
+                    isTurkishDeck ? 'Bana ulaşın' : 'Find me',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: DeckFonts.display,
-                      fontSize: DeckTypeScale.title,
-                      fontWeight: FontWeight.w700,
-                      color: DeckColors.googleYellow,
+                      fontSize: DeckTypeScale.header,
+                      fontWeight: _headingWeight,
+                      color: DeckColors.onGround,
+                    ),
+                  ),
+                  const SizedBox(height: isKonyaTheme ? 14 : 40),
+                  if (isKonyaTheme) ...[const KonyaOrnament(height: 54), const SizedBox(height: 14)],
+                  DecoratedBox(
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(24)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(_qrPadding),
+                      child: Image.asset(
+                        'assets/images/esratech_qr.png',
+                        height: _qrHeight,
+                        filterQuality: FilterQuality.none,
+                        semanticLabel: isTurkishDeck ? 'esratech.com için QR kod' : 'QR code for esratech.com',
+                      ),
+                    ),
+                  ),
+                  if (isTurkishDeck) ...[
+                    const SizedBox(height: isKonyaTheme ? 22 : 32),
+                    const Text(
+                      'Şakayı model yazsın, kararı kodunuz versin.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: DeckFonts.display,
+                        fontSize: DeckTypeScale.title,
+                        fontWeight: _quoteWeight,
+                        color: DeckColors.onGroundAccent,
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: isKonyaTheme ? 22 : 32),
+                  const Text(
+                    isTurkishDeck ? (isIzmirDeck ? 'Teşekkürler İzmir!' : 'Teşekkürler Konya!') : 'Thank you!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: DeckFonts.display,
+                      fontSize: DeckTypeScale.header,
+                      fontWeight: _headingWeight,
+                      color: DeckColors.onGround,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    isTurkishDeck
+                        ? (isIzmirDeck
+                            ? 'esratech.com · @esrakadah · DevFest İzmir 2026'
+                            : 'esratech.com · @esrakadah · Flutter & Dart GDE, kendi görüşlerim')
+                        : 'esratech.com · @esrakadah',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: DeckFonts.sans,
+                      fontSize: DeckTypeScale.bodyLarge,
+                      color: DeckColors.onGroundMuted,
                     ),
                   ),
                 ],
-                const SizedBox(height: 32),
-                const Text(
-                  isTurkishDeck ? (isIzmirDeck ? 'Teşekkürler İzmir!' : 'Teşekkürler Konya!') : 'Thank you!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: DeckFonts.display,
-                    fontSize: DeckTypeScale.header,
-                    fontWeight: FontWeight.w800,
-                    color: DeckColors.offWhite,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  isTurkishDeck
-                      ? (isIzmirDeck
-                          ? 'esratech.com · @esrakadah · DevFest İzmir 2026'
-                          : 'esratech.com · @esrakadah · Flutter & Dart GDE, kendi görüşlerim')
-                      : 'esratech.com · @esrakadah',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: DeckFonts.sans,
-                    fontSize: DeckTypeScale.bodyLarge,
-                    color: DeckColors.mutedText,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ],

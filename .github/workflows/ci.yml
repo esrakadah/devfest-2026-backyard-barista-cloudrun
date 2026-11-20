@@ -36,3 +36,4 @@ jobs:
           flutter analyze
           flutter test
           flutter test --dart-define=DECK_LANG=tr --dart-define=DECK_THEME=candle
+          flutter test --dart-define=DECK_LANG=tr --dart-define=DECK_THEME=konya

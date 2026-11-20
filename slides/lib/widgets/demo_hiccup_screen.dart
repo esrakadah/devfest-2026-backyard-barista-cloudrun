@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 /// The screen the audience sees when something throws on stage or when conference Wi-Fi drops.
 class DemoHiccupScreen extends StatelessWidget {
-  const DemoHiccupScreen({required this.message, super.key});
+  const DemoHiccupScreen({required this.message, required this.ground, super.key});
 
   static const double _iconSize = 80;
   static const double _titleSize = 56;
@@ -15,10 +15,13 @@ class DemoHiccupScreen extends StatelessWidget {
 
   final String message;
 
+  /// Paints its own dark ground. Off when the slide backdrop is already behind it.
+  final bool ground;
+
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: DeckColors.navy,
+      color: ground ? DeckColors.navy : Colors.transparent,
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(_padding),

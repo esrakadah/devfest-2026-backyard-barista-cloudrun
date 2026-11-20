@@ -5,22 +5,28 @@ import 'package:flutter_deck/flutter_deck.dart';
 ///
 /// `gde` (default) is the GDE Midnight Navy deck. `candle` is the candlelit wizard-school edition
 /// for DevFest Konya 2026 (the event has that theme): same navy ground, a serif for slide titles,
-/// candle gold, stars and a thin gold frame. It swaps tokens, fonts and the backdrop only.
+/// candle gold, stars and a thin gold frame. `konya` is the event-identity edition for the same
+/// conference: parchment ground, a crimson ink skyline of Konya along the bottom, gothic slide
+/// titles, and the content on dark ink plates. Each edition swaps tokens, fonts and the backdrop only.
 const String deckTheme = String.fromEnvironment('DECK_THEME', defaultValue: 'gde');
 const bool isCandleTheme = deckTheme == 'candle';
+const bool isKonyaTheme = deckTheme == 'konya';
+
+/// The two Konya editions share the wizard-school act labels and the arched portrait.
+const bool isWizardEdition = isCandleTheme || isKonyaTheme;
 
 /// Unified GDE Midnight Navy palette (`BoardTokens.gde` + 2026 GDE Brand Guide).
 abstract final class DeckColors {
   /// Deep Midnight Navy canvas ground.
-  static const Color navy = isCandleTheme ? Color(0xFF0B1320) : Color(0xFF0E1824);
+  static const Color navy = isKonyaTheme ? ink : (isCandleTheme ? Color(0xFF0B1320) : Color(0xFF0E1824));
 
   /// Primary text on dark surfaces.
-  static const Color offWhite = isCandleTheme ? Color(0xFFF8F0DC) : Color(0xFFF2F6FC);
+  static const Color offWhite = isWizardEdition ? Color(0xFFF8F0DC) : Color(0xFFF2F6FC);
 
   /// Dark-mode pastel accents for text, chips, and data visualization on dark backgrounds.
   static const Color googleBlue = Color(0xFF8AB4F8);
   static const Color googleGreen = Color(0xFF81C995);
-  static const Color googleYellow = isCandleTheme ? Color(0xFFF2CC6B) : Color(0xFFFDD663);
+  static const Color googleYellow = isWizardEdition ? Color(0xFFF2CC6B) : Color(0xFFFDD663);
   static const Color googleRed = Color(0xFFF28B82);
 
   /// Official 2026 GDE Brand Guide core colors for bracket logos and primary fills.
@@ -36,14 +42,19 @@ abstract final class DeckColors {
   static const Color halftonePink = Color(0xFFFF7DAF);
 
   /// Surface hierarchy (`s1`, `s2`, `s3`, and `inset`).
-  static const Color surface = isCandleTheme ? Color(0xFF152134) : Color(0xFF16273A);
-  static const Color surfaceElevated = isCandleTheme ? Color(0xFF1C2A40) : Color(0xFF1D3148);
-  static const Color surface3 = Color(0xFF22344F);
-  static const Color surfaceInset = isCandleTheme ? Color(0xFF080E18) : Color(0xFF0B141F);
+  static const Color surface =
+      isKonyaTheme ? Color(0xFF241619) : (isCandleTheme ? Color(0xFF152134) : Color(0xFF16273A));
+  static const Color surfaceElevated =
+      isKonyaTheme ? Color(0xFF2E1C20) : (isCandleTheme ? Color(0xFF1C2A40) : Color(0xFF1D3148));
+  static const Color surface3 = isKonyaTheme ? Color(0xFF3A2428) : Color(0xFF22344F);
+  static const Color surfaceInset =
+      isKonyaTheme ? Color(0xFF150C0E) : (isCandleTheme ? Color(0xFF080E18) : Color(0xFF0B141F));
 
   /// Hairlines and borders on [surface].
-  static const Color outline = isCandleTheme ? Color(0xFF3A3A44) : Color(0xFF284162);
-  static const Color outlineLight = isCandleTheme ? Color(0xFF8A7440) : Color(0xFF3A5C88);
+  static const Color outline =
+      isKonyaTheme ? Color(0xFF4A2B2F) : (isCandleTheme ? Color(0xFF3A3A44) : Color(0xFF284162));
+  static const Color outlineLight =
+      isKonyaTheme ? Color(0xFFB08A4A) : (isCandleTheme ? Color(0xFF8A7440) : Color(0xFF3A5C88));
 
   /// Top 1px specular highlight on elevated cards.
   static const Color specularTop = Color(0x1EFFFFFF);
@@ -51,8 +62,21 @@ abstract final class DeckColors {
   /// Candle gold of the candle edition.
   static const Color gold = Color(0xFFF2CC6B);
 
+  /// Ink, crimson and parchment of the konya edition (the event's own print palette).
+  static const Color ink = Color(0xFF1B1210);
+  static const Color crimson = Color(0xFF7E1420);
+  static const Color parchment = Color(0xFFF3E7CF);
+
+  /// Text that sits directly on the slide ground, outside any card. The konya ground is light
+  /// parchment, so these turn dark there; every pair is 4.5:1 or better on the darkest paper pixel.
+  /// flutter_deck recolours the whole text theme with the slide colour (kept light for the cards),
+  /// so ground text sets its colour at the call site.
+  static const Color onGround = isKonyaTheme ? ink : offWhite;
+  static const Color onGroundAccent = isKonyaTheme ? crimson : googleYellow;
+  static const Color onGroundMuted = isKonyaTheme ? Color(0xFF4A3B2C) : mutedText;
+
   /// Slide subtitle and header accent.
-  static const Color subtitleAccent = isCandleTheme ? gold : googleBlue;
+  static const Color subtitleAccent = isKonyaTheme ? crimson : (isCandleTheme ? gold : googleBlue);
 
   /// Secondary text: captions, footers, muted labels.
   static const Color mutedText = isCandleTheme ? Color(0xFFC2B79C) : Color(0xFF9EB1C9);
@@ -71,8 +95,11 @@ abstract final class DeckFonts {
   static const String sans = 'GoogleSansFlex';
   static const String mono = 'RobotoMono';
 
-  /// Display serif for slide titles in the candle edition.
-  static const String display = isCandleTheme ? 'PlayfairDisplay' : sans;
+  /// Display face for slide titles: a serif in the candle edition, gothic lettering in the konya edition.
+  static const String display = isKonyaTheme ? 'NewRocker' : (isCandleTheme ? 'PlayfairDisplay' : sans);
+
+  /// Display face for names and headings inside dark cards, where gothic lettering gets too heavy.
+  static const String cardDisplay = isWizardEdition ? 'PlayfairDisplay' : sans;
 }
 
 /// The type scale, in logical pixels on a 1920 x 1080 slide.
@@ -91,7 +118,8 @@ abstract final class DeckTypeScale {
 
 /// Presentation theme for the DevFest 2026 Backyard Barista on Cloud Run deck.
 abstract final class PresentationTheme {
-  static const FontWeight _heavy = FontWeight.w700;
+  /// New Rocker ships one weight; asking for bold would make the engine smear a synthetic one.
+  static const FontWeight _heavy = isKonyaTheme ? FontWeight.w400 : FontWeight.w700;
 
   static FlutterDeckThemeData get darkTheme {
     final baseTheme = ThemeData(
@@ -125,9 +153,9 @@ abstract final class PresentationTheme {
         color: DeckColors.offWhite,
       ),
       title: TextStyle(
-        fontFamily: DeckFonts.display,
+        fontFamily: DeckFonts.cardDisplay,
         fontSize: DeckTypeScale.title,
-        fontWeight: _heavy,
+        fontWeight: FontWeight.w700,
         color: DeckColors.offWhite,
       ),
       subtitle: TextStyle(
@@ -136,11 +164,7 @@ abstract final class PresentationTheme {
         fontWeight: FontWeight.w500,
         color: DeckColors.subtitleAccent,
       ),
-      bodyLarge: TextStyle(
-        fontFamily: DeckFonts.sans,
-        fontSize: DeckTypeScale.bodyLarge,
-        color: DeckColors.offWhite,
-      ),
+      bodyLarge: TextStyle(fontFamily: DeckFonts.sans, fontSize: DeckTypeScale.bodyLarge, color: DeckColors.offWhite),
       bodyMedium: TextStyle(fontFamily: DeckFonts.sans, fontSize: DeckTypeScale.bodyMedium, color: DeckColors.offWhite),
       bodySmall: TextStyle(fontFamily: DeckFonts.sans, fontSize: DeckTypeScale.bodySmall, color: DeckColors.mutedText),
     );
@@ -161,9 +185,9 @@ abstract final class PresentationTheme {
       ),
       headerTheme: FlutterDeckHeaderThemeData(color: DeckColors.googleBlue, textStyle: textTheme.header),
       footerTheme: FlutterDeckFooterThemeData(
-        slideNumberColor: DeckColors.mutedText,
+        slideNumberColor: isKonyaTheme ? DeckColors.parchment : DeckColors.mutedText,
         slideNumberTextStyle: textTheme.bodySmall,
-        socialHandleColor: DeckColors.googleBlue,
+        socialHandleColor: isKonyaTheme ? DeckColors.parchment : DeckColors.googleBlue,
         socialHandleTextStyle: textTheme.bodySmall,
       ),
       speakerInfoWidgetTheme: FlutterDeckSpeakerInfoWidgetThemeData(
@@ -185,6 +209,12 @@ abstract final class PresentationTheme {
       ),
     );
   }
+
+  /// Slide progress bar. flutter_deck draws it in the primary colour (blue) by default; the konya
+  /// edition draws it in sandstone gold on the crimson ground line.
+  static FlutterDeckProgressIndicator get progressIndicator => isKonyaTheme
+      ? const FlutterDeckProgressIndicator.solid(color: Color(0xFFE2B45A), backgroundColor: Color(0xFF6E111B))
+      : const FlutterDeckProgressIndicator.solid();
 
   /// The deck has one brightness; `themeMode` pins it to dark.
   static FlutterDeckThemeData get lightTheme => darkTheme;

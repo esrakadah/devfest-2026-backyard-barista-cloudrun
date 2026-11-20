@@ -28,6 +28,9 @@ class SweetOrSaltySlide extends FlutterDeckSlideWidget {
   static const double _jarSize = 440;
   static const double _faceSize = 150;
 
+  /// Keeps the closing line above the towers of the konya skyline band.
+  static const double _konyaSkylineClearance = 132;
+
   @override
   FlutterDeckSlide build(BuildContext context) {
     return FlutterDeckSlide.blank(
@@ -74,9 +77,10 @@ class SweetOrSaltySlide extends FlutterDeckSlideWidget {
                         fontFamily: DeckFonts.sans,
                         fontSize: DeckTypeScale.title,
                         fontWeight: FontWeight.w700,
-                        color: DeckColors.googleYellow,
+                        color: DeckColors.onGroundAccent,
                       ),
                     ),
+                    if (isKonyaTheme) SizedBox(height: _konyaSkylineClearance),
                   ],
                 ),
               ),

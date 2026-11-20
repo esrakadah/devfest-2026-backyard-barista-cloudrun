@@ -56,14 +56,15 @@ void main() {
         RepaintBoundary(
           key: boundaryKey,
           child: FlutterDeckApp(
-            configuration: const FlutterDeckConfiguration(
+            configuration: FlutterDeckConfiguration(
               slideSize: DeckCanvas.slideSize,
-              background: FlutterDeckBackgroundConfiguration(
+              progressIndicator: PresentationTheme.progressIndicator,
+              background: const FlutterDeckBackgroundConfiguration(
                 light: FlutterDeckBackground.custom(child: DeckBackdrop()),
                 dark: FlutterDeckBackground.custom(child: DeckBackdrop()),
               ),
-              controls: FlutterDeckControlsConfiguration(presenterToolbarVisible: false),
-              footer: FlutterDeckFooterConfiguration(showSocialHandle: true),
+              controls: const FlutterDeckControlsConfiguration(presenterToolbarVisible: false),
+              footer: const FlutterDeckFooterConfiguration(showSocialHandle: true),
             ),
             themeMode: ThemeMode.dark,
             darkTheme: PresentationTheme.darkTheme,

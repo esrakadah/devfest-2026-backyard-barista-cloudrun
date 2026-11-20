@@ -34,6 +34,11 @@ class TitleSlide extends FlutterDeckSlideWidget {
   static const double _portraitWidth = 250;
   static const double _portraitHeight = 300;
   static const double _candleTitleSize = 100;
+  static const double _konyaTitleSize = 104;
+  static const double _konyaContentBottom = 372;
+  static const double _konyaHeroSize = 300;
+  static const double _konyaHeroLeft = 990;
+  static const double _konyaHeroTop = 96;
 
   @override
   FlutterDeckSlide build(BuildContext context) {
@@ -41,7 +46,12 @@ class TitleSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         final textTheme = FlutterDeckTheme.of(context).textTheme;
         final content = Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _outerHorizontalPadding, vertical: _outerVerticalPadding),
+          padding: const EdgeInsets.fromLTRB(
+            _outerHorizontalPadding,
+            _outerVerticalPadding,
+            _outerHorizontalPadding,
+            isKonyaTheme ? _konyaContentBottom : _outerVerticalPadding,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -88,22 +98,27 @@ class TitleSlide extends FlutterDeckSlideWidget {
                     const SizedBox(height: _largeGap),
                     Text(
                       isTurkishDeck ? 'Backyard Barista\non Cloud Run' : 'Backyard Barista on Cloud Run',
-                      style: isCandleTheme ? textTheme.display.copyWith(fontSize: _candleTitleSize) : textTheme.display,
+                      style: isWizardEdition
+                          ? textTheme.display.copyWith(
+                              fontSize: isKonyaTheme ? _konyaTitleSize : _candleTitleSize,
+                              color: DeckColors.onGround,
+                            )
+                          : textTheme.display,
                     ),
-                    if (isCandleTheme) ...[const SizedBox(height: _gap), const HouseFlourish(width: 560)],
+                    if (isWizardEdition) ...[const SizedBox(height: _gap), const HouseFlourish(width: 560)],
                     const SizedBox(height: _gap),
                     Text(
                       isTurkishDeck
                           ? 'AI Studio, Antigravity ve Flutter ile çok oyunculu AI kafe oyunu yap ve canlıya al'
                           : 'Build & Ship a Multiplayer AI Cafe Game with AI Studio, Antigravity & Flutter',
-                      style: textTheme.subtitle,
+                      style: textTheme.subtitle.copyWith(color: DeckColors.onGround),
                     ),
                     const SizedBox(height: _gap),
                     Text(
                       isTurkishDeck
                           ? 'Tatlı mı, tuzlu mu? Kararı Gemini verecek.'
                           : 'TR: AI Studio, Antigravity ve Flutter ile Kendi AI Kafe Oyununu Canlıya Al (Tatlı mı Tuzlu mu?)',
-                      style: textTheme.bodyLarge.copyWith(color: DeckColors.googleYellow),
+                      style: textTheme.bodyLarge.copyWith(color: DeckColors.onGroundAccent),
                     ),
                     if (!isTurkishDeck) const SizedBox(height: _largeGap),
                     if (!isTurkishDeck)
@@ -176,7 +191,7 @@ class TitleSlide extends FlutterDeckSlideWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (isCandleTheme)
+                      if (isWizardEdition)
                         Container(
                           padding: const EdgeInsets.all(6),
                           decoration: const ShapeDecoration(
@@ -225,6 +240,24 @@ class TitleSlide extends FlutterDeckSlideWidget {
             ],
           ),
         );
+        if (isKonyaTheme) {
+          return Stack(
+            children: [
+              const Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: KonyaSkyline(height: KonyaSkyline.tallHeight, groundLine: false),
+              ),
+              Positioned(
+                left: _konyaHeroLeft,
+                top: _konyaHeroTop,
+                child: Image.asset(KonyaArt.hero, height: _konyaHeroSize, excludeFromSemantics: true),
+              ),
+              content,
+            ],
+          );
+        }
         if (!isCandleTheme) return content;
         return Stack(
           children: [
