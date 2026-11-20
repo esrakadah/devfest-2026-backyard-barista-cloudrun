@@ -34,13 +34,13 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         return const SlideFrame(
           eyebrow:
-              isTurkishDeck ? 'HİBRİT GÖRSELLER (YÜKLEME HATASI YOK)' : 'HYBRID ASSET PIPELINE (ZERO UPLOAD FAILURES)',
+              isTurkishDeck ? 'GÖRSELLER' : 'HYBRID ASSET PIPELINE (ZERO UPLOAD FAILURES)',
           title: isTurkishDeck
-              ? "14 hazır stüdyo PNG'si + AI ile üretilen vektör tatlılar"
+              ? 'Hazır resimler + kodla çizilen tatlılar'
               : '14 Pre-Generated Studio PNGs + On-the-Fly AI Vector Dishes',
           act: StoryAct.underTheHood,
           subtitle: isTurkishDeck
-              ? 'Repodaki hazır stüdyo görselleri ile Dart CustomPainter vektör üretimini birleştiriyoruz'
+              ? 'Yeni tatlıyı resim dosyası olarak değil çizim kodu olarak üretiyoruz; eksik görsel olmaz'
               : 'Combining instant visual polish from GitHub with live generative creativity in Round 2',
           accentColor: DeckColors.googleBlue,
           child: Row(
@@ -129,28 +129,28 @@ class HybridAssetPipelineSlide extends FlutterDeckSlideWidget {
                     SizedBox(height: 14),
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'KOD OLARAK VEKTÖR ÜRETİMİ' : 'ROUND 2 · LIVE GENERATIVE EXTENSION',
+                        badge: isTurkishDeck ? 'NEDEN İKİ YÖNTEM?' : 'ROUND 2 · LIVE GENERATIVE EXTENSION',
                         badgeIcon: Icons.auto_awesome,
                         title: isTurkishDeck
-                            ? 'Üretimde hibrit görsel yaklaşımı neden kazanır?'
+                            ? 'Dışarıdan dosya yüklemek yok'
                             : 'Why Hybrid Assets Win in a 300-Seat Hall',
                         accentColor: DeckColors.googleYellow,
                         bullets: [
                           if (isTurkishDeck)
-                            '1. kısım (Repoda 14 PNG): flutter_client/assets/base/ içinde 12 + 2 PNG, yanında 5 Lottie JSON ve 9 WAV + Web Audio API kafe sesi.'
+                            'Hazır geliyor: 14 resim, 5 animasyon, 9 ses.'
                           else
                             'Part 1 (14 Studio PNGs in GitHub): 12 Round-1 base PNGs + 2 Round-2 custom PNGs in flutter_client/assets/base/ alongside 5 Lottie JSONs and 9 Web Audio API + WAV cafe sounds.',
                           if (isTurkishDeck)
-                            '2. kısım (AI çizim kodu): yeni imza tatlıları AI Studio ya da Antigravity ile CustomVectorIngredientGraphic kodu olarak üretilir.'
+                            'Yeni tatlıları AI, çizim kodu olarak yazar.'
                           else
                             'Part 2 (On-the-Fly AI Codegen): Builders prompt AI Studio or Antigravity to generate custom signature dishes as CustomVectorIngredientGraphic code.',
                           if (isTurkishDeck)
-                            'Her şey pakette: bütün görseller flutter_client/ içinde, gcloud run deploy --source . hepsini birlikte yayınlar.'
+                            'Hepsi tek pakette yayınlanır.'
                           else
                             'Self-Contained Cloud Run Build: All assets live inside flutter_client/ so gcloud run deploy --source . bundles everything cleanly.',
                         ],
                         footerText: isTurkishDeck
-                            ? 'Kanıt: flutter_client/lib/data/custom_svg_items.dart'
+                            ? 'İleri seviye: CustomPainter · custom_svg_items.dart'
                             : 'Evidence: flutter_client/lib/data/custom_svg_items.dart',
                       ),
                     ),

@@ -39,13 +39,13 @@ void main() {
       expect(
         find.text(
           isTurkishDeck
-              ? 'Flame sahnesi + Flutter arayüzü: hibrit mimari'
+              ? 'Oyun sahnesi Flame, butonlar Flutter'
               : 'Hybrid Flame Engine + Flutter HUD Architecture',
         ),
         findsOneWidget,
       );
       expect(find.textContaining('BaristaFlameGame'), findsWidgets);
-      expect(find.textContaining(isTurkishDeck ? '3 raf' : '2x2 Counter Grid'), findsWidgets);
+      expect(find.textContaining(isTurkishDeck ? 'raflar ve tepsi' : '2x2 Counter Grid'), findsWidgets);
       expect(tester.takeException(), isNull);
     });
 

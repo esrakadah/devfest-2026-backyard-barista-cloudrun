@@ -15,7 +15,7 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
                 : '6. Hybrid Flame Engine + Flutter HUD Architecture',
             speakerNotes: isTurkishDeck
                 ? "BEAT  [05:45 - 07:00] Mimari karar: sahne Flame ile, tezgah Flutter widget'larıyla.\n"
-                    'SAY   "Bir oyun yazarken her şeyi oyun motorunun içine koymak zorunda değiliz. Arka plandaki 3 şeritli kafe sahnesini ve karakter animasyonlarını Flame, yani BaristaFlameGame çiziyor. Ön plandaki üç raf ve 3 gözlü ahşap tepsi ise bildiğimiz deklaratif Flutter widget\'ları. Neden? Çünkü büyük dil modelleri koordinat matematiğinde yanılabiliyor. Row, Column ve LayoutBuilder ile ise ilk denemede taşmayan, 360 piksellik telefonda da masaüstünde de çalışan, WidgetTester ile test edebildiğimiz bir arayüz çıkarıyorlar."\n'
+                    'SAY   "Bir oyun yazarken her şeyi oyun motorunun içine koymak zorunda değiliz. Arka plandaki 3 şeritli kafe sahnesini ve karakter animasyonlarını Flame çiziyor; Flame, Flutter için bir oyun motoru. Ön plandaki üç raf ve 3 gözlü ahşap tepsi ise bildiğimiz deklaratif Flutter widget\'ları. Neden? Çünkü büyük dil modelleri koordinat matematiğinde yanılabiliyor. Row, Column ve LayoutBuilder ile ise ilk denemede taşmayan, 360 piksellik telefonda da masaüstünde de çalışan, WidgetTester ile test edebildiğimiz bir arayüz çıkarıyorlar."\n'
                     'HOLD  Soldaki sahne (Flame) ve sağdaki arayüz (Flutter) kartlarını elinle ayır. "60fps" tasarım hedefi, ölçüm diye sunma.\n'
                     'NEXT  "Açılışta söz verdiğim bölüme geldik: gerçek rakamlar. Gecikme, soğuk başlangıç ve maliyet ne durumda?"'
                 : 'BEAT  [09:30 - 11:30] Mimari Karar: BaristaFlameGame 60fps 3-Koridorlu Sahne + Reaktif Flutter HUD.\n'
@@ -36,70 +36,66 @@ class PureFlutterWidgetsSlide extends FlutterDeckSlideWidget {
               ? 'MİMARİ KARAR'
               : 'ARCHITECTURAL DECISION (flutter/one-codebase · package:flame)',
           title: isTurkishDeck
-              ? 'Flame sahnesi + Flutter arayüzü: hibrit mimari'
+              ? 'Oyun sahnesi Flame, butonlar Flutter'
               : 'Hybrid Flame Engine + Flutter HUD Architecture',
           act: StoryAct.tools,
           subtitle: isTurkishDeck
-              ? "BaristaFlameGame 3 şeritli sahneyi çizer, tezgah Flutter widget'larıyla çalışır"
+              ? "Her işi en iyi yapan araca verdik: animasyon oyun motorunda, arayüz widget'larda"
               : 'BaristaFlameGame 60fps 3-lane arcade stage (#1E130C / #F4E4CE) paired with reactive 2x2 Flutter HUD cards',
           accentColor: DeckColors.googleGreen,
           child: Row(
             children: [
               Expanded(
                 child: DeckFeatureCard(
-                  badge: isTurkishDeck ? 'SAHNE · BARISTAFLAMEGAME (60FPS HEDEFİ)' : 'STAGE · BARISTAFLAMEGAME (60FPS)',
+                  badge: isTurkishDeck ? 'SAHNE · FLAME (OYUN MOTORU)' : 'STAGE · BARISTAFLAMEGAME (60FPS)',
                   title: isTurkishDeck
-                      ? 'FlameGame: 3 şeritli sahne + gece kafesi dekoru'
+                      ? 'Arkada: hareketli kafe sahnesi'
                       : 'FlameGame 3-Lane Arcade Stage + Night-Cafe Backdrop',
                   accentColor: DeckColors.googleYellow,
                   bullets: [
                     if (isTurkishDeck)
-                      '3 şeritli sahne, 60fps hedefi: BaristaFlameGame içecek, tatlı ve şaka şeritlerini akıcı animasyonla çizer.'
+                      'Üç şerit: içecek, tatlı, şaka.'
                     else
                       '60fps 3-Lane Arcade Stage: BaristaFlameGame renders Beverage, Sweet, and Prank lanes with smooth animations.',
-                    if (isTurkishDeck)
-                      'Sıcak ceviz paleti: boyalı gece kafesi dekorunun önünde ahşap sahne.'
-                    else
+                    if (!isTurkishDeck)
                       'Warm Walnut Palette (#1E130C / #F4E4CE): Rich timber stage over a painted night-cafe backdrop.',
                     if (isTurkishDeck)
-                      'Canlı karakterler: barista ve müşteri tepsiye, buhara ve karara tepki verir.'
+                      'Barista ve müşteri olanlara tepki verir.'
                     else
                       'Reactive Stage Avatars: Barista and customer sprites react live to tray drops, steam particles, and verdicts.',
-                    if (isTurkishDeck)
-                      "Sabit yerleşim: sahne koordinatları 3 şeride kilitli, butonlar Flutter'da kalır."
-                    else
+                    if (!isTurkishDeck)
                       'Deterministic Layout: Scene coordinates stay locked to the 3-lane stage while UI controls live in Flutter.',
                   ],
-                  footerText: 'flutter_client/lib/ui/barista_flame_game.dart',
+                  footerText: isTurkishDeck
+                      ? 'İleri seviye: BaristaFlameGame, 60fps hedefi · barista_flame_game.dart'
+                      : 'flutter_client/lib/ui/barista_flame_game.dart',
                 ),
               ),
               SizedBox(width: _columnGap),
               Expanded(
                 child: DeckFeatureCard(
                   badge:
-                      isTurkishDeck ? "ARAYÜZ (HUD) · FLUTTER WIDGET'LARI" : 'HUD · REACTIVE FLUTTER OVERLAY WIDGETS',
+                      isTurkishDeck ? "ARAYÜZ · FLUTTER WIDGET'LARI" : 'HUD · REACTIVE FLUTTER OVERLAY WIDGETS',
                   title:
-                      isTurkishDeck ? '3 raf + 3 gözlü ahşap tepsi' : '2x2 Counter Grid + 3-Slot Wooden Tray HUD',
+                      isTurkishDeck ? 'Önde: raflar ve tepsi' : '2x2 Counter Grid + 3-Slot Wooden Tray HUD',
                   accentColor: DeckColors.googleGreen,
                   bullets: [
                     if (isTurkishDeck)
-                      "Üç raf (içecek, tatlı, şaka) ve 3 gözlü tepsi sade Flutter widget'larında."
+                      'Telefonda da masaüstünde de düzgün görünür.'
                     else
                       '2x2 Counter HUD Grid: Beverages, Sweet Treats, Prank Shelf, and 3-Slot Wooden Tray in clean Flutter cards.',
-                    if (isTurkishDeck)
-                      'Her ekrana uyar: LayoutBuilder tezgahı 360x780 telefondan 1280x1024 masaüstüne ölçekler.'
-                    else
+                    if (!isTurkishDeck)
                       'Responsive Out of the Box: LayoutBuilder scales the 2x2 counter cleanly from 360x780 mobile to 1280x900 desktop.',
                     if (isTurkishDeck)
-                      'AI için kolay hedef: Gemini ve Antigravity Row, Column, Wrap ve Stack ile sağlam arayüz üretir.'
+                      'AI, Row ve Column ile sağlam arayüz yazar.'
                     else
                       '100% LLM Codegen Reliability: Gemini & Antigravity generate rock-solid Row, Column, Wrap, and Stack HUDs.',
-                    if (isTurkishDeck)
-                      'Erişilebilirlik ve test hazır: standart Semantics ve WidgetTester (cafe_counter_test.dart).'
-                    else
+                    if (!isTurkishDeck)
                       'Built-in Accessibility & Testing: Standard Semantics and WidgetTester finders (cafe_counter_test.dart).',
                   ],
-                  footerText: 'flutter_client/lib/ui/cafe_counter_screen.dart',
+                  footerText: isTurkishDeck
+                      ? 'İleri seviye: LayoutBuilder 360 px - 1280 px, WidgetTester · cafe_counter_screen.dart'
+                      : 'flutter_client/lib/ui/cafe_counter_screen.dart',
                 ),
               ),
             ],

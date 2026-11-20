@@ -33,9 +33,9 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         return const SlideFrame(
           eyebrow:
-              isTurkishDeck ? 'EVE GÖTÜRÜLECEK DERSLER VE AÇIK KAYNAK KOD' : 'SHOWCASE PODIUM, VIBE LOUNGE BADGE & Q&A',
+              isTurkishDeck ? 'DÖRT KURAL · AÇIK KAYNAK KOD' : 'SHOWCASE PODIUM, VIBE LOUNGE BADGE & Q&A',
           title: isTurkishDeck
-              ? 'Üretime çıkan AI uygulamaları için 4 kural'
+              ? 'Eve götüreceğiniz dört kural'
               : 'Teşekkürler! Show Us Your Cafe & Claim Your Prizes',
           act: StoryAct.buildAndShip,
           subtitle: isTurkishDeck
@@ -48,29 +48,29 @@ class WinnerPodiumClosingSlide extends FlutterDeckSlideWidget {
                   children: [
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? '4 MÜHENDİSLİK KURALI' : '1. STAGE DEMO & PRIZES',
+                        badge: isTurkishDeck ? 'DÖRT KURAL' : '1. STAGE DEMO & PRIZES',
                         badgeIcon: isTurkishDeck ? Icons.lightbulb : Icons.emoji_events,
                         title: isTurkishDeck ? 'Pazartesi kendi projenize taşıyın' : '60-Second Live Showcase',
                         accentColor: DeckColors.googleYellow,
                         talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
-                            'Her çağrıya zaman aşımı ve yedek: 8 sn, 15 sn, 250 ms. 429 testi yedeğe düşer.'
+                            '1. Her AI çağrısına süre sınırı ve yedek koyun.'
                           else
                             'Open your deployed *.run.app URL or GitHub repo on stage.',
                           if (isTurkishDeck)
-                            'Anahtar sunucuda: nginx ekler, web paketinde yok (anahtarsız istek testi).'
+                            '2. API anahtarını sunucuda tutun.'
                           else
                             'Show your custom Round 2 signature dish & trigger the Salt-instead-of-Sugar 1-star roast!',
                           if (isTurkishDeck)
-                            'Şema istektir, garanti değil: boş yanıt tuzlu tepsiye 5 yıldız veremez (testli).'
+                            '3. Modelin cevabını kontrol etmeden kullanmayın.'
                           else
                             'Win 1 of 4 Google-Colored Pixel Sunglasses (Yellow, Blue, Green, Red) + Dash Gifts.',
                           if (isTurkishDeck)
-                            'Şakayı model yazsın, kararı kodunuz versin: _verdictMatchesPranks, 2 testle sabit.',
+                            '4. Şakayı model yazsın, kararı kodunuz versin.',
                         ],
                         footerText: isTurkishDeck
-                            ? 'Kural: AI çıktısı her zaman güvenilmeyen dış girdidir'
+                            ? 'İleri seviye: dört kuralın da testi repoda (429, anahtarsız istek, boş yanıt, _verdictMatchesPranks)'
                             : '2 winners per 45-min Vibe Lounge wave / 4 winners in 80-min workshop',
                       ),
                     ),

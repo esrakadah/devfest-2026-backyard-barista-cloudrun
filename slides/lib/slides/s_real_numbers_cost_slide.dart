@@ -15,7 +15,7 @@ class RealNumbersCostSlide extends FlutterDeckSlideWidget {
                 : '8. Gerçek Rakamlar #2: Token Math & Model Trap',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [08:30 - 10:00] Gerçek rakamlar #2: token hesabı ve eski model tuzağı.\n'
-                    'SAY   "Sıra maliyette ve model seçiminde. Tepsiyi dizerken, yani kahveye, baklavaya ya da tuza dokunurken modele hiç gitmiyoruz: sıfır token. Yalnızca Servis Et\'e basıldığında tek bir JSON çağrısı gidiyor. Yaklaşık 150 girdi, 120 çıktı, toplam 270 token. Liste fiyatıyla 1.000 sipariş 5 sentin altında, yaklaşık 4,7 sent. Bir de Ekim 2026\'dan kalan bir tuzak var: yeni açılan Google Cloud projelerinde eski gemini-2.5-flash modelleri kapalı. Eski yazılardan model adı kopyalarsanız yeni proje anında hata verir. Biz varsayılanı gemini-3.5-flash-lite olarak sabitledik."\n'
+                    'SAY   "Sıra maliyette ve model seçiminde. Token, modelin okuduğu ve yazdığı kelime parçası; fatura token sayısına göre kesiliyor. Tepsiyi dizerken, yani kahveye, baklavaya ya da tuza dokunurken modele hiç gitmiyoruz: sıfır token. Yalnızca Servis Et\'e basıldığında tek bir JSON çağrısı gidiyor. Yaklaşık 150 girdi, 120 çıktı, toplam 270 token. Liste fiyatıyla 1.000 sipariş 5 sentin altında, yaklaşık 4,7 sent. Bir de Ekim 2026\'dan kalan bir tuzak var: yeni açılan Google Cloud projelerinde eski gemini-2.5-flash modelleri kapalı. Eski yazılardan model adı kopyalarsanız yeni proje anında hata verir. Biz varsayılanı gemini-3.5-flash-lite olarak sabitledik."\n'
                     "HOLD  Sağdaki kodda defaultValue: 'gemini-3.5-flash-lite' satırını göster. 270 token ve 1.000 sipariş = 0,0468 dolar [YAKLAŞIK HESAP].\n"
                     'NEXT  "Peki bu 850 kişilik salonda yüzlerce kişi aynı anda Servis Et\'e basarsa ne olur?"'
                 : 'BEAT  [14:00 - 16:30] Gerçek Rakamlar #2: Token matematiği ve 2026 model kısıtlaması tuzağı.\n'
@@ -27,6 +27,19 @@ class RealNumbersCostSlide extends FlutterDeckSlideWidget {
         );
 
   static const double _columnGap = 24;
+
+  static const double _talkCodeSize = 24;
+
+  /// The model default and the token sum only: what the room needs to read.
+  static const String _talkSnippet = '''
+// cafe_judge_service.dart (sadeleştirildi)
+this.geminiModel = const String.fromEnvironment(
+  'GEMINI_MODEL',
+  defaultValue: 'gemini-3.5-flash-lite',
+),
+
+// 1 sipariş     = ~150 girdi + ~120 çıktı token
+// 1.000 sipariş = ~270 bin token, 5 sentten az''';
 
   static const String _modelConstantSnippet = '''
 // flutter_client/lib/services/cafe_judge_service.dart
@@ -47,14 +60,14 @@ this.geminiModel = const String.fromEnvironment(
       builder: (context) {
         return const SlideFrame(
           eyebrow: isTurkishDeck
-              ? 'GERÇEK RAKAMLAR #2 (TOKEN HESABI VE 2026 MODEL TUZAĞI)'
+              ? 'GERÇEK RAKAMLAR 2 · MALİYET'
               : 'GERÇEK RAKAMLAR #2 (TOKEN MATH & 2026 MODEL GUARD)',
           title: isTurkishDeck
-              ? 'Gerçek rakamlar #2: 1.000 sipariş 5 sentin altında'
+              ? '1.000 sipariş 5 sentten ucuz'
               : 'Real Numbers #2: ~270 Tokens per Order & The 2.5 Trap',
           act: StoryAct.realNumbers,
           subtitle: isTurkishDeck
-              ? 'Sipariş başına tek JSON çağrısı maliyeti sıfıra yakın tutar, eski model kısıtına da takılmaz'
+              ? 'Token, modelin okuduğu ve yazdığı kelime parçasıdır; fatura token sayısına göre kesilir'
               : 'Why 1 structured JSON call per order keeps costs near zero and avoids legacy model blocks',
           accentColor: DeckColors.googleGreen,
           child: Column(
@@ -64,22 +77,22 @@ this.geminiModel = const String.fromEnvironment(
                   Expanded(
                     child: StatChip(
                       value: isTurkishDeck ? '0 token' : '0 Tokens',
-                      label: isTurkishDeck ? 'TEPSİYİ HAZIRLARKEN (YEREL)' : 'Tray Tap Assembly (60fps Local)',
+                      label: isTurkishDeck ? 'TEPSİYİ DİZERKEN' : 'Tray Tap Assembly (60fps Local)',
                       accentColor: DeckColors.googleGreen,
                     ),
                   ),
                   SizedBox(width: 14),
                   Expanded(
                     child: StatChip(
-                      value: isTurkishDeck ? '~150 girdi + ~120 çıktı' : '~150 In + ~120 Out',
-                      label: isTurkishDeck ? 'SERVİS BAŞINA ~270 TOKEN (YAKLAŞIK)' : '270 Tokens / Serve Call',
+                      value: isTurkishDeck ? '~270 token' : '~150 In + ~120 Out',
+                      label: isTurkishDeck ? 'SERVİS BAŞINA (~150 GİRDİ + ~120 ÇIKTI)' : '270 Tokens / Serve Call',
                     ),
                   ),
                   SizedBox(width: 14),
                   Expanded(
                     child: StatChip(
                       value: 'gemini-3.5-flash-lite',
-                      label: isTurkishDeck ? 'VARSAYILAN GÜVENLİ MODEL (2026)' : 'Default Safe 2026 Model',
+                      label: isTurkishDeck ? 'KULLANDIĞIMIZ MODEL' : 'Default Safe 2026 Model',
                       accentColor: DeckColors.googleYellow,
                     ),
                   ),
@@ -87,7 +100,7 @@ this.geminiModel = const String.fromEnvironment(
                   Expanded(
                     child: StatChip(
                       value: isTurkishDeck ? '2.5 kısıtlı' : '2.5 Blocked',
-                      label: isTurkishDeck ? 'YENİ GCP PROJELERİ TUZAĞI' : 'New GCP Projects Trap',
+                      label: isTurkishDeck ? 'YENİ PROJELERDE ESKİ MODEL' : 'New GCP Projects Trap',
                       accentColor: DeckColors.googleRed,
                     ),
                   ),
@@ -100,30 +113,28 @@ this.geminiModel = const String.fromEnvironment(
                     Expanded(
                       flex: 5,
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'DOĞRULANDI (2026)' : 'VERIFIED 2026 FACTS',
+                        badge: isTurkishDeck ? 'NEDEN UCUZ?' : 'VERIFIED 2026 FACTS',
                         badgeIcon: Icons.verified,
-                        title: isTurkishDeck ? 'Token tüketimi ve model seçimi' : 'Token Footprint & Model Selection',
+                        title: isTurkishDeck ? 'Modele sadece gerektiğinde gidiyoruz' : 'Token Footprint & Model Selection',
                         accentColor: DeckColors.googleGreen,
                         bullets: [
                           if (isTurkishDeck)
-                            "Tepsiyi hazırlarken 0 token: Espresso, Süt, Baklava ya da Tuz'a dokunmak tamamen Flutter'da, cihazda çalışır."
+                            'Tepsiyi dizerken modele gitmiyoruz: ücretsiz.'
                           else
                             '0 Tokens During Tray Assembly: Tapping Espresso, Milk, Baklava, or Salt runs 100% locally in Flutter at 60fps.',
                           if (isTurkishDeck)
-                            "Servis Et'te 1 çağrı: ~150 girdi + ~120 JSON çıktı token'ı (sipariş başına ~270 token)."
+                            "Sadece Servis Et'e basınca tek çağrı gider."
                           else
                             '1 Structured Call on Serve: ~150 input tokens + ~120 JSON output tokens (~270 tokens per completed order).',
                           if (isTurkishDeck)
-                            'Eski model kısıtı (Ekim 2026): yeni Google Cloud projeleri gemini-2.5-flash ve gemini-2.5-flash-lite kullanamaz.'
+                            'Dikkat: eski yazılardaki model adları yeni projede hata verir.'
                           else
                             'Legacy Model Restriction (Oct 2026): New Google Cloud projects are restricted from gemini-2.5-flash and gemini-2.5-flash-lite.',
-                          if (isTurkishDeck)
-                            'Kullanın: gemini-3.5-flash-lite (varsayılan) ya da gemini-3.8-flash; üretimde firebase_ai + App Check.'
-                          else
+                          if (!isTurkishDeck)
                             'Always Use: gemini-3.5-flash-lite (default) or gemini-3.8-flash; pair with firebase_ai (^5.1.0) + App Check in production.',
                         ],
                         footerText: isTurkishDeck
-                            ? "Kaynak: ai.google.dev/gemini-api/docs/models (24 Ekim 2026'da doğrulandı)"
+                            ? 'İleri seviye: yeni GCP projelerinde gemini-2.5-flash kapalı · ai.google.dev/gemini-api/docs/models'
                             : 'Source: ai.google.dev/gemini-api/docs/models (Verified 24 Oct 2026)',
                       ),
                     ),
@@ -132,7 +143,8 @@ this.geminiModel = const String.fromEnvironment(
                       flex: 6,
                       child: DeckCodeCard(
                         filePathLabel: 'flutter_client/lib/services/cafe_judge_service.dart',
-                        code: _modelConstantSnippet,
+                        code: isTurkishDeck ? _talkSnippet : _modelConstantSnippet,
+                        talkFontSize: _talkCodeSize,
                         accentColor: DeckColors.googleGreen,
                         badgeLabel: isTurkishDeck ? 'SİPARİŞ BAŞINA YAKLAŞIK 270 TOKEN' : '270 TOKENS / ORDER',
                       ),

@@ -25,7 +25,7 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
           ),
         );
 
-  static const double _talkBulletSize = 26;
+  static const double _talkBulletSize = 28;
   static const double _gap = 16;
 
   @override
@@ -34,14 +34,14 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
       builder: (context) {
         return const SlideFrame(
           eyebrow: isTurkishDeck
-              ? 'GERÇEK RAKAMLAR #1 (GECİKME, ZAMAN AŞIMI, SOĞUK BAŞLANGIÇ)'
+              ? 'GERÇEK RAKAMLAR 1 · HIZ'
               : 'GERÇEK RAKAMLAR #1 (LATENCY, TIMEOUTS & COLD STARTS)',
           title: isTurkishDeck
-              ? 'Gerçek rakamlar #1: gecikme ve zaman aşımı sınırları'
+              ? 'Yapay zeka geç kalırsa ekran donmaz'
               : 'Real Numbers #1: Latency Budgets & Timeout Guardrails',
           act: StoryAct.realNumbers,
           subtitle: isTurkishDeck
-              ? "CafeJudgeService'teki her ağ çağrısının bir süre sınırı var: ekran sahnede donup kalmaz"
+              ? 'Her çağrıya "en fazla şu kadar bekle" sınırı koyduk; süre dolunca yedeğe geçer'
               : 'Every network path in CafeJudgeService is bounded so the UI never hangs on stage',
           child: Column(
             children: [
@@ -52,74 +52,74 @@ class RealNumbersLatencySlide extends FlutterDeckSlideWidget {
                   children: [
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'OLGU · KOD SABİTİ' : 'FACT · CODE CONSTANT',
+                        badge: isTurkishDeck ? 'SINIR + ÖLÇÜM' : 'FACT · CODE CONSTANT',
                         badgeIcon: Icons.verified,
-                        title: isTurkishDeck ? 'Canlı Gemini zaman aşımı: 8 saniye' : 'Live Gemini JSON Timeout: 8,000 ms',
+                        title: isTurkishDeck ? 'Gemini: en fazla 8 saniye bekleriz' : 'Live Gemini JSON Timeout: 8,000 ms',
                         talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
-                            'Ölçüldü (11 Kasım, 12 tepsi): karar ortalama 1,4 sn.'
+                            'Ölçtük (12 tepsi): ortalama 1,4 saniye.'
                           else
                             'Defined in lib/services/cafe_judge_service.dart:11 (_geminiRequestTimeout = Duration(seconds: 8)).',
                           if (isTurkishDeck)
-                            'Bu laptopta yerel Gemma 4: 5-8,4 sn, sınırı 15 sn.'
+                            'Yedek: bu laptopta Gemma 4, 5-8,4 saniye.'
                           else
                             'Calls gemini-3.5-flash-lite with responseMimeType: application/json and 6 required schema keys.',
                           if (!isTurkishDeck)
                             'Measured 11 Nov (12 trays): 1.0-1.8 s per verdict, mean 1.4 s. Local Gemma 4 warm: 5-8.4 s, 15 s timeout.',
                         ],
                         footerText: isTurkishDeck
-                            ? null
+                            ? 'İleri seviye: _geminiRequestTimeout 8 sn, Gemma sınırı 15 sn'
                             : 'Evidence: cafe_judge_service.dart:11 · docs/articles/cloud-vs-local-judge-draft.md',
                       ),
                     ),
                     SizedBox(width: _gap),
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'OLGU · DOCKERFILE VE CLOUD RUN' : 'FACT · DOCKERFILE & CLOUD RUN',
+                        badge: isTurkishDeck ? 'ÖLÇÜLDÜ' : 'FACT · DOCKERFILE & CLOUD RUN',
                         badgeIcon: Icons.speed,
-                        title: isTurkishDeck ? "Cloud Run'da statik sayfa: 53,81 ms" : 'Stateless Container on PORT 8080',
+                        title: isTurkishDeck ? "Cloud Run'da sayfa: 54 milisaniye" : 'Stateless Container on PORT 8080',
                         accentColor: DeckColors.googleGreen,
                         talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
-                            'Ölçüldü (50 istek, europe-west3): p50 53,81 ms, p95 75,52 ms.'
+                            'Ölçtük: 50 istek, Frankfurt bölgesi.'
                           else
                             'Defined in flutter_client/Dockerfile: multi-stage Flutter Web build served by nginx:alpine on PORT 8080.',
                           if (isTurkishDeck)
-                            'TLS dahil ilk soğuk çağrı: 528,95 ms.'
+                            'İlk açılış (soğuk başlangıç): yarım saniye.'
                           else
                             'Measured 50 requests for the static index.html (europe-west3): 53.81 ms p50 / 75.52 ms p95 (first call with TLS: 528.95 ms).',
                           if (!isTurkishDeck)
                             'Zero server state: every order evaluation is self-contained.',
                         ],
                         footerText: isTurkishDeck
-                            ? null
+                            ? 'İleri seviye: p50 53,81 ms · p95 75,52 ms · ilk çağrı 528,95 ms'
                             : 'Evidence: Dockerfile:1-25 · tool/benchmark_gaziantep.dart',
                       ),
                     ),
                     SizedBox(width: _gap),
                     Expanded(
                       child: DeckFeatureCard(
-                        badge: isTurkishDeck ? 'OLGU · ÇEVRİMDIŞI YEDEK' : 'FACT · OFFLINE FALLBACK',
+                        badge: isTurkishDeck ? 'SON YEDEK' : 'FACT · OFFLINE FALLBACK',
                         badgeIcon: Icons.bolt,
-                        title: isTurkishDeck ? "Salon Wi-Fi'ı giderse: 250 ms" : 'Conference Wi-Fi Guard: 250 ms',
+                        title: isTurkishDeck ? 'Wi-Fi giderse: hazır yanıtlar' : 'Conference Wi-Fi Guard: 250 ms',
                         accentColor: DeckColors.googleYellow,
                         talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
-                            'mock_responses.json bir kez yüklenir, bellekte tutulur.'
+                            'Paketteki hazır yanıtlar 250 ms içinde gelir.'
                           else
                             'Defined in lib/services/cafe_judge_service.dart:12 (_offlineBundleLoadTimeout = Duration(milliseconds: 250)).',
                           if (isTurkishDeck)
-                            'Wi-Fi tamamen giderse oyun ağ beklemeden devam eder.'
+                            'Oyun internet beklemeden devam eder.'
                           else
                             'Loads assets/offline_fallback/mock_responses.json once and caches reviewsByCity in memory.',
                           if (!isTurkishDeck)
                             'If Wi-Fi drops completely, gameplay continues at 60fps with 0 ms network wait.',
                         ],
                         footerText: isTurkishDeck
-                            ? null
+                            ? 'İleri seviye: mock_responses.json bir kez yüklenir, bellekte tutulur'
                             : 'Evidence: cafe_judge_service.dart:12 (_evaluateFromOfflineFallback)',
                       ),
                     ),
