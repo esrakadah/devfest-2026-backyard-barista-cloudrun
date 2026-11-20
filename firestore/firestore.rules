@@ -1,0 +1,59 @@
+rules_version = '2';
+
+// Hall leaderboard of the Backyard Barista game. Players write without signing in, so every limit the
+// game relies on is enforced here and not in the client: a browser can send anything.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /events/{eventId}/players/{playerId} {
+      function maxPointsPerRound() { return 100; }
+      function minSecondsPerRound() { return 3; }
+      function playWindowSeconds() { return 200; }
+      function maxBoardRows() { return 50; }
+
+      function hasOnlyBoardFields() {
+        return request.resource.data.keys().hasOnly(['name', 'score', 'rounds', 'startedAt', 'updatedAt']);
+      }
+
+      function hasValidName() {
+        return request.resource.data.name is string
+          && request.resource.data.name.size() >= 2
+          && request.resource.data.name.size() <= 16;
+      }
+
+      function hasValidTotals() {
+        return request.resource.data.score is int
+          && request.resource.data.rounds is int
+          && request.resource.data.score >= 0
+          && request.resource.data.rounds >= 1
+          && request.resource.data.score <= request.resource.data.rounds * maxPointsPerRound()
+          && request.resource.data.updatedAt == request.time;
+      }
+
+      function elapsedSeconds() {
+        return (request.time.toMillis() - resource.data.startedAt.toMillis()) / 1000;
+      }
+
+      allow get: if true;
+      allow list: if request.query.limit <= maxBoardRows();
+
+      allow create: if playerId.size() == 20
+        && eventId.matches('^[a-z0-9-]{1,32}$')
+        && hasOnlyBoardFields()
+        && hasValidName()
+        && hasValidTotals()
+        && request.resource.data.rounds == 1
+        && request.resource.data.startedAt == request.time;
+
+      allow update: if hasOnlyBoardFields()
+        && hasValidTotals()
+        && request.resource.data.name == resource.data.name
+        && request.resource.data.startedAt == resource.data.startedAt
+        && request.resource.data.score >= resource.data.score
+        && request.resource.data.rounds >= resource.data.rounds
+        && elapsedSeconds() <= playWindowSeconds()
+        && request.resource.data.rounds <= 1 + elapsedSeconds() / minSecondsPerRound();
+
+      allow delete: if false;
+    }
+  }
+}
