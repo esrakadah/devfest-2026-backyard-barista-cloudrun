@@ -84,7 +84,7 @@ void main() {
       );
 
       expect(review.source, JudgeSource.offlineBundle);
-      expect(review.tasteVerdict, 'salty_sabotage');
+      expect(review.tasteVerdict, TasteVerdict.saltySabotage);
     },
   );
 
@@ -150,7 +150,7 @@ void main() {
       );
 
       expect(review.source, JudgeSource.offlineBundle);
-      expect(review.tasteVerdict, 'salty_sabotage');
+      expect(review.tasteVerdict, TasteVerdict.saltySabotage);
       expect(review.ratingStars, minCafeRatingStars);
     });
 
@@ -167,7 +167,7 @@ void main() {
       );
 
       expect(review.source, JudgeSource.offlineBundle);
-      expect(review.tasteVerdict, 'salty_sabotage');
+      expect(review.tasteVerdict, TasteVerdict.saltySabotage);
     });
   });
 
@@ -220,7 +220,7 @@ void main() {
       );
 
       expect(review.source, JudgeSource.localGemma);
-      expect(review.tasteVerdict, 'salty_sabotage');
+      expect(review.tasteVerdict, TasteVerdict.saltySabotage);
       expect(review.headline, 'Local Gemma roast');
     });
 
@@ -260,7 +260,7 @@ void main() {
       );
 
       expect(review.source, JudgeSource.offlineBundle);
-      expect(review.tasteVerdict, 'salty_sabotage');
+      expect(review.tasteVerdict, TasteVerdict.saltySabotage);
     });
 
     test('an unreachable Ollama falls back to the offline bundle', () async {
