@@ -12,10 +12,11 @@ class KeyRuleSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/key-rule',
             title: '16. Kural 5: anahtar sunucuda kalır',
-            speakerNotes: 'BEAT  [22:30 - 24:15] Kural 5, güvenlik. Yeni kelime: proxy. Anahtarı ve iki kanıtı göster.\n'
-                'SAY   "Beşinci kural. Gemini\'yi çağırmak için bir API anahtarı gerekiyor; anahtar, faturanın bağlı olduğu şifre gibi. Web uygulamasının içine koyarsanız herkes tarayıcıdan okuyabilir. Yeni kelime proxy: tarayıcı ile Gemini arasındaki aracı sunucu. Telefonunuz bizim sunucuya soruyor; sarı satırda sunucu anahtarı ekleyip Gemini\'ye iletiyor. Anahtar telefonunuza hiç inmiyor. Bunu söylemek kolay, o yüzden iki kanıt var. Bir test, giden istekte anahtar olmadığını kontrol ediyor. CI, yani her değişiklikte otomatik çalışan kontrol, derlenen pakette anahtara benzeyen bir şey arıyor. Sahte bir anahtarla denedim, yakaladı."\n'
+            speakerNotes:
+                'BEAT  [21:15 - 22:45] Kural 5, güvenlik. Yeni kelime: proxy. Anahtarı ve iki kanıtı göster.\n'
+                'SAY   "Beşinci kural. Gemini\'yi çağırmak için bir API anahtarı gerekiyor; anahtar, faturanızın şifresi gibi: kimde varsa sizin hesabınıza harcar. Web uygulamasının içine koyarsanız herkes tarayıcıdan okuyabilir. Yeni kelime proxy: tarayıcı ile Gemini arasındaki aracı sunucu. Telefonunuz bizim sunucuya soruyor; sarı satırda sunucu anahtarı ekleyip Gemini\'ye iletiyor. Anahtar telefonunuza hiç inmiyor. Bunu söylemek kolay, o yüzden iki kanıt var. Bir test, giden istekte anahtar olmadığını kontrol ediyor. CI, yani her değişiklikte otomatik çalışan kontrol, derlenen pakette anahtara benzeyen bir şey arıyor. Eve götüreceğiniz cümle: tarayıcıya giden her şeyi herkes okur."\n'
                 'HOLD  Sarı satır, sonra sağdaki kanıtlar. Alttaki "İleri seviye" satırını okuma; sorulursa: proxy\'de kimlik kontrolü yok, üretimde yol App Check.\n'
-                'NEXT  "Güvenli. Peki ne kadar tutuyor?"',
+                'NEXT  "Anahtar güvende. Peki onu ne sıklıkla kullanıyoruz?"',
           ),
         );
 
@@ -69,7 +70,7 @@ class KeyRuleSlide extends FlutterDeckSlideWidget {
                         bullets: [
                           'Test: tarayıcıdan giden istekte anahtar yok.',
                           'CI: derlenen pakette anahtar kalıbı arıyor.',
-                          'Sahte anahtarla denendi: yakaladı.',
+                          'Sahte anahtarla denedim: yakaladı.',
                         ],
                         footerText: 'judge_proxy_safety_test.dart · .github/workflows/ci.yml',
                       ),

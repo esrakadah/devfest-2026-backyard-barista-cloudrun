@@ -11,17 +11,18 @@ class LessonRecapSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/lesson-recap',
             title: '18. Özet: beş kural, iki sütun',
-            speakerNotes: 'BEAT  [25:45 - 27:30] Özet. İki sütunu oku, yeniden anlatma. Açılıştaki soruyu salona geri sor.\n'
-                'SAY   "Beş kural, iki sütun. Okuyorum, yeniden anlatmıyorum. Modelin cevabı: model önerir, kararı kod verir. Serbest metin yerine kapalı liste; boş cevap başarı değildir. Uygulamanın kendisi: olmaması gereken durum yazılamasın. Model susarsa oyun susmaz. Anahtar sunucuda kalır, model boşuna çağrılmaz. Kodun hepsi, testleriyle birlikte, sağdaki QR kodda. Başta bir soru sormuştum: tuzu kim yakalayacak, yapay zeka mı, kod mu?"\n'
-                'HOLD  Sütunları oku, açıklama ekleme. Soruyu sorduktan sonra salonun cevabını bekle.\n'
-                'NEXT  "Evet: kod."',
+            speakerNotes:
+                'BEAT  [24:00 - 25:30] Özet. İki sütunu oku, yeniden anlatma. Açılıştaki soruyu salona geri sor.\n'
+                'SAY   "Beş kural, iki sütun. Modelin cevabı: model önerir, kararı kod verir. Serbest metin yerine kapalı liste; boş cevap başarı değildir. Uygulamanın kendisi: olmaması gereken durum yazılamasın. Model susarsa oyun susmaz. Anahtar sunucuda kalır, model boşuna çağrılmaz. Kodun hepsi, testleriyle birlikte, sağdaki QR kodda. Başta bir soru sormuştum: tuzu kim yakalayacak, yapay zeka mı, kod mu?"\n'
+                'HOLD  Sütunları oku, açıklama ekleme. Soruyu sorduktan sonra 3 saniye bekle; sessizlikse cevabı kendin söyle.\n'
+                'NEXT  "Cevap: kod."',
           ),
         );
 
   static const double _gap = 20;
   static const double _columnTitleSize = 36;
   static const double _ruleSize = 38;
-  static const double _qrSize = 330;
+  static const double _qrSize = 400;
 
   @override
   FlutterDeckSlide build(BuildContext context) {

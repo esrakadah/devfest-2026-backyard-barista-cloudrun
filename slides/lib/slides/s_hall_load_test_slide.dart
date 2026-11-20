@@ -13,9 +13,9 @@ class HallLoadTestSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/hall-load-test',
             title: '15. Kural 4, kanıt: yük testini salon yaptı',
-            speakerNotes: 'BEAT  [20:45 - 22:30] Kural 4, kanıt. İkinci görevi salona sor: rozetinizde ne yazıyordu?\n'
-                'SAY   "Rozetinde Canlı Gemini yazanlar el kaldırsın. Yerel JSON Şeması yazanlar? İkinci grup: sizde bir şey bozulmadı, C planı çalıştı. Sunucumuz saniyede on isteğe izin veriyor; fazlasına HTTP 429 diyor, yani çok fazla istek geldi, yavaşla. Solda küçük bir hikaye daha: rozet eskiden bir evet-hayır değişkeniydi, Gemini\'den mi geldi? Üçüncü jüri gelince evet-hayır yetmedi. Sarı satır yeni hali: üç jüri, üç isim. Eve götüreceğiniz cümle: yapay zeka çağıran her özelliğin bir B planı olsun."\n'
-                'HOLD  İki oylamada da elleri görmek için 3 saniye bekle. Sonra soldaki kod, sonra sağdaki kart.\n'
+            speakerNotes: 'BEAT  [19:30 - 21:15] Kural 4, kanıt. İkinci görevi salona sor: rozetinizde ne yazıyordu?\n'
+                'SAY   "Rozetinde Canlı Gemini yazanlar el kaldırsın. Yerel JSON Şeması yazanlar? Yerel JSON Şeması, pakete koyduğumuz hazır yanıt demek. İkinci grup: sizde model cevap veremedi ya da cevabı reddedildi, C planı çalıştı. Nedenini rozet söylemiyor. Olası bir neden: her sunucu kopyası saniyede on isteğe izin veriyor; fazlasına HTTP 429 diyor, yani çok fazla istek geldi, yavaşla. Soldaki kod rozetin arkasındaki liste: üç jüri, üç isim. Eve götüreceğiniz cümle: yapay zeka çağıran her özelliğin bir B planı olsun."\n'
+                'HOLD  İki oylamada da 3 saniye bekle. İlk grupta el yoksa: "Demek hepiniz C planına düştünüz; oyun yine de cevap verdi." İkinci grupta el yoksa: "Bugün sınıra takılmadık; takılsaydık rozette Yerel JSON Şeması yazacaktı. C planını alttaki test kanıtlıyor." Sonra soldaki kod, sonra sağdaki kart.\n'
                 'NEXT  "Son kural para ve güvenlikle ilgili."',
           ),
         );
@@ -56,10 +56,11 @@ class HallLoadTestSlide extends FlutterDeckSlideWidget {
               accentColor: DeckColors.googleGreen,
               bullets: [
                 '"Canlı Gemini": cevap modelden geldi.',
-                '"Yerel JSON Şeması": C planı çalıştı.',
-                'Sunucu saniyede 10 isteğe izin veriyor.',
+                '"Yerel JSON Şeması": hazır yanıt, C planı.',
+                'Her sunucu kopyası saniyede 10 istek alır.',
               ],
-              footerText: 'nginx limit_req 10 r/s + burst 20 · tek ortak kova: harcamayı sınırlar, kötüye kullanımı değil',
+              footerText:
+                  'nginx limit_req 10 r/s + burst 20 · kopya başına tek kova: harcamayı sınırlar, kötüye kullanımı değil',
             ),
             proof: ProofStrip(
               testName: 'Proxy errors such as a 429 rate limit fall back to the offline roast',

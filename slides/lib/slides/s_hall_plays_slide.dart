@@ -13,10 +13,11 @@ class HallPlaysSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/hall-plays',
             title: '3. Salon oynuyor: QR ve üç görev',
-            speakerNotes: 'BEAT  [02:00 - 06:00] Canlı oyun. Önce kendi iki tepsin (90 sn), sonra salon (2,5 dk).\n'
-                'SAY   "Önce ben oynuyorum. Canlı oyundayız, Cloud Run\'da çalışıyor. Doğru bir tepsi: kahve, tatlı, şeker. Servis Et: beş yıldız. Şimdi şeker yerine tuz: bir yıldız. Sıra sizde. QR kodu okutun; iki buçuk dakikanız ve üç göreviniz var. Bir: tatlı siparişe gizlice tuz atın. İki: gelen kartın altındaki jüri rozetini okuyun, ne yazdığını aklınızda tutun. Üç: Servis Et\'e basın ve hemen Sıradaki Müşteri\'ye basın. Ne gördüğünüzü birazdan soracağım."\n'
-                'HOLD  1) Canlı Cloud Run sekmesi: tatlı tepsi 5 yıldız, tuzlu tepsi 1 yıldız. 2) Bu slayta dön; QR arkadan okunmuyorsa tam ekran QR sekmesini aç. 3) Salon oynarken sus ve bekle; sayaç 05:45 olunca "Son on beş saniye" de. Oyun açılmazsa Stage Navigator ile "Demo aksadı" slaytına geç.\n'
-                'NEXT  "Telefonlar elinizde kalsın. Şimdi bu oyunun nasıl yazıldığına bakalım."',
+            speakerNotes:
+                'BEAT  [02:00 - 06:00] Canlı oyun. Önce kendi iki tepsin (canlı sekmede, 90 sn), sonra bu slayt ve salon (2,5 dk).\n'
+                'SAY   "Canlı oyundayız, Cloud Run\'da çalışıyor. Doğru bir tepsi: kahve, tatlı, şeker. Servis Et: beş yıldız. Karttaki esprili yorumu Gemini yazıyor. Şimdi şeker yerine tuz: bir yıldız. Sıra sizde. Önce telefonun sesini kısın, sonra QR kodu okutun. İki buçuk dakikanız ve üç göreviniz var. Bir: tatlı siparişe gizlice tuz atın. İki: gelen kartın altındaki jüri rozetini okuyun, ne yazdığını aklınızda tutun. Üç, hızlı olanlar için: Servis Et\'e basın ve hemen Sıradaki Müşteri\'ye basın."\n'
+                'HOLD  1) Canlı Cloud Run sekmesi: tatlı tepsi 5 yıldız, tuzlu tepsi 1 yıldız. 2) "Sıra sizde" derken bu slaytı aç; önce tam ekran QR sekmesini 30 saniye göster, sonra bu slayta dön. "Okutamayan yanındakinin telefonundan oynasın" de. 3) Sayaç 04:00: "Açabilenler el kaldırsın." Yarıdan azsa "Yanınızdakinin ekranına bakın" de ve 05:00\'te bitir. 4) Salon oynarken sus; 05:45\'te "Son on beş saniye" de. Oyun sende açılmazsa Stage Navigator ile "Demo aksadı" slaytına geç.\n'
+                'NEXT  "Telefonları kilitleyip cebinize koyun. Rozetiniz aklınızda kalsın; birazdan soracağım."',
           ),
         );
 
@@ -65,11 +66,11 @@ class HallPlaysSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: 'GÖREV 3',
-                        title: "Servis Et'e, hemen ardından Sıradaki Müşteri'ye basın",
+                        title: 'Hızlıysanız: Servis Et, hemen ardından Sıradaki Müşteri',
                         talkTitleFontSize: _taskTitleSize,
                         talkBulletFontSize: _taskLineSize,
                         accentColor: DeckColors.googleGreen,
-                        bullets: ['Jüri düşünürken. Ne oldu?'],
+                        bullets: ['Jüri düşünürken yetişebildiniz mi?'],
                       ),
                     ),
                   ],

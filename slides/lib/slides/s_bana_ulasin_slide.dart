@@ -12,9 +12,9 @@ class BanaUlasinSlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? '19. Bana ulaşın' : '16. Find me',
             footer: FlutterDeckFooterConfiguration(showFooter: false),
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [27:30 - 28:45] Kapanış cümlesi ve fuaye daveti. Bu slayt konuşma bittikten sonra ekranda açık kalsın.\n'
+                ? 'BEAT  [25:30 - 26:30] Kapanış cümlesi ve fuaye daveti. Bu slayt konuşma bittikten sonra ekranda açık kalsın.\n'
                     'SAY   "Şakayı model yazsın, kararı kodunuz versin. ${isIzmirDeck ? "Yazılarım, açık kaynak kodlar ve iletişim bilgilerim ekrandaki QR kodda, yani esratech.com adresinde. Beni dinlediğiniz ve oyuna katıldığınız için çok teşekkür ederim İzmir, fuayede görüşmek üzere!" : "Yazılarım, kodlarım ve iletişim bilgilerim ekrandaki QR kodda, esratech.com adresinde. Ayrı bir soru-cevap süremiz yok ama hemen dışarıda, fuayede olacağım; gelin tanışalım, kodu ve hataları konuşalım. Çok teşekkürler Konya!"}"\n'
-                    'HOLD  İlk cümleyi ekrandaki yazıyı göstererek, yavaş söyle. Gülümse, salona el salla; HDMI kablosunu sökmeden önce sahne ekibinin işaretini bekle.\n'
+                    'HOLD  İlk cümleyi ekrandaki yazıyı göstererek, yavaş söyle. Gülümse, salona el salla. Teşekkürden sonra kumandayı bırak: bir tık daha yedek slaytı açar. HDMI kablosunu sökmeden önce sahne ekibinin işaretini bekle.\n'
                     'NEXT  Son ana slayt (yedek slaytlar: /demo-hiccup ve /wifi-off-gemma).'
                 : 'BEAT  Closing.\n'
                     'SAY   "My articles and how to reach me are behind this QR code. Thank you!"\n'
@@ -95,8 +95,8 @@ class BanaUlasinSlide extends FlutterDeckSlideWidget {
                   const Text(
                     isTurkishDeck
                         ? (isIzmirDeck
-                            ? 'esratech.com · @esrakadah · DevFest İzmir 2026'
-                            : 'esratech.com · @esrakadah · Flutter & Dart GDE, kendi görüşlerim')
+                            ? 'Esra Kadah · esratech.com · @esrakadah · DevFest İzmir 2026'
+                            : 'Esra Kadah · esratech.com · @esrakadah · Flutter & Dart GDE, kendi görüşlerim')
                         : 'esratech.com · @esrakadah',
                     textAlign: TextAlign.center,
                     style: TextStyle(

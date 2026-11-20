@@ -11,9 +11,9 @@ class GuardRuleSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/guard-rule',
             title: '6. Kural 1: model önerir, kararı kod verir',
-            speakerNotes: 'BEAT  [07:30 - 08:45] Kural 1. Salona sor, sonra yeni kelime: guard.\n'
-                'SAY   "Kim tuz attı? Hepiniz bir yıldız aldınız. Peki o bir yıldızı kim verdi? Çoğunuz Gemini diyeceksiniz. Aslında kod verdi. Yeni kelimemiz guard, Türkçesiyle koruyucu: modelin cevabı ekrana çıkmadan önce onu kontrol eden kod. Hikaye şöyle: 12 Kasım\'a kadar Gemini\'nin cevabı kontrolsüz ekrana çıkıyordu. Model tuzu kaçırırsa tuzlu tepsi beş yıldız alabiliyordu. Tepside tuz var mı, bunu artık Dart biliyor; modelin kararı buna uymuyorsa cevabı atıyoruz."\n'
-                'HOLD  "Kim verdi?" sorusundan sonra 2 saniye bekle. Sonra üç kutuyu soldan sağa göster. Alttaki satırı okuma.\n'
+            speakerNotes: 'BEAT  [07:45 - 09:00] Kural 1. Salona sor, sonra yeni kelime: guard.\n'
+                'SAY   "Kim tuz attı? Kaç yıldız aldınız? Bir. Peki o yıldızı kim verdi? Yıldızı Gemini önerdi; ekrana çıkmasına kod izin verdi. Yeni kelimemiz guard, Türkçesiyle koruyucu: modelin cevabı ekrana çıkmadan önce onu kontrol eden kod. Hikaye şöyle: 12 Kasım\'a kadar Gemini\'nin cevabı kontrolsüz ekrana çıkıyordu. Model tuzu kaçırırsa tuzlu tepsi beş yıldız alabiliyordu. Tepside tuz var mı, bunu artık kodumuz biliyor; modelin kararı buna uymuyorsa cevabı atıyoruz."\n'
+                'HOLD  "Kim verdi?" sorusundan sonra 2 saniye bekle; "Gemini" diyeni de "kod" diyeni de duy, sonra cevabı ver. "Kim tuz attı?" sorusuna el kalkmazsa: "Ben attım, gördünüz: bir yıldız." Sonra üç kutuyu soldan sağa göster. Alttaki satırı okuma.\n'
                 'NEXT  "Kodda bu tek bir satır."',
           ),
         );
@@ -36,7 +36,7 @@ class GuardRuleSlide extends FlutterDeckSlideWidget {
             ),
             whatWeDid: LessonTile(
               title: 'Kararı koda aldık',
-              lines: ['Tuz var mı? Buna Dart bakıyor.', 'Modelin kararı uymuyorsa cevabı atıyoruz.'],
+              lines: ['Tuz var mı? Buna kod bakıyor.', 'Modelin kararı uymuyorsa cevabı atıyoruz.'],
               footer: 'cafe_judge_service.dart',
             ),
             proof: LessonTile(

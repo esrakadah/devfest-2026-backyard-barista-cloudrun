@@ -11,8 +11,8 @@ class TypedOutputRuleSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/typed-output-rule',
             title: '8. Kural 2: serbest metin yerine kapalı liste',
-            speakerNotes: 'BEAT  [10:45 - 11:45] Kural 2. Yeni kelime: enum. Şemayı da burada tanımla.\n'
-                'SAY   "İkinci kural. Yeni kelime enum: izin verilen değerlerin kapalı listesi. Oyunda üç karar var: tatlı, tuzlu, acı. Bunlar kodda düz metin olarak yazılıydı; aynı metin 21 ayrı yerde. Bir harfi yanlış yazarsanız kimse fark etmiyor. Daha kötüsü: modele \'cevabı şu kalıpta ver\' dediğimiz tarife şema diyoruz. Gemini\'ye giden şemada bu liste hiç yoktu. Şimdi liste tek bir yerde duruyor; şema da kod da oradan okuyor."\n'
+            speakerNotes: 'BEAT  [10:30 - 11:30] Kural 2. Yeni kelime: enum. Şemayı da burada tanımla.\n'
+                'SAY   "İkinci kural. Yeni kelime enum: izin verilen değerlerin kapalı listesi. Oyunda modelin verebileceği üç karar var: tatlı, tuzlu, acı. Bunlar kodda düz metindi; karar metinleri 21 ayrı yerde elle yazılıydı. Bir harfi yanlış yazarsanız kimse fark etmiyor. Bir de şema var: modele \'cevabı şu kalıpta ver\' dediğimiz tarif. Daha kötüsü, Gemini\'ye giden şemada bu liste hiç yoktu. Şimdi liste tek bir yerde duruyor; şema da kod da oradan okuyor."\n'
                 'HOLD  Üç kutu, soldan sağa. "21 ayrı yerde" derken dur.\n'
                 'NEXT  "Kodda nasıl görünüyor?"',
           ),
@@ -31,17 +31,17 @@ class TypedOutputRuleSlide extends FlutterDeckSlideWidget {
             definition: 'İzin verilen değerlerin kapalı listesi. Listede olmayan değer kabul edilmez.',
             whatHappened: LessonTile(
               title: 'Karar düz metindi',
-              lines: ['Aynı metin kodda 21 yerde yazılıydı.', "Gemini'ye giden şemada liste yoktu."],
+              lines: ['Karar metinleri kodda 21 yerde elle yazılıydı.', "Gemini'ye giden şemada liste yoktu."],
               footer: "'sweet_perfection' · 'salty_sabotage' · 'spicy_chaos'",
             ),
             whatWeDid: LessonTile(
               title: 'Tek liste: enum',
-              lines: ['İki şema ve istek metni bu listeden üretiliyor.', 'Eksik ya da hatalı alan: cevap sayılmıyor.'],
+              lines: ['İki şema ve istek metni bu listeden üretiliyor.', 'Listede olmayan karar reddediliyor.'],
               footer: 'enum TasteVerdict · cafe_review.dart',
             ),
             proof: LessonTile(
               title: 'Yazım hatası artık yakalanıyor',
-              lines: ['"sweet_perfction" reddediliyor.', "Boş cevap testi 20 Kasım'da kırmızıydı."],
+              lines: ['"sweet_perfction" reddediliyor.', 'İki şema da aynı listeyi gönderiyor.'],
               footer: 'taste_verdict_test.dart',
             ),
             advanced: "Dart 3 exhaustive switch: listeye yeni değer eklenince derleyici eksik case'i gösterir, "

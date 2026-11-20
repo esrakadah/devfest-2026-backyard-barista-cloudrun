@@ -12,10 +12,10 @@ class FallbackRuleSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/fallback-rule',
             title: '14. Kural 4: model susarsa oyun susmaz',
-            speakerNotes: 'BEAT  [19:15 - 20:45] Kural 4. Yeni kelime: timeout. Üç plan; sınır ile ölçümü ayır.\n'
-                'SAY   "Dördüncü kural. Yeni kelime timeout, zaman aşımı: en fazla şu kadar beklerim sınırı. Oyunda üç plan var. A planı canlı Gemini: en fazla sekiz saniye bekliyoruz; ölçtüğümüzde bir ile iki saniye arasında cevap verdi. B planı bu laptoptaki Gemma: sınır on beş saniye; o yalnızca benim laptopumda var, sizin telefonunuzda yok. C planı pakete koyduğumuz hazır yanıtlar: internet gerekmez. Ekrandaki sekiz ve on beş ölçüm değil, sınır. Ölçümler kartların altında, tarihleriyle."\n'
-                'HOLD  Soldan sağa A, B, C. "Ölçüm değil, sınır" derken kart başlıklarını, sonra alt satırları göster.\n'
-                'NEXT  "C planını az önce siz test ettiniz."',
+            speakerNotes: 'BEAT  [18:15 - 19:30] Kural 4. Yeni kelime: timeout. Üç plan; sınır ile ölçümü ayır.\n'
+                'SAY   "Dördüncü kural. Yeni kelime timeout, zaman aşımı: en fazla şu kadar beklerim sınırı. Oyunda üç plan var. A planı canlı Gemini: en fazla sekiz saniye bekliyoruz. B planı bu laptoptaki Gemma: sınır on beş saniye; o yalnızca benim laptopumda var, sizin telefonunuzda yok. C planı pakete koyduğumuz hazır yanıtlar: model gerekmez. Ekrandaki sekiz ve on beş ölçüm değil, sınır. Ölçümler kartların ikinci satırında; 11 Kasım\'da 12 tepsiyle ölçtüm."\n'
+                'HOLD  Soldan sağa A, B, C. "Ölçüm değil, sınır" derken kart başlıklarını, sonra ikinci satırları göster.\n'
+                'NEXT  "C planını belki az önce siz test ettiniz."',
           ),
         );
 
@@ -45,7 +45,7 @@ class FallbackRuleSlide extends FlutterDeckSlideWidget {
             ),
             proof: LessonTile(
               title: 'Hazır yanıtlar · pakette',
-              lines: ['İnternet gerekmez.', 'Her şehir ve her karar için bir yanıt.'],
+              lines: ['Model gerekmez.', 'Her şehir ve her karar için bir yanıt.'],
               footer: 'yükleme sınırı 250 ms · mock_responses.json',
             ),
             advanced: 'her katman CafeReview? döndürüyor: null; 429, zaman aşımı ve bozuk JSON birbirinden ayrılmıyor, '

@@ -12,10 +12,11 @@ class HowItWasBuiltSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/how-it-was-built',
             title: '4. Bu oyun nasıl yazıldı',
-            speakerNotes: 'BEAT  [06:00 - 07:00] Dört araç tek slaytta, ardından konuşmanın çerçevesi: çalışıyor, ama beş hata.\n'
-                'SAY   "Bu oyunu dört araçla yaptım. Google AI Studio: tarayıcıda isteğini yazıyorsun, çalışan uygulamayı alıyorsun. Antigravity: tek istekle birçok dosyayı değiştiren bir AI editör. Oyun sahnesi Flame ile, raflar ve tepsi Flutter widget\'larıyla. Hepsi Cloud Run\'da; Cloud Run, uygulamanızı internette çalıştıran Google servisi. Sonuç: çalışan bir oyun ve 32 test, hepsi yeşil. 20 Kasım\'da aynı kodda beş hata buldum. Çalışıyor olması ve testlerin yeşil olması, doğru olduğu anlamına gelmiyor."\n'
+            speakerNotes:
+                'BEAT  [06:00 - 07:15] Dört araç tek slaytta, testin tanımı, ardından konuşmanın çerçevesi: çalışıyor, ama beş hata.\n'
+                'SAY   "Bu oyunu dört araçla yaptım. Google AI Studio: tarayıcıda isteğini yazıyorsun, çalışan uygulamayı alıyorsun. Antigravity: tek istekle birçok dosyayı değiştiren bir yapay zeka editörü. Oyun sahnesi Flame ile, raflar ve tepsi Flutter ile. Hepsi Cloud Run\'da; Cloud Run, uygulamanızı internette çalıştıran Google servisi. Yapım adımları ve istek metinleri repoda. Sonuç: çalışan bir oyun ve 32 test. Test, kodun doğru çalıştığını kontrol eden küçük bir program: geçerse yeşil, kalırsa kırmızı. 32\'si de yeşildi. 20 Kasım\'da aynı kodda beş hata buldum. Çalışıyor olması ve testlerin yeşil olması, doğru olduğu anlamına gelmiyor."\n'
                 'HOLD  Dört kartı soldan sağa göster, okuma. Alttaki cümlede dur ve salona bak.\n'
-                'NEXT  "Bu beş hatadan beş kural çıktı."',
+                'NEXT  "Bu hatalardan üçünü bugün göstereceğim; beşi de testleriyle repoda. Bu oyundan çıkardığım beş kural var."',
           ),
         );
 
@@ -72,7 +73,7 @@ class HowItWasBuiltSlide extends FlutterDeckSlideWidget {
                         talkTitleFontSize: _toolTitleSize,
                         talkBulletFontSize: _toolLineSize,
                         accentColor: DeckColors.googleGreen,
-                        bullets: ['Flame: Flutter için oyun motoru.', 'Raflar ve tepsi: widget.'],
+                        bullets: ['Flame: Flutter için oyun motoru.', 'Raflar ve tepsi: Flutter.'],
                       ),
                     ),
                     SizedBox(width: _gap),
@@ -104,7 +105,7 @@ class HowItWasBuiltSlide extends FlutterDeckSlideWidget {
                   ),
                 ),
                 child: const Text(
-                  "Çalışıyor. 32 test yeşil. 20 Kasım'da içinde 5 hata buldum.",
+                  "Çalışıyor. 32 test yeşildi. 20 Kasım'da içinde 5 hata buldum.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: DeckFonts.sans,

@@ -13,10 +13,10 @@ class GuardBeforeAfterSlide extends FlutterDeckSlideWidget {
           configuration: const FlutterDeckSlideConfiguration(
             route: '/guard-before-after',
             title: '7. Kural 1, kod: önce ve sonra',
-            speakerNotes: 'BEAT  [08:45 - 10:45] Kural 1, kod. Yalnızca iki sarı satır ve test adı.\n'
-                'SAY   "Solda eski hali. Sarı satıra bakın: cevap geldiyse göster. Modelin ne dediğine bakan yok. Sağda yeni hali: cevap geldiyse ve tepsideki şakayla uyuşuyorsa göster. Uyuşmuyorsa cevap çöpe gidiyor, yerine hazır yanıt geliyor. Bunu nereden biliyoruz? Alttaki test. Sağdaki sarı satırı silerseniz bu test kırmızıya dönüyor. 20 Kasım\'da bir şey daha buldum: kontrol sadece kelimeye bakıyordu. Model tuzlu deyip beş yıldız verirse geçiyordu; artık yıldıza da bakıyor. Eve götüreceğiniz cümle: modelin cevabı bir öneridir, karar değil."\n'
+            speakerNotes: 'BEAT  [09:00 - 10:30] Kural 1, kod. Yalnızca iki sarı satır ve test adı.\n'
+                'SAY   "Solda eski hali. Sarı satıra bakın: cevap geldiyse göster. Modelin ne dediğine bakan yok. Sağda yeni hali: cevap geldiyse ve tepsideki tuzla uyuşuyorsa göster. Uyuşmuyorsa cevap çöpe gidiyor, yerine hazır yanıt geliyor. Bunu nereden biliyoruz? Alttaki test. Sağdaki sarı satırı silerseniz bu test kırmızıya dönüyor. 20 Kasım\'da bir şey daha buldum: kontrol sadece kelimeye bakıyordu. Model tuzlu deyip beş yıldız verirse geçiyordu; artık yıldıza da bakıyor. Eve götüreceğiniz cümle: modelin cevabı bir öneridir, karar değil."\n'
                 'HOLD  Önce soldaki sarı satır, sonra sağdaki sarı satır, en son alttaki test adı. Kodun geri kalanını okuma.\n'
-                'NEXT  "Peki model yanlış değil de eksik cevap verirse?"',
+                'NEXT  "Peki \'tuzlu\' kararı kodda nasıl yazılıyor? Orada da bir tuzak vardı."',
           ),
         );
 

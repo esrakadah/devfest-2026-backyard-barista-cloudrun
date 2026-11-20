@@ -4,16 +4,16 @@ import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
-/// The plan of the talk: five rules in two groups, and the three new words.
+/// The plan of the talk: five rules in two groups, and the five new words.
 class FiveLessonsSlide extends FlutterDeckSlideWidget {
   const FiveLessonsSlide({super.key})
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/five-lessons',
-            title: '5. Bugün: beş kural, üç kelime',
-            speakerNotes: 'BEAT  [07:00 - 07:30] Yol haritası. Kuralları okuma, iki grubu ve üç kelimeyi göster.\n'
-                'SAY   "Bugünün planı: beş kural. İlk ikisi modelin cevabıyla ilgili, son üçü uygulamanın kendisiyle. Üç yeni kelime öğreneceğiz: guard, enum ve sealed class. Hepsini geldiği yerde açıklayacağım; şimdi bilmeniz gerekmiyor."\n'
-                'HOLD  Sol sütun, sağ sütun, alttaki üç kelime. 30 saniyeyi geçme.\n'
+            title: '5. Bugün: beş kural, beş kelime',
+            speakerNotes: 'BEAT  [07:15 - 07:45] Yol haritası. Kuralları okuma, iki grubu ve beş kelimeyi göster.\n'
+                'SAY   "Bugünün planı: beş kural. İlk ikisi modelin cevabıyla ilgili, son üçü uygulamanın kendisiyle. Her kuralla bir yeni kelime geliyor: guard, enum, sealed class, timeout ve proxy. Hepsini geldiği yerde açıklayacağım; şimdi bilmeniz gerekmiyor."\n'
+                'HOLD  Sol sütun, sağ sütun, alttaki beş kelime. 30 saniyeyi geçme.\n'
                 'NEXT  "Birinci kural, az önce tuz atanların gördüğü şey."',
           ),
         );
@@ -21,9 +21,9 @@ class FiveLessonsSlide extends FlutterDeckSlideWidget {
   static const double _gap = 20;
   static const double _ruleTitleSize = 36;
   static const double _ruleLineSize = 38;
-  static const double _wordSize = 32;
-  static const double _wordLabelSize = 20;
-  static const double _wordPaddingHorizontal = 26;
+  static const double _wordSize = 30;
+  static const double _wordLabelSize = 25;
+  static const double _wordPaddingHorizontal = 20;
   static const double _wordPaddingVertical = 16;
   static const double _wordRadius = 16;
   static const double _wordBorderOpacity = 0.6;
@@ -34,7 +34,7 @@ class FiveLessonsSlide extends FlutterDeckSlideWidget {
       builder: (context) {
         return const SlideFrame(
           eyebrow: 'BUGÜN NE GÖRECEĞİZ',
-          title: 'Beş hata, beş kural, üç yeni kelime',
+          title: 'Beş kural, beş yeni kelime',
           act: StoryAct.tools,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -79,6 +79,10 @@ class FiveLessonsSlide extends FlutterDeckSlideWidget {
                   Expanded(child: _NewWordChip(word: 'enum', meaning: 'kapalı liste')),
                   SizedBox(width: _gap),
                   Expanded(child: _NewWordChip(word: 'sealed class', meaning: 'kapalı durum listesi')),
+                  SizedBox(width: _gap),
+                  Expanded(child: _NewWordChip(word: 'timeout', meaning: 'zaman aşımı')),
+                  SizedBox(width: _gap),
+                  Expanded(child: _NewWordChip(word: 'proxy', meaning: 'aracı sunucu')),
                 ],
               ),
             ],
