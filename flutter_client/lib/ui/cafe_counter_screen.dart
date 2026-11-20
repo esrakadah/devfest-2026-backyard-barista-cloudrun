@@ -5,6 +5,7 @@ import 'package:backyard_barista_cloudrun/data/custom_svg_items.dart';
 import 'package:backyard_barista_cloudrun/data/ingredients_catalog.dart';
 import 'package:backyard_barista_cloudrun/models/cafe_review.dart';
 import 'package:backyard_barista_cloudrun/models/customer_order_ticket.dart';
+import 'package:backyard_barista_cloudrun/models/order_state.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_judge_service.dart';
 import 'package:backyard_barista_cloudrun/services/cafe_sound_controller.dart';
 import 'package:backyard_barista_cloudrun/services/nfc_tag_controller.dart';
@@ -59,18 +60,16 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   final CafeSoundController _soundController = CafeSoundController();
   late final BaristaFlameGame _flameGame;
   bool _includeRoundTwoCustomItems = true;
-  bool _isEvaluatingOrder = false;
 
-  /// Bumped whenever the tray is cleared or the city changes, so a verdict that arrives late for an
-  /// older tray is dropped instead of scoring points and playing sounds.
-  int _trayGeneration = 0;
+  /// The one place that says where the order stands. Every reset writes [OrderIdle] here, which hides the
+  /// review card and makes a verdict that is still on its way land nowhere.
+  OrderState _order = const OrderIdle();
   bool _isCrewSippingTea = false;
   bool _isCustomerSippingTea = false;
   int _activeTicketIndex = 0;
   int _playerOneBaristaScore = 0;
   int _playerTwoPastryScore = 0;
   int _tipJarTotal = 0;
-  CafeReview? _latestReview;
   late final NfcTagController _nfcController = widget.nfcController ?? NfcTagController();
 
   @override
@@ -133,10 +132,9 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       return;
     }
     setState(() {
-      _trayGeneration++;
+      _order = const OrderIdle();
       _activeTicketIndex = 0;
       _selectedTray.clear();
-      _latestReview = null;
       _isCrewSippingTea = false;
       _isCustomerSippingTea = false;
       _syncFlameStage();
@@ -152,6 +150,12 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   }
 
   int get _crewLevel => 1 + ((_playerOneBaristaScore + _playerTwoPastryScore) ~/ _pointsPerCrewLevel);
+
+  /// The review on the counter, which exists only while the order is [OrderServed].
+  CafeReview? get _latestReview => switch (_order) {
+        OrderServed(:final review) => review,
+        OrderIdle() || OrderEvaluating() => null,
+      };
 
   void _triggerManualSoundCue(CafeSoundCue cue) {
     setState(() {
@@ -239,9 +243,8 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
 
   void _clearTray() {
     setState(() {
-      _trayGeneration++;
+      _order = const OrderIdle();
       _selectedTray.clear();
-      _latestReview = null;
       _syncFlameStage();
     });
     _soundController.play(CafeSoundCue.tapPop);
@@ -251,8 +254,8 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
     setState(() {
       final tickets = _ticketsForActiveCity;
       _activeTicketIndex = (_activeTicketIndex + 1) % tickets.length;
+      _order = const OrderIdle();
       _selectedTray.clear();
-      _latestReview = null;
       _isCrewSippingTea = false;
       _isCustomerSippingTea = false;
       _syncFlameStage();
@@ -297,35 +300,37 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
   }
 
   Future<void> _serveOrder() async {
-    if (_selectedTray.isEmpty || _isEvaluatingOrder) {
+    if (_selectedTray.isEmpty || _order is OrderEvaluating) {
       return;
     }
+    final evaluatingOrder = OrderEvaluating();
     setState(() {
-      _isEvaluatingOrder = true;
+      _order = evaluatingOrder;
+      _syncFlameStage();
     });
     _soundController.play(CafeSoundCue.serveBell);
 
-    final servedTrayGeneration = _trayGeneration;
     final CafeReview review;
     try {
       review = await widget.judgeService.evaluateOrder(
         selectedIngredients: List<CafeIngredient>.unmodifiable(_selectedTray),
         cityEdition: widget.cityController.activeEdition,
       );
-    } finally {
-      if (mounted && _isEvaluatingOrder) {
+    } on Object {
+      if (mounted && identical(_order, evaluatingOrder)) {
         setState(() {
-          _isEvaluatingOrder = false;
+          _order = const OrderIdle();
         });
       }
+      rethrow;
     }
 
-    if (!mounted || servedTrayGeneration != _trayGeneration) {
+    if (!mounted || !identical(_order, evaluatingOrder)) {
       return;
     }
     final previousLevel = _crewLevel;
     setState(() {
-      _latestReview = review;
+      _order = OrderServed(review);
       _tipJarTotal += review.cityBonusTip;
       if (review.isPrankCaught) {
         _playerTwoPastryScore += _pranksterRoundPoints;
@@ -565,7 +570,7 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
                         final woodenTrayWidget = _InteractiveWoodenTray(
                           selectedTray: _selectedTray,
                           languageCode: languageCode,
-                          isEvaluating: _isEvaluatingOrder,
+                          isEvaluating: _order is OrderEvaluating,
                           onRemoveIngredient: _toggleIngredient,
                           onServeOrder: _serveOrder,
                           onClearTray: _clearTray,
