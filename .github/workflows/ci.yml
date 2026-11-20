@@ -29,6 +29,15 @@ jobs:
           flutter analyze
           flutter test
 
+      - name: Verify the web bundle carries no API key
+        working-directory: flutter_client
+        run: |
+          flutter build web --release --no-web-resources-cdn --dart-define=DEFAULT_CITY=konya --dart-define=GEMINI_MODEL=gemini-3.5-flash-lite --dart-define=GEMINI_PROXY_PATH=/api/gemini/generate
+          if grep -rEl 'AIza[0-9A-Za-z_-]{35}' build/web; then
+            echo "A Google API key pattern was found in the web bundle files listed above." >&2
+            exit 1
+          fi
+
       - name: Verify slides (analyze, test)
         working-directory: slides
         run: |
