@@ -1,3 +1,4 @@
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/slides/s_ai_studio_pipeline_slide.dart';
 import 'package:backyard_barista_deck/slides/s_architecture_recap_slide.dart';
 import 'package:backyard_barista_deck/slides/s_bana_ulasin_slide.dart';
@@ -37,8 +38,29 @@ export 's_title_slide.dart';
 export 's_winner_podium_closing_slide.dart';
 export 's_workshop_contract_slide.dart';
 
-/// Main 16-slide presentation order.
-const List<FlutterDeckSlideWidget> mainSlides = [
+/// The English workshop deck: 16 main slides.
+const List<FlutterDeckSlideWidget> workshopMainSlides = [
+  TitleSlide(),
+  SweetOrSaltySlide(),
+  WorkshopContractSlide(),
+  AiStudioPipelineSlide(),
+  MeetAntigravitySlide(),
+  PureFlutterWidgetsSlide(),
+  RealNumbersLatencySlide(),
+  RealNumbersCostSlide(),
+  RoomQuotaTrapSlide(),
+  MultiCityRemoteConfigSlide(),
+  SaltSugarMechanicSlide(),
+  HybridAssetPipelineSlide(),
+  LiveBuildDashboardSlide(),
+  ArchitectureRecapSlide(),
+  WinnerPodiumClosingSlide(),
+  BanaUlasinSlide(),
+];
+
+/// The Turkish main-hall talk (`--dart-define=DECK_LANG=tr`). It has its own list so the talk can be
+/// reordered without touching the workshop.
+const List<FlutterDeckSlideWidget> talkMainSlides = [
   TitleSlide(),
   SweetOrSaltySlide(),
   WorkshopContractSlide(),
@@ -58,9 +80,16 @@ const List<FlutterDeckSlideWidget> mainSlides = [
 ];
 
 /// Backup slides after the closing slide, reachable via PresenterMenuPlugin.
-const List<FlutterDeckSlideWidget> backupSlides = [DemoHiccupSlide(), GenerateVsDecideSlide()];
+const List<FlutterDeckSlideWidget> workshopBackupSlides = [DemoHiccupSlide(), GenerateVsDecideSlide()];
+const List<FlutterDeckSlideWidget> talkBackupSlides = [DemoHiccupSlide(), GenerateVsDecideSlide()];
 
-/// Full running order (16 main slides + 2 backup slides).
+/// Main presentation order of the deck being built.
+const List<FlutterDeckSlideWidget> mainSlides = isTurkishDeck ? talkMainSlides : workshopMainSlides;
+
+/// Backup slides of the deck being built.
+const List<FlutterDeckSlideWidget> backupSlides = isTurkishDeck ? talkBackupSlides : workshopBackupSlides;
+
+/// Full running order: main slides, then backup slides.
 const List<FlutterDeckSlideWidget> deckSlides = [...mainSlides, ...backupSlides];
 
 /// One-based slide number of [route], as `flutterDeck.goToSlide` counts them.

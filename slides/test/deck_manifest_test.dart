@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/plugins/presenter_menu_plugin.dart';
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-/// Locked 16-slide main running order + 2 backup slides (`/demo-hiccup`, `/generate-vs-decide`).
-const List<String> expectedRunningOrder = [
+/// Locked running order of the English workshop deck: 16 main slides + 2 backup slides.
+const List<String> expectedWorkshopOrder = [
   '/title',
   '/sweet-or-salty',
   '/workshop-contract',
@@ -26,12 +27,44 @@ const List<String> expectedRunningOrder = [
   '/generate-vs-decide',
 ];
 
+/// Locked running order of the Turkish talk (`--dart-define=DECK_LANG=tr`): 16 main slides + 2 backup slides.
+const List<String> expectedTalkOrder = [
+  '/title',
+  '/sweet-or-salty',
+  '/workshop-contract',
+  '/ai-studio-pipeline',
+  '/meet-antigravity',
+  '/pure-flutter-widgets',
+  '/real-numbers-latency',
+  '/real-numbers-cost',
+  '/room-quota-trap',
+  '/multi-city-remote-config',
+  '/salt-sugar-mechanic',
+  '/hybrid-asset-pipeline',
+  '/live-build-dashboard',
+  '/architecture-recap',
+  '/winner-podium-closing',
+  '/bana-ulasin',
+  '/demo-hiccup',
+  '/generate-vs-decide',
+];
+
+const List<String> expectedRunningOrder = isTurkishDeck ? expectedTalkOrder : expectedWorkshopOrder;
+const int expectedMainSlideCount = 16;
+const int expectedBackupSlideCount = 2;
+
 void main() {
   group('the Backyard Barista deck manifest', () {
-    test('has exactly 16 main slides and 2 backup slides', () {
-      expect(mainSlides.length, 16);
-      expect(backupSlides.length, 2);
-      expect(deckSlides.length, 18);
+    test('has the expected number of main and backup slides', () {
+      expect(mainSlides.length, expectedMainSlideCount);
+      expect(backupSlides.length, expectedBackupSlideCount);
+      expect(deckSlides.length, expectedMainSlideCount + expectedBackupSlideCount);
+      expect(expectedRunningOrder.length, deckSlides.length);
+    });
+
+    test('the workshop and the talk each keep their own list', () {
+      expect(mainSlides, same(isTurkishDeck ? talkMainSlides : workshopMainSlides));
+      expect(backupSlides, same(isTurkishDeck ? talkBackupSlides : workshopBackupSlides));
     });
 
     test('every slide declares a configuration with a route', () {
@@ -95,12 +128,9 @@ void main() {
     });
 
     test('slideNumberForRoute is one-based and agrees with the order', () {
-      expect(slideNumberForRoute('/title'), 1);
-      expect(slideNumberForRoute('/architecture-recap'), 14);
-      expect(slideNumberForRoute('/winner-podium-closing'), 15);
-      expect(slideNumberForRoute('/bana-ulasin'), 16);
-      expect(slideNumberForRoute('/demo-hiccup'), 17);
-      expect(slideNumberForRoute('/generate-vs-decide'), 18);
+      for (var index = 0; index < expectedRunningOrder.length; index++) {
+        expect(slideNumberForRoute(expectedRunningOrder[index]), index + 1, reason: expectedRunningOrder[index]);
+      }
       expect(slideNumberForRoute('/does-not-exist'), isNull);
     });
   });
