@@ -8,6 +8,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
+import 'package:backyard_barista_deck/leaderboard/hall_board.dart';
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_backdrop.dart';
@@ -20,6 +21,35 @@ import '../test/helpers/deck_fonts.dart';
 
 const Size _slideSize = Size(2560, 1440);
 const String _outputDirectory = 'build/slides';
+
+/// `--dart-define=BOARD_SAMPLE=true` fills the leaderboard slides with made-up players, to check the
+/// layout. The backup PDF is exported without it: its board says that the table opens live on stage.
+const bool _showsSampleBoard = bool.fromEnvironment('BOARD_SAMPLE');
+
+final List<HallBoardEntry> _sampleBoard = <HallBoardEntry>[
+  for (final (index, name) in const <String>[
+    'tuzlu_kahve',
+    'Mevlana42',
+    'baklavacı',
+    'flutter_kız',
+    'dash_avcısı',
+    'Etli Ekmek',
+    'şekerpare',
+    'gde_fan',
+    'cloud_run',
+    'konyalı',
+    'son_sıra',
+  ].indexed)
+    HallBoardEntry(
+      name: name,
+      score: _sampleTopScore - index * _sampleScoreStep,
+      rounds: _sampleTopRounds - index,
+      updatedAt: DateTime.utc(2026, 11, 21, 11, 36, index),
+    ),
+];
+const int _sampleTopScore = 1850;
+const int _sampleScoreStep = 130;
+const int _sampleTopRounds = 21;
 
 Future<void> _precacheImages(WidgetTester tester) async {
   final elements = find.byType(Image).evaluate().toList();
@@ -39,6 +69,9 @@ String _fileNameFor(int number, String route) {
 void main() {
   setUpAll(() async {
     await loadDeckFonts();
+    if (_showsSampleBoard) {
+      HallBoard.instance.showEntries(_sampleBoard);
+    }
     Directory(_outputDirectory).createSync(recursive: true);
   });
 

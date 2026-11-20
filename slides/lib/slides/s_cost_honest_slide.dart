@@ -12,9 +12,9 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/cost-honest',
-            title: '17. Kural 5, maliyet: model boşuna çağrılmaz',
+            title: '18. Kural 5, maliyet: model boşuna çağrılmaz',
             speakerNotes:
-                'BEAT  [22:45 - 24:00] Kural 5, maliyet. Sayılan rakamlar ve bir ölçüm; eski tahminin tutmadığını söyle.\n'
+                'BEAT  [23:15 - 24:30] Kural 5, maliyet. Sayılan rakamlar ve bir ölçüm; eski tahminin tutmadığını söyle.\n'
                 'SAY   "Token, modelin okuduğu ve yazdığı kelime parçası; fatura token sayısına göre kesiliyor. O yüzden en ucuz çağrı, hiç yapmadığınız çağrı. Tepsiyi dizerken modele gitmiyoruz: sıfır çağrı. Eksik tepside, içinde tuz ya da acı yoksa, yine gitmiyoruz; cevabı kod veriyor. Tepsi servis edilince tek çağrı gidiyor. Bu üçünün testi var. Sağdaki rakama dikkat: 322 token. Bunu 20 Kasım\'da tek bir tepside ölçtüm. O güne kadar slaytımda 270 yazıyordu ve bir tahmindi; elli token eksik tahmin etmişim. Ölçmediğiniz rakamı ölçmüş gibi göstermeyin."\n'
                 'HOLD  Soldan sağa dört kutu. Son kutudaki "ÖLÇÜLDÜ" etiketini göster ve bir saniye dur.\n'
                 'NEXT  "Toparlayalım."',

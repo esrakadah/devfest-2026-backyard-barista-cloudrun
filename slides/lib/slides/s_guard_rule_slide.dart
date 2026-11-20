@@ -1,4 +1,5 @@
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
+import 'package:backyard_barista_deck/widgets/lesson_diagrams.dart';
 import 'package:backyard_barista_deck/widgets/lesson_layouts.dart';
 import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,10 @@ class GuardRuleSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/guard-rule',
-            title: '6. Kural 1: model önerir, kararı kod verir',
-            speakerNotes: 'BEAT  [07:45 - 09:00] Kural 1. Salona sor, sonra yeni kelime: guard.\n'
+            title: '7. Kural 1: model önerir, kararı kod verir',
+            speakerNotes: 'BEAT  [08:15 - 09:30] Kural 1. Salona sor, sonra yeni kelime: guard.\n'
                 'SAY   "Kim tuz attı? Kaç yıldız aldınız? Bir. Peki o yıldızı kim verdi? Öneri jüriden geldi; son sözü kod söyledi: tepside tuz varsa kod bir yıldızdan fazlasına izin vermiyor. Yeni kelimemiz guard, Türkçesiyle koruyucu: modelin cevabı ekrana çıkmadan önce onu kontrol eden kod. Hikaye şöyle: 12 Kasım\'a kadar Gemini\'nin cevabı kontrolsüz ekrana çıkıyordu. Model tuzu kaçırırsa tuzlu tepsi beş yıldız alabiliyordu. Tepside tuz var mı, bunu artık kodumuz biliyor; modelin kararı buna uymuyorsa cevabı atıyoruz."\n'
-                'HOLD  "Kim verdi?" sorusundan sonra 2 saniye bekle; "Gemini" diyeni de "kod" diyeni de duy, sonra cevabı ver. "Kim tuz attı?" sorusuna el kalkmazsa: "Ben attım, gördünüz: bir yıldız." Sonra üç kutuyu soldan sağa göster. Alttaki satırı okuma.\n'
+                'HOLD  "Kim verdi?" sorusundan sonra 2 saniye bekle; "Gemini" diyeni de "kod" diyeni de duy, sonra cevabı ver. "Kim tuz attı?" sorusuna el kalkmazsa: "Ben attım, gördünüz: bir yıldız." Sonra üst şeridi (ÖNCE), ardından alt şeridi (SONRA) soldan sağa göster; Guard kutusunda dur. Alttaki satırı okuma.\n'
                 'NEXT  "Kodda bu tek bir satır."',
           ),
         );
@@ -26,24 +27,10 @@ class GuardRuleSlide extends FlutterDeckSlideWidget {
           eyebrow: 'KURAL 1 / 5',
           title: 'Model önerir, kararı kod verir',
           act: StoryAct.realNumbers,
-          child: LessonRuleBody(
+          child: LessonPictureBody(
             word: 'Guard',
             definition: 'Koruyucu: modelin cevabı ekrana çıkmadan önce onu kontrol eden kod.',
-            whatHappened: LessonTile(
-              title: 'Modele güvendik',
-              lines: ["Gemini'nin cevabı kontrolsüz ekrana çıkıyordu.", 'Tuzlu tepsi 5 yıldız alabiliyordu.'],
-              footer: "12 Kasım 2026'ya kadar",
-            ),
-            whatWeDid: LessonTile(
-              title: 'Kararı koda aldık',
-              lines: ['Tuz var mı? Buna kod bakıyor.', 'Modelin kararı uymuyorsa cevabı atıyoruz.'],
-              footer: 'cafe_judge_service.dart',
-            ),
-            proof: LessonTile(
-              title: 'Kontrolü sil, testler kızarsın',
-              lines: ['Kontrol silinirse 4 test kırmızı.', 'Kontrol artık yıldıza da bakıyor.'],
-              footer: 'cafe_judge_service_test.dart · model_reply_validation_test.dart',
-            ),
+            picture: GuardFlowDiagram(),
             advanced: 'kontrol önce yalnızca tasteVerdict alanına bakıyordu; '
                 '"tuzlu" deyip 5 yıldız veren cevap 20 Kasım\'a kadar geçiyordu',
           ),

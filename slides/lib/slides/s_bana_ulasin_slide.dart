@@ -9,10 +9,10 @@ class BanaUlasinSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/bana-ulasin',
-            title: isTurkishDeck ? '19. Bana ulaşın' : '16. Find me',
+            title: isTurkishDeck ? '21. Bana ulaşın' : '16. Find me',
             footer: FlutterDeckFooterConfiguration(showFooter: false),
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [25:30 - 26:30] Kapanış cümlesi ve fuaye daveti. Bu slayt konuşma bittikten sonra ekranda açık kalsın.\n'
+                ? 'BEAT  [27:30 - 28:30] Kapanış cümlesi ve fuaye daveti. Bu slayt konuşma bittikten sonra ekranda açık kalsın.\n'
                     'SAY   "Şakayı model yazsın, kararı kodunuz versin. ${isIzmirDeck ? "Yazılarım, açık kaynak kodlar ve iletişim bilgilerim ekrandaki QR kodda, yani esratech.com adresinde. Beni dinlediğiniz ve oyuna katıldığınız için çok teşekkür ederim İzmir, fuayede görüşmek üzere!" : "Yazılarım, kodlarım ve iletişim bilgilerim ekrandaki QR kodda, esratech.com adresinde. Ayrı bir soru-cevap süremiz yok ama hemen dışarıda, fuayede olacağım; gelin tanışalım, kodu ve hataları konuşalım. Çok teşekkürler Konya!"}"\n'
                     'HOLD  İlk cümleyi ekrandaki yazıyı göstererek, yavaş söyle. Gülümse, salona el salla. Teşekkürden sonra kumandayı bırak: bir tık daha yedek slaytı açar. HDMI kablosunu sökmeden önce sahne ekibinin işaretini bekle.\n'
                     'NEXT  Son ana slayt (yedek slaytlar: /demo-hiccup ve /wifi-off-gemma).'

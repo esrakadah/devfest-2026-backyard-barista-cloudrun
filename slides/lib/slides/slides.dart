@@ -12,6 +12,7 @@ import 'package:backyard_barista_deck/slides/s_forgotten_line_slide.dart';
 import 'package:backyard_barista_deck/slides/s_generate_vs_decide_slide.dart';
 import 'package:backyard_barista_deck/slides/s_guard_before_after_slide.dart';
 import 'package:backyard_barista_deck/slides/s_guard_rule_slide.dart';
+import 'package:backyard_barista_deck/slides/s_hall_leaderboard_slide.dart';
 import 'package:backyard_barista_deck/slides/s_hall_load_test_slide.dart';
 import 'package:backyard_barista_deck/slides/s_hall_plays_slide.dart';
 import 'package:backyard_barista_deck/slides/s_how_it_was_built_slide.dart';
@@ -33,6 +34,7 @@ import 'package:backyard_barista_deck/slides/s_title_slide.dart';
 import 'package:backyard_barista_deck/slides/s_typed_output_rule_slide.dart';
 import 'package:backyard_barista_deck/slides/s_wifi_off_gemma_slide.dart';
 import 'package:backyard_barista_deck/slides/s_winner_podium_closing_slide.dart';
+import 'package:backyard_barista_deck/slides/s_winners_podium_slide.dart';
 import 'package:backyard_barista_deck/slides/s_workshop_contract_slide.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
@@ -49,6 +51,7 @@ export 's_forgotten_line_slide.dart';
 export 's_generate_vs_decide_slide.dart';
 export 's_guard_before_after_slide.dart';
 export 's_guard_rule_slide.dart';
+export 's_hall_leaderboard_slide.dart';
 export 's_hall_load_test_slide.dart';
 export 's_hall_plays_slide.dart';
 export 's_how_it_was_built_slide.dart';
@@ -70,6 +73,7 @@ export 's_title_slide.dart';
 export 's_typed_output_rule_slide.dart';
 export 's_wifi_off_gemma_slide.dart';
 export 's_winner_podium_closing_slide.dart';
+export 's_winners_podium_slide.dart';
 export 's_workshop_contract_slide.dart';
 
 /// The English workshop deck: 16 main slides.
@@ -92,12 +96,14 @@ const List<FlutterDeckSlideWidget> workshopMainSlides = [
   BanaUlasinSlide(),
 ];
 
-/// The Turkish main-hall talk (`--dart-define=DECK_LANG=tr`): the hall plays first, then five rules,
-/// each told as one rule slide and one or two code slides.
+/// The Turkish main-hall talk (`--dart-define=DECK_LANG=tr`): the hall plays first for a place on the
+/// leaderboard, then five rules, each told as one rule slide and one or two code slides, and the podium
+/// before the closing slide.
 const List<FlutterDeckSlideWidget> talkMainSlides = [
   TitleSlide(),
   SweetOrSaltySlide(),
   HallPlaysSlide(),
+  HallLeaderboardSlide(),
   HowItWasBuiltSlide(),
   FiveLessonsSlide(),
   GuardRuleSlide(),
@@ -113,6 +119,7 @@ const List<FlutterDeckSlideWidget> talkMainSlides = [
   KeyRuleSlide(),
   CostHonestSlide(),
   LessonRecapSlide(),
+  WinnersPodiumSlide(),
   BanaUlasinSlide(),
 ];
 

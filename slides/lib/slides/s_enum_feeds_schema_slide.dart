@@ -12,8 +12,8 @@ class EnumFeedsSchemaSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/enum-feeds-schema',
-            title: '9. Kural 2, kod: liste şemayı besliyor',
-            speakerNotes: 'BEAT  [11:30 - 12:45] Kural 2, kod. İki ayrı liste tek listeye iniyor.\n'
+            title: '10. Kural 2, kod: liste şemayı besliyor',
+            speakerNotes: 'BEAT  [12:00 - 13:15] Kural 2, kod. İki ayrı liste tek listeye iniyor.\n'
                 'SAY   "Solda eski hali. Sarı satır Gemini\'ye giden şema: karar bir metin olsun, o kadar. Hangi metin? Söylemiyoruz. Altında ikinci bir şema var, yerel model için; orada liste elle yazılmış. İki liste, iki ayrı yer: biri değişir, öbürü unutulur. Sağda yeni hali. Yukarıda enum: üç karar, tek yerde. Sarı satır iki şemada da aynı: listeyi enum\'dan al. Alttaki test, iki şemanın da tam bu listeyi gönderdiğini kontrol ediyor."\n'
                 'HOLD  Sol sarı satır, sonra sağdaki enum, sonra sağ sarı satır. Test adını göster, okuma.\n'
                 'NEXT  "Liste tamam. Peki cevap gelir ama içi boş olursa?"',
