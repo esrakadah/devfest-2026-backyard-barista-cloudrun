@@ -309,7 +309,7 @@ void main() {
       cityEdition: cityController.activeEdition,
     );
     expect(review.ratingStars, 1);
-    expect(review.tasteVerdict, 'salty_sabotage');
+    expect(review.tasteVerdict, TasteVerdict.saltySabotage);
     expect(review.source, JudgeSource.offlineBundle);
 
     await tester.pumpWidget(

@@ -22,18 +22,14 @@ const Map<String, String> _promptLanguageNames = <String, String>{
   'en': 'English',
 };
 
-const Map<String, dynamic> _localJudgeJsonSchema = <String, dynamic>{
+/// The allowed verdicts and faces come from the Dart enums, so this schema, the Gemini schema and the parser
+/// cannot drift apart.
+final Map<String, dynamic> _localJudgeJsonSchema = <String, dynamic>{
   'type': 'object',
   'properties': <String, dynamic>{
     'ratingStars': <String, dynamic>{'type': 'integer', 'minimum': minCafeRatingStars, 'maximum': maxCafeRatingStars},
-    'tasteVerdict': <String, dynamic>{
-      'type': 'string',
-      'enum': <String>['sweet_perfection', 'salty_sabotage', 'spicy_chaos'],
-    },
-    'customerFace': <String, dynamic>{
-      'type': 'string',
-      'enum': <String>['happy', 'shocked', 'salty_disgusted'],
-    },
+    'tasteVerdict': <String, dynamic>{'type': 'string', 'enum': TasteVerdict.modelJsonValues},
+    'customerFace': <String, dynamic>{'type': 'string', 'enum': CustomerFaceState.jsonValues},
     'headline': <String, dynamic>{'type': 'string'},
     'customerReaction': <String, dynamic>{'type': 'string'},
     'cityBonusTip': <String, dynamic>{'type': 'integer'},
@@ -114,7 +110,7 @@ class CafeJudgeService {
 
       return CafeReview(
         ratingStars: 3,
-        tasteVerdict: 'incomplete_tray',
+        tasteVerdict: TasteVerdict.incompleteTray,
         customerFace: CustomerFaceState.shocked,
         headline:
             isEnglish ? '${cityEdition.cityName}: Incomplete Tray!' : '${cityEdition.cityName}: Tepside Eksik Var!',
@@ -185,8 +181,8 @@ You are the witty food & coffee critic at ${cityEdition.eventTitle} (${cityEditi
 The 2-player barista team just served a tray with: [$itemDescriptions].
 Active city: ${cityEdition.cityName} (${cityEdition.flagEmoji}).
 Contains salt prank: $containsSaltPrank. Contains chili prank: $containsChiliPrank.
-If a salt or chili prank item is present in a sweet order, you MUST return ratingStars=1, tasteVerdict="salty_sabotage" (or "spicy_chaos"), customerFace="salty_disgusted" (or "shocked"), and a hilarious roast referencing ${cityEdition.cityName}.
-Otherwise return ratingStars=5, tasteVerdict="sweet_perfection", customerFace="happy", and a warm local compliment.
+If a salt or chili prank item is present in a sweet order, you MUST return ratingStars=$minCafeRatingStars, tasteVerdict="${TasteVerdict.saltySabotage.jsonValue}" (or "${TasteVerdict.spicyChaos.jsonValue}"), customerFace="${CustomerFaceState.saltyDisgusted.jsonValue}" (or "${CustomerFaceState.shocked.jsonValue}"), and a hilarious roast referencing ${cityEdition.cityName}.
+Otherwise return ratingStars=$maxCafeRatingStars, tasteVerdict="${TasteVerdict.sweetPerfection.jsonValue}", customerFace="${CustomerFaceState.happy.jsonValue}", and a warm local compliment.
 Write in $languageName only: headline at most 6 words, customerReaction one sentence of at most 20 words.
 ''';
   }
@@ -223,8 +219,16 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
           'type': 'OBJECT',
           'properties': <String, dynamic>{
             'ratingStars': <String, dynamic>{'type': 'INTEGER'},
-            'tasteVerdict': <String, dynamic>{'type': 'STRING'},
-            'customerFace': <String, dynamic>{'type': 'STRING'},
+            'tasteVerdict': <String, dynamic>{
+              'type': 'STRING',
+              'format': 'enum',
+              'enum': TasteVerdict.modelJsonValues,
+            },
+            'customerFace': <String, dynamic>{
+              'type': 'STRING',
+              'format': 'enum',
+              'enum': CustomerFaceState.jsonValues,
+            },
             'headline': <String, dynamic>{'type': 'STRING'},
             'customerReaction': <String, dynamic>{'type': 'STRING'},
             'cityBonusTip': <String, dynamic>{'type': 'INTEGER'},
@@ -286,7 +290,7 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
         return null;
       }
       final reviewJson = jsonDecode(rawJsonText) as Map<String, dynamic>;
-      return CafeReview.fromJson(
+      return CafeReview.tryParse(
         reviewJson,
         evaluatedAt: _clock(),
         source: JudgeSource.liveGemini,
@@ -350,7 +354,7 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
         return null;
       }
       final reviewJson = jsonDecode(rawJsonText) as Map<String, dynamic>;
-      return CafeReview.fromJson(
+      return CafeReview.tryParse(
         reviewJson,
         evaluatedAt: _clock(),
         source: JudgeSource.localGemma,
@@ -373,10 +377,10 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
     required bool containsChiliPrank,
   }) {
     if (!containsSaltPrank && !containsChiliPrank) {
-      return review.tasteVerdict == 'sweet_perfection';
+      return review.tasteVerdict == TasteVerdict.sweetPerfection;
     }
-    return (containsSaltPrank && review.tasteVerdict == 'salty_sabotage') ||
-        (containsChiliPrank && review.tasteVerdict == 'spicy_chaos');
+    return (containsSaltPrank && review.tasteVerdict == TasteVerdict.saltySabotage) ||
+        (containsChiliPrank && review.tasteVerdict == TasteVerdict.spicyChaos);
   }
 
   Future<CafeReview> _evaluateFromOfflineFallback({
@@ -385,11 +389,11 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
     required bool containsChiliPrank,
     AssetBundle? bundle,
   }) async {
-    final verdictKey = containsSaltPrank
-        ? 'salty_sabotage'
+    final bundledVerdict = containsSaltPrank
+        ? TasteVerdict.saltySabotage
         : containsChiliPrank
-            ? 'spicy_chaos'
-            : 'sweet_perfection';
+            ? TasteVerdict.spicyChaos
+            : TasteVerdict.sweetPerfection;
 
     final effectiveBundle = bundle ?? rootBundle;
     try {
@@ -408,13 +412,16 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
       if (reviewsByCity != null) {
         final cityNode = reviewsByCity[cityEdition.editionId.code];
         if (cityNode is Map<String, dynamic>) {
-          final verdictNode = cityNode[verdictKey];
+          final verdictNode = cityNode[bundledVerdict.jsonValue];
           if (verdictNode is Map<String, dynamic>) {
-            return CafeReview.fromJson(
+            final bundledReview = CafeReview.tryParse(
               verdictNode,
               evaluatedAt: _clock(),
               source: JudgeSource.offlineBundle,
             );
+            if (bundledReview != null) {
+              return bundledReview;
+            }
           }
         }
       }
@@ -425,7 +432,7 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
     if (containsSaltPrank) {
       return CafeReview(
         ratingStars: minCafeRatingStars,
-        tasteVerdict: 'salty_sabotage',
+        tasteVerdict: TasteVerdict.saltySabotage,
         customerFace: CustomerFaceState.saltyDisgusted,
         headline: '${cityEdition.cityName}: Salt Prank Caught!',
         customerReaction: cityEdition.saltPrankRoast,
@@ -438,7 +445,7 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
     if (containsChiliPrank) {
       return CafeReview(
         ratingStars: minCafeRatingStars,
-        tasteVerdict: 'spicy_chaos',
+        tasteVerdict: TasteVerdict.spicyChaos,
         customerFace: CustomerFaceState.shocked,
         headline: '${cityEdition.cityName}: Chili Prank Caught!',
         customerReaction: cityEdition.chiliPrankRoast,
@@ -450,7 +457,7 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
 
     return CafeReview(
       ratingStars: maxCafeRatingStars,
-      tasteVerdict: 'sweet_perfection',
+      tasteVerdict: TasteVerdict.sweetPerfection,
       customerFace: CustomerFaceState.happy,
       headline: '${cityEdition.cityName}: 5-Star Sweet Perfection!',
       customerReaction: cityEdition.sweetCompliment,
