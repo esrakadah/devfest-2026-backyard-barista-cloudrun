@@ -368,19 +368,20 @@ Write in $languageName only: headline at most 6 words, customerReaction one sent
     }
   }
 
-  /// A model can miss the prank even when the prompt states it, and a reply with missing fields parses as
-  /// `sweet_perfection`, so every model verdict must agree with the flags decided in Dart before it reaches
-  /// the screen. A salt tray must never score 5 stars on stage.
+  /// A model can miss the prank even when the prompt states it, so every model verdict must agree with the
+  /// flags decided in Dart before it reaches the screen: the verdict word and the stars the prompt asked for.
+  /// A salt tray must never score 5 stars on stage.
   bool _verdictMatchesPranks(
     CafeReview review, {
     required bool containsSaltPrank,
     required bool containsChiliPrank,
   }) {
     if (!containsSaltPrank && !containsChiliPrank) {
-      return review.tasteVerdict == TasteVerdict.sweetPerfection;
+      return review.tasteVerdict == TasteVerdict.sweetPerfection && review.ratingStars == maxCafeRatingStars;
     }
-    return (containsSaltPrank && review.tasteVerdict == TasteVerdict.saltySabotage) ||
+    final namesThePrankOnTheTray = (containsSaltPrank && review.tasteVerdict == TasteVerdict.saltySabotage) ||
         (containsChiliPrank && review.tasteVerdict == TasteVerdict.spicyChaos);
+    return namesThePrankOnTheTray && review.ratingStars == minCafeRatingStars;
   }
 
   Future<CafeReview> _evaluateFromOfflineFallback({

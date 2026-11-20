@@ -4,6 +4,10 @@ import 'package:flutter/foundation.dart';
 const int minCafeRatingStars = 1;
 const int maxCafeRatingStars = 5;
 
+/// The largest tip a single review pays into the jar. No prompt or schema limits the number a model writes,
+/// so the parser does. The bundled answers pay 0 to 50.
+const int maxCityBonusTip = 50;
+
 /// Deterministic customer face state mapped to `assets/base/customers/*.png`.
 enum CustomerFaceState {
   happy('happy', 'assets/base/customers/customer_happy.png'),
@@ -17,13 +21,14 @@ enum CustomerFaceState {
 
   static List<String> get jsonValues => <String>[for (final face in CustomerFaceState.values) face.jsonValue];
 
-  static CustomerFaceState fromJsonValue(String? rawValue) {
+  /// Returns null for a missing or unknown value instead of defaulting to a happy customer.
+  static CustomerFaceState? tryParse(Object? rawValue) {
     for (final candidate in CustomerFaceState.values) {
       if (candidate.jsonValue == rawValue) {
         return candidate;
       }
     }
-    return CustomerFaceState.happy;
+    return null;
   }
 }
 
@@ -73,30 +78,40 @@ class CafeReview {
     required this.source,
   });
 
-  /// Returns null when the verdict is not one of [TasteVerdict.values].
+  /// Returns null unless every field is present with the right type and in range. A reply with holes is not a
+  /// verdict: no missing field may be read as 5 stars or as a sweet tray.
   static CafeReview? tryParse(
     Map<String, dynamic> jsonMap, {
     required DateTime evaluatedAt,
     required JudgeSource source,
   }) {
-    final rawVerdict = jsonMap['tasteVerdict'];
-    final tasteVerdict = rawVerdict == null ? TasteVerdict.sweetPerfection : TasteVerdict.tryParse(rawVerdict);
-    if (tasteVerdict == null) {
+    final tasteVerdict = TasteVerdict.tryParse(jsonMap['tasteVerdict']);
+    final customerFace = CustomerFaceState.tryParse(jsonMap['customerFace']);
+    final ratingStars = jsonMap['ratingStars'];
+    final headline = jsonMap['headline'];
+    final customerReaction = jsonMap['customerReaction'];
+    final cityBonusTip = jsonMap['cityBonusTip'];
+
+    if (tasteVerdict == null ||
+        customerFace == null ||
+        ratingStars is! int ||
+        ratingStars < minCafeRatingStars ||
+        ratingStars > maxCafeRatingStars ||
+        headline is! String ||
+        headline.trim().isEmpty ||
+        customerReaction is! String ||
+        customerReaction.trim().isEmpty ||
+        cityBonusTip is! int) {
       return null;
     }
-    final rawStars = jsonMap['ratingStars'];
-    final parsedStars = rawStars is num ? rawStars.toInt() : maxCafeRatingStars;
-    final clampedStars = parsedStars.clamp(minCafeRatingStars, maxCafeRatingStars);
-    final rawTip = jsonMap['cityBonusTip'];
-    final parsedTip = rawTip is num ? rawTip.toInt() : 0;
 
     return CafeReview(
-      ratingStars: clampedStars,
+      ratingStars: ratingStars,
       tasteVerdict: tasteVerdict,
-      customerFace: CustomerFaceState.fromJsonValue(jsonMap['customerFace'] as String?),
-      headline: (jsonMap['headline'] as String?) ?? 'Cafe Verdict',
-      customerReaction: (jsonMap['customerReaction'] as String?) ?? '',
-      cityBonusTip: parsedTip,
+      customerFace: customerFace,
+      headline: headline,
+      customerReaction: customerReaction,
+      cityBonusTip: cityBonusTip.clamp(0, maxCityBonusTip),
       evaluatedAt: evaluatedAt,
       source: source,
     );
