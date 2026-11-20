@@ -12,8 +12,8 @@ class EmptyReplySlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/empty-reply',
-            title: '10. Kural 2, kod: boş cevap başarı değildir',
-            speakerNotes: 'BEAT  [12:45 - 14:15] Kural 2, ikinci kod. Boş cevaba beş yıldız hikayesi.\n'
+            title: '11. Kural 2, kod: boş cevap başarı değildir',
+            speakerNotes: 'BEAT  [13:15 - 14:45] Kural 2, ikinci kod. Boş cevaba beş yıldız hikayesi.\n'
                 'SAY   "20 Kasım\'da denedim: modelin yerine sahte, boş bir cevap koydum. Süslü parantez aç, kapa, içi boş. Oyun ne yaptı? Beş yıldız, Tatlı Mükemmellik, altında Canlı Gemini rozeti ve tam puan. Neden? Solda sarı satır: yıldız yoksa beş yıldız say. Kod her boşluğu başarıyla dolduruyordu. Sağda yeni hali: bir alan eksikse ya da yanlış türdeyse, sayı yerine yazı gibi, bu bir cevap değildir. Şema biçimi tarif eder, değerin doğru olduğunu garanti etmez; Google\'ın kendi dokümanı da değerleri uygulamanızda doğrulayın diyor. Eve götüreceğiniz cümle: boş cevap, başarı değildir."\n'
                 'HOLD  Sol sarı satır, sağ sarı satır, test adı. Alttaki İngilizce alıntıyı okuma; sorulursa kaynağı göster.\n'
                 'NEXT  "Buraya kadar modelin cevabıydı. Şimdi uygulamanın kendisine geçiyoruz."',

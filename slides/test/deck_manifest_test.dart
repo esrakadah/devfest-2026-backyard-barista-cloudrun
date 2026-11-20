@@ -27,11 +27,12 @@ const List<String> expectedWorkshopOrder = [
   '/generate-vs-decide',
 ];
 
-/// Locked running order of the Turkish talk (`--dart-define=DECK_LANG=tr`): 19 main slides + 2 backup slides.
+/// Locked running order of the Turkish talk (`--dart-define=DECK_LANG=tr`): 21 main slides + 2 backup slides.
 const List<String> expectedTalkOrder = [
   '/title',
   '/sweet-or-salty',
   '/hall-plays',
+  '/hall-leaderboard',
   '/how-it-was-built',
   '/five-lessons',
   '/guard-rule',
@@ -47,13 +48,14 @@ const List<String> expectedTalkOrder = [
   '/key-rule',
   '/cost-honest',
   '/lesson-recap',
+  '/winners-podium',
   '/bana-ulasin',
   '/demo-hiccup',
   '/wifi-off-gemma',
 ];
 
 const List<String> expectedRunningOrder = isTurkishDeck ? expectedTalkOrder : expectedWorkshopOrder;
-const int expectedMainSlideCount = isTurkishDeck ? 19 : 16;
+const int expectedMainSlideCount = isTurkishDeck ? 21 : 16;
 const int expectedBackupSlideCount = 2;
 
 void main() {

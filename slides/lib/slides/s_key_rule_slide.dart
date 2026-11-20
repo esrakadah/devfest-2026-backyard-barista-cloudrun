@@ -1,6 +1,7 @@
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
 import 'package:backyard_barista_deck/widgets/lesson_blocks.dart';
+import 'package:backyard_barista_deck/widgets/lesson_diagrams.dart';
 import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
@@ -11,18 +12,16 @@ class KeyRuleSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/key-rule',
-            title: '16. Kural 5: anahtar sunucuda kalır',
+            title: '17. Kural 5: anahtar sunucuda kalır',
             speakerNotes:
-                'BEAT  [21:15 - 22:45] Kural 5, güvenlik. Yeni kelime: proxy. Anahtarı ve iki kanıtı göster.\n'
+                'BEAT  [21:45 - 23:15] Kural 5, güvenlik. Yeni kelime: proxy. Anahtarı ve iki kanıtı göster.\n'
                 'SAY   "Beşinci kural. Gemini\'yi çağırmak için bir API anahtarı gerekiyor; anahtar, faturanızın şifresi gibi: kimde varsa sizin hesabınıza harcar. Web uygulamasının içine koyarsanız herkes tarayıcıdan okuyabilir. Yeni kelime proxy: tarayıcı ile Gemini arasındaki aracı sunucu. Telefonunuz bizim sunucuya soruyor; sarı satırda sunucu anahtarı ekleyip Gemini\'ye iletiyor. Anahtar telefonunuza hiç inmiyor. Bunu söylemek kolay, o yüzden iki kanıt var. Bir test, giden istekte anahtar olmadığını kontrol ediyor. CI, yani her değişiklikte otomatik çalışan kontrol, derlenen pakette anahtara benzeyen bir şey arıyor. Eve götüreceğiniz cümle: tarayıcıya giden her şeyi herkes okur."\n'
-                'HOLD  Sarı satır, sonra sağdaki kanıtlar. Alttaki "İleri seviye" satırını okuma; sorulursa: proxy\'de kimlik kontrolü yok, üretimde yol App Check.\n'
+                'HOLD  Önce soldaki iki şerit: YANLIŞ, sonra OYUNDA. Sonra sağdaki sarı satır, en son alttaki iki kanıt. Alttaki "İleri seviye" satırını okuma; sorulursa: proxy\'de kimlik kontrolü yok, üretimde yol App Check.\n'
                 'NEXT  "Anahtar güvende. Peki onu ne sıklıkla kullanıyoruz?"',
           ),
         );
 
   static const double _gap = 18;
-  static const double _tileTitleSize = 34;
-  static const double _tileLineSize = 29;
 
   @override
   FlutterDeckSlide build(BuildContext context) {
@@ -44,6 +43,8 @@ class KeyRuleSlide extends FlutterDeckSlideWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Expanded(child: KeyProxyDiagram()),
+                    SizedBox(width: _gap),
                     Expanded(
                       child: LessonCodeCard(
                         label: 'SUNUCU · ANAHTARI BURASI EKLER',
@@ -59,24 +60,16 @@ class KeyRuleSlide extends FlutterDeckSlideWidget {
                         ],
                       ),
                     ),
-                    SizedBox(width: _gap),
-                    Expanded(
-                      child: DeckFeatureCard(
-                        badge: 'KANIT',
-                        title: 'Söz değil, iki kontrol',
-                        talkTitleFontSize: _tileTitleSize,
-                        talkBulletFontSize: _tileLineSize,
-                        accentColor: DeckColors.googleGreen,
-                        bullets: [
-                          'Test: tarayıcıdan giden istekte anahtar yok.',
-                          'CI: derlenen pakette anahtar kalıbı arıyor.',
-                          'Sahte anahtarla denedim: yakaladı.',
-                        ],
-                        footerText: 'judge_proxy_safety_test.dart · .github/workflows/ci.yml',
-                      ),
-                    ),
                   ],
                 ),
+              ),
+              SizedBox(height: _gap),
+              Row(
+                children: [
+                  Expanded(child: ProofChip(label: 'TEST', text: 'Tarayıcıdan giden istekte anahtar yok.')),
+                  SizedBox(width: _gap),
+                  Expanded(child: ProofChip(label: 'CI', text: 'Pakette anahtar kalıbı arar; sahtesini yakaladı.')),
+                ],
               ),
               SizedBox(height: _gap),
               AdvancedNote(

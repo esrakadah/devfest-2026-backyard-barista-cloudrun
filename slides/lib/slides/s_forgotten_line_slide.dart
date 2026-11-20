@@ -12,8 +12,8 @@ class ForgottenLineSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/forgotten-line',
-            title: '12. Kural 3, hata: unutulan satır',
-            speakerNotes: 'BEAT  [15:30 - 16:45] Kural 3, hata. Üç değişken, üç sıfırlama yeri, bir unutulan satır.\n'
+            title: '13. Kural 3, hata: unutulan satır',
+            speakerNotes: 'BEAT  [16:00 - 17:15] Kural 3, hata. Üç değişken, üç sıfırlama yeri, bir unutulan satır.\n'
                 'SAY   "Solda siparişin eski hali: üç ayrı değişken, yani kodun bilgi tuttuğu üç ayrı kutu. Jüri düşünüyor mu, kaçıncı tepsi, son karar ne. Ortadaki bir sayaç: cevap geldiğinde sayı değişmişse cevap eski tepsiye aittir, atılır. Siparişi sıfırlayan üç yer var: Temizle, şehir değiştir, Sıradaki Müşteri. Her biri üç değişkeni de hatırlamak zorunda. Bu hata 12 Kasım\'da bir kez düzeltildi; düzeltme iki yeri kapattı, üçüncüyü unuttu. Sarı satır, unutulan satırın olması gereken yer. Sağda oyuncunun gördüğü: boş tepsiye beş yıldız. Bunu bir testle kanıtladım: test kırmızı yandı."\n'
                 'HOLD  Soldaki üç değişkeni parmakla say, sarı satırda dur. Sonra sağdaki kart.\n'
                 'NEXT  "Çözüm, unutulan satırı eklemek değil."',
