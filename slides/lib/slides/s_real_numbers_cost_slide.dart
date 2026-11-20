@@ -50,7 +50,7 @@ this.geminiModel = const String.fromEnvironment(
               ? 'GERÇEK RAKAMLAR #2 (TOKEN HESABI VE 2026 MODEL TUZAĞI)'
               : 'GERÇEK RAKAMLAR #2 (TOKEN MATH & 2026 MODEL GUARD)',
           title: isTurkishDeck
-              ? 'Gerçek rakamlar #2: sipariş başına ~270 token'
+              ? 'Gerçek rakamlar #2: 1.000 sipariş 5 sentin altında'
               : 'Real Numbers #2: ~270 Tokens per Order & The 2.5 Trap',
           act: StoryAct.realNumbers,
           subtitle: isTurkishDeck

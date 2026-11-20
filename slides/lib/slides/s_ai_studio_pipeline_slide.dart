@@ -16,7 +16,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [03:15 - 04:30] "AI Studio\'dan bugün ne çıkar?" sorusunun somut cevabı.\n'
                     'SAY   "Google AI Studio eskiden sadece prompt denediğimiz bir metin kutusuydu. Bugün Build moduna başlangıç promptumuzu veriyoruz, bize çalışan bir web uygulaması ve arka uç üretiyor. Kodu GitHub hesabımızla iki yönlü eşitliyor. Starter Tier kapsamında, kredi kartı ya da fatura hesabı açmadan Cloud Run\'da canlı bir .run.app adresine yayınlıyor. En güzel yanı: GEMINI_API_KEY sunucudaki container\'da kalıyor, tarayıcıdaki JavaScript paketine sızmıyor."\n'
-                    'HOLD  Üstteki 4 adımı soldan sağa göster. [Olgu (Ekim 2026, ai.google.dev): Starter Tier = 2 Cloud Run uygulaması.]\n'
+                    'HOLD  Dört kartı soldan sağa göster. [Olgu (Ekim 2026, ai.google.dev): Starter Tier = 2 Cloud Run uygulaması.]\n'
                     'NEXT  "Tarayıcıda prototip hızlı. Gerçek, çok dosyalı bir Flutter projesinde ne oluyor?"'
                 : 'BEAT  [05:00 - 07:30] "AI Studio\'dan ne gelir?" sorusunun somut cevabı.\n'
                     'SAY   "Mustafa ile konuşurken en önemli soru şuydu: Google AI Studio\'dan bugün tam olarak ne çıkıyor? Eskiden sadece bir prompt test ekranıydı. Bugün ise AI Studio Build modu size çalışan tam yığın bir web uygulaması üretiyor, çift yönlü GitHub senkronizasyonu yapıyor ve Starter Tier kapsamında kredi kartı veya fatura hesabı açmadan 2 adede kadar tam yığın uygulamayı tek tıkla Google Cloud Run üzerinde canlı bir .run.app adresine yayınlıyor. Dikkat etmeniz gereken tek önemli kural: eski Firebase Studio kapandı, yeni kayıt almıyor; doğru adres doğrudan Google AI Studio ve Google Antigravity."\n'
@@ -25,6 +25,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
           ),
         );
 
+  static const double _talkBulletSize = 26;
   static const double _gap = 16;
 
   @override
@@ -41,8 +42,8 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
           accentColor: DeckColors.halftoneBlue,
           child: Column(
             children: [
-              AiStudioPipelineDiagramCard(),
-              SizedBox(height: _gap),
+              if (!isTurkishDeck) AiStudioPipelineDiagramCard(),
+              if (!isTurkishDeck) SizedBox(height: _gap),
               Expanded(
                 child: Row(
                   children: [
@@ -51,6 +52,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                         badge: isTurkishDeck ? 'ADIM 1 · PROMPT + GÖRSEL' : 'STEP 1 · SEED + ASSETS',
                         badgeIcon: Icons.description,
                         title: isTurkishDeck ? 'Prompt + hazır PNG seti' : 'Prompt + GitHub PNGs',
+                        talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
                             'prompts/step-1-base-cafe.md dosyası AI Studio Build moduna verilir.'
@@ -71,6 +73,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                         badgeIcon: Icons.web,
                         title: isTurkishDeck ? 'Canlı web önizlemesi' : 'Full-Stack Web Preview',
                         accentColor: DeckColors.googleGreen,
+                        talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
                             '2 oyunculu kafe tezgahı arayüzünü ve arka uç servisini üretir.'
@@ -91,6 +94,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                         badgeIcon: Icons.sync,
                         title: isTurkishDeck ? 'İki yönlü GitHub eşitleme' : 'Two-Way GitHub Sync',
                         accentColor: DeckColors.googleYellow,
+                        talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
                             'Tek tıkla GitHub hesabınıza aktarır, iki yönlü eşitler.'
@@ -111,6 +115,7 @@ class AiStudioPipelineSlide extends FlutterDeckSlideWidget {
                         badgeIcon: Icons.cloud_done,
                         title: isTurkishDeck ? 'Kredi kartsız .run.app yayını' : 'No-Card .run.app Deploy',
                         accentColor: DeckColors.googleRed,
+                        talkBulletFontSize: _talkBulletSize,
                         bullets: [
                           if (isTurkishDeck)
                             "Starter Tier 2 uygulamaya kadar Cloud Run'da yayınlar."

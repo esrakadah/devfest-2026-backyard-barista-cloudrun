@@ -13,7 +13,7 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
             title: isTurkishDeck ? '5. Google Antigravity ile tanışın' : '5. Meet Google Antigravity',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [04:30 - 05:45] Google Antigravity: tek istekle birden çok dosyayı değiştiren AI ajanlı kod editörü.\n'
-                    'SAY   "Gerçek bir Flutter projesinde değişiklik tek dosyada kalmaz: veri kataloğu, çizim sınıfı ve testler birlikte değişir. Google Antigravity tam burada devreye giriyor. Cmd+I ya da Agent Mode ile \'kafeye yeni bir imza tatlısı ekle\' dediğimizde dışarıdan resim dosyası aramıyor. Doğrudan CustomVectorIngredientGraphic çizim kodunu üretiyor, ingredients_catalog.dart listesine bağlıyor ve testleri koşturuyor. Birazdan demoda Konya sürümünün de bir AI ajanıyla, 11 dosyada nasıl eklendiğini göreceğiz."\n'
+                    'SAY   "Gerçek bir Flutter projesinde değişiklik tek dosyada kalmaz: veri kataloğu, çizim sınıfı ve testler birlikte değişir. Google Antigravity tam burada devreye giriyor. Cmd+I ya da Agent Mode ile \'kafeye yeni bir imza tatlısı ekle\' dediğimizde dışarıdan resim dosyası aramıyor. Çizim kodunu yazıyor, kataloğa bağlıyor, testleri koşturuyor. Birazdan demoda Konya sürümünün de bir AI ajanıyla, 11 dosyada nasıl eklendiğini göreceğiz."\n'
                     'HOLD  Sağdaki kodda roundTwoCustomItems listesini göster (custom_katmer_roll ve custom_isot_pepper). İsot satırında bir saniye dur, salon gülümser.\n'
                     'NEXT  "Burada bir mimari karar var: sahneyi neden oyun motoruyla, tezgahı neden Flutter widget\'larıyla çizdik?"'
                 : 'BEAT  [07:30 - 09:30] Google Antigravity ile çoklu dosya düzenleme ve yerinde vektör/widget üretimi.\n'
@@ -26,7 +26,7 @@ class MeetAntigravitySlide extends FlutterDeckSlideWidget {
   static const double _columnGap = 28;
 
   static const String _antigravitySnippet = '''
-// flutter_client/lib/data/ingredients_catalog.dart (Lines 185-209)
+// flutter_client/lib/data/ingredients_catalog.dart (Lines 185-210)
 static const List<CafeIngredient> roundTwoCustomItems = <CafeIngredient>[
   CafeIngredient(
     id: 'custom_katmer_roll',

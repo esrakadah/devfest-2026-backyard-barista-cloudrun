@@ -2,6 +2,7 @@ import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/plugins/presenter_menu_plugin.dart';
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:backyard_barista_deck/theme.dart';
+import 'package:backyard_barista_deck/widgets/deck_backdrop.dart';
 import 'package:backyard_barista_deck/widgets/demo_hiccup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
@@ -32,8 +33,8 @@ class BackyardBaristaDeckApp extends StatelessWidget {
         slideSize: DeckCanvas.slideSize,
         transition: FlutterDeckTransition.fade(),
         background: FlutterDeckBackgroundConfiguration(
-          light: FlutterDeckBackground.solid(DeckColors.navy),
-          dark: FlutterDeckBackground.solid(DeckColors.navy),
+          light: FlutterDeckBackground.custom(child: DeckBackdrop()),
+          dark: FlutterDeckBackground.custom(child: DeckBackdrop()),
         ),
         footer: FlutterDeckFooterConfiguration(showSlideNumbers: true, showSocialHandle: true),
       ),

@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
+/// Visual edition of the deck, picked at build time with `--dart-define=DECK_THEME=<name>`.
+///
+/// `gde` (default) is the GDE Midnight Navy deck. `candle` is the candlelit wizard-school edition
+/// for DevFest Konya 2026 (the event has that theme): same navy ground, a serif for slide titles,
+/// candle gold, stars and a thin gold frame. It swaps tokens, fonts and the backdrop only.
+const String deckTheme = String.fromEnvironment('DECK_THEME', defaultValue: 'gde');
+const bool isCandleTheme = deckTheme == 'candle';
+
 /// Unified GDE Midnight Navy palette (`BoardTokens.gde` + 2026 GDE Brand Guide).
 abstract final class DeckColors {
   /// Deep Midnight Navy canvas ground.
-  static const Color navy = Color(0xFF0E1824);
+  static const Color navy = isCandleTheme ? Color(0xFF0B1320) : Color(0xFF0E1824);
 
   /// Primary text on dark surfaces.
-  static const Color offWhite = Color(0xFFF2F6FC);
+  static const Color offWhite = isCandleTheme ? Color(0xFFF8F0DC) : Color(0xFFF2F6FC);
 
   /// Dark-mode pastel accents for text, chips, and data visualization on dark backgrounds.
   static const Color googleBlue = Color(0xFF8AB4F8);
   static const Color googleGreen = Color(0xFF81C995);
-  static const Color googleYellow = Color(0xFFFDD663);
+  static const Color googleYellow = isCandleTheme ? Color(0xFFF2CC6B) : Color(0xFFFDD663);
   static const Color googleRed = Color(0xFFF28B82);
 
   /// Official 2026 GDE Brand Guide core colors for bracket logos and primary fills.
@@ -28,20 +36,26 @@ abstract final class DeckColors {
   static const Color halftonePink = Color(0xFFFF7DAF);
 
   /// Surface hierarchy (`s1`, `s2`, `s3`, and `inset`).
-  static const Color surface = Color(0xFF16273A);
-  static const Color surfaceElevated = Color(0xFF1D3148);
+  static const Color surface = isCandleTheme ? Color(0xFF152134) : Color(0xFF16273A);
+  static const Color surfaceElevated = isCandleTheme ? Color(0xFF1C2A40) : Color(0xFF1D3148);
   static const Color surface3 = Color(0xFF22344F);
-  static const Color surfaceInset = Color(0xFF0B141F);
+  static const Color surfaceInset = isCandleTheme ? Color(0xFF080E18) : Color(0xFF0B141F);
 
   /// Hairlines and borders on [surface].
-  static const Color outline = Color(0xFF284162);
-  static const Color outlineLight = Color(0xFF3A5C88);
+  static const Color outline = isCandleTheme ? Color(0xFF3A3A44) : Color(0xFF284162);
+  static const Color outlineLight = isCandleTheme ? Color(0xFF8A7440) : Color(0xFF3A5C88);
 
   /// Top 1px specular highlight on elevated cards.
   static const Color specularTop = Color(0x1EFFFFFF);
 
+  /// Candle gold of the candle edition.
+  static const Color gold = Color(0xFFF2CC6B);
+
+  /// Slide subtitle and header accent.
+  static const Color subtitleAccent = isCandleTheme ? gold : googleBlue;
+
   /// Secondary text: captions, footers, muted labels.
-  static const Color mutedText = Color(0xFF9EB1C9);
+  static const Color mutedText = isCandleTheme ? Color(0xFFC2B79C) : Color(0xFF9EB1C9);
 }
 
 /// The logical slide canvas. The type scale below is designed for it; flutter_deck scales the
@@ -56,6 +70,9 @@ abstract final class DeckCanvas {
 abstract final class DeckFonts {
   static const String sans = 'GoogleSansFlex';
   static const String mono = 'RobotoMono';
+
+  /// Display serif for slide titles in the candle edition.
+  static const String display = isCandleTheme ? 'PlayfairDisplay' : sans;
 }
 
 /// The type scale, in logical pixels on a 1920 x 1080 slide.
@@ -75,7 +92,6 @@ abstract final class DeckTypeScale {
 /// Presentation theme for the DevFest 2026 Backyard Barista on Cloud Run deck.
 abstract final class PresentationTheme {
   static const FontWeight _heavy = FontWeight.w700;
-  static const double _bodyOpacity = 0.92;
 
   static FlutterDeckThemeData get darkTheme {
     final baseTheme = ThemeData(
@@ -96,20 +112,20 @@ abstract final class PresentationTheme {
 
     const textTheme = FlutterDeckTextTheme(
       display: TextStyle(
-        fontFamily: DeckFonts.sans,
+        fontFamily: DeckFonts.display,
         fontSize: DeckTypeScale.display,
         fontWeight: _heavy,
         color: DeckColors.offWhite,
         height: 1.1,
       ),
       header: TextStyle(
-        fontFamily: DeckFonts.sans,
+        fontFamily: DeckFonts.display,
         fontSize: DeckTypeScale.header,
         fontWeight: _heavy,
         color: DeckColors.offWhite,
       ),
       title: TextStyle(
-        fontFamily: DeckFonts.sans,
+        fontFamily: DeckFonts.display,
         fontSize: DeckTypeScale.title,
         fontWeight: _heavy,
         color: DeckColors.offWhite,
@@ -118,12 +134,12 @@ abstract final class PresentationTheme {
         fontFamily: DeckFonts.sans,
         fontSize: DeckTypeScale.subtitle,
         fontWeight: FontWeight.w500,
-        color: DeckColors.googleBlue,
+        color: DeckColors.subtitleAccent,
       ),
       bodyLarge: TextStyle(
         fontFamily: DeckFonts.sans,
         fontSize: DeckTypeScale.bodyLarge,
-        color: Color.fromRGBO(0xF2, 0xF6, 0xFC, _bodyOpacity),
+        color: DeckColors.offWhite,
       ),
       bodyMedium: TextStyle(fontFamily: DeckFonts.sans, fontSize: DeckTypeScale.bodyMedium, color: DeckColors.offWhite),
       bodySmall: TextStyle(fontFamily: DeckFonts.sans, fontSize: DeckTypeScale.bodySmall, color: DeckColors.mutedText),

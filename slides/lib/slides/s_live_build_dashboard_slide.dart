@@ -32,7 +32,7 @@ class LiveBuildDashboardSlide extends FlutterDeckSlideWidget {
         return const SlideFrame(
           eyebrow: isTurkishDeck ? 'CANLI DEMO · TELEFONUNUZLA KATILIN' : 'KEEP ON SCREEN · MINUTES 25 TO 60',
           title: isTurkishDeck
-              ? 'Canlı demo: QR kodu okutun ve tatlıya tuz atın!'
+              ? 'Canlı demo: önce ben, sonra siz'
               : 'Live Build Dashboard: 3 Rounds to Cloud Run & GitHub',
           act: StoryAct.buildAndShip,
           subtitle: isTurkishDeck

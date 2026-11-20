@@ -15,8 +15,8 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
                 : '9. Gerçek Rakamlar #3: The 300-Person Quota Trap',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [10:00 - 11:30] Gerçek rakamlar #3: kalabalık salonda HTTP 429 tuzağı ve dört önlem.\n'
-                    'SAY   "Canlı demoları batıran klasik hata şudur: tek bir ücretsiz API anahtarını bütün salonla paylaşmak. Ücretsiz katmanda hız sınırı anahtar başına değil, Google Cloud projesi başına uygulanıyor: dakikada 5 ile 15 istek. Yüzlerce kişi tek projeye yüklenince birkaç saniyede HTTP 429, yani kota doldu hatası alırsınız. Biz dört önlem aldık. Kendi uygulamasını kuran herkes kendi AI Studio projesini kullanıyor. Sipariş başına tek çağrı gidiyor. Cloud Run\'daki nginx saniyede 10 istek sınırı koyuyor. 429 dönse bile oyun çökmüyor, 250 milisaniyede şehre özel hazır yanıtlara geçiyor. Birazdan demoda bunu sizinle birlikte deneyeceğiz."\n'
-                    'HOLD  Önce soldaki kırmızı "3 saniyede HTTP 429" kutusunu, sonra sağdaki dört önlemi göster. "3 saniye" bir hesap (15 RPM sınırına 300+ kişi); nginx 10 r/s + burst 20 kod sabiti (nginx/default.conf.template).\n'
+                    'SAY   "Canlı demoları batıran klasik hata şudur: tek bir ücretsiz API anahtarını bütün salonla paylaşmak. Ücretsiz katmanda sınır anahtara değil, projeye bağlı: dakikada 5 ile 15 istek. Yüzlerce kişi tek projeye yüklenince birkaç saniyede HTTP 429, yani kota doldu hatası alırsınız. Biz dört önlem aldık. Kendi uygulamasını kuran herkes kendi AI Studio projesini kullanıyor. Sipariş başına tek çağrı gidiyor. Cloud Run\'daki nginx saniyede 10 istek sınırı koyuyor. 429 dönse bile oyun çökmüyor, 250 milisaniyede şehre özel hazır yanıtlara geçiyor. Birazdan demoda bunu sizinle birlikte deneyeceğiz."\n'
+                    'HOLD  Önce soldaki kırmızı "birkaç saniyede HTTP 429" kutusunu, sonra sağdaki dört önlemi göster. nginx 10 r/s + burst 20 kod sabiti (nginx/default.conf.template).\n'
                     'NEXT  "Savunma tamam. Aynı oyunu beş şehre, yeniden derlemeden nasıl uyarlıyoruz?"'
                 : 'BEAT  [16:30 - 18:30] Gerçek Rakamlar #3: 300 kişilik salonda HTTP 429 RESOURCE_EXHAUSTED tuzağı ve çözümümüz.\n'
                     'SAY   "Bir konferans atölyesini batıran en klasik hata nedir? Konuşmacının kendi API anahtarını 300 kişiyle paylaşması! Ücretsiz katman hız sınırları API anahtarı başına değil, Google Cloud projesi başına uygulanır ve dakikada 5 ila 15 istek seviyesindedir. Yani 300 kişi tek bir projeye yüklenirse 3 saniye içinde HTTP 429 RESOURCE_EXHAUSTED hatası alırsınız. Ayrıca GEAR ve Qwiklabs sanal laboratuvarları etkinlik başına 100 katılımcı ile sınırlıdır. Biz bu iki engeli dört katmanlı savunmayla aşıyoruz: herkes kendi ücretsiz AI Studio anahtarını kullanıyor, sipariş başına sadece 1 JSON isteği atıyoruz, AI Studio Starter Tier ile sanal makine sınırına takılmadan Cloud Run yayını yapıyoruz ve ağ kesilirse uygulama otomatik olarak çevrimdışı şaka yanıtlarına düşüyor."\n'
@@ -53,7 +53,7 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: DeckFeatureCard(
                         badge: isTurkishDeck
-                            ? 'SAHNE TUZAĞI · 3 SANİYEDE HTTP 429'
+                            ? 'SAHNE TUZAĞI · BİRKAÇ SANİYEDE HTTP 429'
                             : 'THE STAGE TRAP · HTTP 429 IN 3 SECONDS',
                         badgeIcon: Icons.error_outline,
                         title: isTurkishDeck
@@ -66,7 +66,7 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
                           else
                             'Per-Project Quota Enforcement (Fact): Gemini API free-tier rate limits apply per Google Cloud project (typically 5 to 15 RPM, ~250K TPM), not per API key.',
                           if (isTurkishDeck)
-                            'Ortak anahtar = anında 429: 300 kişi tek projeye yüklenince 15 RPM kotası 3 saniyeden kısa sürede biter.'
+                            'Ortak anahtar = anında 429: 850 kişi tek projeye yüklenince 15 RPM kotası birkaç saniyede biter.'
                           else
                             'Shared Key = Instant 429: 300 builders hitting 1 project exhausts the 15 RPM bucket in under 3 seconds.',
                           if (isTurkishDeck)
@@ -87,12 +87,12 @@ class RoomQuotaTrapSlide extends FlutterDeckSlideWidget {
                         badge: isTurkishDeck ? 'DÖRT ÖNLEMİMİZ' : 'OUR 4-LAYER DEFENSE · 100% SURVIVABLE',
                         badgeIcon: Icons.shield,
                         title: isTurkishDeck
-                            ? 'Backyard Barista 300 kişiyle nasıl ayakta kalır?'
+                            ? 'Backyard Barista 850 kişiyle nasıl ayakta kalır?'
                             : 'How Backyard Barista Stays Up for 300 Builders',
                         accentColor: DeckColors.googleGreen,
                         bullets: [
                           if (isTurkishDeck)
-                            '1. Herkese kendi AI Studio projesi: tek ortak kota yerine 300 ayrı kota.'
+                            '1. Herkese kendi AI Studio projesi: tek ortak kota yerine herkese ayrı kota.'
                           else
                             '1. One Personal AI Studio Project per Builder: 300 isolated RPM buckets instead of 1 shared bottleneck.',
                           if (isTurkishDeck)

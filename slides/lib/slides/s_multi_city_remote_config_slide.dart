@@ -15,7 +15,7 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
                 : '10. Multi-City Architecture with Firebase Remote Config',
             speakerNotes: isTurkishDeck
                 ? 'BEAT  [11:30 - 12:45] Beş DevFest şehri için 3 katmanlı CityEditionController.\n'
-                    'SAY   "Beş DevFest şehri: Berlin, Gaziantep, Konya, Adana ve İstanbul. Her şehir için ayrı uygulama derlemiyoruz. CityEditionController üç yere sırayla bakıyor. Birinci öncelik uygulama içindeki şehir seçici: üst bardaki bayrak rozetine dokununca açılıyor. İkinci öncelik dışarıdan gelen şehir parametresi. Repoda Firebase Remote Config şablonumuz hazır, ama sıfır kurulum için bugün bu katmanı URL\'deki remote_city parametresi ve derleme anındaki DEFAULT_CITY ayarı sağlıyor. Üçüncü öncelik paketin içindeki city_editions.json dosyası. Yani tek bir parametreyle bütün oyun bugün Alaaddin Kahve ve Tatlı Durağı olarak açılıyor."\n'
+                    'SAY   "Beş DevFest şehri: Berlin, Gaziantep, Konya, Adana ve İstanbul. Her şehir için ayrı uygulama derlemiyoruz. CityEditionController üç yere sırayla bakıyor. Birinci öncelik uygulama içindeki şehir seçici: üst bardaki bayrak rozetine dokununca açılıyor. İkinci öncelik URL\'deki remote_city parametresi. Firebase Remote Config şablonu repoda hazır, bugün kullanmıyoruz. Üçüncü öncelik paketin içindeki city_editions.json dosyası. Yani tek bir parametreyle bütün oyun bugün Alaaddin Kahve ve Tatlı Durağı olarak açılıyor."\n'
                     'HOLD  Sağdaki kodda activeCityId satırını göster (city_edition_controller.dart:165): ?? operatörüyle üç öncelik tek satırda çözülüyor.\n'
                     'NEXT  "Şimdi kaputun altındaki en eğlenceli parçaya bakalım: tatlı mı tuzlu mu mekaniği."'
                 : 'BEAT  [18:30 - 20:30] Firebase Remote Config ile 4 Şehir (Berlin, Gaziantep, Adana, İstanbul) Mimarisi.\n'
@@ -28,7 +28,7 @@ class MultiCityRemoteConfigSlide extends FlutterDeckSlideWidget {
   static const double _columnGap = 24;
 
   static const String _cityControllerSnippet = '''
-// flutter_client/lib/config/city_edition_controller.dart (Lines 159-179)
+// flutter_client/lib/config/city_edition_controller.dart (Lines 159-180)
 Map<CityEditionId, CityEditionConfig> _editionsByCity = _builtInDefaults;
 CityEditionId _fallbackCityId = CityEditionId.gaziantep;
 CityEditionId? _remoteConfigCityId;
@@ -114,8 +114,9 @@ CityEditionConfig get activeEdition =>
                             'TR · Konya (${isIzmirDeck ? "21 Kas" : "bugün"}): Alaaddin Kahve & Tatlı Durağı · "Alaaddin Tepesi\'nde misafire böyle ikram olmaz!"'
                           else
                             'TR · Adana (11 Dec): Gar Kahvesi & Bici Bici Durağı · Bici Bici & Gar Kahvesi ("Şalgam suyu mu sandın?").',
+                          if (isTurkishDeck) 'TR · Adana (11 Ara): Gar Kahvesi & Bici Bici Durağı.',
                           if (isTurkishDeck)
-                            'TR · Adana (11 Ara) ve İstanbul (19 Ara): Gar Kahvesi & Galata Vapur Kafe.'
+                            'TR · İstanbul (19 Ara): Galata & Vapur Kafe.'
                           else
                             'TR · Istanbul (19 Dec): Galata & Vapur Kafe · Galata San Sebastian & Vapur Çayı.',
                         ],

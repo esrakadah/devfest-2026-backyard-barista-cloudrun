@@ -50,7 +50,7 @@ class SlideFrame extends StatelessWidget {
           Text(title, style: textTheme.header),
           if (subtitle != null) ...[
             const SizedBox(height: _subtitleGap),
-            Text(subtitle!, style: textTheme.bodyLarge.copyWith(color: DeckColors.googleBlue)),
+            Text(subtitle!, style: textTheme.bodyLarge.copyWith(color: DeckColors.subtitleAccent)),
           ],
           const SizedBox(height: _bodyGap),
           Expanded(child: child),
@@ -291,6 +291,7 @@ class DeckFeatureCard extends StatelessWidget {
     this.accentColor = DeckColors.googleBlue,
     this.footerText,
     this.padding,
+    this.talkBulletFontSize,
     super.key,
   });
 
@@ -310,9 +311,15 @@ class DeckFeatureCard extends StatelessWidget {
   final String? footerText;
   final EdgeInsetsGeometry? padding;
 
+  /// Bullet text size in the Turkish talk deck, for cards with few bullets and room to spare.
+  /// The English workshop deck keeps the body size.
+  final double? talkBulletFontSize;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = FlutterDeckTheme.of(context).textTheme;
+    final bulletStyle = textTheme.bodyMedium.copyWith(height: 1.32, fontSize: isTurkishDeck ? talkBulletFontSize : null);
+    final dotTopOffset = _dotTopOffset * (bulletStyle.fontSize ?? DeckTypeScale.bodyMedium) / DeckTypeScale.bodyMedium;
     return DeckCard(
       padding: padding ?? const EdgeInsets.symmetric(horizontal: _paddingHorizontal, vertical: _paddingVertical),
       borderColor: accentColor.withValues(alpha: 0.45),
@@ -336,15 +343,21 @@ class DeckFeatureCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: _dotTopOffset),
-                    child: Container(
-                      width: _dotSize,
-                      height: _dotSize,
-                      decoration: BoxDecoration(color: accentColor, shape: BoxShape.circle),
+                    padding: EdgeInsets.only(top: dotTopOffset),
+                    child: Transform.rotate(
+                      angle: isCandleTheme ? math.pi / 4 : 0,
+                      child: Container(
+                        width: _dotSize,
+                        height: _dotSize,
+                        decoration: BoxDecoration(
+                          color: accentColor,
+                          shape: isCandleTheme ? BoxShape.rectangle : BoxShape.circle,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: _dotRightGap),
-                  Expanded(child: Text(bullet, style: textTheme.bodyMedium.copyWith(height: 1.32))),
+                  Expanded(child: Text(bullet, style: bulletStyle)),
                 ],
               ),
             ),
@@ -735,12 +748,7 @@ class _LatencyBarsPainter extends CustomPainter {
         0.14,
         DeckColors.googleGreen,
       ),
-      (
-        isTurkishDeck ? 'Statik sayfa p95, ısınmış' : 'Static Page p95 Warm',
-        isTurkishDeck ? '75,52 ms (ölçüldü)' : '75.52 ms (Measured)',
-        0.20,
-        DeckColors.halftoneBlue,
-      ),
+      if (!isTurkishDeck) ('Static Page p95 Warm', '75.52 ms (Measured)', 0.20, DeckColors.halftoneBlue),
       (
         isTurkishDeck ? 'Çevrimdışı JSON yedeği' : 'Offline JSON Fallback',
         '250 ms (_offlineBundleLoadTimeout)',
@@ -761,19 +769,22 @@ class _LatencyBarsPainter extends CustomPainter {
       ),
     ];
 
-    const labelWidth = 220.0;
+    const labelWidth = isTurkishDeck ? 250.0 : 220.0;
     const trackLeft = labelWidth + 12;
     const valueGap = 14.0;
     const valueEndPadding = 8.0;
-    const rowH = 17.0;
-    const gap = 5.0;
+    const rowH = isTurkishDeck ? 22.0 : 17.0;
+    const gap = isTurkishDeck ? 6.0 : 5.0;
+    const labelSize = isTurkishDeck ? 17.0 : 13.0;
+    const valueSize = isTurkishDeck ? 15.0 : 12.0;
 
     final valuePainters = [
       for (final row in rows)
         TextPainter(
           text: TextSpan(
             text: row.$2,
-            style: TextStyle(fontFamily: DeckFonts.mono, fontSize: 12, fontWeight: FontWeight.w700, color: row.$4),
+            style:
+                TextStyle(fontFamily: DeckFonts.mono, fontSize: valueSize, fontWeight: FontWeight.w700, color: row.$4),
           ),
           textDirection: TextDirection.ltr,
         )..layout(),
@@ -790,7 +801,7 @@ class _LatencyBarsPainter extends CustomPainter {
           text: row.$1,
           style: const TextStyle(
             fontFamily: DeckFonts.sans,
-            fontSize: 13,
+            fontSize: labelSize,
             fontWeight: FontWeight.w600,
             color: DeckColors.offWhite,
           ),
@@ -838,7 +849,7 @@ class QuotaComparisonDiagramCard extends StatelessWidget {
             children: [
               Text(
                 isTurkishDeck
-                    ? 'ORTAK ANAHTAR NEDEN BATAR, 300 AYRI AI STUDIO PROJESİ NEDEN AYAKTA KALIR'
+                    ? 'ORTAK ANAHTAR NEDEN BATAR, AYRI AI STUDIO PROJELERİ NEDEN AYAKTA KALIR'
                     : 'WHY SHARED KEYS FAIL vs HOW 300 ISOLATED AI STUDIO PROJECTS STAY GREEN',
                 style: TextStyle(
                   fontFamily: DeckFonts.mono,
@@ -926,24 +937,23 @@ class _QuotaComparisonPainter extends CustomPainter {
 
     drawLane(
       left: 0,
-      badge: isTurkishDeck
-          ? 'TUZAK · ORTAK KONUŞMACI ANAHTARI'
-          : 'TRAP · SHARED SPEAKER KEY OR 100-SEAT LAB',
+      badge: isTurkishDeck ? 'TUZAK · ORTAK KONUŞMACI ANAHTARI' : 'TRAP · SHARED SPEAKER KEY OR 100-SEAT LAB',
       flow: isTurkishDeck
-          ? '300 kişi -> 1 ortak GCP projesi (15 RPM sınırı)'
+          ? '850 kişi -> 1 ortak GCP projesi (15 RPM sınırı)'
           : '300 Builders -> 1 Shared GCP Project (15 RPM Cap)',
       outcome: isTurkishDeck
-          ? '3 saniyeden kısa sürede HTTP 429 RESOURCE_EXHAUSTED'
+          ? 'Birkaç saniyede HTTP 429 RESOURCE_EXHAUSTED'
           : 'HTTP 429 RESOURCE_EXHAUSTED in < 3.0 seconds',
       color: DeckColors.googleRed,
     );
 
     drawLane(
       left: halfW + 28,
-      badge:
-          isTurkishDeck ? 'ÇÖZÜM · AYRI ANAHTARLAR + SİPARİŞ BAŞINA 1 ÇAĞRI' : 'SOLUTION · ISOLATED KEYS + 1 CALL ON SERVE',
+      badge: isTurkishDeck
+          ? 'ÇÖZÜM · AYRI ANAHTARLAR + SİPARİŞ BAŞINA 1 ÇAĞRI'
+          : 'SOLUTION · ISOLATED KEYS + 1 CALL ON SERVE',
       flow: isTurkishDeck
-          ? '300 kişi -> 300 kişisel proje (300 x 15 RPM)'
+          ? '850 kişi -> 850 kişisel proje (850 x 15 RPM)'
           : '300 Builders -> 300 Personal Projects (300 x 15 RPM)',
       outcome: isTurkishDeck
           ? 'Oyuncu başına 1-2 RPM + 250 ms mock_responses.json yedeği'

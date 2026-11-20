@@ -10,6 +10,7 @@ import 'dart:ui' as ui;
 
 import 'package:backyard_barista_deck/slides/slides.dart';
 import 'package:backyard_barista_deck/theme.dart';
+import 'package:backyard_barista_deck/widgets/deck_backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_deck/flutter_deck.dart';
@@ -58,8 +59,8 @@ void main() {
             configuration: const FlutterDeckConfiguration(
               slideSize: DeckCanvas.slideSize,
               background: FlutterDeckBackgroundConfiguration(
-                light: FlutterDeckBackground.solid(DeckColors.navy),
-                dark: FlutterDeckBackground.solid(DeckColors.navy),
+                light: FlutterDeckBackground.custom(child: DeckBackdrop()),
+                dark: FlutterDeckBackground.custom(child: DeckBackdrop()),
               ),
               controls: FlutterDeckControlsConfiguration(presenterToolbarVisible: false),
               footer: FlutterDeckFooterConfiguration(showSocialHandle: true),
