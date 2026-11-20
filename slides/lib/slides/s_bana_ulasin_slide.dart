@@ -55,7 +55,20 @@ class BanaUlasinSlide extends FlutterDeckSlideWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 40),
+            if (isTurkishDeck) ...[
+              const SizedBox(height: 32),
+              const Text(
+                'Şakayı model yazsın, kararı kodunuz versin.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: DeckFonts.sans,
+                  fontSize: DeckTypeScale.title,
+                  fontWeight: FontWeight.w700,
+                  color: DeckColors.googleYellow,
+                ),
+              ),
+            ],
+            const SizedBox(height: 32),
             const Text(
               isTurkishDeck ? (isIzmirDeck ? 'Teşekkürler İzmir!' : 'Teşekkürler Konya!') : 'Thank you!',
               textAlign: TextAlign.center,
