@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/leaderboard/hall_board.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/lesson_diagrams.dart';
@@ -236,55 +237,99 @@ class HallBoardTable extends StatelessWidget {
   }
 }
 
-/// The three prizes, one row each.
+/// Framed photo of the physical stage prizes for the Konya main hall.
+class _KonyaPrizesPhoto extends StatelessWidget {
+  const _KonyaPrizesPhoto({this.fit = BoxFit.cover});
+
+  static const double _radius = 16;
+
+  final BoxFit fit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: DeckColors.surfaceInset,
+        borderRadius: BorderRadius.circular(_radius),
+        border: Border.all(color: DeckColors.googleYellow.withValues(alpha: 0.65), width: 1.8),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Image.asset(
+        'assets/images/konya_prizes.jpg',
+        width: double.infinity,
+        height: double.infinity,
+        fit: fit,
+      ),
+    );
+  }
+}
+
+/// The three prizes, one row each, paired with the backstage photo on the Konya deck.
 class HallPrizeList extends StatelessWidget {
   const HallPrizeList({super.key});
 
-  static const double _iconSize = 64;
-  static const double _placeSize = 22;
-  static const double _nameSize = 32;
-  static const double _noteSize = 22;
+  static const double _iconSize = 40;
+  static const double _placeSize = 17;
+  static const double _nameSize = 25;
+  static const double _noteSize = 19;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final prize in hallPrizes)
-          Expanded(
-            child: Row(
-              children: [
-                Icon(prize.icon, size: _iconSize, color: prize.color),
-                const SizedBox(width: 18),
+        if (!isIzmirDeck) ...[
+          const Expanded(flex: 7, child: _KonyaPrizesPhoto(fit: BoxFit.contain)),
+          const SizedBox(height: 10),
+        ],
+        Expanded(
+          flex: 4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final prize in hallPrizes)
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(
-                        '${prize.place}. OLANA',
-                        style: TextStyle(
-                          fontFamily: DeckFonts.mono,
-                          fontSize: _placeSize,
-                          fontWeight: FontWeight.w700,
-                          color: prize.color,
-                        ),
-                      ),
-                      Text(
-                        prize.name,
-                        style: const TextStyle(
-                          fontFamily: DeckFonts.sans,
-                          fontSize: _nameSize,
-                          fontWeight: FontWeight.w700,
-                          color: DeckColors.offWhite,
+                      Icon(prize.icon, size: _iconSize, color: prize.color),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${prize.place}. OLANA',
+                                style: TextStyle(
+                                  fontFamily: DeckFonts.mono,
+                                  fontSize: _placeSize,
+                                  fontWeight: FontWeight.w700,
+                                  color: prize.color,
+                                ),
+                              ),
+                              Text(
+                                prize.name,
+                                style: const TextStyle(
+                                  fontFamily: DeckFonts.sans,
+                                  fontSize: _nameSize,
+                                  fontWeight: FontWeight.w700,
+                                  color: DeckColors.offWhite,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
+            ],
           ),
+        ),
+        const SizedBox(height: 6),
         const Text(
           'Kullanıcı adınızla sahneye çağıracağım.',
           style: TextStyle(fontFamily: DeckFonts.sans, fontSize: _noteSize, color: DeckColors.mutedText),
@@ -336,7 +381,7 @@ class _WinnersPodiumViewState extends State<WinnersPodiumView> {
     return ListenableBuilder(
       listenable: _board,
       builder: (context, _) {
-        return Row(
+        final podiumRow = Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(child: _step(place: 2, flex: _secondPlaceFlex)),
@@ -344,6 +389,25 @@ class _WinnersPodiumViewState extends State<WinnersPodiumView> {
             Expanded(child: _step(place: 1, flex: _firstPlaceFlex)),
             const SizedBox(width: _gap),
             Expanded(child: _step(place: 3, flex: _thirdPlaceFlex)),
+          ],
+        );
+        if (isIzmirDeck) {
+          return podiumRow;
+        }
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(flex: 8, child: podiumRow),
+            const SizedBox(width: _gap),
+            const Expanded(
+              flex: 4,
+              child: DiagramPanel(
+                label: 'HEDİYELER',
+                tag: 'SAHNEDE',
+                accentColor: DeckColors.googleYellow,
+                child: _KonyaPrizesPhoto(),
+              ),
+            ),
           ],
         );
       },
