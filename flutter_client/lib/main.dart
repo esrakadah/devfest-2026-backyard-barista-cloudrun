@@ -34,6 +34,7 @@ LeaderboardService? _buildLeaderboardService() {
   final eventId = LeaderboardService.resolveEventId(configuredEventId: _leaderboardEventFromEnv, uri: Uri.base);
   final playerIdKey = 'barista_player_id_$eventId';
   final playerNameKey = 'barista_player_name_$eventId';
+  final playerSessionKey = 'barista_player_session_$eventId';
   var playerId = readPlayerStorageValue(playerIdKey);
   if (playerId == null || playerId.length != LeaderboardService.playerIdLength) {
     playerId = LeaderboardService.generatePlayerId(math.Random.secure());
@@ -47,6 +48,8 @@ LeaderboardService? _buildLeaderboardService() {
     clock: DateTime.now,
     rememberedPlayerName: readPlayerStorageValue(playerNameKey),
     onPlayerNameChosen: (playerName) => writePlayerStorageValue(playerNameKey, playerName),
+    restoredSession: LeaderboardSessionSnapshot.tryParse(readPlayerStorageValue(playerSessionKey)),
+    onSessionChanged: (session) => writePlayerStorageValue(playerSessionKey, session?.toJsonString()),
   );
 }
 

@@ -795,6 +795,7 @@ class _AdminSignInDialog extends StatefulWidget {
 
 class _AdminSignInDialogState extends State<_AdminSignInDialog> {
   final TextEditingController _passwordController = TextEditingController();
+  bool _isObscured = true;
 
   @override
   void dispose() {
@@ -844,7 +845,9 @@ class _AdminSignInDialogState extends State<_AdminSignInDialog> {
               TextField(
                 key: const Key('admin_password_field'),
                 controller: _passwordController,
-                obscureText: true,
+                obscureText: _isObscured,
+                autocorrect: false,
+                enableSuggestions: false,
                 autofocus: true,
                 enabled: !isBusy,
                 textInputAction: TextInputAction.done,
@@ -852,6 +855,15 @@ class _AdminSignInDialogState extends State<_AdminSignInDialog> {
                 decoration: InputDecoration(
                   hintText: widget.isEnglish ? 'Admin key' : 'Admin şifresi',
                   hintStyle: const TextStyle(color: _mutedCreamText),
+                  suffixIcon: IconButton(
+                    key: const Key('admin_password_visibility_button'),
+                    onPressed: () => setState(() => _isObscured = !_isObscured),
+                    icon: Icon(
+                      _isObscured ? Icons.visibility_rounded : Icons.visibility_off_rounded,
+                      color: _mutedCreamText,
+                      size: 19,
+                    ),
+                  ),
                   enabledBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: _goldAccent),
                   ),

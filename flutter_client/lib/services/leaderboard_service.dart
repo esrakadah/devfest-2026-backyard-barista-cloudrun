@@ -23,6 +23,69 @@ enum LeaderboardPhase {
   finished,
 }
 
+/// Persisted browser state so navigating to the leaderboard tab and back (or reloading the page)
+/// never re-prompts for the player's name or drops an active 3-minute window.
+@immutable
+class LeaderboardSessionSnapshot {
+  const LeaderboardSessionSnapshot({
+    required this.isOptedOut,
+    this.playerName,
+    this.score = 0,
+    this.rounds = 0,
+    this.firstRoundScore = 0,
+    this.isDocumentCreated = false,
+    this.windowStartedAt,
+  });
+
+  final bool isOptedOut;
+  final String? playerName;
+  final int score;
+  final int rounds;
+  final int firstRoundScore;
+  final bool isDocumentCreated;
+  final DateTime? windowStartedAt;
+
+  String toJsonString() {
+    return jsonEncode(<String, Object?>{
+      'isOptedOut': isOptedOut,
+      'playerName': playerName,
+      'score': score,
+      'rounds': rounds,
+      'firstRoundScore': firstRoundScore,
+      'isDocumentCreated': isDocumentCreated,
+      'windowStartedAt': windowStartedAt?.toUtc().toIso8601String(),
+    });
+  }
+
+  static LeaderboardSessionSnapshot? tryParse(String? rawJson) {
+    if (rawJson == null || rawJson.isEmpty) {
+      return null;
+    }
+    try {
+      final decoded = jsonDecode(rawJson);
+      if (decoded is! Map<String, Object?>) {
+        return null;
+      }
+      final rawStartedAt = decoded['windowStartedAt'];
+      final rawName = decoded['playerName'];
+      final rawScore = decoded['score'];
+      final rawRounds = decoded['rounds'];
+      final rawFirstScore = decoded['firstRoundScore'];
+      return LeaderboardSessionSnapshot(
+        isOptedOut: decoded['isOptedOut'] == true,
+        playerName: rawName is String ? rawName : null,
+        score: rawScore is int ? rawScore : 0,
+        rounds: rawRounds is int ? rawRounds : 0,
+        firstRoundScore: rawFirstScore is int ? rawFirstScore : 0,
+        isDocumentCreated: decoded['isDocumentCreated'] == true,
+        windowStartedAt: rawStartedAt is String ? DateTime.tryParse(rawStartedAt) : null,
+      );
+    } on Object {
+      return null;
+    }
+  }
+}
+
 /// Sends one player's running total to the hall leaderboard in Firestore over plain REST.
 ///
 /// Sending never blocks a serve: [recordRound] returns at once, a send that fails or hangs is dropped after
@@ -36,10 +99,17 @@ class LeaderboardService extends ChangeNotifier {
     required DateTime Function() clock,
     String? rememberedPlayerName,
     void Function(String playerName)? onPlayerNameChosen,
+    LeaderboardSessionSnapshot? restoredSession,
+    void Function(LeaderboardSessionSnapshot? session)? onSessionChanged,
   })  : _httpClient = httpClient,
         _clock = clock,
         _onPlayerNameChosen = onPlayerNameChosen,
-        suggestedPlayerName = rememberedPlayerName == null ? null : normalizePlayerName(rememberedPlayerName);
+        _onSessionChanged = onSessionChanged,
+        suggestedPlayerName = rememberedPlayerName == null ? null : normalizePlayerName(rememberedPlayerName) {
+    if (restoredSession != null) {
+      _restoreFromSnapshot(restoredSession);
+    }
+  }
 
   static const Duration playWindow = Duration(seconds: 180);
   static const Duration sendTimeout = Duration(seconds: 3);
@@ -69,6 +139,7 @@ class LeaderboardService extends ChangeNotifier {
   final http.Client _httpClient;
   final DateTime Function() _clock;
   final void Function(String playerName)? _onPlayerNameChosen;
+  final void Function(LeaderboardSessionSnapshot? session)? _onSessionChanged;
 
   LeaderboardPhase _phase = LeaderboardPhase.awaitingName;
   String? _playerName;
@@ -173,6 +244,7 @@ class LeaderboardService extends ChangeNotifier {
     _playerName = normalizedName;
     _phase = LeaderboardPhase.ready;
     _onPlayerNameChosen?.call(normalizedName);
+    _persistSession();
     notifyListeners();
     return true;
   }
@@ -182,7 +254,19 @@ class LeaderboardService extends ChangeNotifier {
       return;
     }
     _phase = LeaderboardPhase.optedOut;
+    _persistSession();
     notifyListeners();
+  }
+
+  /// Lets a player who previously chose "Play without a name" voluntarily open the name prompt later.
+  bool reopenNamePromptFromOptOut() {
+    if (_phase != LeaderboardPhase.optedOut) {
+      return false;
+    }
+    _phase = LeaderboardPhase.awaitingName;
+    _onSessionChanged?.call(null);
+    notifyListeners();
+    return true;
   }
 
   /// Counts one served round worth [pointsGained]. The first round after the name starts the window; a round
@@ -200,6 +284,7 @@ class LeaderboardService extends ChangeNotifier {
     }
     _score += pointsGained;
     _rounds += 1;
+    _persistSession();
     notifyListeners();
     _hasUnsentTotals = true;
     if (!_isSending) {
@@ -221,11 +306,77 @@ class LeaderboardService extends ChangeNotifier {
     super.dispose();
   }
 
+  void _restoreFromSnapshot(LeaderboardSessionSnapshot snapshot) {
+    if (snapshot.isOptedOut) {
+      _phase = LeaderboardPhase.optedOut;
+      return;
+    }
+    final normalizedName = snapshot.playerName == null ? null : normalizePlayerName(snapshot.playerName!);
+    if (normalizedName == null) {
+      return;
+    }
+    _playerName = normalizedName;
+    _score = snapshot.score >= 0 ? snapshot.score : 0;
+    _rounds = snapshot.rounds >= 0 ? snapshot.rounds : 0;
+    _firstRoundScore = snapshot.firstRoundScore >= 0 ? snapshot.firstRoundScore : 0;
+    _isDocumentCreated = snapshot.isDocumentCreated;
+    _windowStartedAt = snapshot.windowStartedAt;
+
+    final startedAt = _windowStartedAt;
+    if (startedAt == null || _rounds == 0) {
+      _windowStartedAt = null;
+      _score = 0;
+      _rounds = 0;
+      _firstRoundScore = 0;
+      _phase = LeaderboardPhase.ready;
+      return;
+    }
+
+    final isExpired = _clock().difference(startedAt) >= playWindow;
+    _phase = isExpired ? LeaderboardPhase.finished : LeaderboardPhase.running;
+    unawaited(_reconcileRestoredSessionWithFirestore());
+  }
+
+  Future<void> _reconcileRestoredSessionWithFirestore() async {
+    try {
+      final response =
+          await _httpClient.get(Uri.https(_firestoreHost, '/v1/$_playerDocumentPath')).timeout(sendTimeout);
+      if (response.statusCode == _httpNotFound) {
+        _startOverAfterBoardReset();
+      }
+    } on Object {
+      // Offline or slow network keeps the local restored state.
+    }
+  }
+
+  void _persistSession() {
+    final sessionCallback = _onSessionChanged;
+    if (sessionCallback == null) {
+      return;
+    }
+    if (_phase == LeaderboardPhase.awaitingName) {
+      sessionCallback(null);
+      return;
+    }
+    sessionCallback(
+      LeaderboardSessionSnapshot(
+        isOptedOut: _phase == LeaderboardPhase.optedOut,
+        playerName: _playerName,
+        score: _score,
+        rounds: _rounds,
+        firstRoundScore: _firstRoundScore,
+        isDocumentCreated: _isDocumentCreated,
+        windowStartedAt: _windowStartedAt,
+      ),
+    );
+  }
+
   bool _closeWindowIfOver() {
     if (remaining > Duration.zero) {
       return false;
     }
     _phase = LeaderboardPhase.finished;
+    _persistSession();
     notifyListeners();
     return true;
   }
@@ -254,6 +405,7 @@ class LeaderboardService extends ChangeNotifier {
         );
         if (createOutcome == _WriteOutcome.accepted) {
           _isDocumentCreated = true;
+          _persistSession();
           if (rounds == 1) {
             return;
           }
@@ -264,6 +416,7 @@ class LeaderboardService extends ChangeNotifier {
       );
       if (updateOutcome == _WriteOutcome.accepted) {
         _isDocumentCreated = true;
+        _persistSession();
       } else if (wasDocumentCreated && await _wasPlayerDocumentDeleted(updateOutcome)) {
         _startOverAfterBoardReset();
       }
@@ -295,6 +448,7 @@ class LeaderboardService extends ChangeNotifier {
     _isDocumentCreated = false;
     _hasUnsentTotals = false;
     _phase = LeaderboardPhase.ready;
+    _persistSession();
     notifyListeners();
   }
 

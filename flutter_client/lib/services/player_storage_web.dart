@@ -9,9 +9,13 @@ String? readPlayerStorageValue(String key) {
   }
 }
 
-void writePlayerStorageValue(String key, String value) {
+void writePlayerStorageValue(String key, String? value) {
   try {
-    web.window.localStorage.setItem(key, value);
+    if (value == null || value.isEmpty) {
+      web.window.localStorage.removeItem(key);
+    } else {
+      web.window.localStorage.setItem(key, value);
+    }
   } on Object {
     // The player still plays; a reload then starts a new leaderboard row.
   }

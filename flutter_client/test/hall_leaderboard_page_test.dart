@@ -318,4 +318,108 @@ void main() {
       expect(find.byKey(const Key('leaderboard_admin_toolbar')), findsNothing);
     });
   });
+
+  group('Persisted player session across tab switches and reloads', () {
+    testWidgets('restores a joined mid-round session without re-opening the name dialog', (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1280, 900));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      var currentTime = DateTime.utc(2026, 11, 21, 11, 30, 30);
+      final savedJson = LeaderboardSessionSnapshot(
+        isOptedOut: false,
+        playerName: 'Esra',
+        score: 200,
+        rounds: 2,
+        firstRoundScore: 100,
+        isDocumentCreated: true,
+        windowStartedAt: DateTime.utc(2026, 11, 21, 11, 30),
+      ).toJsonString();
+
+      final leaderboardService = LeaderboardService(
+        projectId: 'devfest-backyard-barista-2026',
+        eventId: 'konya-2026',
+        playerId: 'AbCdEfGhIjKlMnOpQrSt',
+        httpClient: MockClient((_) async => http.Response('{}', 200)),
+        clock: () => currentTime,
+        restoredSession: LeaderboardSessionSnapshot.tryParse(savedJson),
+      );
+      addTearDown(leaderboardService.dispose);
+
+      await tester.pumpWidget(
+        BackyardBaristaApp(
+          cityController: CityEditionController(remoteConfigCityCode: 'konya'),
+          judgeService: CafeJudgeService(clock: () => currentTime, forceOfflineMode: true),
+          leaderboardService: leaderboardService,
+        ),
+      );
+      await tester.pump();
+
+      expect(find.text('Kullanıcı adın?'), findsNothing);
+      expect(leaderboardService.phase, LeaderboardPhase.running);
+      expect(leaderboardService.score, 200);
+      expect(find.text('Esra · 02:30'), findsOneWidget);
+
+      currentTime = currentTime.add(const Duration(seconds: 5));
+      await tester.pump(const Duration(seconds: 1));
+      expect(find.text('Esra · 02:25'), findsOneWidget);
+    });
+
+    testWidgets('restores an opted-out session silently and allows voluntary rejoin', (tester) async {
+      await tester.binding.setSurfaceSize(const Size(1280, 900));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+
+      final leaderboardService = LeaderboardService(
+        projectId: 'devfest-backyard-barista-2026',
+        eventId: 'konya-2026',
+        playerId: 'AbCdEfGhIjKlMnOpQrSt',
+        httpClient: MockClient((_) async => http.Response('{}', 200)),
+        clock: fixedClock,
+        restoredSession: const LeaderboardSessionSnapshot(isOptedOut: true),
+      );
+      addTearDown(leaderboardService.dispose);
+
+      await tester.pumpWidget(
+        BackyardBaristaApp(
+          cityController: CityEditionController(remoteConfigCityCode: 'konya'),
+          judgeService: CafeJudgeService(clock: fixedClock, forceOfflineMode: true),
+          leaderboardService: leaderboardService,
+        ),
+      );
+      await tester.pump();
+
+      expect(find.text('Kullanıcı adın?'), findsNothing);
+      expect(leaderboardService.phase, LeaderboardPhase.optedOut);
+
+      await tester.tap(find.byKey(const Key('rejoin_leaderboard_button')));
+      await tester.pumpAndSettle();
+      expect(find.text('Kullanıcı adın?'), findsOneWidget);
+    });
+
+    test('reconciles a restored session to ready (0 pts) while keeping the name when the board was reset', () async {
+      final leaderboardService = LeaderboardService(
+        projectId: 'devfest-backyard-barista-2026',
+        eventId: 'konya-2026',
+        playerId: 'AbCdEfGhIjKlMnOpQrSt',
+        httpClient: MockClient((_) async => http.Response('Not Found', 404)),
+        clock: () => DateTime.utc(2026, 11, 21, 11, 40),
+        restoredSession: LeaderboardSessionSnapshot(
+          isOptedOut: false,
+          playerName: 'Esra',
+          score: 400,
+          rounds: 4,
+          firstRoundScore: 100,
+          isDocumentCreated: true,
+          windowStartedAt: DateTime.utc(2026, 11, 21, 11, 30),
+        ),
+      );
+      addTearDown(leaderboardService.dispose);
+
+      await Future<void>.delayed(Duration.zero);
+
+      expect(leaderboardService.playerName, 'Esra');
+      expect(leaderboardService.score, 0);
+      expect(leaderboardService.rounds, 0);
+      expect(leaderboardService.phase, LeaderboardPhase.ready);
+    });
+  });
 }

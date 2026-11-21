@@ -105,8 +105,20 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
       leaderboardService.addListener(_handleLeaderboardChanged);
       if (leaderboardService.phase == LeaderboardPhase.awaitingName) {
         WidgetsBinding.instance.addPostFrameCallback((_) => _askForLeaderboardName(leaderboardService));
+      } else if (leaderboardService.phase == LeaderboardPhase.running) {
+        _startLeaderboardTicker(leaderboardService);
       }
     }
+  }
+
+  void _startLeaderboardTicker(LeaderboardService leaderboardService) {
+    _leaderboardTicker?.cancel();
+    _leaderboardTicker = Timer.periodic(_leaderboardTickInterval, (_) {
+      leaderboardService.refreshWindow();
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   void _askForLeaderboardName(LeaderboardService leaderboardService) {
@@ -135,16 +147,15 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
     _lastSeenLeaderboardPhase = phase;
     if (didPhaseChange) {
       _leaderboardTicker?.cancel();
-      _leaderboardTicker = phase == LeaderboardPhase.running
-          ? Timer.periodic(_leaderboardTickInterval, (_) {
-              leaderboardService.refreshWindow();
-              if (mounted) {
-                setState(() {});
-              }
-            })
-          : null;
+      if (phase == LeaderboardPhase.running) {
+        _startLeaderboardTicker(leaderboardService);
+      } else {
+        _leaderboardTicker = null;
+      }
       if (phase == LeaderboardPhase.finished) {
         _announceLeaderboardWindowOver(leaderboardService.score);
+      } else if (phase == LeaderboardPhase.awaitingName) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => _askForLeaderboardName(leaderboardService));
       }
     }
     setState(() {});
@@ -512,6 +523,21 @@ class _CafeCounterScreenState extends State<CafeCounterScreen> {
               ],
             ),
             actions: <Widget>[
+              if (widget.leaderboardService case final activeLeaderboard?
+                  when activeLeaderboard.phase == LeaderboardPhase.optedOut)
+                IconButton(
+                  key: const Key('rejoin_leaderboard_button'),
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                  tooltip: languageCode == 'en' ? 'Enter player name' : 'İsimle tabloya katıl',
+                  onPressed: activeLeaderboard.reopenNamePromptFromOptOut,
+                  icon: const Icon(
+                    Icons.person_add_alt_1_rounded,
+                    size: 19,
+                    color: Color(0xFFD4AF37),
+                  ),
+                ),
               if (widget.leaderboardService != null)
                 Padding(
                   padding: const EdgeInsets.only(right: 4, top: 6, bottom: 6),
