@@ -65,6 +65,7 @@ class TodayPlanSlide extends FlutterDeckSlideWidget {
                       child: _PartCard(
                         badge: '3 · YAKLAŞIK 3 DK',
                         icon: Icons.emoji_events,
+                        imageAssetPath: isIzmirDeck ? null : 'assets/images/konya_prizes.jpg',
                         title: 'Podyum',
                         lines: ['Kazananlar sahneye.', 'Kod ve slaytlar QR kodda.'],
                         accentColor: DeckColors.googleBlue,
@@ -110,10 +111,12 @@ class _PartCard extends StatelessWidget {
     required this.title,
     required this.lines,
     required this.accentColor,
+    this.imageAssetPath,
   });
 
   static const double _padding = 26;
   static const double _iconSize = 170;
+  static const double _photoRadius = 18;
   static const double _titleSize = 46;
   static const double _lineSize = 30;
   static const double _lineGap = 8;
@@ -121,12 +124,14 @@ class _PartCard extends StatelessWidget {
 
   final String badge;
   final IconData icon;
+  final String? imageAssetPath;
   final String title;
   final List<String> lines;
   final Color accentColor;
 
   @override
   Widget build(BuildContext context) {
+    final assetPath = imageAssetPath;
     return DeckCard(
       padding: const EdgeInsets.all(_padding),
       borderColor: accentColor.withValues(alpha: _borderOpacity),
@@ -135,7 +140,21 @@ class _PartCard extends StatelessWidget {
         children: [
           DeckBadge(label: badge, color: accentColor),
           Expanded(
-            child: Center(child: Icon(icon, size: _iconSize, color: accentColor)),
+            child: assetPath == null
+                ? Center(child: Icon(icon, size: _iconSize, color: accentColor))
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    child: Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(_photoRadius),
+                          border: Border.all(color: DeckColors.googleYellow.withValues(alpha: 0.7), width: 2),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: Image.asset(assetPath, fit: BoxFit.cover),
+                      ),
+                    ),
+                  ),
           ),
           Text(
             title,
