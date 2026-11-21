@@ -10,9 +10,9 @@ class WinnersPodiumSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/winners-podium',
-            title: '20. Podyum: ilk üç sahneye',
+            title: '23. Podyum: ilk üç sahneye',
             steps: _stepCount,
-            speakerNotes: 'BEAT  [26:00 - 27:30] Ödül anı. Üç tık: üçüncü, ikinci, birinci.\n'
+            speakerNotes: 'BEAT  [26:30 - 28:00] Ödül anı. Üç tık: üçüncü, ikinci, birinci.\n'
                 'SAY   "Söz verdiğim gibi: podyum. Üçüncümüz sticker setini alıyor. İkincimiz Google Cloud gözlüğü. Ve birincimiz, Dash\'in yeni sahibi. Üçünüzü de sahneye bekliyorum."\n'
                 'HOLD  Slayt üç soru işaretiyle açılır. Her ödülden önce ileri tuşuna bir kez bas, ekrandaki kullanıcı adını yüksek sesle oku ve salonun alkışını bekle. İsim *** görünüyorsa okuma, "üçüncümüz kendini biliyor" de. Kutu "Henüz kimse yok" diyorsa o ödülü fuayede vereceğini söyle. Üçü sahneye gelince ödülleri ver, tek bir fotoğraf çektir.\n'
                 'NEXT  "Ve son olarak: bana nasıl ulaşırsınız?"',

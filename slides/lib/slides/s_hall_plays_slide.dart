@@ -12,11 +12,11 @@ class HallPlaysSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/hall-plays',
-            title: '3. Salon oynuyor: QR ve üç görev',
+            title: '6. Salon oynuyor: QR ve üç görev',
             speakerNotes:
-                'BEAT  [02:00 - 06:00] Canlı oyun. Önce kendi iki tepsin (canlı sekmede, 90 sn), sonra bu slayt ve salon (2,5 dk).\n'
+                'BEAT  [03:15 - 07:00] Canlı oyun. Önce kendi iki tepsin (canlı sekmede, 75 sn), sonra bu slayt ve salon (2,5 dk).\n'
                 'SAY   "Canlı oyundayız, Cloud Run\'da çalışıyor. Doğru bir tepsi: kahve, tatlı, şeker. Servis Et: beş yıldız. Kartın altında Jüri: Canlı Gemini yazıyorsa, bu esprili yorumu Gemini yazdı. Şimdi şeker yerine tuz: bir yıldız. Sıra sizde. Önce telefonun sesini kısın, sonra QR kodu okutun ve bir kullanıcı adı yazın. Puanınız sahnedeki tabloya düşecek; tabloyu iki buçuk dakika sonra donduracağım. Birinciye Dash, ikinciye Google Cloud gözlük, üçüncüye sticker seti; kazananları kapanışta o kullanıcı adıyla sahneye çağıracağım. Üç de göreviniz var. Bir: tatlı siparişe gizlice tuz atın. İki: gelen kartın altındaki jüri rozetini okuyun, ne yazdığını aklınızda tutun. Üç, hızlı olanlar için: Servis Et\'e basın ve hemen Sıradaki Müşteri\'ye basın."\n'
-                'HOLD  1) Canlı Cloud Run sekmesi: tatlı tepsi 5 yıldız, tuzlu tepsi 1 yıldız. Rozete bak: "Canlı Gemini" yazmıyorsa Gemini cümlesini atla ve "Bu kez hazır yanıt geldi; nedenini birazdan anlatacağım" de. 2) "Sıra sizde" derken bu slaytı aç; önce tam ekran QR sekmesini 30 saniye göster, sonra bu slayta dön. "Okutamayan yanındakinin telefonundan oynasın" de. 3) Sayaç 04:00: "Açabilenler el kaldırsın." Yarıdan azsa "Yanınızdakinin ekranına bakın" de ve 05:00\'te bitir. 4) Salon oynarken sus; 05:45\'te "Son on beş saniye" de. Oyun sende açılmazsa Stage Navigator ile "Demo aksadı" slaytına geç.\n'
+                'HOLD  1) Canlı Cloud Run sekmesi: tatlı tepsi 5 yıldız, tuzlu tepsi 1 yıldız. Rozete bak: "Canlı Gemini" yazmıyorsa Gemini cümlesini atla ve "Bu kez hazır yanıt geldi; nedenini birazdan anlatacağım" de. 2) "Sıra sizde" derken bu slaytı aç; önce tam ekran QR sekmesini 30 saniye göster, sonra bu slayta dön. "Okutamayan yanındakinin telefonundan oynasın" de. 3) Sayaç 05:00: "Açabilenler el kaldırsın." Yarıdan azsa "Yanınızdakinin ekranına bakın" de ve 06:00\'da bitir. 4) Salon oynarken sus; 06:45\'te "Son on beş saniye" de. Oyun sende açılmazsa Stage Navigator ile "Demo aksadı" slaytına geç.\n'
                 'NEXT  "Bakalım kim önde."',
           ),
         );

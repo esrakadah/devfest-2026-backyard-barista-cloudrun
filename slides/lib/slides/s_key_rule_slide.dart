@@ -12,9 +12,9 @@ class KeyRuleSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/key-rule',
-            title: '17. Kural 5: anahtar sunucuda kalır',
+            title: '20. Kural 5: anahtar sunucuda kalır',
             speakerNotes:
-                'BEAT  [21:45 - 23:15] Kural 5, güvenlik. Yeni kelime: proxy. Anahtarı ve iki kanıtı göster.\n'
+                'BEAT  [22:30 - 24:00] Kural 5, güvenlik. Yeni kelime: proxy. Anahtarı ve iki kanıtı göster.\n'
                 'SAY   "Beşinci kural. Gemini\'yi çağırmak için bir API anahtarı gerekiyor; anahtar, faturanızın şifresi gibi: kimde varsa sizin hesabınıza harcar. Web uygulamasının içine koyarsanız herkes tarayıcıdan okuyabilir. Yeni kelime proxy: tarayıcı ile Gemini arasındaki aracı sunucu. Telefonunuz bizim sunucuya soruyor; sarı satırda sunucu anahtarı ekleyip Gemini\'ye iletiyor. Anahtar telefonunuza hiç inmiyor. Bunu söylemek kolay, o yüzden iki kanıt var. Bir test, giden istekte anahtar olmadığını kontrol ediyor. CI, yani her değişiklikte otomatik çalışan kontrol, derlenen pakette anahtara benzeyen bir şey arıyor. Eve götüreceğiniz cümle: tarayıcıya giden her şeyi herkes okur."\n'
                 'HOLD  Önce soldaki iki şerit: YANLIŞ, sonra OYUNDA. Sonra sağdaki sarı satır, en son alttaki iki kanıt. Alttaki "İleri seviye" satırını okuma; sorulursa: proxy\'de kimlik kontrolü yok, üretimde yol App Check.\n'
                 'NEXT  "Anahtar güvende. Peki onu ne sıklıkla kullanıyoruz?"',

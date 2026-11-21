@@ -10,8 +10,8 @@ class FiveLessonsSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/five-lessons',
-            title: '6. Bugün: beş kural, beş kelime',
-            speakerNotes: 'BEAT  [07:45 - 08:15] Yol haritası. Kuralları okuma, iki grubu ve beş kelimeyi göster.\n'
+            title: '9. Bugün: beş kural, beş kelime',
+            speakerNotes: 'BEAT  [08:30 - 09:00] Yol haritası. Kuralları okuma, iki grubu ve beş kelimeyi göster.\n'
                 'SAY   "Bugünün planı: beş kural. İlk ikisi modelin cevabıyla ilgili, son üçü uygulamanın kendisiyle. Her kuralla bir yeni kelime geliyor: guard, enum, sealed class, timeout ve proxy. Hepsini geldiği yerde açıklayacağım; şimdi bilmeniz gerekmiyor."\n'
                 'HOLD  Sol sütun, sağ sütun, alttaki beş kelime. 30 saniyeyi geçme.\n'
                 'NEXT  "Birinci kural, az önce tuz atanların gördüğü şey."',

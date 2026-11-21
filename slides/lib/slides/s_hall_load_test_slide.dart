@@ -12,8 +12,8 @@ class HallLoadTestSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/hall-load-test',
-            title: '16. Kural 4, kanıt: yük testini salon yaptı',
-            speakerNotes: 'BEAT  [20:00 - 21:45] Kural 4, kanıt. İkinci görevi salona sor: rozetinizde ne yazıyordu?\n'
+            title: '19. Kural 4, kanıt: yük testini salon yaptı',
+            speakerNotes: 'BEAT  [20:45 - 22:30] Kural 4, kanıt. İkinci görevi salona sor: rozetinizde ne yazıyordu?\n'
                 'SAY   "Rozetinde Canlı Gemini yazanlar el kaldırsın. Yerel JSON Şeması yazanlar? Yerel JSON Şeması, pakete koyduğumuz hazır yanıt demek. İkinci grup: sizde model cevap veremedi ya da cevabı reddedildi, C planı çalıştı. Nedenini rozet söylemiyor. Olası bir neden: sunucumuz saniyede on isteğe izin veriyor; fazlasına HTTP 429 diyor, yani çok fazla istek geldi, yavaşla. Soldaki kod rozetin arkasındaki liste: üç jüri, üç isim. Eve götüreceğiniz cümle: yapay zeka çağıran her özelliğin bir B planı olsun."\n'
                 'HOLD  İki oylamada da 3 saniye bekle. İlk grupta el yoksa: "Demek hepiniz C planına düştünüz; oyun yine de cevap verdi." İkinci grupta el yoksa: "Bugün sınıra takılmadık; takılsaydık rozette Yerel JSON Şeması yazacaktı. C planını alttaki test kanıtlıyor." Sonra soldaki kod, sonra sağdaki kart.\n'
                 'NEXT  "Son kural para ve güvenlikle ilgili."',
