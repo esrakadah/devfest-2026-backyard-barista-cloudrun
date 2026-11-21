@@ -31,6 +31,7 @@ flutter:
     - assets/base/toppings_pranks/
     - assets/base/customers/
     - assets/editions/city_editions.json
+    - assets/editions/konya_prizes.jpg
     - assets/offline_fallback/mock_responses.json
   fonts:
     - family: GoogleSans

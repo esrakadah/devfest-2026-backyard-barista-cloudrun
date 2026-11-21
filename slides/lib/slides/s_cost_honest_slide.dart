@@ -5,36 +5,40 @@ import 'package:backyard_barista_deck/widgets/story_arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_deck/flutter_deck.dart';
 
-/// Lesson 5, second slide: cost as a decision. Counted numbers are tested; the token count is one
-/// measurement from the live game, shown next to the estimate it replaced.
+/// Lesson 5, second slide: explains what a token actually is for junior developers and how the
+/// game avoids spending tokens when code alone already knows the answer.
 class CostHonestSlide extends FlutterDeckSlideWidget {
   const CostHonestSlide({super.key})
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/cost-honest',
-            title: '21. Kural 5, maliyet: model boşuna çağrılmaz',
-            speakerNotes:
-                'BEAT  [24:00 - 25:15] Kural 5, maliyet. Sayılan rakamlar ve bir ölçüm; eski tahminin tutmadığını söyle.\n'
-                'SAY   "Token, modelin okuduğu ve yazdığı kelime parçası; fatura token sayısına göre kesiliyor. O yüzden en ucuz çağrı, hiç yapmadığınız çağrı. Tepsiyi dizerken modele gitmiyoruz: sıfır çağrı. Eksik tepside, içinde tuz ya da acı yoksa, yine gitmiyoruz; cevabı kod veriyor. Tepsi servis edilince tek çağrı gidiyor. Bu üçünün testi var. Sağdaki rakama dikkat: 322 token. Bunu 20 Kasım\'da tek bir tepside ölçtüm. O güne kadar slaytımda 270 yazıyordu ve bir tahmindi; elli token eksik tahmin etmişim. Ölçmediğiniz rakamı ölçmüş gibi göstermeyin."\n'
-                'HOLD  Soldan sağa dört kutu. Son kutudaki "ÖLÇÜLDÜ" etiketini göster ve bir saniye dur.\n'
-                'NEXT  "Toparlayalım."',
+            title: '21. Kural 5, maliyet: token nedir, model ne zaman çağrılır?',
+            speakerNotes: 'BEAT  [24:00 - 25:15] Kural 5, maliyet. Önce token nedir açıkla, sonra üç kartı göster.\n'
+                'SAY   "Peki fatura neye göre yazılıyor? Yeni kelime token: modelin okuduğu, işlediği ve ürettiği en küçük metin birimi. Bazen kısa bir kelime, bazen kelimenin yarısı, bazen tek bir noktalama işareti; kabaca dört harf bir token eder. Modelin taksimetresi token sayar: hem sizin gönderdiğiniz soruyu hem kendi yazdığı cevabı toplar. O yüzden en ucuz token, hiç harcamadığınız tokendır. Tepsiyi dizerken, değiştirirken, temizlerken modele hiç gitmiyoruz: sıfır token. Eksik tepside de gitmiyoruz; cevabı Dart kodu veriyor. Yalnızca Servis Et\'e bastığınızda, tüm geçmişi değil sadece o tepsinin kısa özetini gönderiyoruz."\n'
+                'HOLD  Önce üstteki Token tanımını göster ("kabaca dört harf = bir token"). Sonra soldan sağa üç kartı işaret et: 0 token, 0 token, 1 kısa istek.\n'
+                'NEXT  "Beş kuralı tek ekranda toparlayalım."',
           ),
         );
 
   static const double _gap = 18;
 
   @override
-  FlutterDeckSlide build(BuildContext context) {
+  Widget build(BuildContext context) {
     return FlutterDeckSlide.blank(
       builder: (context) {
         return const SlideFrame(
           eyebrow: 'KURAL 5 / 5 · MALİYET',
           title: 'Model boşuna çağrılmaz',
           act: StoryAct.underTheHood,
-          subtitle: 'Token: modelin okuduğu ve yazdığı kelime parçası. Fatura token sayısına göre kesilir',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              NewWordCard(
+                word: 'Token',
+                definition:
+                    'Modelin okuduğu ve ürettiği en küçük veri birimi (kelime, hece ya da noktalama; yaklaşık 4 harf / 0,75 kelime). Fatura toplam token sayısına göre kesilir.',
+              ),
+              SizedBox(height: _gap),
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -42,9 +46,9 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: _CountTile(
                         value: '0',
-                        unit: 'çağrı',
-                        caption: 'Tepsiyi dizerken, değiştirirken, temizlerken',
-                        tag: 'TEST VAR',
+                        unit: 'token',
+                        caption: 'Tepsiyi dizerken, ürün değiştirirken ya da tepsiyi temizlerken modele hiç gidilmez.',
+                        tag: 'TEPSİYİ DİZERKEN · TEST VAR',
                         color: DeckColors.googleGreen,
                       ),
                     ),
@@ -52,9 +56,9 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: _CountTile(
                         value: '0',
-                        unit: 'çağrı',
-                        caption: 'Eksik tepside (tuz, acı yoksa): cevabı kod veriyor',
-                        tag: 'TEST VAR',
+                        unit: 'token',
+                        caption: 'Eksik tepside (tuz ve acı yoksa) cevabı doğrudan Dart kodu verir; model çağrılmaz.',
+                        tag: 'KOD BİLİYORSA · TEST VAR',
                         color: DeckColors.googleGreen,
                       ),
                     ),
@@ -62,19 +66,10 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
                     Expanded(
                       child: _CountTile(
                         value: '1',
-                        unit: 'çağrı',
-                        caption: 'Servis edilen tepsi başına',
-                        tag: 'TEST VAR',
-                        color: DeckColors.googleGreen,
-                      ),
-                    ),
-                    SizedBox(width: _gap),
-                    Expanded(
-                      child: _CountTile(
-                        value: '322',
-                        unit: 'token',
-                        caption: 'Bir tatlı tepsi: 223 girdi, 99 çıktı. Eski tahmin 270 idi',
-                        tag: 'ÖLÇÜLDÜ · 1 TEPSİ · 20 KAS',
+                        unit: 'kısa istek',
+                        caption:
+                            'Yalnızca Servis Et anında: uzun sohbet geçmişi değil, tek tepsinin özeti + JSON şeması gider.',
+                        tag: 'SERVİS ANINDA · TEST VAR',
                         color: DeckColors.googleYellow,
                       ),
                     ),
@@ -88,7 +83,7 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
               ),
               SizedBox(height: _gap),
               AdvancedNote(
-                'tek ölçüm: canlı oyun, Konya sürümü, gemini-3.5-flash-lite, usageMetadata 223 + 99; eski tahmin benchmark aracındaki 152 + 118 sabitiydi',
+                'İngilizcede 1 token yaklaşık 4 karakterdir; Türkçede ekler nedeniyle aynı cümle biraz daha fazla token tutar, kısa istek iki kat kazandırır',
               ),
             ],
           ),
@@ -107,10 +102,10 @@ class _CountTile extends StatelessWidget {
     required this.color,
   });
 
-  static const double _valueSize = 92;
-  static const double _unitSize = 34;
-  static const double _captionSize = 28;
-  static const double _tagGap = 14;
+  static const double _valueSize = 84;
+  static const double _unitSize = 32;
+  static const double _captionSize = 27;
+  static const double _tagGap = 12;
 
   final String value;
   final String unit;
@@ -142,25 +137,38 @@ class _CountTile extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Text(
-                unit,
-                style: const TextStyle(
-                  fontFamily: DeckFonts.sans,
-                  fontSize: _unitSize,
-                  fontWeight: FontWeight.w700,
-                  color: DeckColors.offWhite,
+              Flexible(
+                child: Text(
+                  unit,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontFamily: DeckFonts.sans,
+                    fontSize: _unitSize,
+                    fontWeight: FontWeight.w700,
+                    color: DeckColors.offWhite,
+                  ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: _tagGap),
-          Text(
-            caption,
-            style: const TextStyle(
-              fontFamily: DeckFonts.sans,
-              fontSize: _captionSize,
-              height: 1.25,
-              color: DeckColors.offWhite,
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: 480,
+                child: Text(
+                  caption,
+                  style: const TextStyle(
+                    fontFamily: DeckFonts.sans,
+                    fontSize: _captionSize,
+                    height: 1.28,
+                    color: DeckColors.offWhite,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
