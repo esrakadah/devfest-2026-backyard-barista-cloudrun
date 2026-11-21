@@ -98,7 +98,7 @@ devfest-2026-backyard-barista-cloudrun/
 │   ├── step-1-base-cafe.md    # AI Studio Build mode seed prompt (Base Cafe + 4-City Switcher + 5s Tea Sip)
 │   ├── step-2-custom-dish.md  # On-the-fly custom SVG dish + prank icon + Gemini JSON judge
 │   └── step-3-deploy.md       # One-click Cloud Run (.run.app) & GitHub sync guide
-├── slides/                    # flutter_deck presentation: 16-slide English workshop deck and 19-slide Turkish talk (DECK_LANG=tr) + Stage Navigator + speaker notes
+├── slides/                    # flutter_deck presentation: 16-slide English workshop deck and 24-slide Turkish talk (DECK_LANG=tr) + Stage Navigator + speaker notes
 │   ├── pubspec.yaml
 │   ├── lib/
 │   │   ├── main.dart

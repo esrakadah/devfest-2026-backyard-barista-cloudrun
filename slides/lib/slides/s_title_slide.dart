@@ -12,10 +12,10 @@ class TitleSlide extends FlutterDeckSlideWidget {
             route: '/title',
             title: isTurkishDeck ? "1. Cloud Run'da Backyard Barista" : '1. Backyard Barista on Cloud Run',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [00:00 - 01:00] Ana salon açılışı. Kendini iki cümleyle tanıt, beş hatayı söyle ve dur.\n'
-                    'SAY   "Merhaba ${isIzmirDeck ? "İzmir" : "Konya"}, hoş geldiniz! Ben Esra Kadah. Berlin\'de Antigua Mobile\'da Tech Lead olarak çalışıyorum, Flutter ve Dart alanında Google Developer Expert\'im; burada kendi adıma konuşuyorum, Google adına değil. Bugün size bir oyun göstereceğim. Kodunu yapay zeka araçlarıyla birlikte yazdım; çalışıyor, testlerden geçiyor. ${isIzmirDeck ? "20 Kasım'da" : "Dün"} bu oyunda beş hata buldum. Başlıkta \'yap ve canlıya al\' yazıyor. Yapmak artık kolay; ben canlıya aldıktan sonra olanı anlatacağım: o hatalardan üçünü ve bu oyundan çıkardığım beş kuralı."\n'
-                    'HOLD  Telefondaki kronometreyi "Merhaba" derken başlat. İlk cümleyi ekrana değil salona bakarak söyle. "Beş hata buldum" dedikten sonra 2 saniye bekle.\n'
-                    'NEXT  "Koda geçmeden önce bütün salonla küçük bir oyun oynayalım."'
+                ? 'BEAT  [00:00 - 00:30] Ana salon açılışı. Selamla, adını söyle ve konuyu tek cümleyle ver. Tanışma bir sonraki slaytta.\n'
+                    'SAY   "Merhaba ${isIzmirDeck ? "İzmir" : "Konya"}, hoş geldiniz! Ben Esra Kadah. Bugün birlikte bir oyun oynayacağız, sonra o oyunun kodunu açıp içinde bulduğum hataları ve onlardan çıkardığım beş kuralı konuşacağız."\n'
+                    'HOLD  Telefondaki kronometreyi "Merhaba" derken başlat. İlk cümleyi ekrana değil salona bakarak söyle.\n'
+                    'NEXT  "Önce kısaca kim olduğumu söyleyeyim."'
                 : 'BEAT  [00:00 - 02:00] Enerjik Açılış ve Sözleşme. Salonu selamla, iki cümlelik GDE girişini yap ve herkesin bugün çalışan bir oyunla çıkacağını ilan et.\n'
                     'SAY   "Ben Esra Kadah, Berlin\'de Antigua Mobile\'da Tech Lead, Senior Flutter ve AI Engineer olarak çalışıyorum ve Flutter ile Dart alanında Google Developer Expert\'im. Önümüzdeki oturumda size sadece slayt göstermeyeceğim: Google AI Studio, Antigravity ve Flutter ile çok oyunculu bir AI kafe oyununu Google Cloud Run üzerinde canlıya alacağız ve gerçek rakamları konuşacağız. Söyleyeceklerim kendi görüşlerim, Google adına konuşmuyorum."\n'
                     'HOLD  İlk iki cümleyi ekrana bakmadan, doğrudan salonun gözlerinin içine bakarak söyle. "Google adına değil, sahadaki bir mühendis olarak" vurgusunu net tut.\n'

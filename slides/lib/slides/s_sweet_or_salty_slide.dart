@@ -11,12 +11,12 @@ class SweetOrSaltySlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/sweet-or-salty',
-            title: isTurkishDeck ? '2. Açılış: hangisi şeker?' : '2. Cold Open: Hangisi şeker?',
+            title: isTurkishDeck ? '4. Açılış: hangisi şeker?' : '2. Cold Open: Hangisi şeker?',
             speakerNotes: isTurkishDeck
-                ? 'BEAT  [01:00 - 02:00] Salon oylaması. Teknik terim kullanmadan oyunun fikrini tek resimle ver, soruyu açık bırak.\n'
+                ? 'BEAT  [02:00 - 02:45] Salon oylaması. Teknik terim kullanmadan oyunun fikrini tek resimle ver, soruyu açık bırak.\n'
                     'SAY   "Hızlı bir el oylaması. Ekranda birbirinin ikizi iki kavanoz var: biri şeker, biri tuz. A şeker diyenler el kaldırsın. B diyenler? Doğru cevap: A şeker, B tuz. Oyunun fikri bu kadar: tatlı siparişe gizlice tuz atılıyor ve müşteriyi kimse uyarmıyor. Peki tuzu kim yakalayacak: yapay zeka mı, kod mu? Bu soruyu aklınızda tutun; konuşmanın sonunda cevabını siz vereceksiniz."\n'
                     'HOLD  Her oylamadan sonra elleri görmek için 3 saniye bekle. Cevabı söylerken sağdaki iki müşteri yüzünü göster. Soruyu cevaplama. Sonra canlı Cloud Run sekmesine geç; 3. slaytı henüz açma.\n'
-                    'NEXT  "Önce ben oynayacağım, sonra siz."'
+                    'NEXT  "Oyunun kuralı üç adım."'
                 : 'BEAT  [02:00 - 03:30] Soğuk açılış ve salon oylaması. Oyunun tüm fikrini tek bir resimle ver; henüz hiçbir teknoloji adı söyleme.\n'
                     'SAY   "Başlamadan önce küçük bir oylama. Ekrandaki iki kavanozdan biri şeker, biri tuz. A şeker diyenler el kaldırsın. Şimdi B diyenler. Eller nasıl dağıldı, bakalım. Doğru cevap: A şeker, B tuz. İşte bugünkü oyunun bütün fikri bu: iki kavanoz neredeyse aynı ve arayüz hiçbir uyarı vermiyor. Peki tatlıya tuz atıldığını kim fark edecek? Gemini. Sipariş servis edildiği anda yapılandırılmış bir JSON kararı dönüyor: ya beş yıldız ya da şehre özel, bir yıldızlı iğneli bir yorum. Bu oturumun sonunda sizin kafenizin jürisi de bunu her seferinde bilecek."\n'
                     'HOLD  Her oylamadan sonra elleri saymak için 3 saniye bekle. Cevabı söylerken sağdaki iki müşteri yüzünü işaret et (yanlış kavanoz 1 yıldız, doğru kavanoz 5 yıldız).\n'

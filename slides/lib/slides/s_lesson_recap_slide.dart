@@ -10,9 +10,9 @@ class LessonRecapSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/lesson-recap',
-            title: '19. Özet: beş kural, iki sütun',
+            title: '22. Özet: beş kural, iki sütun',
             speakerNotes:
-                'BEAT  [24:30 - 26:00] Özet. İki sütunu oku, yeniden anlatma. Açılıştaki soruyu salona geri sor.\n'
+                'BEAT  [25:15 - 26:30] Özet. İki sütunu oku, yeniden anlatma. Açılıştaki soruyu salona geri sor.\n'
                 'SAY   "Beş kural, iki sütun. Modelin cevabı: model önerir, kararı kod verir. Serbest metin yerine kapalı liste; boş cevap başarı değildir. Uygulamanın kendisi: olmaması gereken durum yazılamasın. Model susarsa oyun susmaz. Anahtar sunucuda kalır, model boşuna çağrılmaz. Kodun hepsi, testleriyle birlikte, sağdaki QR kodda. Başta bir soru sormuştum: tuzu kim yakalayacak, yapay zeka mı, kod mu?"\n'
                 'HOLD  Sütunları oku, açıklama ekleme. Soruyu sorduktan sonra 3 saniye bekle; sessizlikse cevabı kendin söyle.\n'
                 'NEXT  "Cevap: kod."',

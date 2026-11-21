@@ -12,9 +12,9 @@ class SealedOrderSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/sealed-order',
-            title: '14. Kural 3, çözüm: sealed OrderState',
+            title: '17. Kural 3, çözüm: sealed OrderState',
             speakerNotes:
-                'BEAT  [17:15 - 18:45] Kural 3, çözüm. Tek tip, tek atama. Dosyanın hâlâ büyük olduğunu söyle.\n'
+                'BEAT  [18:00 - 19:30] Kural 3, çözüm. Tek tip, tek atama. Dosyanın hâlâ büyük olduğunu söyle.\n'
                 'SAY   "Solda yeni kalıp: üç değişken yerine tek bir OrderState. Boşta, jüride ya da servis edildi. Kart sadece servis edildi halinin içinde yaşıyor; sipariş boştaysa gösterecek kart yok. Sağda sarı satır: sıfırlamak artık tek bir atama. Unutulacak ikinci satır kalmadı. Geç gelen cevap ne oluyor? Alttaki satır soruyor: bu cevap hâlâ beklediğim siparişe mi ait? Değilse çöpe. Dürüst olayım: bu ekran dosyası hâlâ 2.600 satırdan uzun; dosyayı düzeltmedim, durumu düzelttim. Eve götüreceğiniz cümle: aynı bilgiyi üç yerde tutarsanız biri unutulur; tek yerde tutun."\n'
                 'HOLD  Soldaki üç sınıf, sağdaki sarı satır, test adı. "Dürüst olayım" cümlesinde ekrana değil salona bak.\n'
                 'NEXT  "Buraya kadar cevap hep geldi. Ya hiç gelmezse?"',

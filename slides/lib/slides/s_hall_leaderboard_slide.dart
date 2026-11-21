@@ -12,9 +12,9 @@ class HallLeaderboardSlide extends FlutterDeckSlideWidget {
       : super(
           configuration: const FlutterDeckSlideConfiguration(
             route: '/hall-leaderboard',
-            title: '4. Skor tablosu: kim önde?',
+            title: '7. Skor tablosu: kim önde?',
             steps: _stepCount,
-            speakerNotes: 'BEAT  [06:00 - 06:30] Canlı skor tablosu. Bir tık ileri: süre doldu, tablo donar.\n'
+            speakerNotes: 'BEAT  [07:00 - 07:30] Canlı skor tablosu. Bir tık ileri: süre doldu, tablo donar.\n'
                 'SAY   "Bakalım kim önde. Puanı Gemini değil kod veriyor, o yüzden tablo adil. Süre doldu: tablo dondu. İlk üçü kapanışta kullanıcı adıyla sahneye çağıracağım: birinciye Dash, ikinciye Google Cloud gözlük, üçüncüye sticker seti. Telefonları kilitleyip cebinize koyun. Rozetiniz aklınızda kalsın; birazdan soracağım."\n'
                 'HOLD  Slayt açıldığında tablo canlıdır. "Süre doldu" derken ileri tuşuna bir kez bas: başlık "SÜRE DOLDU" olur ve tablo donar. Geri tuşu tabloyu yeniden canlıya alır. Tablo boşsa ya da "BAĞLANTI BEKLENİYOR" yazıyorsa bekleme: "Tabloyu kapanışta göstereceğim" de ve geç. Uygunsuz bir isim *** olarak görünür; sahneye çağırmadan önce adı kendin oku.\n'
                 'NEXT  "Peki bu oyun nasıl yazıldı?"',
