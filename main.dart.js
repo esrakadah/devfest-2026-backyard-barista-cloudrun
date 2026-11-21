@@ -1013,7 +1013,7 @@ a.l()
 return l},
 l9(a){return new A.Ni(a)},
 aYK(a){var s,r,q,p,o,n,m
-A:for(s=a.length,r=0;r<6;++r){q=B.NH[r]
+A:for(s=a.length,r=0;r<6;++r){q=B.NI[r]
 p=q.c
 o=p.length
 if(s<o)continue A
@@ -8191,7 +8191,7 @@ s=r.j(0,c)
 return typeof s=="string"?s:null},
 aK1(a){var s,r,q,p,o
 for(s=B.c.rQ(a.toLowerCase(),$.aMN()),r=s.length,q=0;q<r;++q){p=s[q]
-for(o=0;o<7;++o)if(B.c.bh(p,B.PN[o]))return"***"}return B.c.lK(a)},
+for(o=0;o<7;++o)if(B.c.bh(p,B.PM[o]))return"***"}return B.c.lK(a)},
 l4:function l4(a,b,c,d){var _=this
 _.a=a
 _.b=b
@@ -8417,7 +8417,7 @@ Se:function Se(a,b){this.c=a
 this.a=b},
 amE:function amE(){},
 amD:function amD(){},
-aKp(a){var s=B.b.Iq(B.pH,new A.ayR(a))
+aKp(a){var s=B.b.Iq(B.pC,new A.ayR(a))
 return s<0?null:s+1},
 ayR:function ayR(a){this.a=a},
 L8:function L8(a){this.a=a},
@@ -11863,8 +11863,8 @@ break
 case 4:s=l.a
 s===$&&A.a()
 s=A.bz(s,200)
-r=A.bz(A.a4Y(l,B.pE,B.Oc),24)
-q=A.bz(A.a4Y(l,B.pE,B.Ph),32)
+r=A.bz(A.a4Y(l,B.pF,B.Oe),24)
+q=A.bz(A.a4Y(l,B.pF,B.Pi),32)
 p=A.bz(l.a,10)
 o=A.bz(l.a,12)
 l.d===$&&A.a()
@@ -11874,8 +11874,8 @@ break
 case 5:s=l.a
 s===$&&A.a()
 s=A.bz(A.Bi(s+240),40)
-r=A.bz(A.a4Y(l,B.pG,B.Q4),24)
-q=A.bz(A.a4Y(l,B.pG,B.Q5),32)
+r=A.bz(A.a4Y(l,B.pH,B.Q6),24)
+q=A.bz(A.a4Y(l,B.pH,B.Q7),32)
 p=A.bz(l.a+15,8)
 o=A.bz(l.a+15,12)
 l.d===$&&A.a()
@@ -12405,7 +12405,7 @@ aEo(a,b,c){if(b!=null&&!b.i(0,B.M))return A.aDP(b.c_(A.aPA(c)),a)
 return a},
 aPA(a){var s,r,q,p,o,n
 if(a<0)return 0
-for(s=0;r=B.pF[s],q=r.a,a>=q;){if(a===q||s+1===6)return r.b;++s}p=B.pF[s-1]
+for(s=0;r=B.pG[s],q=r.a,a>=q;){if(a===q||s+1===6)return r.b;++s}p=B.pG[s-1]
 o=p.a
 n=p.b
 return n+(a-o)/(q-o)*(r.b-n)},
@@ -20046,7 +20046,7 @@ r.toString
 A.eV(r)
 q=a.j(0,"swipeEdge")
 q.toString
-return new A.nz(s,r,B.OP[A.dK(q)])},
+return new A.nz(s,r,B.OR[A.dK(q)])},
 DJ:function DJ(a,b){this.a=a
 this.b=b},
 nz:function nz(a,b,c){this.a=a
@@ -22352,7 +22352,7 @@ if(a.as!==q)return q?-1:1
 return 0},
 aPy(a,b){var s=A.W(b).h("a4<1,dH>")
 s=A.Z(new A.a4(b,new A.a5P(),s),s.h("ap.E"))
-return A.aOS(!0,s,a,B.Ps,!0,B.Hl,null)},
+return A.aOS(!0,s,a,B.Pt,!0,B.Hl,null)},
 azG(a){var s
 try{a.dC()}catch(s){a.Ov()}a.w=B.a5u
 try{a.bd(A.aZ1())}catch(s){}},
@@ -22910,7 +22910,7 @@ _.as=!0
 _.at=!1
 _.$ti=d},
 a9O(a,b){var s
-if(a.i(0,b))return new A.Kk(B.PB)
+if(a.i(0,b))return new A.Kk(B.PC)
 s=A.b([],t.fJ)
 A.c3()
 a.n5(new A.a9P(b,A.ax(t.u),s))
@@ -23298,7 +23298,7 @@ t.Dn.a(a)
 s=J.bj(a)
 r=s.j(a,0)
 r.toString
-switch(B.NR[A.dK(r)].a){case 0:s=s.hJ(a,1)
+switch(B.NS[A.dK(r)].a){case 0:s=s.hJ(a,1)
 r=s[0]
 r.toString
 A.dK(r)
@@ -26946,7 +26946,7 @@ B.b.M(r,A.b(b.split("/"),s))
 return"/"+new A.aH(r,new A.axZ(),A.W(r).h("aH<1>")).bb(0,"/")},
 axj:function axj(){},
 axZ:function axZ(){},
-MM(a,b,c,d){var s=A.b([],t.s),r=new A.Ax(c,b,a,s,d,B.Pv,null,null)
+MM(a,b,c,d){var s=A.b([],t.s),r=new A.Ax(c,b,a,s,d,B.Pw,null,null)
 r.Q=A.aKf(c,s,!0)
 return r},
 vn:function vn(){},
@@ -28215,7 +28215,7 @@ a8L(a){var s=a/100
 return(s<=0.0031308?s*12.92:1.055*Math.pow(s,0.4166666666666667)-0.055)*255},
 azV(a){var s=Math.pow(Math.abs(a),0.42)
 return A.qc(a)*400*s/(s+27.13)},
-azW(a){var s=A.ni(a,B.Q2),r=A.azV(s[0]),q=A.azV(s[1]),p=A.azV(s[2])
+azW(a){var s=A.ni(a,B.Q4),r=A.azV(s[0]),q=A.azV(s[1]),p=A.azV(s[2])
 return Math.atan2((r+q-2*p)/9,(11*r+-12*q+p)/11)},
 aQk(a,b){var s,r,q,p,o,n=B.f.bC(b,4)<=1?0:100,m=(b&1)===0?0:100
 if(b<4){s=(a-n*0.7152-m*0.0722)/0.2126
@@ -28274,7 +28274,7 @@ j=23*(k+0.305)*l/(a1+11*l*a3+108*l*a2)
 i=j*a3
 h=j*a2
 g=460*k
-f=A.ni(A.b([A.azX((g+451*i+288*h)/1403),A.azX((g-891*i-261*h)/1403),A.azX((g-220*i-6300*h)/1403)],p),B.Nd)
+f=A.ni(A.b([A.azX((g+451*i+288*h)/1403),A.azX((g-891*i-261*h)/1403),A.azX((g-220*i-6300*h)/1403)],p),B.Ne)
 g=f[0]
 if(g<0||f[1]<0||f[2]<0)return 0
 e=f[1]
@@ -28656,7 +28656,7 @@ $1(a){this.a.b=A.aKj(a.getOutputBounds(A.cZ(this.b)))},
 $S:2}
 A.tz.prototype={
 gaf5(){var s,r,q=new Float32Array(20)
-for(s=this.a,r=0;r<20;++r)if(B.b.C(B.NF,r))q[r]=s[r]/255
+for(s=this.a,r=0;r<20;++r)if(B.b.C(B.NG,r))q[r]=s[r]/255
 else q[r]=s[r]
 return q},
 tu(){return $.aK.aR().ColorFilter.MakeMatrix(this.gaf5())},
@@ -29537,7 +29537,7 @@ vM(){var s=this.Q
 s===$&&A.a()
 return s},
 vN(a,b,c,d){var s,r,q,p
-if(a<0||b<0)return B.PD
+if(a<0||b<0)return B.PE
 s=this.a
 s===$&&A.a()
 s=s.a
@@ -29556,7 +29556,7 @@ l.push(new A.e9(n[0],n[1],n[2],n[3],B.lm[m]))}return l},
 cI(a){var s,r,q=this.a
 q===$&&A.a()
 s=q.a.getGlyphPositionAtCoordinate(a.a,a.b)
-r=B.OS[J.ad(s.affinity.value)]
+r=B.OT[J.ad(s.affinity.value)]
 return new A.ae(J.ad(s.pos),r)},
 Kn(a){var s=this.a
 s===$&&A.a()
@@ -29800,7 +29800,7 @@ i(a,b){if(b==null)return!1
 if(!(b instanceof A.zF))return!1
 return b.d===this.d&&b.b==this.b&&A.fS(b.c,this.c)},
 gt(a){var s=this,r=s.c
-return A.K(s.d,s.a,s.b,A.bu(r==null?B.Pw:r),B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a)},
+return A.K(s.d,s.a,s.b,A.bu(r==null?B.Px:r),B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a)},
 $ihG:1}
 A.yx.prototype={
 UJ(a,b){var s=this.NY(a),r=A.b_(new A.a2Q(this,b,s))
@@ -31911,7 +31911,7 @@ if(e.b){q=t.f
 d=q.a(q.a(B.cn.fo(a2)).j(0,"data"))
 c=A.cY(d.j(0,"message"))
 if(c!=null&&c.length!==0){b=A.aA9(d,"assertiveness")
-e.a.UW(c,B.O8[b==null?0:b])}}a.eM(a3,B.cn.bX(!0))
+e.a.UW(c,B.Oa[b==null?0:b])}}a.eM(a3,B.cn.bX(!0))
 return
 case"flutter/navigation":q=a.gcA().b
 p=t.e8
@@ -34873,7 +34873,7 @@ a9J(){var s=this,r=s.r
 if(r==null){r=s.r=new A.JB(s.c)
 r.d=new A.a6l(s)}return r},
 JD(a){var s,r,q,p,o,n,m=this
-if(B.b.C(B.Qe,a.type)){s=m.a9J()
+if(B.b.C(B.Qf,a.type)){s=m.a9J()
 s.toString
 r=m.c.$0()
 q=r.b
@@ -36474,7 +36474,7 @@ o=A.dK(s.j(0,"textAlignIndex"))
 n=A.dK(s.j(0,"textDirectionIndex"))
 m=A.ho(s.j(0,"fontWeightIndex"))
 l=m!=null?A.aC0(m):"normal"
-p=new A.ale(new A.a5L(A.aa6(s,"fontSize"),l,A.cY(s.j(0,"fontFamily")),B.O6[o],B.lm[n],A.aa6(s,"letterSpacing"),A.aa6(s,"wordSpacing"),A.aa6(s,"lineHeight")))
+p=new A.ale(new A.a5L(A.aa6(s,"fontSize"),l,A.cY(s.j(0,"fontFamily")),B.O8[o],B.lm[n],A.aa6(s,"letterSpacing"),A.aa6(s,"wordSpacing"),A.aa6(s,"lineHeight")))
 break
 case"TextInput.clearClient":p=B.DJ
 break
@@ -42112,7 +42112,7 @@ if(o>0)return s
 return null}}
 A.ank.prototype={
 F(a,b){this.NV(b,0,b.length,!1)},
-b4(){this.NV(B.Pq,0,0,!0)}}
+b4(){this.NV(B.Pr,0,0,!0)}}
 A.awB.prototype={
 NV(a,b,c,d){var s=this.b.aow(a,b,c,d)
 if(s!=null)this.a.mg(s,0,s.length,d)}}
@@ -44464,7 +44464,7 @@ $S:5}
 A.aqw.prototype={
 $2(a,b){var s=this.a,r=s.a.c?"S\xdcRE DOLDU \xb7 SON DURUM":"CANLI \xb7 \u0130LK 10",q=s.aj6(),p=s.a.c?B.y:B.z
 s=s.gjt()
-return A.bv(A.b([A.bG(new A.jG(r,p,new A.MW(s.d,s.f,null),q,null),7),B.aX,B.Iy],t.p),B.Q,B.j,B.l,null)},
+return A.bv(A.b([A.bG(new A.jG(r,p,new A.MW(s.d,s.f,null),q,null),7),B.aX,B.Iz],t.p),B.Q,B.j,B.l,null)},
 $S:123}
 A.MW.prototype={
 A(a){var s,r,q,p,o,n,m,l,k,j,i,h=null,g=this.c
@@ -44537,7 +44537,7 @@ A.ayw.prototype={
 $1(a){return new A.kM("Sayfay\u0131 yenile ya da --dart-define=OFFLINE_MODE=true ile \xe7al\u0131\u015ft\u0131r.\n"+a.WJ(),!0,null)},
 $S:478}
 A.JY.prototype={
-A(a){return new A.zV($.aMO(),new A.A0(B.JE,B.ae,B.JH,B.ac,B.a8,B.JL,!0,B.Kd,B.ad,B.Ki),B.pH,B.Di,A.aG5(),A.aG5(),B.j9,A.b([new A.P5()],t.w1),null)}}
+A(a){return new A.zV($.aMO(),new A.A0(B.JE,B.ae,B.JH,B.ac,B.a8,B.JL,!0,B.Kd,B.ad,B.Ki),B.pC,B.Di,A.aG5(),A.aG5(),B.j9,A.b([new A.P5()],t.w1),null)}}
 A.er.prototype={}
 A.P5.prototype={
 alY(a,b){return A.b([b.$4$icon$label$onPressed(a,B.LG,"Stage Navigator ve k\u0131sayollar",new A.afp(a))],t.p)}}
@@ -44566,7 +44566,7 @@ this.a.c.b.BS(r)},
 A(a){var s,r,q,p=null,o="GoogleSansFlex",n=A.bC(20),m=$.ayZ(),l=B.f.dg(A.e3(m.gWB(),0).a,1e6),k=t.p
 m=A.bv(A.b([B.LN,B.bt,B.a3c,B.dw,new A.ZN(B.c.kE(B.f.k(B.f.dg(l,60)),2,"0")+":"+B.c.kE(B.f.k(B.f.bC(l,60)),2,"0"),m.b==null,this.gajz(),new A.ati(this),16,p),A.ij(p,p,B.LV,p,p,new A.atj(a),p,p,p)],k),B.o,B.j,B.l,p)
 s=A.b([A.an("KONU\u015eMA B\xd6L\xdcMLER\u0130",p,p,p,p,p,p,p,A.ch(p,p,B.fb,p,p,p,p,p,o,p,p,12,p,p,B.w,p,p,!0,p,1.5,p,p,p,p,p,p),p,p,p),B.ew],k)
-for(r=0;r<16;++r){q=B.O3[r]
+for(r=0;r<16;++r){q=B.O5[r]
 s.push(new A.Yv(q,new A.atk(this,q),p))}return new A.Lq(B.bz,new A.cW(n,B.CF),A.bk(p,A.by(A.b([m,B.fW,B.Hq,B.fW,A.bv(A.b([A.bG(A.by(s,B.X,B.j,B.l),1),B.fT,A.bG(A.by(A.b([A.an("KLAVYE KISAYOLLARI",p,p,p,p,p,p,p,A.ch(p,p,B.nS,p,p,p,p,p,o,p,p,12,p,p,B.w,p,p,!0,p,1.5,p,p,p,p,p,p),p,p,p),B.ew,B.a7r],k),B.X,B.j,B.l),1)],k),B.X,B.j,B.l,p)],k),B.X,B.j,B.a1),B.n,p,p,p,p,p,p,B.I9,780),p)}}
 A.atm.prototype={
 $1(a){var s=this.a
@@ -44600,14 +44600,14 @@ r=A.aKp(r.c)
 return new A.bI(B.om,A.jW(!1,B.ah,!0,o,A.aA3(!1,n,!0,new A.bI(B.oo,A.bv(A.b([m,B.fS,l,A.bk(s,A.an("Slayt "+A.k(r==null?"?":r),s,s,s,s,s,s,s,B.a_1,s,s,s),B.n,s,s,new A.b9(B.bz,s,s,k,s,s,B.A),s,s,s,B.ow,s)],t.p),B.o,B.j,B.l,s),s),s,!0,s,s,s,s,s,s,s,s,this.d,s,s,s,s),B.n,B.bG,0,s,s,s,s,s,B.cu),s)}}
 A.YP.prototype={
 A(a){var s=null,r=A.bC(12)
-return A.bk(s,B.Gn,B.n,s,s,new A.b9(B.bG,s,A.cs(B.ca,1),r,s,s,B.A),s,s,s,B.op,s)}}
+return A.bk(s,B.Go,B.n,s,s,new A.b9(B.bG,s,A.cs(B.ca,1),r,s,s,B.A),s,s,s,B.op,s)}}
 A.xd.prototype={
 A(a){var s=null,r=A.bC(6),q=A.cs(B.ca,1)
 return new A.bI(B.om,A.bv(A.b([A.bk(s,A.an(this.c,s,s,s,s,s,s,s,B.Zc,s,s,s),B.n,s,s,new A.b9(B.bz,s,q,r,s,s,B.A),s,s,s,B.ow,s),B.fS,A.bG(A.an(this.d,s,s,s,s,s,s,s,B.a0M,s,s,s),1)],t.p),B.o,B.j,B.l,s),s)}}
 A.Jv.prototype={
 A(a){return A.dg(new A.a1j())}}
 A.a1j.prototype={
-$1(a){return B.XT},
+$1(a){return B.XQ},
 $S:9}
 A.Gw.prototype={
 A(a){var s=null,r=A.bC(22),q=A.cs(B.bo,3)
@@ -44634,7 +44634,7 @@ $S:592}
 A.KW.prototype={
 A(a){return A.dg(new A.a3C())}}
 A.a3C.prototype={
-$1(a){return B.XQ},
+$1(a){return B.XK},
 $S:9}
 A.rE.prototype={
 A(a){var s=this,r=null,q=s.r,p=t.p
@@ -44647,17 +44647,17 @@ $S:244}
 A.LM.prototype={
 A(a){return A.dg(new A.a5X())}}
 A.a5X.prototype={
-$1(a){return B.XK},
+$1(a){return B.XT},
 $S:9}
 A.LS.prototype={
 A(a){return A.dg(new A.a6o())}}
 A.a6o.prototype={
-$1(a){return B.XR},
+$1(a){return B.XO},
 $S:9}
 A.LY.prototype={
 A(a){return A.dg(new A.a6v())}}
 A.a6v.prototype={
-$1(a){return B.XS},
+$1(a){return B.XP},
 $S:9}
 A.M3.prototype={
 A(a){return A.dg(new A.a6B())}}
@@ -44670,17 +44670,17 @@ return A.bk(s,A.by(A.b([A.an(this.c,s,s,s,s,s,s,s,B.Bi,s,s,s),A.an(this.d,s,s,s,
 A.My.prototype={
 A(a){return A.dg(new A.a7I())}}
 A.a7I.prototype={
-$1(a){return B.XV},
+$1(a){return B.XL},
 $S:9}
 A.MR.prototype={
 A(a){return A.dg(new A.a8u())}}
 A.a8u.prototype={
-$1(a){return B.XO},
+$1(a){return B.XV},
 $S:9}
 A.MT.prototype={
 A(a){return A.dg(new A.a8v())}}
 A.a8v.prototype={
-$1(a){return B.XJ},
+$1(a){return B.XN},
 $S:9}
 A.MX.prototype={
 A(a){return A.dg(new A.a8z())}}
@@ -44693,25 +44693,25 @@ $S:245}
 A.MY.prototype={
 A(a){return A.dg(new A.a8A())}}
 A.a8A.prototype={
-$1(a){return B.XL},
+$1(a){return B.XS},
 $S:9}
 A.MZ.prototype={
 A(a){return A.dg(new A.a8B())}}
 A.a8B.prototype={
-$1(a){return B.XU},
+$1(a){return B.XR},
 $S:9}
 A.N6.prototype={
 A(a){return A.dg(new A.a9c())}}
 A.a9c.prototype={
 $1(a){var s=null,r=A.bC(18)
-return A.Ds(B.fb,B.ey,A.by(A.b([B.IU,B.bk,A.bk(s,B.a3f,B.n,s,s,new A.b9(B.b8,s,A.cs(B.y.bL(0.7),2),r,s,s,B.A),s,s,s,B.ov,s)],t.p),B.Q,B.j,B.l),"BU OYUN NASIL YAZILDI","D\xf6rt ara\xe7, \xe7al\u0131\u015fan bir oyun")},
+return A.Ds(B.fb,B.ey,A.by(A.b([B.IC,B.bk,A.bk(s,B.a3d,B.n,s,s,new A.b9(B.b8,s,A.cs(B.y.bL(0.7),2),r,s,s,B.A),s,s,s,B.ov,s)],t.p),B.Q,B.j,B.l),"BU OYUN NASIL YAZILDI","D\xf6rt ara\xe7, \xe7al\u0131\u015fan bir oyun")},
 $S:9}
 A.N7.prototype={
 A(a){return A.dg(new A.a9d())}}
 A.a9d.prototype={
 $1(a){var s,r,q=null,p=t.p,o=A.b([],p)
 for(s=0;s<5;++s)o.push(B.LQ)
-o=A.bG(A.bv(A.b([B.Ja,B.BZ,B.Jn,B.BZ,A.bG(new A.xg("ADIM 3","J\xfcri kart\u0131 gelir","Y\u0131ld\u0131z, yorum ve j\xfcri rozeti.",B.z,A.by(A.b([A.bv(o,B.o,B.j,B.a1,q),B.bk,B.a36],p),B.o,B.j,B.a1),q),1)],p),B.Q,B.j,B.l,q),1)
+o=A.bG(A.bv(A.b([B.J9,B.BZ,B.Jn,B.BZ,A.bG(new A.xg("ADIM 3","J\xfcri kart\u0131 gelir","Y\u0131ld\u0131z, yorum ve j\xfcri rozeti.",B.z,A.by(A.b([A.bv(o,B.o,B.j,B.a1,q),B.bk,B.a36],p),B.o,B.j,B.a1),q),1)],p),B.Q,B.j,B.l,q),1)
 r=A.bC(18)
 return A.Ds(B.z,B.ey,A.by(A.b([o,B.fW,A.bk(q,B.a33,B.n,q,q,new A.b9(B.b8,q,A.cs(B.y.bL(0.7),2),r,q,q,B.A),q,q,q,B.Ia,q)],p),B.Q,B.j,B.l),"OYUN NASIL OYNANIR","\xdc\xe7 ad\u0131mda bir tepsi")},
 $S:9}
@@ -44720,7 +44720,7 @@ A(a){var s=this,r=null,q=s.f
 return A.mK(r,r,q.bL(0.45),A.by(A.b([A.a3Y(q,r,s.c),A.bG(A.fc(s.r,r,r),1),A.an(s.d,r,r,r,r,r,r,r,B.a0A,r,r,r),B.cz,A.an(s.e,r,r,r,r,r,r,r,B.B6,r,r,r)],t.p),B.X,B.j,B.l),B.ou)}}
 A.a_d.prototype={
 A(a){var s,r,q,p,o,n,m=t.p,l=A.b([],m)
-for(s=A.a9N(B.Ne,0,t.N),r=J.be(s.a),s=s.b,q=new A.us(r,s);q.n();){p=q.c
+for(s=A.a9N(B.Nf,0,t.N),r=J.be(s.a),s=s.b,q=new A.us(r,s);q.n();){p=q.c
 p=p>=0?new A.a8(s+p,r.gK()):A.Y(A.c6())
 o=A.b([],m)
 if(p.a>0)o.push(B.mt)
@@ -44732,12 +44732,12 @@ A(a){return B.Tl}}
 A.NC.prototype={
 A(a){return A.dg(new A.aab())}}
 A.aab.prototype={
-$1(a){return B.XM},
+$1(a){return B.XH},
 $S:9}
 A.NR.prototype={
 A(a){return A.dg(new A.aaH())}}
 A.aaH.prototype={
-$1(a){return B.XP},
+$1(a){return B.XM},
 $S:9}
 A.OC.prototype={
 A(a){return A.dg(new A.aet())}}
@@ -44750,12 +44750,12 @@ $S:281}
 A.Qr.prototype={
 A(a){return A.dg(new A.aic())}}
 A.aic.prototype={
-$1(a){return B.XN},
+$1(a){return B.XJ},
 $S:9}
 A.Rh.prototype={
 A(a){return A.dg(new A.akB())}}
 A.akB.prototype={
-$1(a){return B.XI},
+$1(a){return B.XG},
 $S:9}
 A.GC.prototype={
 A(a){var s=null
@@ -44795,7 +44795,7 @@ A.RH.prototype={
 A(a){return A.dg(new A.alJ())}}
 A.alJ.prototype={
 $1(a){var s=null,r=A.bC(18)
-return A.Ds(B.y,B.j0,A.by(A.b([B.Iz,B.fW,A.bk(s,B.a2W,B.n,s,s,new A.b9(B.b8,s,A.cs(B.y.bL(0.7),2),r,s,s,B.A),s,s,s,B.ov,s)],t.p),B.Q,B.j,B.l),"BUG\xdcN NE YAPACA\u011eIZ","30 dakika, \xfc\xe7 par\xe7a")},
+return A.Ds(B.y,B.j0,A.by(A.b([B.IB,B.fW,A.bk(s,B.a2W,B.n,s,s,new A.b9(B.b8,s,A.cs(B.y.bL(0.7),2),r,s,s,B.A),s,s,s,B.ov,s)],t.p),B.Q,B.j,B.l),"BUG\xdcN NE YAPACA\u011eIZ","30 dakika, \xfc\xe7 par\xe7a")},
 $S:9}
 A.x2.prototype={
 A(a){var s,r,q=this,p=null,o=q.r,n=o.bL(0.45),m=t.p
@@ -44805,12 +44805,12 @@ return A.mK(p,p,n,A.by(o,B.X,B.j,B.l),B.ou)}}
 A.RM.prototype={
 A(a){return A.dg(new A.alW())}}
 A.alW.prototype={
-$1(a){return B.XG},
+$1(a){return B.XI},
 $S:9}
 A.Sb.prototype={
 A(a){return A.dg(new A.amz())}}
 A.amz.prototype={
-$1(a){return B.XH},
+$1(a){return B.XU},
 $S:9}
 A.Se.prototype={
 A(a){return A.dg(new A.amE())}}
@@ -44840,7 +44840,7 @@ A.NE.prototype={
 A(a){return A.ik("assets/konya/ornament.webp",!0,B.b0,null,54,null,null)}}
 A.N5.prototype={
 A(a){var s,r,q=null,p=t.p,o=A.b([],p)
-for(s=0;s<4;++s){r=A.bk(q,q,B.n,B.PQ[s],q,q,14,q,q,q,14)
+for(s=0;s<4;++s){r=A.bk(q,q,B.n,B.PP[s],q,q,14,q,q,q,14)
 B.b.M(o,A.b([new A.jh(A.aB1(0.7853981633974483),B.U,!0,q,r,q),B.fS],p))}o.push(B.fS)
 o.push(A.bG(A.bk(q,q,B.n,B.bo,q,q,2,q,q,q,q),1))
 return A.hf(A.bv(o,B.o,B.j,B.l,q),q,560)}}
@@ -44872,7 +44872,7 @@ r=A.cs(o.f,1.5)
 q=o.x
 p=o.c
 q=q==null?p:A.by(A.b([A.bk(n,n,B.n,n,n,new A.b9(q,n,n,A.bC(999),n,n,B.A),4,n,B.HO,n,48),new A.kW(1,B.fm,p,n)],t.p),B.X,B.j,B.a1)
-return A.bk(n,q,B.n,n,n,new A.b9(m,n,r,s,B.Of,n,B.A),n,n,n,o.d,n)}}
+return A.bk(n,q,B.n,n,n,new A.b9(m,n,r,s,B.Oh,n,B.A),n,n,n,o.d,n)}}
 A.OT.prototype={
 A(a){var s=null,r=A.bC(999),q=A.cs(B.y.bL(0.34),1),p=t.p,o=A.b([],p)
 B.b.M(o,A.b([A.dz(B.KF,B.y,s,15),B.fU],p))
@@ -44972,8 +44972,8 @@ return A.bk(B.U,new A.PY(3,A.an(this.c,s,s,s,s,s,s,s,A.ch(s,s,q,s,s,s,s,s,"Googl
 A.MS.prototype={
 A(a){return A.by(A.b([A.bG(this.Qk(!1),1),B.bk,A.bG(this.Qk(!0),1)],t.p),B.o,B.j,B.l)},
 Qk(a){var s,r,q,p,o=null,n=a?B.z:B.a6,m=a?"SONRA":"\xd6NCE",l=t.p
-m=A.b([new A.wK(m,n,o),B.aX,B.Jj,B.k1,B.J6],l)
-if(a)B.b.M(m,A.b([B.k1,B.Jk,B.Eb],l))
+m=A.b([new A.wK(m,n,o),B.aX,B.Ji,B.k1,B.J6],l)
+if(a)B.b.M(m,A.b([B.k1,B.Jj,B.Eb],l))
 else m.push(B.Eg)
 s=a?"Ekranda 1 y\u0131ld\u0131z":"Ekranda 5 y\u0131ld\u0131z"
 r=a?"Haz\u0131r yan\u0131t devrede":"Tuzlu tepsi \xf6d\xfcl ald\u0131"
@@ -44984,7 +44984,7 @@ return A.bv(m,B.Q,B.j,B.l,o)}}
 A.oz.prototype={}
 A.KJ.prototype={
 A(a){var s,r,q,p,o,n,m,l,k,j,i,h=null,g="GoogleSansFlex",f=t.p,e=A.b([B.Vq,B.cz],f)
-for(s=0;s<5;++s){r=B.pD[s]
+for(s=0;s<5;++s){r=B.pE[s]
 q=r.b
 p=q?B.z:B.a6
 o=p.bL(0.12)
@@ -45003,7 +45003,7 @@ j=q?B.i2:B.le
 q=q?"ge\xe7ti":"reddedildi"
 j=A.dz(j,B.z,h,26)
 q=A.b([new A.aN(1,B.r,A.bk(h,A.bv(A.b([new A.aN(1,B.r,new A.zO(B.c6,B.ck,l,h),h),new A.bP(232,h,k,h),new A.bP(232,h,A.bv(A.b([j,B.dv,new A.bL(q,h,new A.j(!0,B.z,h,g,h,h,23,B.w,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h),h,h,h,h,h,h,h,h,h,h)],f),B.o,B.j,B.l,h),h)],f),B.o,B.j,B.l,h),B.n,h,h,new A.b9(o,h,new A.df(m,m,m,m),new A.ck(n,n,n,n),h,h,B.A),h,h,h,B.dg,h),h)],f)
-if(r!==B.b.ga5(B.pD))q.push(B.cz)
+if(r!==B.b.ga5(B.pE))q.push(B.cz)
 B.b.M(e,q)}return A.bv(A.b([B.Jq,B.aX,A.bG(new A.jG("MODELDEN GELEN KARAR",B.y,A.by(e,B.Q,B.j,B.l),"\xd6NCE: KODDA 21 YERDE ELLE YAZILI MET\u0130N",h),7)],f),B.Q,B.j,B.l,h)}}
 A.EY.prototype={
 A(a){var s=null
@@ -45030,9 +45030,9 @@ case 2:s=B.z
 break
 default:s=null}return s},
 A(a){var s,r,q,p,o,n,m,l,k=this,j=null,i=k.c,h=i===B.w4,g=k.gaeg(),f=k.gaef(),e=t.p,d=A.b([],e)
-for(s=0;s<5;++s){r=B.pC[s]
+for(s=0;s<5;++s){r=B.pD[s]
 q=A.b([new A.aN(1,B.r,k.a7h(r),j)],e)
-if(r!==B.b.ga5(B.pC))q.push(B.cz)
+if(r!==B.b.ga5(B.pD))q.push(B.cz)
 B.b.M(d,q)}g=A.bG(new A.jG("\xd6NCE \xb7 \xdc\xc7 AYRI DE\u011e\u0130\u015eKEN",f,A.by(d,B.Q,B.j,B.l),g,j),7)
 f=h?"3 HAL":"B\u0130RAZDAN"
 d=h?B.z:B.aV
@@ -45073,9 +45073,9 @@ A.LZ.prototype={
 A(a){var s,r,q,p=t.p,o=A.b([],p)
 for(s=0;s<3;++s){r=B.pO[s]
 q=A.b([new A.aN(1,B.r,this.agR(r),null)],p)
-if(r!==B.b.ga5(B.pO))q.push(B.Vk)
+if(r!==B.b.ga5(B.pO))q.push(B.Vl)
 B.b.M(o,q)}o.push(this.a67())
-return new A.jG("\xdc\xc7 PLAN \xb7 AYNI ZAMAN EKSEN\u0130",B.y,A.by(o,B.Q,B.j,B.l),"\xc7ER\xc7EVE: SINIR \xb7 DOLU: \xd6L\xc7\xdcM (12 TEPS\u0130, 11 KAS 2026)",null)},
+return new A.jG("\xdc\xc7 PLAN \xb7 AYNI ZAMAN EKSEN\u0130",B.y,A.by(o,B.Q,B.j,B.l),"\xc7ER\xc7EVE: SINIR \xb7 DOLU: \xd6L\xc7\xdcM (12 TEPS\u0130)",null)},
 agR(a){var s=null,r=t.p
 return A.bv(A.b([A.hf(A.bv(A.b([A.an(a.a,s,s,s,s,s,s,s,A.ch(s,s,a.d,s,s,s,s,s,"GoogleSansFlex",s,s,46,s,s,B.w,s,s,!0,s,s,s,s,s,s,s,s),s,s,s),B.du,A.bG(A.by(A.b([A.an(a.b,s,s,s,s,s,s,s,B.j8,s,s,s),A.an(a.c,s,s,s,s,s,s,s,B.Be,s,s,s)],r),B.X,B.cg,B.l),1)],r),B.o,B.j,B.l,s),s,400),A.bG(A.NN(new A.a6x(a)),1)],r),B.o,B.j,B.l,s)},
 a67(){return new A.bI(B.Ic,A.NN(new A.a6w()),null)}}
@@ -45095,11 +45095,11 @@ return A.fm(B.ck,q,B.J,B.bu)},
 $S:345}
 A.a6w.prototype={
 $2(a,b){var s,r,q=null,p=b.b/22,o=A.b([A.lz(q,A.bk(q,q,B.n,B.cJ,q,q,2,q,q,q,q),q,q,0,0,0,q)],t.p)
-for(s=0;s<6;++s){r=B.Oj[s]
+for(s=0;s<6;++s){r=B.Ol[s]
 o.push(new A.k3(r*p,4,q,q,q,q,new A.bL(""+r+" sn",q,B.Ba,q,q,q,q,q,q,q,q,q,q),q))}return A.hf(A.fm(B.bx,o,B.J,B.bu),34,q)},
 $S:124}
 A.NB.prototype={
-A(a){return B.Gs}}
+A(a){return B.Gt}}
 A.wJ.prototype={
 A(a){var s=A.b([new A.wE(this.c,this.d,null)],t.p)
 if(this.e)s.push(B.Ua)
@@ -45120,7 +45120,7 @@ A.nS.prototype={
 I(){return"StoryAct."+this.b}}
 A.R9.prototype={
 A(a){var s,r,q,p,o=t.p,n=A.b([],o)
-for(s=this.c,r=0;r<5;++r){q=B.Ok[r]
+for(s=this.c,r=0;r<5;++r){q=B.Om[r]
 p=A.b([],o)
 if(q.a>0)p.push(B.dv)
 p.push(new A.SI(q,s,null))
@@ -46396,7 +46396,7 @@ r=A.qt(B.SG,B.h,r==null?1:r)
 r.toString
 q=p.aA(q.gB())
 if(q==null)q=1
-return A.aHk(A.aGe(null,B.n,new A.uH(q,B.OL,new A.cW(B.Cv,this.e)),s,1,B.Xw),r)}}
+return A.aHk(A.aGe(null,B.n,new A.uH(q,B.OM,new A.cW(B.Cv,this.e)),s,1,B.Xw),r)}}
 A.IE.prototype={
 l(){var s=this,r=s.bO$
 if(r!=null)r.J(s.ghX())
@@ -52830,7 +52830,7 @@ r.f=s.d},
 $S:0}
 A.O0.prototype={
 A(a){var s=this.c.V(0,new A.h(0,40.95))
-return A.aGe(A.mF(null,B.G8,!0),B.J,new A.uH(1,B.PP,new A.cW(B.Cu,B.x)),s,1.25,B.Xx)}}
+return A.aGe(A.mF(null,B.G8,!0),B.J,new A.uH(1,B.PO,new A.cW(B.Cu,B.x)),s,1.25,B.Xx)}}
 A.qb.prototype={
 I(){return"MaterialType."+this.b}}
 A.Bf.prototype={
@@ -58321,7 +58321,7 @@ return new A.mW(r.a.d3(s.gis()),r.b,r.c)},
 cI(a){var s=this.b
 return s.a.c.cI(a.W(0,s.gis()))},
 qe(){var s,r,q=this.b,p=q.gis()
-if(!isFinite(p.a)||!isFinite(p.b))return B.Pt
+if(!isFinite(p.a)||!isFinite(p.b))return B.Pu
 s=q.f
 if(s==null){s=q.a.c.qe()
 q.f=s}if(p.i(0,B.h))r=s
@@ -58524,7 +58524,7 @@ p=e==null?h.gnv():e
 o=h.r
 o=o==null?g:o*a2+a1
 n=h.w
-n=n==null?g:B.Qg[B.f.di(n.gmG(),0,8)]
+n=n==null?g:B.Qh[B.f.di(n.gmG(),0,8)]
 m=h.y
 m=m==null?g:m*a6+a5
 l=h.z
@@ -68017,7 +68017,7 @@ break
 case 1:return A.M(q,r)}})
 return A.N($async$E9,r)},
 a9u(a,b){var s,r,q,p
-if(a===b)return B.PA
+if(a===b)return B.PB
 s=A.b([],t.QP)
 if(a==null)s.push(b)
 else{r=B.b.fA(B.fs,a)
@@ -70402,7 +70402,7 @@ r=n.gadP()
 q=n.a
 q=q.ch
 q.toString
-l.a=A.azN(!0,A.aAm(B.n,r,s,q,A.aCc(),n.gafl(),m,n.gafZ(),B.Pu,!0,!0,"nav",B.a3s),"Navigator Scope",!0,m,m,m,m,m)}else{s=n.a.z
+l.a=A.azN(!0,A.aAm(B.n,r,s,q,A.aCc(),n.gafl(),m,n.gafZ(),B.Pv,!0,!0,"nav",B.a3s),"Navigator Scope",!0,m,m,m,m,m)}else{s=n.a.z
 if(s!=null){r=s.d
 r===$&&A.a()
 q=s.e
@@ -71976,7 +71976,7 @@ q.bk()
 q.cf$.F(0,s.gafa())
 s.e=q}return q},
 gQa(){var s=this.f
-return s===$?this.f=new A.apf(1,B.O5,B.c4):s},
+return s===$?this.f=new A.apf(1,B.O7,B.c4):s},
 gfi(){var s=this.z
 s=s==null?null:$.cd().d===s
 return s===!0},
@@ -72648,7 +72648,7 @@ h.FZ()
 r=h.gaac()
 q=q.uL
 h.e!==$&&A.b0()
-h.e=new A.Qt(s,new A.bR(B.RI,l),new A.q5(),p,B.cC,0,k,h.gacD(),h.gacF(),r,B.cC,0,j,h.gacx(),h.gacz(),r,i,B.Px,f,g.CW,g.cx,g.cy,o,g,n,m,g.x,q,new A.KV(),new A.KV())
+h.e=new A.Qt(s,new A.bR(B.RI,l),new A.q5(),p,B.cC,0,k,h.gacD(),h.gacF(),r,B.cC,0,j,h.gacx(),h.gacz(),r,i,B.Py,f,g.CW,g.cx,g.cy,o,g,n,m,g.x,q,new A.KV(),new A.KV())
 return h},
 wP(a,b){var s,r,q,p=this,o=p.a.c,n=o.a.a.length
 if(n<a.b||n<a.a)return
@@ -76014,7 +76014,7 @@ if(b==null)return!1
 if(J.S(b)!==A.u(s))return!1
 return b instanceof A.aJ&&b.a===s.a&&b.b==s.b&&b.c==s.c&&b.d===s.d&&A.cy(null,null)},
 gt(a){var s=this
-return A.K(s.a,s.b,s.c,s.d,A.bu(B.Pr),B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a)},
+return A.K(s.a,s.b,s.c,s.d,A.bu(B.Ps),B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a,B.a)},
 k(a){return"IconData(U+"+B.c.kE(B.f.n0(this.a,16).toUpperCase(),5,"0")+")"}}
 A.pR.prototype={
 bF(a){return!this.w.i(0,a.w)},
@@ -83436,7 +83436,7 @@ r.y5()
 return s.aQ()},
 l(){var s,r,q,p,o=this
 for(s=o.b,r=s.length,q=o.gEb(),p=0;p<s.length;s.length===r||(0,A.w)(s),++p)s[p].J(q)
-o.b=B.Pz
+o.b=B.PA
 o.y=!1
 o.eC()},
 dP(a,b){return a.ms(b)},
@@ -86638,7 +86638,7 @@ return null},
 $S:41}
 A.aod.prototype={
 $1(a){var s=null,r=A.bC(32)
-return A.bk(s,B.Vj,B.n,s,s,new A.b9(A.a5(a).ax.k2,s,s,r,s,s,B.A),s,s,B.cL,B.Ig,s)},
+return A.bk(s,B.Vk,B.n,s,s,new A.b9(A.a5(a).ax.k2,s,s,r,s,s,B.A),s,s,B.cL,B.Ig,s)},
 $S:550}
 A.Xe.prototype={
 A(a){var s=a.X(t.T).f,r=s.d
@@ -87449,7 +87449,7 @@ s.l()
 this.aB()},
 A(a){return A.aAF(null,new A.cJ(new A.atp(),null),B.oX,!0)}}
 A.atp.prototype={
-$1(a){return new A.mR(new A.ato(A.CV(a)),new A.px(A.by(A.b([B.JK,A.bG(new A.Mj(new A.JQ(A.r(t.o6,t.i)),null),1),B.Hs,B.Jg],t.p),B.o,B.j,B.l),null),null)},
+$1(a){return new A.mR(new A.ato(A.CV(a)),new A.px(A.by(A.b([B.JK,A.bG(new A.Mj(new A.JQ(A.r(t.o6,t.i)),null),1),B.Hs,B.Jf],t.p),B.o,B.j,B.l),null),null)},
 $S:577}
 A.ato.prototype={
 $0(){var s=this.a,r=s.x,q=r.y
@@ -87727,7 +87727,7 @@ q=s.d.VR(s.c,B.w)
 r.push(A.an("@esrakadah",o,o,o,o,o,o,o,q,o,o,o))}else r.push(B.az)
 if(this.c){q=a.X(t.T).f.b.b
 q===$&&A.a()
-p=s.b.anw(s.a,B.Ol)
+p=s.b.anw(s.a,B.On)
 r.push(A.an(""+(q+1),o,o,o,o,o,o,o,p,o,o,o))}return new A.bI(B.cL,A.bv(r,B.dN,B.ih,B.l,o),o)}}
 A.ud.prototype={
 ak(){return new A.FC()}}
@@ -87884,7 +87884,7 @@ qK(){return},
 l(){return}}
 A.Mg.prototype={
 Z_(a){var s=this.a.j(0,a)
-return s==null?B.PC:s},
+return s==null?B.PD:s},
 a12(a,b){J.e0(this.a.bl(a,new A.a6W()),A.b([b],t.yv));++this.c
 this.ao()},
 alf(a,b){var s=this.a.j(0,a)
@@ -88152,7 +88152,7 @@ return r==null?b.a(r):r},
 k(a){return"RouterConfiguration: "+A.k(this.a.a.a)},
 ao3(){var s,r,q,p,o,n=new A.cr("")
 n.a="Full paths for routes:\n"
-this.O7(this.a.a.a,"",B.Py,n)
+this.O7(this.a.a.a,"",B.Pz,n)
 s=this.e
 if(s.a!==0){n.a+="known full paths for route names:\n"
 for(s=new A.dB(s,A.m(s).h("dB<1,2>")).ga_(0);s.n();){r=s.d
@@ -88543,7 +88543,7 @@ A.Yg.prototype={}
 A.ub.prototype={
 A(a){var s=null,r=this.c
 r=r==null?s:"GoException: "+r.a
-return A.ahD(!0,A.fc(A.by(A.b([B.a3e,B.d_,A.an(r==null?"page not found":r,s,s,s,s,s,s,s,s,s,s,s),B.d_,new A.EO(new A.a6p(a),B.a3d,s)],t.p),B.o,B.cg,B.l),s,s),B.ay,!0)}}
+return A.ahD(!0,A.fc(A.by(A.b([B.a3f,B.d_,A.an(r==null?"page not found":r,s,s,s,s,s,s,s,s,s,s,s),B.d_,new A.EO(new A.a6p(a),B.a3e,s)],t.p),B.o,B.cg,B.l),s,s),B.ay,!0)}}
 A.a6p.prototype={
 $0(){return A.aEJ(this.a).BR("/",null)},
 $S:0}
@@ -93853,28 +93853,28 @@ B.R=new A.amh(1,"down")
 B.r=new A.M4(0,"tight")
 B.Ls=new A.aJ(983521,"MaterialIcons",null,!1)
 B.a71=new A.wY(B.Ls,"Bo\u015fta","OrderIdle",null)
-B.IZ=new A.aN(1,B.r,B.a71,null)
+B.J_=new A.aN(1,B.r,B.a71,null)
 B.L5=new A.aJ(62837,"MaterialIcons",null,!1)
 B.pj=new A.cK(B.L5,34,B.z,null,null)
 B.Lh=new A.aJ(63488,"MaterialIcons",null,!1)
 B.a70=new A.wY(B.Lh,"J\xfcride","OrderEvaluating",null)
-B.IN=new A.aN(1,B.r,B.a70,null)
+B.IP=new A.aN(1,B.r,B.a70,null)
 B.Lq=new A.aJ(983308,"MaterialIcons",null,!1)
 B.a7_=new A.wY(B.Lq,"Servis edildi","OrderServed + kart",null)
-B.IS=new A.aN(1,B.r,B.a7_,null)
+B.IT=new A.aN(1,B.r,B.a7_,null)
 B.mv=new A.bP(null,10,null,null)
 B.cN=new A.h0(600)
 B.a__=new A.j(!0,B.E,null,"GoogleSansFlex",null,null,24,B.cN,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.aI=new A.lV(2,"center")
 B.a39=new A.bL("D\xf6rd\xfcnc\xfc hal yok: yazmaya kalkarsan derlenmez.",null,B.a__,null,B.aI,null,null,null,null,null,null,null,null)
-B.Q6=s([B.IZ,B.pj,B.IN,B.pj,B.IS,B.mv,B.a39],t.p)
-B.Gk=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.Q6,null)
+B.Q8=s([B.J_,B.pj,B.IP,B.pj,B.IT,B.mv,B.a39],t.p)
+B.Gk=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.Q8,null)
 B.o=new A.pe(2,"center")
 B.a7u=new A.xd("\u2190 / \u2192","\xd6nceki / sonraki slayt ya da ad\u0131m",null)
 B.a7t=new A.xd(".","Slayt listesi",null)
 B.a7s=new A.xd("M","\u0130\u015faretleyiciyi a\xe7 / kapat",null)
-B.PJ=s([B.a7u,B.a7t,B.a7s],t.p)
-B.Gn=new A.f_(B.W,B.j,B.l,B.o,null,B.R,null,0,B.PJ,null)
+B.PI=s([B.a7u,B.a7t,B.a7s],t.p)
+B.Go=new A.f_(B.W,B.j,B.l,B.o,null,B.R,null,0,B.PI,null)
 B.a6e=new A.wK("YANLI\u015e",B.a6,null)
 B.aX=new A.bP(18,null,null,null)
 B.pf=new A.aJ(983167,"MaterialIcons",null,!1)
@@ -93886,15 +93886,15 @@ B.Ee=new A.fU(B.U,null,null,B.a5H,null)
 B.p7=new A.aJ(57527,"MaterialIcons",null,!1)
 B.n2=new A.wE(B.p7,B.b9,null)
 B.a5P=new A.iH("Gemini","Fatura sizin",B.b9,B.n2,null)
-B.IE=new A.aN(4,B.r,B.a5P,null)
-B.OK=s([B.a6e,B.aX,B.J7,B.Ee,B.IE],t.p)
-B.Vo=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.OK,null)
-B.Jd=new A.aN(1,B.r,B.Vo,null)
+B.IH=new A.aN(4,B.r,B.a5P,null)
+B.OL=s([B.a6e,B.aX,B.J7,B.Ee,B.IH],t.p)
+B.Vo=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.OL,null)
+B.Jc=new A.aN(1,B.r,B.Vo,null)
 B.bk=new A.bP(null,18,null,null)
 B.a6d=new A.wK("OYUNDA",B.z,null)
 B.a6b=new A.wJ(B.pf,B.y,!1,null)
 B.a5S=new A.iH("Telefonunuz","Anahtar yok",B.y,B.a6b,null)
-B.J_=new A.aN(4,B.r,B.a5S,null)
+B.J0=new A.aN(4,B.r,B.a5S,null)
 B.L9=new A.aJ(63169,"MaterialIcons",null,!1)
 B.a6a=new A.wJ(B.L9,B.z,!0,null)
 B.a5R=new A.iH("Proxy","Cloud Run:\nanahtar\u0131 o ekler",B.z,B.a6a,null)
@@ -93903,11 +93903,11 @@ B.a5L=new A.og(B.z,null,!1,null)
 B.Ed=new A.fU(B.U,null,null,B.a5L,null)
 B.a5M=new A.iH("Gemini","Cevap",B.b9,B.n2,null)
 B.Iv=new A.aN(3,B.r,B.a5M,null)
-B.Pc=s([B.a6d,B.aX,B.J_,B.k1,B.Jp,B.Ed,B.Iv],t.p)
+B.Pc=s([B.a6d,B.aX,B.J0,B.k1,B.Jp,B.Ed,B.Iv],t.p)
 B.Vx=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Pc,null)
 B.Jm=new A.aN(1,B.r,B.Vx,null)
-B.Om=s([B.Jd,B.bk,B.Jm],t.p)
-B.Gs=new A.f_(B.W,B.j,B.l,B.o,null,B.R,null,0,B.Om,null)
+B.Oo=s([B.Jc,B.bk,B.Jm],t.p)
+B.Gt=new A.f_(B.W,B.j,B.l,B.o,null,B.R,null,0,B.Oo,null)
 B.kh=new A.yZ(0,"none")
 B.Gu=new A.yZ(1,"waiting")
 B.ki=new A.yZ(3,"done")
@@ -93993,8 +93993,8 @@ B.a8a=new A.a3W(1,"traversalOrder")
 B.w=new A.h0(700)
 B.a26=new A.j(!0,B.E,null,"RobotoMono",null,null,18,B.w,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.a2X=new A.bL("A\xe7\u0131k kaynak kod ve slaytlar: github.com/esrakadah/devfest-2026-backyard-barista-cloudrun",null,B.a26,null,null,null,null,null,null,null,null,null,null)
-B.PV=s([B.a2X],t.p)
-B.Gm=new A.f_(B.W,B.j,B.l,B.X,null,B.R,null,0,B.PV,null)
+B.PW=s([B.a2X],t.p)
+B.Gm=new A.f_(B.W,B.j,B.l,B.X,null,B.R,null,0,B.PW,null)
 B.ky=new A.am(20,16,20,16)
 B.GU=new A.zf(B.Gm,B.ky,B.b8,B.cJ,null,null)
 B.cK=new A.Lb(0,"background")
@@ -94177,58 +94177,58 @@ B.oD=new A.ps(!1,!1,!1,!1)
 B.oE=new A.ps(!1,!1,!1,!0)
 B.Kx=new A.N_(null)
 B.Hn=new A.jG("\xd6D\xdcLLER",B.y,B.Kx,"KAPANI\u015eTA SAHNEDE",null)
-B.Iy=new A.aN(4,B.r,B.Hn,null)
+B.Iz=new A.aN(4,B.r,B.Hn,null)
 B.L_=new A.aJ(58856,"MaterialIcons",null,!1)
-B.Qf=s(["Telefonunuzla canl\u0131 oyuna girin.","\u0130lk \xfc\xe7e \xf6d\xfcl var."],t.s)
-B.a75=new A.x2("1 \xb7 YAKLA\u015eIK 5 DK",B.L_,"\xd6nce oynuyoruz",B.Qf,B.z,null)
-B.IH=new A.aN(1,B.r,B.a75,null)
+B.Qg=s(["Telefonunuzla canl\u0131 oyuna girin.","\u0130lk \xfc\xe7e \xf6d\xfcl var."],t.s)
+B.a75=new A.x2("1 \xb7 YAKLA\u015eIK 5 DK",B.L_,"\xd6nce oynuyoruz",B.Qg,B.z,null)
+B.IL=new A.aN(1,B.r,B.a75,null)
 B.bM=new A.bP(20,null,null,null)
 B.KZ=new A.aJ(58695,"MaterialIcons",null,!1)
 B.P1=s(["Bu oyunun hatalar\u0131ndan \xe7\u0131kt\u0131lar.","Her kuralda bir yeni kelime."],t.s)
 B.a74=new A.x2("2 \xb7 YAKLA\u015eIK 19 DK",B.KZ,"Be\u015f kural",B.P1,B.y,null)
-B.IF=new A.aN(1,B.r,B.a74,null)
+B.IJ=new A.aN(1,B.r,B.a74,null)
 B.p9=new A.aJ(57900,"MaterialIcons",null,!1)
-B.Pe=s(["Kazananlar sahneye.","Kod ve slaytlar QR kodda."],t.s)
-B.a76=new A.x2("3 \xb7 YAKLA\u015eIK 3 DK",B.p9,"Podyum",B.Pe,B.b9,null)
-B.IX=new A.aN(1,B.r,B.a76,null)
-B.Oa=s([B.IH,B.bM,B.IF,B.bM,B.IX],t.p)
-B.Vw=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Oa,null)
-B.Iz=new A.aN(1,B.r,B.Vw,null)
-B.Pk=s(["Taray\u0131c\u0131da, kurulum yok.","\u0130stek metni (prompt) GitHub'da."],t.s)
-B.GW=new A.ej("\u0130ste\u011fini yaz, uygulamay\u0131 al","AI STUDIO",B.Pk,B.b9,null,30,34,null)
-B.J4=new A.aN(1,B.r,B.GW,null)
-B.Qi=s(["AI destekli kod edit\xf6r\xfc.","Kodu yazar, testleri \xe7al\u0131\u015ft\u0131r\u0131r."],t.s)
-B.H0=new A.ej("Bir istek, bir\xe7ok dosya","ANTIGRAVITY",B.Qi,B.y,null,30,34,null)
-B.IL=new A.aN(1,B.r,B.H0,null)
-B.OQ=s(["Flame: Flutter i\xe7in oyun motoru.","Raflar ve tepsi: Flutter."],t.s)
-B.H_=new A.ej("Sahne Flame, tezgah Flutter","FLAME + FLUTTER",B.OQ,B.z,null,30,34,null)
-B.IG=new A.aN(1,B.r,B.H_,null)
-B.Q8=s(["Uygulamay\u0131 internette \xe7al\u0131\u015ft\u0131r\u0131r.","Az \xf6nce oynad\u0131\u011f\u0131n\u0131z yer."],t.s)
-B.H9=new A.ej("\u0130nternette canl\u0131 adres","CLOUD RUN",B.Q8,B.a6,null,30,34,null)
-B.IJ=new A.aN(1,B.r,B.H9,null)
-B.Ow=s([B.J4,B.aX,B.IL,B.aX,B.IG,B.aX,B.IJ],t.p)
-B.Vl=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Ow,null)
-B.IU=new A.aN(1,B.r,B.Vl,null)
+B.Pf=s(["Kazananlar sahneye.","Kod ve slaytlar QR kodda."],t.s)
+B.a76=new A.x2("3 \xb7 YAKLA\u015eIK 3 DK",B.p9,"Podyum",B.Pf,B.b9,null)
+B.IW=new A.aN(1,B.r,B.a76,null)
+B.Oc=s([B.IL,B.bM,B.IJ,B.bM,B.IW],t.p)
+B.Vw=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Oc,null)
+B.IB=new A.aN(1,B.r,B.Vw,null)
+B.PV=s(["Google AI Studio: taray\u0131c\u0131da \xe7al\u0131\u015f\u0131r, kurulum yok.","Ne istedi\u011fini yazars\u0131n, \xe7al\u0131\u015fan bir uygulama \xfcretir.","\u0130stek metinleri (prompt) GitHub'da."],t.s)
+B.H9=new A.ej("\u0130ste\u011fini yaz, uygulamay\u0131 al","AI STUDIO",B.PV,B.b9,null,30,34,null)
+B.IY=new A.aN(1,B.r,B.H9,null)
+B.PY=s(["Google'\u0131n AI destekli kod edit\xf6r\xfc.","Tek istekle bir\xe7ok dosyay\u0131 de\u011fi\u015ftirir.","Kodu yazar, testleri \xe7al\u0131\u015ft\u0131r\u0131r."],t.s)
+B.H5=new A.ej("Bir istek, bir\xe7ok dosya","ANTIGRAVITY",B.PY,B.y,null,30,34,null)
+B.IA=new A.aN(1,B.r,B.H5,null)
+B.PS=s(["Flutter: tek kodla web ve mobil uygulama.","Flame: Flutter i\xe7in oyun motoru.","Oyun sahnesi Flame, raflar ve tepsi Flutter."],t.s)
+B.GZ=new A.ej("Sahne Flame, tezgah Flutter","FLAME + FLUTTER",B.PS,B.z,null,30,34,null)
+B.Jk=new A.aN(1,B.r,B.GZ,null)
+B.Pd=s(["Google Cloud servisi: sunucu kurmazs\u0131n, y\xf6netmezsin.","Tek komutla yay\u0131nlars\u0131n, sana bir https adresi verir.","Az \xf6nce oynad\u0131\u011f\u0131n\u0131z adres orada \xe7al\u0131\u015f\u0131yor."],t.s)
+B.H0=new A.ej("Uygulamay\u0131 internete koyar","CLOUD RUN",B.Pd,B.a6,null,30,34,null)
+B.II=new A.aN(1,B.r,B.H0,null)
+B.Pn=s([B.IY,B.aX,B.IA,B.aX,B.Jk,B.aX,B.II],t.p)
+B.Vv=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Pn,null)
+B.IC=new A.aN(1,B.r,B.Vv,null)
 B.a5Q=new A.iH("Gemini",'Tuzu ka\xe7\u0131r\u0131rsa:\n"5 y\u0131ld\u0131z, tatl\u0131!"',B.b9,B.n2,null)
 B.J6=new A.aN(4,B.r,B.a5Q,null)
 B.a7D=new A.a_d(null)
 B.a7w=new A.xg("ADIM 1","Raftan \xfcr\xfcn se\xe7in","Tatl\u0131 tepsi: kahve + tatl\u0131 + \u015feker.",B.y,B.a7D,null)
-B.Ja=new A.aN(1,B.r,B.a7w,null)
+B.J9=new A.aN(1,B.r,B.a7w,null)
 B.Kf=new A.Ae(null)
-B.Jg=new A.aN(2,B.r,B.Kf,null)
+B.Jf=new A.aN(2,B.r,B.Kf,null)
 B.a1=new A.O1(0,"min")
 B.a56=new A.oc("espresso.png",96,null)
 B.dv=new A.bP(8,null,null,null)
 B.a55=new A.oc("baklava.png",96,null)
 B.a57=new A.oc("salt_shaker.png",96,null)
-B.Oi=s([B.a56,B.dv,B.a55,B.dv,B.a57],t.p)
-B.Vh=new A.d4(B.H,B.j,B.a1,B.o,null,B.R,null,0,B.Oi,null)
-B.a5O=new A.iH("Tepsi","Tatl\u0131 sipari\u015f, i\xe7inde gizli tuz",B.y,B.Vh,null)
-B.Jj=new A.aN(5,B.r,B.a5O,null)
+B.Ok=s([B.a56,B.dv,B.a55,B.dv,B.a57],t.p)
+B.Vi=new A.d4(B.H,B.j,B.a1,B.o,null,B.R,null,0,B.Ok,null)
+B.a5O=new A.iH("Tepsi","Tatl\u0131 sipari\u015f, i\xe7inde gizli tuz",B.y,B.Vi,null)
+B.Ji=new A.aN(5,B.r,B.a5O,null)
 B.Lr=new A.aJ(983403,"MaterialIcons",null,!1)
 B.a5X=new A.wE(B.Lr,B.z,null)
 B.a5T=new A.iH("Guard (kod)","Tepside tuz var.\nKarar uymuyor.",B.z,B.a5X,null)
-B.Jk=new A.aN(4,B.r,B.a5T,null)
+B.Jj=new A.aN(4,B.r,B.a5T,null)
 B.KY=new A.aJ(58685,"MaterialIcons",null,!1)
 B.LC=new A.cK(B.KY,150,B.b9,null,null)
 B.a7x=new A.xg("ADIM 2","Servis Et'e bas\u0131n","Tepsi j\xfcriye gider. J\xfcri: Gemini.",B.b9,B.LC,null)
@@ -94237,12 +94237,12 @@ B.lK=new A.nh(5,"spaceEvenly")
 B.a7J=new A.xr("customer_happy.png","Tatl\u0131","sweet_perfection",null)
 B.a7L=new A.xr("customer_salty_disgusted.png","Tuzlu","salty_sabotage",null)
 B.a7K=new A.xr("customer_shocked.png","Ac\u0131","spicy_chaos",null)
-B.NQ=s([B.a7J,B.a7L,B.a7K],t.p)
-B.VB=new A.d4(B.H,B.lK,B.l,B.o,null,B.R,null,0,B.NQ,null)
+B.NR=s([B.a7J,B.a7L,B.a7K],t.p)
+B.VB=new A.d4(B.H,B.lK,B.l,B.o,null,B.R,null,0,B.NR,null)
 B.a_M=new A.j(!0,B.E,null,"GoogleSansFlex",null,null,26,B.cN,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.a31=new A.bL("Model bu \xfc\xe7 y\xfczden birini se\xe7er.\nD\xf6rd\xfcnc\xfc y\xfcz yok.",null,B.a_M,null,B.aI,null,null,null,null,null,null,null,null)
-B.OH=s([B.VB,B.a31],t.p)
-B.Gj=new A.f_(B.W,B.lK,B.l,B.o,null,B.R,null,0,B.OH,null)
+B.OI=s([B.VB,B.a31],t.p)
+B.Gj=new A.f_(B.W,B.lK,B.l,B.o,null,B.R,null,0,B.OI,null)
 B.Hm=new A.jG("KAPALI L\u0130STE \xb7 enum TasteVerdict",B.z,B.Gj,"3 KARAR",null)
 B.Jq=new A.aN(5,B.r,B.Hm,null)
 B.Js=new A.zJ(null,null,null,null,null,null,null,null,null,null,null,null,null)
@@ -94517,39 +94517,39 @@ B.N7=new A.q3(1,"titleHeight")
 B.N8=new A.q3(2,"top")
 B.px=new A.q3(3,"center")
 B.N9=new A.q3(4,"bottom")
-B.Pg=s([1373.2198709594231,-1100.4251190754821,-7.278681089101213],t.n)
-B.OJ=s([-271.815969077903,559.6580465940733,-32.46047482791194],t.n)
+B.Ph=s([1373.2198709594231,-1100.4251190754821,-7.278681089101213],t.n)
+B.OK=s([-271.815969077903,559.6580465940733,-32.46047482791194],t.n)
 B.Qk=s([1.9622899599665666,-57.173814538844006,308.7233197812385],t.n)
-B.Nd=s([B.Pg,B.OJ,B.Qk],t.zg)
+B.Ne=s([B.Ph,B.OK,B.Qk],t.zg)
 B.pz=s(["text","multiline","number","phone","datetime","emailAddress","url","visiblePassword","name","address","none","webSearch","twitter"],t.s)
-B.Ne=s(["espresso.png","baklava.png","sugar_jar.png"],t.s)
-B.NF=s([4,9,14,19],t.t)
-B.PX=s([137,80,78,71,13,10,26,10],t.Z)
+B.Nf=s(["espresso.png","baklava.png","sugar_jar.png"],t.s)
+B.NG=s([4,9,14,19],t.t)
+B.PZ=s([137,80,78,71,13,10,26,10],t.Z)
 B.M4=new A.n0(0,"png")
 B.Mc=new A.jQ(B.M4,!1,0,"png")
-B.M2=new A.la(B.PX,B.Mc,0,"png")
-B.PZ=s([71,73,70,56,55,97],t.Z)
-B.M1=new A.la(B.PZ,B.i3,1,"gif87a")
-B.P6=s([71,73,70,56,57,97],t.Z)
-B.M0=new A.la(B.P6,B.i3,2,"gif89a")
-B.Ng=s([255,216,255],t.Z)
+B.M2=new A.la(B.PZ,B.Mc,0,"png")
+B.Q0=s([71,73,70,56,55,97],t.Z)
+B.M1=new A.la(B.Q0,B.i3,1,"gif87a")
+B.P5=s([71,73,70,56,57,97],t.Z)
+B.M0=new A.la(B.P5,B.i3,2,"gif89a")
+B.Nh=s([255,216,255],t.Z)
 B.M5=new A.n0(2,"jpeg")
 B.Mg=new A.jQ(B.M5,!1,3,"jpeg")
-B.M3=new A.la(B.Ng,B.Mg,3,"jpeg")
-B.O4=s([82,73,70,70,null,null,null,null,87,69,66,80],t.Z)
-B.M_=new A.la(B.O4,B.pn,4,"webp")
-B.NU=s([66,77],t.Z)
+B.M3=new A.la(B.Nh,B.Mg,3,"jpeg")
+B.O6=s([82,73,70,70,null,null,null,null,87,69,66,80],t.Z)
+B.M_=new A.la(B.O6,B.pn,4,"webp")
+B.NV=s([66,77],t.Z)
 B.M6=new A.n0(4,"bmp")
 B.Me=new A.jQ(B.M6,!1,6,"bmp")
-B.LZ=new A.la(B.NU,B.Me,5,"bmp")
-B.NH=s([B.M2,B.M1,B.M0,B.M3,B.M_,B.LZ],A.aj("v<la>"))
+B.LZ=new A.la(B.NV,B.Me,5,"bmp")
+B.NI=s([B.M2,B.M1,B.M0,B.M3,B.M_,B.LZ],A.aj("v<la>"))
 B.n7=new A.Hf(0,"named")
 B.BY=new A.Hf(1,"anonymous")
-B.NR=s([B.n7,B.BY],A.aj("v<Hf>"))
-B.OM=s([0.41233895,0.35762064,0.18051042],t.n)
-B.Oe=s([0.2126,0.7152,0.0722],t.n)
-B.Qd=s([0.01932141,0.11916382,0.95034478],t.n)
-B.dk=s([B.OM,B.Oe,B.Qd],t.zg)
+B.NS=s([B.n7,B.BY],A.aj("v<Hf>"))
+B.OO=s([0.41233895,0.35762064,0.18051042],t.n)
+B.Og=s([0.2126,0.7152,0.0722],t.n)
+B.Qe=s([0.01932141,0.11916382,0.95034478],t.n)
+B.dk=s([B.OO,B.Og,B.Qe],t.zg)
 B.pA=s([0,4,12,1,5,13,3,7,15],t.t)
 B.L0=new A.aJ(58984,"MaterialIcons",null,!1)
 B.Uh=new A.er(B.L0,"1. Ba\u015fl\u0131k","/title",!1)
@@ -94580,7 +94580,7 @@ B.ph=new A.aJ(984490,"MaterialIcons",null,!1)
 B.Uf=new A.er(B.ph,"Demo aksad\u0131 (\xe7evrimd\u0131\u015f\u0131 yedek)","/demo-hiccup",!0)
 B.L2=new A.aJ(59115,"MaterialIcons",null,!1)
 B.Uj=new A.er(B.L2,"Yedek: Wi-Fi kapal\u0131, Gemma","/wifi-off-gemma",!1)
-B.O3=s([B.Uh,B.Up,B.Uo,B.Um,B.Us,B.Uq,B.Ur,B.Ue,B.Ug,B.Ul,B.Un,B.Uk,B.Ui,B.Ud,B.Uf,B.Uj],A.aj("v<er>"))
+B.O5=s([B.Uh,B.Up,B.Uo,B.Um,B.Us,B.Uq,B.Ur,B.Ue,B.Ug,B.Ul,B.Un,B.Uk,B.Ui,B.Ud,B.Uf,B.Uj],A.aj("v<er>"))
 B.a5Z=new A.hk(0,1)
 B.a63=new A.hk(0.5,1)
 B.a66=new A.hk(0.5375,0.75)
@@ -94592,34 +94592,34 @@ B.a67=new A.hk(0.8875,0.25)
 B.a65=new A.hk(0.925,0.5)
 B.a6_=new A.hk(0.9625,0.75)
 B.a60=new A.hk(1,1)
-B.O5=s([B.a5Z,B.a63,B.a66,B.a68,B.a64,B.a62,B.a61,B.a67,B.a65,B.a6_,B.a60],A.aj("v<hk>"))
+B.O7=s([B.a5Z,B.a63,B.a66,B.a68,B.a64,B.a62,B.a61,B.a67,B.a65,B.a6_,B.a60],A.aj("v<hk>"))
 B.cB=new A.lV(0,"left")
 B.eB=new A.lV(1,"right")
 B.fX=new A.lV(3,"justify")
 B.bl=new A.lV(4,"start")
 B.j1=new A.lV(5,"end")
-B.O6=s([B.cB,B.eB,B.aI,B.fX,B.bl,B.j1],A.aj("v<lV>"))
-B.Ot=s([2,1.13276676],t.n)
-B.Nk=s([2.18349805,1.20311921],t.n)
-B.PL=s([2.33888662,1.28698796],t.n)
-B.PO=s([2.48660575,1.36351941],t.n)
-B.O9=s([2.62226596,1.44717976],t.n)
-B.Oh=s([2.7514899,1.53385819],t.n)
+B.O8=s([B.cB,B.eB,B.aI,B.fX,B.bl,B.j1],A.aj("v<lV>"))
+B.Ov=s([2,1.13276676],t.n)
+B.Nl=s([2.18349805,1.20311921],t.n)
+B.PK=s([2.33888662,1.28698796],t.n)
+B.PN=s([2.48660575,1.36351941],t.n)
+B.Ob=s([2.62226596,1.44717976],t.n)
+B.Oj=s([2.7514899,1.53385819],t.n)
 B.P2=s([3.36298265,1.98288283],t.n)
-B.Ox=s([4.08649929,2.23811846],t.n)
-B.OR=s([4.85481134,2.47563463],t.n)
-B.Od=s([5.62945551,2.72948597],t.n)
-B.Ou=s([6.43023796,2.98020421],t.n)
-B.pB=s([B.Ot,B.Nk,B.PL,B.PO,B.O9,B.Oh,B.P2,B.Ox,B.OR,B.Od,B.Ou],t.zg)
-B.O8=s([B.jQ,B.jR],A.aj("v<yd>"))
-B.Oc=s([18,15,10,12,15,18,15,12,12],t.n)
+B.Oy=s([4.08649929,2.23811846],t.n)
+B.OS=s([4.85481134,2.47563463],t.n)
+B.Of=s([5.62945551,2.72948597],t.n)
+B.Ow=s([6.43023796,2.98020421],t.n)
+B.pB=s([B.Ov,B.Nl,B.PK,B.PN,B.Ob,B.Oj,B.P2,B.Oy,B.OS,B.Of,B.Ow],t.zg)
+B.Oa=s([B.jQ,B.jR],A.aj("v<yd>"))
+B.Oe=s([18,15,10,12,15,18,15,12,12],t.n)
 B.Ge=new A.F(0.11764705882352941,1,1,1,B.i)
 B.vY=new A.h(0,-1)
 B.CS=new A.dN(0,B.dG,B.Ge,B.vY,0)
 B.Ga=new A.F(0.2196078431372549,0,0,0,B.i)
 B.SD=new A.h(0,10)
 B.CV=new A.dN(0,B.dG,B.Ga,B.SD,24)
-B.Of=s([B.CS,B.CV],t.sq)
+B.Oh=s([B.CS,B.CV],t.sq)
 B.KI=new A.aJ(58016,"MaterialIcons",null,!1)
 B.Kz=new A.mX(1,"Dash",B.KI,B.y)
 B.Lw=new A.aJ(983726,"MaterialIcons",null,!1)
@@ -94629,103 +94629,103 @@ B.L6=new A.aJ(62868,"MaterialIcons",null,!1)
 B.G3=new A.F(1,0.8784313725490196,0.6431372549019608,0.43137254901960786,B.i)
 B.Ky=new A.mX(3,"Sticker seti",B.L6,B.G3)
 B.ll=s([B.Kz,B.KA,B.Ky],A.aj("v<mX>"))
-B.Oj=s([0,5,8,10,15,20],t.t)
+B.an=new A.e2(B.bg,0,t.fF)
+B.K8=new A.cA("/title","1. Cloud Run'da Backyard Barista",'BEAT  [00:00 - 00:30] Ana salon a\xe7\u0131l\u0131\u015f\u0131. Selamla, ad\u0131n\u0131 s\xf6yle ve konuyu tek c\xfcmleyle ver. Tan\u0131\u015fma bir sonraki slaytta.\nSAY   "Merhaba Konya, ho\u015f geldiniz! Ben Esra Kadah. Bug\xfcn birlikte bir oyun oynayaca\u011f\u0131z, sonra o oyunun kodunu a\xe7\u0131p i\xe7inde buldu\u011fum hatalar\u0131 ve onlardan \xe7\u0131kard\u0131\u011f\u0131m be\u015f kural\u0131 konu\u015faca\u011f\u0131z."\nHOLD  Telefondaki kronometreyi "Merhaba" derken ba\u015flat. \u0130lk c\xfcmleyi ekrana de\u011fil salona bakarak s\xf6yle.\nNEXT  "\xd6nce k\u0131saca kim oldu\u011fumu s\xf6yleyeyim."',!1,!1,1,B.an,B.aa,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.a3k=new A.RG(B.K8,null)
+B.JR=new A.cA("/about-me","2. Merhaba, ben Esra","BEAT  [00:30 - 01:15] Kim konu\u015fuyor. Hafif tut, 45 saniyeyi ge\xe7me.\nSAY   \"Ben Esra. Berlin'de Antigua Mobile'da Tech Lead olarak \xe7al\u0131\u015f\u0131yorum, Flutter ve Dart alan\u0131nda Google Developer Expert'im ve Flutter Design Patterns and Best Practices kitab\u0131n\u0131n yazarlar\u0131ndan biriyim. Flutteristas, Flutter Berlin, Flutter Community AI Circle ve GDG Cloud Berlin topluluklar\u0131n\u0131 y\xfcr\xfct\xfcyorum. Yolunuz Berlin'e d\xfc\u015ferse ya da online etkinliklerimize kat\u0131lmak isterseniz mutlaka yaz\u0131n. Burada s\xf6ylediklerim kendi g\xf6r\xfc\u015flerim, Google ad\u0131na konu\u015fmuyorum.\"\nHOLD  Sa\u011fdaki logolar\u0131 ve kitab\u0131 g\xf6ster, foto\u011fraflar\u0131 tek tek anlatma. Foto\u011fraflardaki ki\u015filerin ad\u0131n\u0131 s\xf6yleme.\nNEXT  \"\xd6n\xfcm\xfczdeki yar\u0131m saati nas\u0131l kullanaca\u011f\u0131m\u0131z\u0131 g\xf6stereyim.\"",!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.C1=new A.Jv(B.JR,null)
+B.JQ=new A.cA("/today-plan","3. Bug\xfcn: 30 dakika, \xfc\xe7 par\xe7a",'BEAT  [01:15 - 02:00] Harita ve ana fikir. \xdc\xe7 kart\u0131 g\xf6ster, alttaki c\xfcmleyi yava\u015f s\xf6yle.\nSAY   "Yar\u0131m saatimiz \xfc\xe7 par\xe7a. \xd6nce oynuyoruz: birazdan telefonunuzla canl\u0131 bir oyuna gireceksiniz, ilk \xfc\xe7e \xf6d\xfcl var. Sonra konu\u015fman\u0131n as\u0131l k\u0131sm\u0131: be\u015f kural. Bu oyunun kodunu yapay zeka ara\xe7lar\u0131yla birlikte yazd\u0131m; \xe7al\u0131\u015f\u0131yor, testlerden ge\xe7iyor. Sonra ayn\u0131 kodda be\u015f hata buldum. O hatalardan \xfc\xe7\xfcn\xfc ve bu oyundan \xe7\u0131kard\u0131\u011f\u0131m be\u015f kural\u0131 g\xf6sterece\u011fim. En sonda podyum ve \xf6d\xfcller. Ba\u015fl\u0131kta \'yap ve canl\u0131ya al\' yaz\u0131yor. Yapmak art\u0131k kolay; ben canl\u0131ya ald\u0131ktan sonra olan\u0131 anlataca\u011f\u0131m."\nHOLD  Kartlar\u0131 okuma, \xfc\xe7 par\xe7ay\u0131 soldan sa\u011fa g\xf6ster. "Be\u015f hata buldum" dedikten sonra 2 saniye bekle.\nNEXT  "Koda ge\xe7meden \xf6nce b\xfct\xfcn salonla k\xfc\xe7\xfck bir oylama yapal\u0131m."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.a3l=new A.RH(B.JQ,null)
+B.JZ=new A.cA("/sweet-or-salty","4. A\xe7\u0131l\u0131\u015f: hangisi \u015feker?",'BEAT  [02:00 - 02:45] Salon oylamas\u0131. Teknik terim kullanmadan oyunun fikrini tek resimle ver, soruyu a\xe7\u0131k b\u0131rak.\nSAY   "H\u0131zl\u0131 bir el oylamas\u0131. Ekranda birbirinin ikizi iki kavanoz var: biri \u015feker, biri tuz. A \u015feker diyenler el kald\u0131rs\u0131n. B diyenler? Do\u011fru cevap: A \u015feker, B tuz. Oyunun fikri bu kadar: tatl\u0131 sipari\u015fe gizlice tuz at\u0131l\u0131yor ve m\xfc\u015fteriyi kimse uyarm\u0131yor. Peki tuzu kim yakalayacak: yapay zeka m\u0131, kod mu? Bu soruyu akl\u0131n\u0131zda tutun; konu\u015fman\u0131n sonunda cevab\u0131n\u0131 siz vereceksiniz."\nHOLD  Her oylamadan sonra elleri g\xf6rmek i\xe7in 3 saniye bekle. Cevab\u0131 s\xf6ylerken sa\u011fdaki iki m\xfc\u015fteri y\xfcz\xfcn\xfc g\xf6ster. Soruyu cevaplama. Sonra canl\u0131 Cloud Run sekmesine ge\xe7; 3. slayt\u0131 hen\xfcz a\xe7ma.\nNEXT  "Oyunun kural\u0131 \xfc\xe7 ad\u0131m."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Yh=new A.Rh(B.JZ,null)
+B.K9=new A.cA("/how-to-play","5. Oyun: \xfc\xe7 ad\u0131mda bir tepsi",'BEAT  [02:45 - 03:15] Oyunun kural\u0131, \xfc\xe7 ad\u0131m. Sonra canl\u0131 sekmeye ge\xe7.\nSAY   "Oyun \xfc\xe7 ad\u0131m. Bir: raftan \xfcr\xfcn se\xe7ip tepsiyi diziyorsunuz; tatl\u0131 bir tepsi kahve, tatl\u0131 ve \u015feker demek. \u0130ki: Servis Et\'e bas\u0131yorsunuz, tepsi j\xfcriye gidiyor; j\xfcrimiz Gemini. \xdc\xe7: bir kart geliyor: y\u0131ld\u0131z, esprili bir yorum ve en altta cevab\u0131 kimin verdi\u011fini s\xf6yleyen j\xfcri rozeti. Do\u011fru tepsi y\xfcz puan."\nHOLD  \xdc\xe7 kart\u0131 soldan sa\u011fa g\xf6ster, okuma. Bu slayttan sonra canl\u0131 Cloud Run sekmesine ge\xe7.\nNEXT  "\xd6nce ben oynayaca\u011f\u0131m, sonra siz."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.KD=new A.N7(B.K9,null)
+B.JU=new A.cA("/hall-plays","6. Salon oynuyor: QR ve \xfc\xe7 g\xf6rev",'BEAT  [03:15 - 07:00] Canl\u0131 oyun. \xd6nce kendi iki tepsin (canl\u0131 sekmede, 75 sn), sonra bu slayt ve salon (2,5 dk).\nSAY   "Canl\u0131 oyunday\u0131z, Cloud Run\'da \xe7al\u0131\u015f\u0131yor. Do\u011fru bir tepsi: kahve, tatl\u0131, \u015feker. Servis Et: be\u015f y\u0131ld\u0131z. Kart\u0131n alt\u0131nda J\xfcri: Canl\u0131 Gemini yaz\u0131yorsa, bu esprili yorumu Gemini yazd\u0131. \u015eimdi \u015feker yerine tuz: bir y\u0131ld\u0131z. S\u0131ra sizde. \xd6nce telefonun sesini k\u0131s\u0131n, sonra QR kodu okutun ve bir kullan\u0131c\u0131 ad\u0131 yaz\u0131n. Puan\u0131n\u0131z sahnedeki tabloya d\xfc\u015fecek; tabloyu iki bu\xe7uk dakika sonra donduraca\u011f\u0131m. Birinciye Dash, ikinciye Google Cloud g\xf6zl\xfck, \xfc\xe7\xfcnc\xfcye sticker seti; kazananlar\u0131 kapan\u0131\u015fta o kullan\u0131c\u0131 ad\u0131yla sahneye \xe7a\u011f\u0131raca\u011f\u0131m. \xdc\xe7 de g\xf6reviniz var. Bir: tatl\u0131 sipari\u015fe gizlice tuz at\u0131n. \u0130ki: gelen kart\u0131n alt\u0131ndaki j\xfcri rozetini okuyun, ne yazd\u0131\u011f\u0131n\u0131 akl\u0131n\u0131zda tutun. \xdc\xe7, h\u0131zl\u0131 olanlar i\xe7in: Servis Et\'e bas\u0131n ve hemen S\u0131radaki M\xfc\u015fteri\'ye bas\u0131n."\nHOLD  1) Canl\u0131 Cloud Run sekmesi: tatl\u0131 tepsi 5 y\u0131ld\u0131z, tuzlu tepsi 1 y\u0131ld\u0131z. Rozete bak: "Canl\u0131 Gemini" yazm\u0131yorsa Gemini c\xfcmlesini atla ve "Bu kez haz\u0131r yan\u0131t geldi; nedenini birazdan anlataca\u011f\u0131m" de. 2) "S\u0131ra sizde" derken bu slayt\u0131 a\xe7; \xf6nce tam ekran QR sekmesini 30 saniye g\xf6ster, sonra bu slayta d\xf6n. "Okutamayan yan\u0131ndakinin telefonundan oynas\u0131n" de. 3) Saya\xe7 05:00: "A\xe7abilenler el kald\u0131rs\u0131n." Yar\u0131dan azsa "Yan\u0131n\u0131zdakinin ekran\u0131na bak\u0131n" de ve 06:00\'da bitir. 4) Salon oynarken sus; 06:45\'te "Son on be\u015f saniye" de. Oyun sende a\xe7\u0131lmazsa Stage Navigator ile "Demo aksad\u0131" slayt\u0131na ge\xe7.\nNEXT  "Bakal\u0131m kim \xf6nde."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Kw=new A.MZ(B.JU,null)
+B.JX=new A.cA("/hall-leaderboard","7. Skor tablosu: kim \xf6nde?",'BEAT  [07:00 - 07:30] Canl\u0131 skor tablosu. Bir t\u0131k ileri: s\xfcre doldu, tablo donar.\nSAY   "Bakal\u0131m kim \xf6nde. Puan\u0131 Gemini de\u011fil kod veriyor, o y\xfczden tablo adil. S\xfcre doldu: tablo dondu. \u0130lk \xfc\xe7\xfc kapan\u0131\u015fta kullan\u0131c\u0131 ad\u0131yla sahneye \xe7a\u011f\u0131raca\u011f\u0131m: birinciye Dash, ikinciye Google Cloud g\xf6zl\xfck, \xfc\xe7\xfcnc\xfcye sticker seti. Telefonlar\u0131 kilitleyip cebinize koyun. Rozetiniz akl\u0131n\u0131zda kals\u0131n; birazdan soraca\u011f\u0131m."\nHOLD  Slayt a\xe7\u0131ld\u0131\u011f\u0131nda tablo canl\u0131d\u0131r. "S\xfcre doldu" derken ileri tu\u015funa bir kez bas: ba\u015fl\u0131k "S\xdcRE DOLDU" olur ve tablo donar. Geri tu\u015fu tabloyu yeniden canl\u0131ya al\u0131r. Tablo bo\u015fsa ya da "BA\u011eLANTI BEKLEN\u0130YOR" yaz\u0131yorsa bekleme: "Tabloyu kapan\u0131\u015fta g\xf6sterece\u011fim" de ve ge\xe7. Uygunsuz bir isim *** olarak g\xf6r\xfcn\xfcr; sahneye \xe7a\u011f\u0131rmadan \xf6nce ad\u0131 kendin oku.\nNEXT  "Peki bu oyun nas\u0131l yaz\u0131ld\u0131?"',!1,!1,2,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Ku=new A.MX(B.JX,null)
+B.K0=new A.cA("/how-it-was-built","8. Bu oyun nas\u0131l yaz\u0131ld\u0131","BEAT  [07:30 - 08:30] D\xf6rt ara\xe7 tek slaytta, testin tan\u0131m\u0131, ard\u0131ndan konu\u015fman\u0131n \xe7er\xe7evesi: \xe7al\u0131\u015f\u0131yor, ama be\u015f hata.\nSAY   \"Bu oyunu d\xf6rt ara\xe7la yapt\u0131m. Google AI Studio: taray\u0131c\u0131da iste\u011fini yaz\u0131yorsun, \xe7al\u0131\u015fan uygulamay\u0131 al\u0131yorsun. Antigravity: tek istekle bir\xe7ok dosyay\u0131 de\u011fi\u015ftiren bir yapay zeka edit\xf6r\xfc. Oyun sahnesi Flame ile, raflar ve tepsi Flutter ile. Hepsi Cloud Run'da. Cloud Run, Google Cloud'un bir servisi: sunucu kurmuyorsunuz, tek komutla yay\u0131nl\u0131yorsunuz, size bir https adresi veriyor. Az \xf6nce oynad\u0131\u011f\u0131n\u0131z adres orada \xe7al\u0131\u015f\u0131yor. Yap\u0131m ad\u0131mlar\u0131 ve istek metinleri GitHub'daki a\xe7\u0131k kaynak kodda. Sonu\xe7: \xe7al\u0131\u015fan bir oyun ve 32 test. Test, kodun do\u011fru \xe7al\u0131\u015ft\u0131\u011f\u0131n\u0131 kontrol eden k\xfc\xe7\xfck bir program: ge\xe7erse ye\u015fil, kal\u0131rsa k\u0131rm\u0131z\u0131. 32'si de ye\u015fildi. Sonra ayn\u0131 kodda be\u015f hata buldum. \xc7al\u0131\u015f\u0131yor olmas\u0131 ve testlerin ye\u015fil olmas\u0131, do\u011fru oldu\u011fu anlam\u0131na gelmiyor.\"\nHOLD  D\xf6rt kart\u0131 soldan sa\u011fa g\xf6ster, okuma. Alttaki c\xfcmlede dur ve salona bak.\nNEXT  \"Bu hatalardan \xfc\xe7\xfcn\xfc bug\xfcn g\xf6sterece\u011fim; be\u015fi de testleriyle GitHub'da. Bu oyundan \xe7\u0131kard\u0131\u011f\u0131m be\u015f kural var.\"",!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.KC=new A.N6(B.K0,null)
+B.K7=new A.cA("/five-lessons","9. Bug\xfcn: be\u015f kural, be\u015f kelime",'BEAT  [08:30 - 09:00] Yol haritas\u0131. Kurallar\u0131 okuma, iki grubu ve be\u015f kelimeyi g\xf6ster.\nSAY   "Bug\xfcn\xfcn plan\u0131: be\u015f kural. \u0130lk ikisi modelin cevab\u0131yla ilgili, son \xfc\xe7\xfc uygulaman\u0131n kendisiyle. Her kuralla bir yeni kelime geliyor: guard, enum, sealed class, timeout ve proxy. Hepsini geldi\u011fi yerde a\xe7\u0131klayaca\u011f\u0131m; \u015fimdi bilmeniz gerekmiyor."\nHOLD  Sol s\xfctun, sa\u011f s\xfctun, alttaki be\u015f kelime. 30 saniyeyi ge\xe7me.\nNEXT  "Birinci kural, az \xf6nce tuz atanlar\u0131n g\xf6rd\xfc\u011f\xfc \u015fey."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.JA=new A.M3(B.K7,null)
+B.K3=new A.cA("/guard-rule","10. Kural 1: model \xf6nerir, karar\u0131 kod verir",'BEAT  [09:00 - 10:15] Kural 1. Salona sor, sonra yeni kelime: guard.\nSAY   "Kim tuz att\u0131? Ka\xe7 y\u0131ld\u0131z ald\u0131n\u0131z? Bir. Peki o y\u0131ld\u0131z\u0131 kim verdi? \xd6neri j\xfcriden geldi; son s\xf6z\xfc kod s\xf6yledi: tepside tuz varsa kod bir y\u0131ld\u0131zdan fazlas\u0131na izin vermiyor. Yeni kelimemiz guard, T\xfcrk\xe7esiyle koruyucu: modelin cevab\u0131 ekrana \xe7\u0131kmadan \xf6nce onu kontrol eden kod. Hikaye \u015f\xf6yle: \xf6nceki s\xfcr\xfcmde Gemini\'nin cevab\u0131 kontrols\xfcz ekrana \xe7\u0131k\u0131yordu. Model tuzu ka\xe7\u0131r\u0131rsa tuzlu tepsi be\u015f y\u0131ld\u0131z alabiliyordu. Tepside tuz var m\u0131, bunu art\u0131k kodumuz biliyor; modelin karar\u0131 buna uymuyorsa cevab\u0131 at\u0131yoruz."\nHOLD  "Kim verdi?" sorusundan sonra 2 saniye bekle; "Gemini" diyeni de "kod" diyeni de duy, sonra cevab\u0131 ver. "Kim tuz att\u0131?" sorusuna el kalkmazsa: "Ben att\u0131m, g\xf6rd\xfcn\xfcz: bir y\u0131ld\u0131z." Sonra \xfcst \u015feridi (\xd6NCE), ard\u0131ndan alt \u015feridi (SONRA) soldan sa\u011fa g\xf6ster; Guard kutusunda dur. Alttaki sat\u0131r\u0131 okuma.\nNEXT  "Kodda bu tek bir sat\u0131r."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Kt=new A.MT(B.K3,null)
+B.K2=new A.cA("/guard-before-after","11. Kural 1, kod: \xf6nce ve sonra",'BEAT  [10:15 - 11:45] Kural 1, kod. Yaln\u0131zca iki sar\u0131 sat\u0131r ve test ad\u0131.\nSAY   "Solda eski hali. Sar\u0131 sat\u0131ra bak\u0131n: cevap geldiyse g\xf6ster. Modelin ne dedi\u011fine bakan yok. Sa\u011fda yeni hali: cevap geldiyse ve tepsideki tuzla uyu\u015fuyorsa g\xf6ster. Uyu\u015fmuyorsa cevap \xe7\xf6pe gidiyor, yerine haz\u0131r yan\u0131t geliyor. Bunu nereden biliyoruz? Alttaki test. Sa\u011fdaki sar\u0131 sat\u0131r\u0131 silerseniz bu test k\u0131rm\u0131z\u0131ya d\xf6n\xfcyor. Sonra bir \u015fey daha buldum: kontrol sadece kelimeye bak\u0131yordu. Model tuzlu deyip be\u015f y\u0131ld\u0131z verirse ge\xe7iyordu; art\u0131k y\u0131ld\u0131za da bak\u0131yor. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: modelin cevab\u0131 bir \xf6neridir, karar de\u011fil."\nHOLD  \xd6nce soldaki sar\u0131 sat\u0131r, sonra sa\u011fdaki sar\u0131 sat\u0131r, en son alttaki test ad\u0131. Kodun geri kalan\u0131n\u0131 okuma.\nNEXT  "Peki \'tuzlu\' karar\u0131 kodda nas\u0131l yaz\u0131l\u0131yor? Orada da bir tuzak vard\u0131."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Kr=new A.MR(B.K2,null)
+B.Ka=new A.cA("/typed-output-rule","12. Kural 2: serbest metin yerine kapal\u0131 liste",'BEAT  [11:45 - 12:45] Kural 2. Yeni kelime: enum. Structured output ve \u015femay\u0131 da burada tan\u0131mla.\nSAY   "\u0130kinci kural. Yeni kelime enum: izin verilen de\u011ferlerin kapal\u0131 listesi. Oyunda modelin verebilece\u011fi \xfc\xe7 karar var: tatl\u0131, tuzlu, ac\u0131. Bunlar kodda d\xfcz metindi; karar metinleri 21 ayr\u0131 yerde elle yaz\u0131l\u0131yd\u0131. Bir harfi yanl\u0131\u015f yazarsan\u0131z kimse fark etmiyor. Bir de structured output var, T\xfcrk\xe7esi yap\u0131land\u0131r\u0131lm\u0131\u015f \xe7\u0131kt\u0131: modele serbest yaz\u0131 yerine bir JSON \u015femas\u0131 veriyoruz, yani \'cevab\u0131 \u015fu kal\u0131pta ver\' diyoruz; model de o kal\u0131pta cevap d\xf6n\xfcyor. Daha k\xf6t\xfcs\xfc, Gemini\'ye giden \u015femada bu liste hi\xe7 yoktu. \u015eimdi liste tek bir yerde duruyor; \u015fema da kod da oradan okuyor."\nHOLD  \xd6nce \xfc\xe7 y\xfcz, sonra tablo: \xfc\xe7 ye\u015fil sat\u0131r, iki k\u0131rm\u0131z\u0131 sat\u0131r. "Yine ge\xe7ti" s\xfctununda dur; "21 ayr\u0131 yerde" derken sa\u011f \xfcstteki etiketi g\xf6ster.\nNEXT  "Kodda nas\u0131l g\xf6r\xfcn\xfcyor?"',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.a4B=new A.RM(B.Ka,null)
+B.JV=new A.cA("/enum-feeds-schema","13. Kural 2, kod: liste \u015femay\u0131 besliyor",'BEAT  [12:45 - 14:00] Kural 2, kod. \u0130ki ayr\u0131 liste tek listeye iniyor.\nSAY   "Solda eski hali. Sar\u0131 sat\u0131r Gemini\'ye giden \u015fema: karar bir metin olsun, o kadar. Hangi metin? S\xf6ylemiyoruz. Alt\u0131nda ikinci bir \u015fema var, yerel model i\xe7in; orada liste elle yaz\u0131lm\u0131\u015f. \u0130ki liste, iki ayr\u0131 yer: biri de\u011fi\u015fir, \xf6b\xfcr\xfc unutulur. Sa\u011fda yeni hali. Yukar\u0131da enum: \xfc\xe7 karar, tek yerde. Sar\u0131 sat\u0131r iki \u015femada da ayn\u0131: listeyi enum\'dan al. Alttaki test, iki \u015feman\u0131n da tam bu listeyi g\xf6nderdi\u011fini kontrol ediyor."\nHOLD  Sol sar\u0131 sat\u0131r, sonra sa\u011fdaki enum, sonra sa\u011f sar\u0131 sat\u0131r. Test ad\u0131n\u0131 g\xf6ster, okuma.\nNEXT  "Liste tamam. Peki cevap gelir ama i\xe7i bo\u015f olursa?"',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.It=new A.LS(B.JV,null)
+B.JO=new A.cA("/empty-reply","14. Kural 2, kod: bo\u015f cevap ba\u015far\u0131 de\u011fildir",'BEAT  [14:00 - 15:30] Kural 2, ikinci kod. Bo\u015f cevaba be\u015f y\u0131ld\u0131z hikayesi.\nSAY   "\u015eunu denedim: modelin yerine sahte, bo\u015f bir cevap koydum. S\xfcsl\xfc parantez a\xe7, kapa, i\xe7i bo\u015f. Oyun ne yapt\u0131? Be\u015f y\u0131ld\u0131z, Tatl\u0131 M\xfckemmellik, alt\u0131nda Canl\u0131 Gemini rozeti ve tam puan. Neden? Solda sar\u0131 sat\u0131r: y\u0131ld\u0131z yoksa be\u015f y\u0131ld\u0131z say. Kod her bo\u015flu\u011fu ba\u015far\u0131yla dolduruyordu. Sa\u011fda yeni hali: bir alan eksikse ya da yanl\u0131\u015f t\xfcrdeyse, say\u0131 yerine yaz\u0131 gibi, bu bir cevap de\u011fildir. \u015eema bi\xe7imi tarif eder, de\u011ferin do\u011fru oldu\u011funu garanti etmez; Google\'\u0131n kendi dok\xfcman\u0131 da de\u011ferleri uygulaman\u0131zda do\u011frulay\u0131n diyor. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: bo\u015f cevap, ba\u015far\u0131 de\u011fildir."\nHOLD  Sol sar\u0131 sat\u0131r, sa\u011f sar\u0131 sat\u0131r, test ad\u0131. Alttaki \u0130ngilizce al\u0131nt\u0131y\u0131 okuma; sorulursa kayna\u011f\u0131 g\xf6ster.\nNEXT  "Buraya kadar modelin cevab\u0131yd\u0131. \u015eimdi uygulaman\u0131n kendisine ge\xe7iyoruz."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Ip=new A.LM(B.JO,null)
+B.Kb=new A.cA("/order-state-rule","15. Kural 3: olmamas\u0131 gereken durum, yaz\u0131lamas\u0131n",'BEAT  [15:30 - 16:45] Kural 3. \xdc\xe7\xfcnc\xfc g\xf6revi salona sor, sonra yeni kelime: sealed class. SAY, canl\u0131 oyunun d\xfczeltilmi\u015f s\xfcr\xfcm oldu\u011funu varsayar; de\u011filse HOLD sat\u0131r\u0131ndaki c\xfcmleleri kullan.\nSAY   "\xdc\xe7\xfcnc\xfc kural. Kim Servis Et\'e bas\u0131p hemen S\u0131radaki M\xfc\u015fteri\'ye bast\u0131? Garip bir \u015fey g\xf6rmediniz, \xe7\xfcnk\xfc d\xfczelttim. \xd6nceki s\xfcr\xfcmde ayn\u0131 hamle \u015funu yap\u0131yordu: yeni m\xfc\u015fteri gelmi\u015f, tepsi bo\u015f, ama ekranda be\u015f y\u0131ld\u0131zl\u0131 bir kart ve elli puan. \xd6nceki sipari\u015fin cevab\u0131 yeni m\xfc\u015fteriye yaz\u0131l\u0131yordu. Yeni kelime sealed class: bir \u015feyin alabilece\u011fi halleri tek tek sayan bir kal\u0131p. Sipari\u015f ya bo\u015fta, ya j\xfcride, ya servis edildi. D\xf6rd\xfcnc\xfc hal yok. Kod yazman\u0131za izin vermiyorsa, yanl\u0131\u015fl\u0131kla da yapamazs\u0131n\u0131z."\nHOLD  CANLI OYUN ESK\u0130 S\xdcR\xdcMSE \xfc\xe7\xfcnc\xfc ve d\xf6rd\xfcnc\xfc c\xfcmlenin ("Garip bir \u015fey g\xf6rmediniz..." ve "\xd6nceki s\xfcr\xfcmde...") yerine \u015funu s\xf6yle: "Yeterince h\u0131zl\u0131 olanlar \u015funu g\xf6rd\xfc: yeni m\xfc\u015fteri gelmi\u015f, tepsi bo\u015f, ama ekranda be\u015f y\u0131ld\u0131zl\u0131 bir kart ve elli puan. G\xf6rmediyseniz cevap parma\u011f\u0131n\u0131zdan h\u0131zl\u0131yd\u0131. Bu hata \u015fu an canl\u0131da duruyor; d\xfczeltmesi yaz\u0131ld\u0131, testi ye\u015fil." El kalkmazsa: "Normal, cevap sizden h\u0131zl\u0131yd\u0131." Bekleme, devam et. \u0130lk a\xe7\u0131l\u0131\u015fta be\u015f sat\u0131r n\xf6trd\xfcr; ilk t\u0131kta iki sa\xe7ma durum k\u0131rm\u0131z\u0131 yanar, ikinci t\u0131kta \xfcstleri \xe7izilir ve sa\u011fda \xfc\xe7 OrderState hali a\xe7\u0131l\u0131r.\nNEXT  "Hata tek bir unutulmu\u015f sat\u0131rd\u0131."',!1,!1,3,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Td=new A.OC(B.Kb,null)
+B.K_=new A.cA("/forgotten-line","16. Kural 3, hata: unutulan sat\u0131r",'BEAT  [16:45 - 18:00] Kural 3, hata. \xdc\xe7 de\u011fi\u015fken, \xfc\xe7 s\u0131f\u0131rlama yeri, bir unutulan sat\u0131r.\nSAY   "Solda sipari\u015fin eski hali: \xfc\xe7 ayr\u0131 de\u011fi\u015fken, yani kodun bilgi tuttu\u011fu \xfc\xe7 ayr\u0131 kutu. J\xfcri d\xfc\u015f\xfcn\xfcyor mu, ka\xe7\u0131nc\u0131 tepsi, son karar ne. Ortadaki bir saya\xe7: cevap geldi\u011finde say\u0131 de\u011fi\u015fmi\u015fse cevap eski tepsiye aittir, at\u0131l\u0131r. Sipari\u015fi s\u0131f\u0131rlayan \xfc\xe7 yer var: Temizle, \u015fehir de\u011fi\u015ftir, S\u0131radaki M\xfc\u015fteri. Her biri \xfc\xe7 de\u011fi\u015fkeni de hat\u0131rlamak zorunda. Bu hata daha \xf6nce bir kez d\xfczeltildi; d\xfczeltme iki yeri kapatt\u0131, \xfc\xe7\xfcnc\xfcy\xfc unuttu. Sar\u0131 sat\u0131r, unutulan sat\u0131r\u0131n olmas\u0131 gereken yer. Sa\u011fda oyuncunun g\xf6rd\xfc\u011f\xfc: bo\u015f tepsiye be\u015f y\u0131ld\u0131z. Bunu bir testle kan\u0131tlad\u0131m: test k\u0131rm\u0131z\u0131 yand\u0131."\nHOLD  Soldaki \xfc\xe7 de\u011fi\u015fkeni parmakla say, sar\u0131 sat\u0131rda dur. Sonra sa\u011fdaki kart.\nNEXT  "\xc7\xf6z\xfcm, unutulan sat\u0131r\u0131 eklemek de\u011fil."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Km=new A.My(B.K_,null)
+B.K5=new A.cA("/sealed-order","17. Kural 3, \xe7\xf6z\xfcm: sealed OrderState",'BEAT  [18:00 - 19:30] Kural 3, \xe7\xf6z\xfcm. Tek tip, tek atama. Dosyan\u0131n h\xe2l\xe2 b\xfcy\xfck oldu\u011funu s\xf6yle.\nSAY   "Solda yeni kal\u0131p: \xfc\xe7 de\u011fi\u015fken yerine tek bir OrderState. Bo\u015fta, j\xfcride ya da servis edildi. Kart sadece servis edildi halinin i\xe7inde ya\u015f\u0131yor; sipari\u015f bo\u015ftaysa g\xf6sterecek kart yok. Sa\u011fda sar\u0131 sat\u0131r: s\u0131f\u0131rlamak art\u0131k tek bir atama. Unutulacak ikinci sat\u0131r kalmad\u0131. Ge\xe7 gelen cevap ne oluyor? Alttaki sat\u0131r soruyor: bu cevap h\xe2l\xe2 bekledi\u011fim sipari\u015fe mi ait? De\u011filse \xe7\xf6pe. D\xfcr\xfcst olay\u0131m: bu ekran dosyas\u0131 h\xe2l\xe2 2.600 sat\u0131rdan uzun; dosyay\u0131 d\xfczeltmedim, durumu d\xfczelttim. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: ayn\u0131 bilgiyi \xfc\xe7 yerde tutarsan\u0131z biri unutulur; tek yerde tutun."\nHOLD  Soldaki \xfc\xe7 s\u0131n\u0131f, sa\u011fdaki sar\u0131 sat\u0131r, test ad\u0131. "D\xfcr\xfcst olay\u0131m" c\xfcmlesinde ekrana de\u011fil salona bak.\nNEXT  "Buraya kadar cevap hep geldi. Ya hi\xe7 gelmezse?"',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.VK=new A.Qr(B.K5,null)
+B.JT=new A.cA("/fallback-rule","18. Kural 4: model susarsa oyun susmaz",'BEAT  [19:30 - 20:45] Kural 4. Yeni kelime: timeout. \xdc\xe7 plan; s\u0131n\u0131r ile \xf6l\xe7\xfcm\xfc ay\u0131r.\nSAY   "D\xf6rd\xfcnc\xfc kural. Yeni kelime timeout, zaman a\u015f\u0131m\u0131: en fazla \u015fu kadar beklerim s\u0131n\u0131r\u0131. Oyunda \xfc\xe7 plan var. A plan\u0131 canl\u0131 Gemini: en fazla sekiz saniye bekliyoruz. B plan\u0131 Gemma, bu laptopta \xe7al\u0131\u015fan k\xfc\xe7\xfck bir model: s\u0131n\u0131r on be\u015f saniye; o yaln\u0131zca benim laptopumda var, sizin telefonunuzda yok. C plan\u0131 pakete koydu\u011fumuz haz\u0131r yan\u0131tlar: model gerekmez. Ekrandaki sekiz ve on be\u015f \xf6l\xe7\xfcm de\u011fil, s\u0131n\u0131r. \xc7er\xe7eve s\u0131n\u0131r\u0131, dolu k\u0131s\u0131m \xf6l\xe7\xfcm\xfc g\xf6steriyor; 12 tepsiyle \xf6l\xe7t\xfcm."\nHOLD  Yukar\u0131dan a\u015fa\u011f\u0131 A, B, C. "\xd6l\xe7\xfcm de\u011fil, s\u0131n\u0131r" derken \xe7er\xe7eveyi, sonra dolu k\u0131sm\u0131 g\xf6ster. C \xe7ubu\u011funun ne kadar k\u0131sa oldu\u011funu g\xf6ster.\nNEXT  "C plan\u0131n\u0131 belki az \xf6nce siz test ettiniz."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Jv=new A.LY(B.JT,null)
+B.JY=new A.cA("/hall-load-test","19. Kural 4, kan\u0131t: y\xfck testini salon yapt\u0131",'BEAT  [20:45 - 22:30] Kural 4, kan\u0131t. \u0130kinci g\xf6revi salona sor: rozetinizde ne yaz\u0131yordu?\nSAY   "Rozetinde Canl\u0131 Gemini yazanlar el kald\u0131rs\u0131n. Yerel JSON \u015eemas\u0131 yazanlar? Yerel JSON \u015eemas\u0131, pakete koydu\u011fumuz haz\u0131r yan\u0131t demek. \u0130kinci grup: sizde model cevap veremedi ya da cevab\u0131 reddedildi, C plan\u0131 \xe7al\u0131\u015ft\u0131. Nedenini rozet s\xf6ylemiyor. Olas\u0131 bir neden: sunucumuz saniyede on iste\u011fe izin veriyor; fazlas\u0131na HTTP 429 diyor, yani \xe7ok fazla istek geldi, yava\u015fla. Soldaki kod rozetin arkas\u0131ndaki liste: \xfc\xe7 j\xfcri, \xfc\xe7 isim. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: yapay zeka \xe7a\u011f\u0131ran her \xf6zelli\u011fin bir B plan\u0131 olsun."\nHOLD  \u0130ki oylamada da 3 saniye bekle. \u0130lk grupta el yoksa: "Demek hepiniz C plan\u0131na d\xfc\u015ft\xfcn\xfcz; oyun yine de cevap verdi." \u0130kinci grupta el yoksa: "Bug\xfcn s\u0131n\u0131ra tak\u0131lmad\u0131k; tak\u0131lsayd\u0131k rozette Yerel JSON \u015eemas\u0131 yazacakt\u0131. C plan\u0131n\u0131 alttaki test kan\u0131tl\u0131yor." Sonra soldaki kod, sonra sa\u011fdaki kart.\nNEXT  "Son kural para ve g\xfcvenlikle ilgili."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Kv=new A.MY(B.JY,null)
+B.K1=new A.cA("/key-rule","20. Kural 5: anahtar sunucuda kal\u0131r",'BEAT  [22:30 - 24:00] Kural 5, g\xfcvenlik. Yeni kelime: proxy. Anahtar\u0131 ve iki kan\u0131t\u0131 g\xf6ster.\nSAY   "Be\u015finci kural. Gemini\'yi \xe7a\u011f\u0131rmak i\xe7in bir API anahtar\u0131 gerekiyor; anahtar, faturan\u0131z\u0131n \u015fifresi gibi: kimde varsa sizin hesab\u0131n\u0131za harcar. Web uygulamas\u0131n\u0131n i\xe7ine koyarsan\u0131z herkes taray\u0131c\u0131dan okuyabilir. Yeni kelime proxy: taray\u0131c\u0131 ile Gemini aras\u0131ndaki arac\u0131 sunucu. Telefonunuz bizim sunucuya soruyor; sar\u0131 sat\u0131rda sunucu anahtar\u0131 ekleyip Gemini\'ye iletiyor. Anahtar telefonunuza hi\xe7 inmiyor. Bunu s\xf6ylemek kolay, o y\xfczden iki kan\u0131t var. Bir test, giden istekte anahtar olmad\u0131\u011f\u0131n\u0131 kontrol ediyor. CI, yani her de\u011fi\u015fiklikte otomatik \xe7al\u0131\u015fan kontrol, derlenen pakette anahtara benzeyen bir \u015fey ar\u0131yor. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: taray\u0131c\u0131ya giden her \u015feyi herkes okur."\nHOLD  \xd6nce soldaki iki \u015ferit: YANLI\u015e, sonra OYUNDA. Sonra sa\u011fdaki sar\u0131 sat\u0131r, en son alttaki iki kan\u0131t. Alttaki "\u0130leri seviye" sat\u0131r\u0131n\u0131 okuma; sorulursa: proxy\'de kimlik kontrol\xfc yok, \xfcretimde yol App Check.\nNEXT  "Anahtar g\xfcvende. Peki onu ne s\u0131kl\u0131kla kullan\u0131yoruz?"',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.MB=new A.NC(B.K1,null)
+B.JS=new A.cA("/cost-honest","21. Kural 5, maliyet: model bo\u015funa \xe7a\u011fr\u0131lmaz",'BEAT  [24:00 - 25:15] Kural 5, maliyet. Say\u0131lan rakamlar ve bir \xf6l\xe7\xfcm; eski tahminin tutmad\u0131\u011f\u0131n\u0131 s\xf6yle.\nSAY   "Token, modelin okudu\u011fu ve yazd\u0131\u011f\u0131 kelime par\xe7as\u0131; fatura token say\u0131s\u0131na g\xf6re kesiliyor. O y\xfczden en ucuz \xe7a\u011fr\u0131, hi\xe7 yapmad\u0131\u011f\u0131n\u0131z \xe7a\u011fr\u0131. Tepsiyi dizerken modele gitmiyoruz: s\u0131f\u0131r \xe7a\u011fr\u0131. Eksik tepside, i\xe7inde tuz ya da ac\u0131 yoksa, yine gitmiyoruz; cevab\u0131 kod veriyor. Tepsi servis edilince tek \xe7a\u011fr\u0131 gidiyor. Bu \xfc\xe7\xfcn\xfcn testi var. Sa\u011fdaki rakama dikkat: 322 token. Bunu tek bir tepside \xf6l\xe7t\xfcm. Ondan \xf6nce slayt\u0131mda 270 yaz\u0131yordu ve bir tahmindi; elli token eksik tahmin etmi\u015fim. \xd6l\xe7medi\u011finiz rakam\u0131 \xf6l\xe7m\xfc\u015f gibi g\xf6stermeyin."\nHOLD  Soldan sa\u011fa d\xf6rt kutu. Son kutudaki "\xd6L\xc7\xdcLD\xdc" etiketini g\xf6ster ve bir saniye dur.\nNEXT  "Toparlayal\u0131m."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Gv=new A.KW(B.JS,null)
+B.JW=new A.cA("/lesson-recap","22. \xd6zet: be\u015f kural, iki s\xfctun",'BEAT  [25:15 - 26:30] \xd6zet. \u0130ki s\xfctunu oku, yeniden anlatma. A\xe7\u0131l\u0131\u015ftaki soruyu salona geri sor.\nSAY   "Be\u015f kural, iki s\xfctun. Modelin cevab\u0131: model \xf6nerir, karar\u0131 kod verir. Serbest metin yerine kapal\u0131 liste; bo\u015f cevap ba\u015far\u0131 de\u011fildir. Uygulaman\u0131n kendisi: olmamas\u0131 gereken durum yaz\u0131lamas\u0131n. Model susarsa oyun susmaz. Anahtar sunucuda kal\u0131r, model bo\u015funa \xe7a\u011fr\u0131lmaz. Kodun hepsi, testleriyle birlikte, sa\u011fdaki QR kodda. Ba\u015fta bir soru sormu\u015ftum: tuzu kim yakalayacak, yapay zeka m\u0131, kod mu?"\nHOLD  S\xfctunlar\u0131 oku, a\xe7\u0131klama ekleme. Soruyu sorduktan sonra 3 saniye bekle; sessizlikse cevab\u0131 kendin s\xf6yle.\nNEXT  "Cevap: kod."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.N2=new A.NR(B.JW,null)
+B.Kc=new A.cA("/winners-podium","23. Podyum: ilk \xfc\xe7 sahneye",'BEAT  [26:30 - 28:00] \xd6d\xfcl an\u0131. \xdc\xe7 t\u0131k: \xfc\xe7\xfcnc\xfc, ikinci, birinci.\nSAY   "S\xf6z verdi\u011fim gibi: podyum. \xdc\xe7\xfcnc\xfcm\xfcz sticker setini al\u0131yor. \u0130kincimiz Google Cloud g\xf6zl\xfc\u011f\xfc. Ve birincimiz, Dash\'in yeni sahibi. \xdc\xe7\xfcn\xfcz\xfc de sahneye bekliyorum."\nHOLD  Slayt \xfc\xe7 soru i\u015faretiyle a\xe7\u0131l\u0131r. Her \xf6d\xfclden \xf6nce ileri tu\u015funa bir kez bas, ekrandaki kullan\u0131c\u0131 ad\u0131n\u0131 y\xfcksek sesle oku ve salonun alk\u0131\u015f\u0131n\u0131 bekle. \u0130sim *** g\xf6r\xfcn\xfcyorsa okuma, "\xfc\xe7\xfcnc\xfcm\xfcz kendini biliyor" de. Kutu "Hen\xfcz kimse yok" diyorsa o \xf6d\xfcl\xfc fuayede verece\u011fini s\xf6yle. \xdc\xe7\xfc sahneye gelince \xf6d\xfclleri ver, tek bir foto\u011fraf \xe7ektir.\nNEXT  "Ve son olarak: bana nas\u0131l ula\u015f\u0131rs\u0131n\u0131z?"',!1,!1,4,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.a4X=new A.Se(B.Kc,null)
+B.K6=new A.cA("/bana-ulasin","24. Bana ula\u015f\u0131n",'BEAT  [28:00 - 29:00] Kapan\u0131\u015f c\xfcmlesi ve fuaye daveti. Bu slayt konu\u015fma bittikten sonra ekranda a\xe7\u0131k kals\u0131n.\nSAY   "\u015eakay\u0131 model yazs\u0131n, karar\u0131 kodunuz versin. Yaz\u0131lar\u0131m, kodlar\u0131m ve ileti\u015fim bilgilerim ekrandaki QR kodda, esratech.com adresinde. Ayr\u0131 bir soru-cevap s\xfcremiz yok ama hemen d\u0131\u015far\u0131da, fuayede olaca\u011f\u0131m; gelin tan\u0131\u015fal\u0131m, kodu ve hatalar\u0131 konu\u015fal\u0131m. \xc7ok te\u015fekk\xfcrler Konya!"\nHOLD  \u0130lk c\xfcmleyi ekrandaki yaz\u0131y\u0131 g\xf6stererek, yava\u015f s\xf6yle. G\xfcl\xfcmse, salona el salla. Te\u015fekk\xfcrden sonra kumanday\u0131 b\u0131rak: bir t\u0131k daha yedek slayt\u0131 a\xe7ar. HDMI kablosunu s\xf6kmeden \xf6nce sahne ekibinin i\u015faretini bekle.\nNEXT  Son ana slayt (yedek slaytlar: /demo-hiccup ve /wifi-off-gemma).',!1,!1,1,B.an,B.aa,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Cl=new A.K_(B.K6,null)
+B.K4=new A.cA("/demo-hiccup","Yedek: demo aksarsa, \xe7evrimd\u0131\u015f\u0131 mod",'BEAT  [YEDEK] Salon Wi-Fi\'\u0131 kesilirse cankurtaran slayt\u0131.\nSAY   "Wi-Fi k\u0131sa bir \xe7ay molas\u0131 verdi. Sorun de\u011fil, mimariyi tam bu an i\xe7in kurduk. Haz\u0131rlad\u0131\u011f\u0131m yerel sekmeye ge\xe7iyorum: kod ayn\u0131, sadece bulut kapal\u0131. Karar\u0131 bu laptoptaki Gemma 4 veriyor; o da yeti\u015fmezse paketteki haz\u0131r yan\u0131tlar devreye giriyor. Oyuna kald\u0131\u011f\u0131m\u0131z yerden devam ediyoruz."\nHOLD  Sakin kal, g\xfcl\xfcmse, sahneden \xf6nce a\xe7t\u0131\u011f\u0131n yerel \xe7evrimd\u0131\u015f\u0131 sekmeye ge\xe7. Sahnede komut \xe7al\u0131\u015ft\u0131rma. Bitti\u011finde canl\u0131 oyun slayt\u0131na (/hall-plays) geri d\xf6n.\nNEXT  "Kald\u0131\u011f\u0131m\u0131z yerden devam edelim."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.Hc=new A.Ll(B.K4,null)
+B.JP=new A.cA("/wifi-off-gemma","Yedek: Wi-Fi kapal\u0131, j\xfcri bu laptopta",'BEAT  [YEDEK] B plan\u0131n\u0131n canl\u0131 g\xf6sterimi. Yaln\u0131zca s\xfcre kal\u0131rsa ya da sorulursa.\nSAY   "B plan\u0131n\u0131 canl\u0131 g\xf6relim. Wi-Fi\'\u0131 kapat\u0131yorum ve ayn\u0131 tuzlu tepsiyi g\xf6nderiyorum; bu kez bulut yok. Karar\u0131 bu laptoptaki Gemma 4 veriyor. Be\u015f ile sekiz saniye s\xfcrebiliyor; on be\u015f saniyelik s\u0131n\u0131r bunun i\xe7in. O da yeti\u015fmezse paketteki haz\u0131r yan\u0131t gelir."\nHOLD  Yerel oyun sekmesine ge\xe7 (sahneden \xf6nce a\xe7t\u0131\u011f\u0131n sekme). Sahnede komut \xe7al\u0131\u015ft\u0131rma. Gemma d\xfc\u015f\xfcn\xfcrken sus ve bekle. Bitince Stage Navigator ile kald\u0131\u011f\u0131n slayta d\xf6n.\nNEXT  "Kald\u0131\u011f\u0131m\u0131z yerden devam edelim."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
+B.a4W=new A.Sb(B.JP,null)
+B.pC=s([B.a3k,B.C1,B.a3l,B.Yh,B.KD,B.Kw,B.Ku,B.KC,B.JA,B.Kt,B.Kr,B.a4B,B.It,B.Ip,B.Td,B.Km,B.VK,B.Jv,B.Kv,B.MB,B.Gv,B.N2,B.a4X,B.Cl,B.Hc,B.a4W],A.aj("v<c8>"))
+B.Ol=s([0,5,8,10,15,20],t.t)
 B.j0=new A.nS("DAVET",B.y,0,"hook")
 B.ey=new A.nS("CANLI B\xdcY\xdc",B.fb,1,"tools")
 B.ez=new A.nS("MODEL\u0130N CEVABI",B.a6,2,"realNumbers")
 B.cA=new A.nS("UYGULAMANIN KEND\u0130S\u0130",B.z,3,"underTheHood")
 B.mx=new A.nS("KAPANI\u015e",B.b9,4,"buildAndShip")
-B.Ok=s([B.j0,B.ey,B.ez,B.cA,B.mx],A.aj("v<nS>"))
+B.Om=s([B.j0,B.ey,B.ez,B.cA,B.mx],A.aj("v<nS>"))
 B.Dj=new A.Aq()
-B.Ol=s([B.Dj],t.xS)
+B.On=s([B.Dj],t.xS)
 B.a6V=new A.op("j\xfcride: hay\u0131r \xb7 kart: yok","Bo\u015fta",!0)
 B.a6X=new A.op("j\xfcride: evet  \xb7 kart: yok","J\xfcride",!0)
 B.a6Y=new A.op("j\xfcride: hay\u0131r \xb7 kart: var","Servis edildi",!0)
 B.a6W=new A.op("j\xfcride: evet  \xb7 kart: var","J\xfcride ama kart ekranda?",!1)
 B.a6Z=new A.op("yeni m\xfc\u015fteri \xb7 tepsi bo\u015f \xb7 kart: var","Bo\u015f tepsiye 5 y\u0131ld\u0131z!",!1)
-B.pC=s([B.a6V,B.a6X,B.a6Y,B.a6W,B.a6Z],A.aj("v<op>"))
+B.pD=s([B.a6V,B.a6X,B.a6Y,B.a6W,B.a6Z],A.aj("v<op>"))
 B.a7E=new A.oz('"sweet_perfection"',!0,null)
 B.a7I=new A.oz('"salty_sabotage"',!0,null)
 B.a7F=new A.oz('"spicy_chaos"',!0,null)
 B.a7H=new A.oz('"sweet_perfction"',!1,"yaz\u0131m hatas\u0131")
 B.a7G=new A.oz('"bence g\xfczeldi"',!1,"serbest metin")
-B.pD=s([B.a7E,B.a7I,B.a7F,B.a7H,B.a7G],A.aj("v<oz>"))
+B.pE=s([B.a7E,B.a7I,B.a7F,B.a7H,B.a7G],A.aj("v<oz>"))
 B.pR=new A.j1("en",null,"US")
 B.i8=s([B.pR],t.ss)
-B.pE=s([0,41,61,101,131,181,251,301,360],t.n)
+B.pF=s([0,41,61,101,131,181,251,301,360],t.n)
 B.a5v=new A.mc(0,0)
 B.a5A=new A.mc(1,0.05)
 B.a5y=new A.mc(3,0.08)
 B.a5z=new A.mc(6,0.11)
 B.a5x=new A.mc(8,0.12)
 B.a5w=new A.mc(12,0.14)
-B.pF=s([B.a5v,B.a5A,B.a5y,B.a5z,B.a5x,B.a5w],A.aj("v<mc>"))
-B.pG=s([0,21,51,121,151,191,271,321,360],t.n)
-B.OI=s([-1,0,0,1,0,0,-1,0,1,0,0,0,-1,1,0,1,1,1,1,0],t.n)
+B.pG=s([B.a5v,B.a5A,B.a5y,B.a5z,B.a5x,B.a5w],A.aj("v<mc>"))
+B.pH=s([0,21,51,121,151,191,271,321,360],t.n)
+B.OJ=s([-1,0,0,1,0,0,-1,0,1,0,0,0,-1,1,0,1,1,1,1,0],t.n)
 B.Cr=new A.K6(2,"outer")
 B.nO=new A.F(0.09803921568627451,0,0,0,B.i)
 B.h=new A.h(0,0)
 B.CU=new A.dN(0.2,B.Cr,B.nO,B.h,11)
-B.OL=s([B.CU],t.sq)
-B.an=new A.e2(B.bg,0,t.fF)
-B.K9=new A.cA("/title","1. Cloud Run'da Backyard Barista",'BEAT  [00:00 - 00:30] Ana salon a\xe7\u0131l\u0131\u015f\u0131. Selamla, ad\u0131n\u0131 s\xf6yle ve konuyu tek c\xfcmleyle ver. Tan\u0131\u015fma bir sonraki slaytta.\nSAY   "Merhaba Konya, ho\u015f geldiniz! Ben Esra Kadah. Bug\xfcn birlikte bir oyun oynayaca\u011f\u0131z, sonra o oyunun kodunu a\xe7\u0131p i\xe7inde buldu\u011fum hatalar\u0131 ve onlardan \xe7\u0131kard\u0131\u011f\u0131m be\u015f kural\u0131 konu\u015faca\u011f\u0131z."\nHOLD  Telefondaki kronometreyi "Merhaba" derken ba\u015flat. \u0130lk c\xfcmleyi ekrana de\u011fil salona bakarak s\xf6yle.\nNEXT  "\xd6nce k\u0131saca kim oldu\u011fumu s\xf6yleyeyim."',!1,!1,1,B.an,B.aa,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.a3k=new A.RG(B.K9,null)
-B.JQ=new A.cA("/about-me","2. Merhaba, ben Esra","BEAT  [00:30 - 01:15] Kim konu\u015fuyor. Hafif tut, 45 saniyeyi ge\xe7me.\nSAY   \"Ben Esra. Berlin'de Antigua Mobile'da Tech Lead olarak \xe7al\u0131\u015f\u0131yorum, Flutter ve Dart alan\u0131nda Google Developer Expert'im ve Flutter Design Patterns and Best Practices kitab\u0131n\u0131n yazarlar\u0131ndan biriyim. Flutteristas, Flutter Berlin, Flutter Community AI Circle ve GDG Cloud Berlin topluluklar\u0131n\u0131 y\xfcr\xfct\xfcyorum. Yolunuz Berlin'e d\xfc\u015ferse ya da online etkinliklerimize kat\u0131lmak isterseniz mutlaka yaz\u0131n. Burada s\xf6ylediklerim kendi g\xf6r\xfc\u015flerim, Google ad\u0131na konu\u015fmuyorum.\"\nHOLD  Sa\u011fdaki logolar\u0131 ve kitab\u0131 g\xf6ster, foto\u011fraflar\u0131 tek tek anlatma. Foto\u011fraflardaki ki\u015filerin ad\u0131n\u0131 s\xf6yleme.\nNEXT  \"\xd6n\xfcm\xfczdeki yar\u0131m saati nas\u0131l kullanaca\u011f\u0131m\u0131z\u0131 g\xf6stereyim.\"",!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.C1=new A.Jv(B.JQ,null)
-B.JV=new A.cA("/today-plan","3. Bug\xfcn: 30 dakika, \xfc\xe7 par\xe7a",'BEAT  [01:15 - 02:00] Harita ve ana fikir. \xdc\xe7 kart\u0131 g\xf6ster, alttaki c\xfcmleyi yava\u015f s\xf6yle.\nSAY   "Yar\u0131m saatimiz \xfc\xe7 par\xe7a. \xd6nce oynuyoruz: birazdan telefonunuzla canl\u0131 bir oyuna gireceksiniz, ilk \xfc\xe7e \xf6d\xfcl var. Sonra konu\u015fman\u0131n as\u0131l k\u0131sm\u0131: be\u015f kural. Bu oyunun kodunu yapay zeka ara\xe7lar\u0131yla birlikte yazd\u0131m; \xe7al\u0131\u015f\u0131yor, testlerden ge\xe7iyor. D\xfcn ayn\u0131 kodda be\u015f hata buldum. O hatalardan \xfc\xe7\xfcn\xfc ve bu oyundan \xe7\u0131kard\u0131\u011f\u0131m be\u015f kural\u0131 g\xf6sterece\u011fim. En sonda podyum ve \xf6d\xfcller. Ba\u015fl\u0131kta \'yap ve canl\u0131ya al\' yaz\u0131yor. Yapmak art\u0131k kolay; ben canl\u0131ya ald\u0131ktan sonra olan\u0131 anlataca\u011f\u0131m."\nHOLD  Kartlar\u0131 okuma, \xfc\xe7 par\xe7ay\u0131 soldan sa\u011fa g\xf6ster. "Be\u015f hata buldum" dedikten sonra 2 saniye bekle.\nNEXT  "Koda ge\xe7meden \xf6nce b\xfct\xfcn salonla k\xfc\xe7\xfck bir oylama yapal\u0131m."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.a3l=new A.RH(B.JV,null)
-B.JZ=new A.cA("/sweet-or-salty","4. A\xe7\u0131l\u0131\u015f: hangisi \u015feker?",'BEAT  [02:00 - 02:45] Salon oylamas\u0131. Teknik terim kullanmadan oyunun fikrini tek resimle ver, soruyu a\xe7\u0131k b\u0131rak.\nSAY   "H\u0131zl\u0131 bir el oylamas\u0131. Ekranda birbirinin ikizi iki kavanoz var: biri \u015feker, biri tuz. A \u015feker diyenler el kald\u0131rs\u0131n. B diyenler? Do\u011fru cevap: A \u015feker, B tuz. Oyunun fikri bu kadar: tatl\u0131 sipari\u015fe gizlice tuz at\u0131l\u0131yor ve m\xfc\u015fteriyi kimse uyarm\u0131yor. Peki tuzu kim yakalayacak: yapay zeka m\u0131, kod mu? Bu soruyu akl\u0131n\u0131zda tutun; konu\u015fman\u0131n sonunda cevab\u0131n\u0131 siz vereceksiniz."\nHOLD  Her oylamadan sonra elleri g\xf6rmek i\xe7in 3 saniye bekle. Cevab\u0131 s\xf6ylerken sa\u011fdaki iki m\xfc\u015fteri y\xfcz\xfcn\xfc g\xf6ster. Soruyu cevaplama. Sonra canl\u0131 Cloud Run sekmesine ge\xe7; 3. slayt\u0131 hen\xfcz a\xe7ma.\nNEXT  "Oyunun kural\u0131 \xfc\xe7 ad\u0131m."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Yh=new A.Rh(B.JZ,null)
-B.Ka=new A.cA("/how-to-play","5. Oyun: \xfc\xe7 ad\u0131mda bir tepsi",'BEAT  [02:45 - 03:15] Oyunun kural\u0131, \xfc\xe7 ad\u0131m. Sonra canl\u0131 sekmeye ge\xe7.\nSAY   "Oyun \xfc\xe7 ad\u0131m. Bir: raftan \xfcr\xfcn se\xe7ip tepsiyi diziyorsunuz; tatl\u0131 bir tepsi kahve, tatl\u0131 ve \u015feker demek. \u0130ki: Servis Et\'e bas\u0131yorsunuz, tepsi j\xfcriye gidiyor; j\xfcrimiz Gemini. \xdc\xe7: bir kart geliyor: y\u0131ld\u0131z, esprili bir yorum ve en altta cevab\u0131 kimin verdi\u011fini s\xf6yleyen j\xfcri rozeti. Do\u011fru tepsi y\xfcz puan."\nHOLD  \xdc\xe7 kart\u0131 soldan sa\u011fa g\xf6ster, okuma. Bu slayttan sonra canl\u0131 Cloud Run sekmesine ge\xe7.\nNEXT  "\xd6nce ben oynayaca\u011f\u0131m, sonra siz."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.KD=new A.N7(B.Ka,null)
-B.JT=new A.cA("/hall-plays","6. Salon oynuyor: QR ve \xfc\xe7 g\xf6rev",'BEAT  [03:15 - 07:00] Canl\u0131 oyun. \xd6nce kendi iki tepsin (canl\u0131 sekmede, 75 sn), sonra bu slayt ve salon (2,5 dk).\nSAY   "Canl\u0131 oyunday\u0131z, Cloud Run\'da \xe7al\u0131\u015f\u0131yor. Do\u011fru bir tepsi: kahve, tatl\u0131, \u015feker. Servis Et: be\u015f y\u0131ld\u0131z. Kart\u0131n alt\u0131nda J\xfcri: Canl\u0131 Gemini yaz\u0131yorsa, bu esprili yorumu Gemini yazd\u0131. \u015eimdi \u015feker yerine tuz: bir y\u0131ld\u0131z. S\u0131ra sizde. \xd6nce telefonun sesini k\u0131s\u0131n, sonra QR kodu okutun ve bir kullan\u0131c\u0131 ad\u0131 yaz\u0131n. Puan\u0131n\u0131z sahnedeki tabloya d\xfc\u015fecek; tabloyu iki bu\xe7uk dakika sonra donduraca\u011f\u0131m. Birinciye Dash, ikinciye Google Cloud g\xf6zl\xfck, \xfc\xe7\xfcnc\xfcye sticker seti; kazananlar\u0131 kapan\u0131\u015fta o kullan\u0131c\u0131 ad\u0131yla sahneye \xe7a\u011f\u0131raca\u011f\u0131m. \xdc\xe7 de g\xf6reviniz var. Bir: tatl\u0131 sipari\u015fe gizlice tuz at\u0131n. \u0130ki: gelen kart\u0131n alt\u0131ndaki j\xfcri rozetini okuyun, ne yazd\u0131\u011f\u0131n\u0131 akl\u0131n\u0131zda tutun. \xdc\xe7, h\u0131zl\u0131 olanlar i\xe7in: Servis Et\'e bas\u0131n ve hemen S\u0131radaki M\xfc\u015fteri\'ye bas\u0131n."\nHOLD  1) Canl\u0131 Cloud Run sekmesi: tatl\u0131 tepsi 5 y\u0131ld\u0131z, tuzlu tepsi 1 y\u0131ld\u0131z. Rozete bak: "Canl\u0131 Gemini" yazm\u0131yorsa Gemini c\xfcmlesini atla ve "Bu kez haz\u0131r yan\u0131t geldi; nedenini birazdan anlataca\u011f\u0131m" de. 2) "S\u0131ra sizde" derken bu slayt\u0131 a\xe7; \xf6nce tam ekran QR sekmesini 30 saniye g\xf6ster, sonra bu slayta d\xf6n. "Okutamayan yan\u0131ndakinin telefonundan oynas\u0131n" de. 3) Saya\xe7 05:00: "A\xe7abilenler el kald\u0131rs\u0131n." Yar\u0131dan azsa "Yan\u0131n\u0131zdakinin ekran\u0131na bak\u0131n" de ve 06:00\'da bitir. 4) Salon oynarken sus; 06:45\'te "Son on be\u015f saniye" de. Oyun sende a\xe7\u0131lmazsa Stage Navigator ile "Demo aksad\u0131" slayt\u0131na ge\xe7.\nNEXT  "Bakal\u0131m kim \xf6nde."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Kw=new A.MZ(B.JT,null)
-B.JX=new A.cA("/hall-leaderboard","7. Skor tablosu: kim \xf6nde?",'BEAT  [07:00 - 07:30] Canl\u0131 skor tablosu. Bir t\u0131k ileri: s\xfcre doldu, tablo donar.\nSAY   "Bakal\u0131m kim \xf6nde. Puan\u0131 Gemini de\u011fil kod veriyor, o y\xfczden tablo adil. S\xfcre doldu: tablo dondu. \u0130lk \xfc\xe7\xfc kapan\u0131\u015fta kullan\u0131c\u0131 ad\u0131yla sahneye \xe7a\u011f\u0131raca\u011f\u0131m: birinciye Dash, ikinciye Google Cloud g\xf6zl\xfck, \xfc\xe7\xfcnc\xfcye sticker seti. Telefonlar\u0131 kilitleyip cebinize koyun. Rozetiniz akl\u0131n\u0131zda kals\u0131n; birazdan soraca\u011f\u0131m."\nHOLD  Slayt a\xe7\u0131ld\u0131\u011f\u0131nda tablo canl\u0131d\u0131r. "S\xfcre doldu" derken ileri tu\u015funa bir kez bas: ba\u015fl\u0131k "S\xdcRE DOLDU" olur ve tablo donar. Geri tu\u015fu tabloyu yeniden canl\u0131ya al\u0131r. Tablo bo\u015fsa ya da "BA\u011eLANTI BEKLEN\u0130YOR" yaz\u0131yorsa bekleme: "Tabloyu kapan\u0131\u015fta g\xf6sterece\u011fim" de ve ge\xe7. Uygunsuz bir isim *** olarak g\xf6r\xfcn\xfcr; sahneye \xe7a\u011f\u0131rmadan \xf6nce ad\u0131 kendin oku.\nNEXT  "Peki bu oyun nas\u0131l yaz\u0131ld\u0131?"',!1,!1,2,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Ku=new A.MX(B.JX,null)
-B.K6=new A.cA("/how-it-was-built","8. Bu oyun nas\u0131l yaz\u0131ld\u0131","BEAT  [07:30 - 08:30] D\xf6rt ara\xe7 tek slaytta, testin tan\u0131m\u0131, ard\u0131ndan konu\u015fman\u0131n \xe7er\xe7evesi: \xe7al\u0131\u015f\u0131yor, ama be\u015f hata.\nSAY   \"Bu oyunu d\xf6rt ara\xe7la yapt\u0131m. Google AI Studio: taray\u0131c\u0131da iste\u011fini yaz\u0131yorsun, \xe7al\u0131\u015fan uygulamay\u0131 al\u0131yorsun. Antigravity: tek istekle bir\xe7ok dosyay\u0131 de\u011fi\u015ftiren bir yapay zeka edit\xf6r\xfc. Oyun sahnesi Flame ile, raflar ve tepsi Flutter ile. Hepsi Cloud Run'da; Cloud Run, uygulaman\u0131z\u0131 internette \xe7al\u0131\u015ft\u0131ran Google servisi. Yap\u0131m ad\u0131mlar\u0131 ve istek metinleri GitHub'daki a\xe7\u0131k kaynak kodda. Sonu\xe7: \xe7al\u0131\u015fan bir oyun ve 32 test. Test, kodun do\u011fru \xe7al\u0131\u015ft\u0131\u011f\u0131n\u0131 kontrol eden k\xfc\xe7\xfck bir program: ge\xe7erse ye\u015fil, kal\u0131rsa k\u0131rm\u0131z\u0131. 32'si de ye\u015fildi. 20 Kas\u0131m'da ayn\u0131 kodda be\u015f hata buldum. \xc7al\u0131\u015f\u0131yor olmas\u0131 ve testlerin ye\u015fil olmas\u0131, do\u011fru oldu\u011fu anlam\u0131na gelmiyor.\"\nHOLD  D\xf6rt kart\u0131 soldan sa\u011fa g\xf6ster, okuma. Alttaki c\xfcmlede dur ve salona bak.\nNEXT  \"Bu hatalardan \xfc\xe7\xfcn\xfc bug\xfcn g\xf6sterece\u011fim; be\u015fi de testleriyle GitHub'da. Bu oyundan \xe7\u0131kard\u0131\u011f\u0131m be\u015f kural var.\"",!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.KC=new A.N6(B.K6,null)
-B.K7=new A.cA("/five-lessons","9. Bug\xfcn: be\u015f kural, be\u015f kelime",'BEAT  [08:30 - 09:00] Yol haritas\u0131. Kurallar\u0131 okuma, iki grubu ve be\u015f kelimeyi g\xf6ster.\nSAY   "Bug\xfcn\xfcn plan\u0131: be\u015f kural. \u0130lk ikisi modelin cevab\u0131yla ilgili, son \xfc\xe7\xfc uygulaman\u0131n kendisiyle. Her kuralla bir yeni kelime geliyor: guard, enum, sealed class, timeout ve proxy. Hepsini geldi\u011fi yerde a\xe7\u0131klayaca\u011f\u0131m; \u015fimdi bilmeniz gerekmiyor."\nHOLD  Sol s\xfctun, sa\u011f s\xfctun, alttaki be\u015f kelime. 30 saniyeyi ge\xe7me.\nNEXT  "Birinci kural, az \xf6nce tuz atanlar\u0131n g\xf6rd\xfc\u011f\xfc \u015fey."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.JA=new A.M3(B.K7,null)
-B.K2=new A.cA("/guard-rule","10. Kural 1: model \xf6nerir, karar\u0131 kod verir",'BEAT  [09:00 - 10:15] Kural 1. Salona sor, sonra yeni kelime: guard.\nSAY   "Kim tuz att\u0131? Ka\xe7 y\u0131ld\u0131z ald\u0131n\u0131z? Bir. Peki o y\u0131ld\u0131z\u0131 kim verdi? \xd6neri j\xfcriden geldi; son s\xf6z\xfc kod s\xf6yledi: tepside tuz varsa kod bir y\u0131ld\u0131zdan fazlas\u0131na izin vermiyor. Yeni kelimemiz guard, T\xfcrk\xe7esiyle koruyucu: modelin cevab\u0131 ekrana \xe7\u0131kmadan \xf6nce onu kontrol eden kod. Hikaye \u015f\xf6yle: 12 Kas\u0131m\'a kadar Gemini\'nin cevab\u0131 kontrols\xfcz ekrana \xe7\u0131k\u0131yordu. Model tuzu ka\xe7\u0131r\u0131rsa tuzlu tepsi be\u015f y\u0131ld\u0131z alabiliyordu. Tepside tuz var m\u0131, bunu art\u0131k kodumuz biliyor; modelin karar\u0131 buna uymuyorsa cevab\u0131 at\u0131yoruz."\nHOLD  "Kim verdi?" sorusundan sonra 2 saniye bekle; "Gemini" diyeni de "kod" diyeni de duy, sonra cevab\u0131 ver. "Kim tuz att\u0131?" sorusuna el kalkmazsa: "Ben att\u0131m, g\xf6rd\xfcn\xfcz: bir y\u0131ld\u0131z." Sonra \xfcst \u015feridi (\xd6NCE), ard\u0131ndan alt \u015feridi (SONRA) soldan sa\u011fa g\xf6ster; Guard kutusunda dur. Alttaki sat\u0131r\u0131 okuma.\nNEXT  "Kodda bu tek bir sat\u0131r."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Kt=new A.MT(B.K2,null)
-B.K8=new A.cA("/guard-before-after","11. Kural 1, kod: \xf6nce ve sonra",'BEAT  [10:15 - 11:45] Kural 1, kod. Yaln\u0131zca iki sar\u0131 sat\u0131r ve test ad\u0131.\nSAY   "Solda eski hali. Sar\u0131 sat\u0131ra bak\u0131n: cevap geldiyse g\xf6ster. Modelin ne dedi\u011fine bakan yok. Sa\u011fda yeni hali: cevap geldiyse ve tepsideki tuzla uyu\u015fuyorsa g\xf6ster. Uyu\u015fmuyorsa cevap \xe7\xf6pe gidiyor, yerine haz\u0131r yan\u0131t geliyor. Bunu nereden biliyoruz? Alttaki test. Sa\u011fdaki sar\u0131 sat\u0131r\u0131 silerseniz bu test k\u0131rm\u0131z\u0131ya d\xf6n\xfcyor. 20 Kas\u0131m\'da bir \u015fey daha buldum: kontrol sadece kelimeye bak\u0131yordu. Model tuzlu deyip be\u015f y\u0131ld\u0131z verirse ge\xe7iyordu; art\u0131k y\u0131ld\u0131za da bak\u0131yor. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: modelin cevab\u0131 bir \xf6neridir, karar de\u011fil."\nHOLD  \xd6nce soldaki sar\u0131 sat\u0131r, sonra sa\u011fdaki sar\u0131 sat\u0131r, en son alttaki test ad\u0131. Kodun geri kalan\u0131n\u0131 okuma.\nNEXT  "Peki \'tuzlu\' karar\u0131 kodda nas\u0131l yaz\u0131l\u0131yor? Orada da bir tuzak vard\u0131."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Kr=new A.MR(B.K8,null)
-B.Kb=new A.cA("/typed-output-rule","12. Kural 2: serbest metin yerine kapal\u0131 liste",'BEAT  [11:45 - 12:45] Kural 2. Yeni kelime: enum. \u015eemay\u0131 da burada tan\u0131mla.\nSAY   "\u0130kinci kural. Yeni kelime enum: izin verilen de\u011ferlerin kapal\u0131 listesi. Oyunda modelin verebilece\u011fi \xfc\xe7 karar var: tatl\u0131, tuzlu, ac\u0131. Bunlar kodda d\xfcz metindi; karar metinleri 21 ayr\u0131 yerde elle yaz\u0131l\u0131yd\u0131. Bir harfi yanl\u0131\u015f yazarsan\u0131z kimse fark etmiyor. Bir de \u015fema var: modele \'cevab\u0131 \u015fu kal\u0131pta ver\' dedi\u011fimiz tarif. Daha k\xf6t\xfcs\xfc, Gemini\'ye giden \u015femada bu liste hi\xe7 yoktu. \u015eimdi liste tek bir yerde duruyor; \u015fema da kod da oradan okuyor."\nHOLD  \xd6nce \xfc\xe7 y\xfcz, sonra tablo: \xfc\xe7 ye\u015fil sat\u0131r, iki k\u0131rm\u0131z\u0131 sat\u0131r. "Yine ge\xe7ti" s\xfctununda dur; "21 ayr\u0131 yerde" derken sa\u011f \xfcstteki etiketi g\xf6ster.\nNEXT  "Kodda nas\u0131l g\xf6r\xfcn\xfcyor?"',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.a4B=new A.RM(B.Kb,null)
-B.JU=new A.cA("/enum-feeds-schema","13. Kural 2, kod: liste \u015femay\u0131 besliyor",'BEAT  [12:45 - 14:00] Kural 2, kod. \u0130ki ayr\u0131 liste tek listeye iniyor.\nSAY   "Solda eski hali. Sar\u0131 sat\u0131r Gemini\'ye giden \u015fema: karar bir metin olsun, o kadar. Hangi metin? S\xf6ylemiyoruz. Alt\u0131nda ikinci bir \u015fema var, yerel model i\xe7in; orada liste elle yaz\u0131lm\u0131\u015f. \u0130ki liste, iki ayr\u0131 yer: biri de\u011fi\u015fir, \xf6b\xfcr\xfc unutulur. Sa\u011fda yeni hali. Yukar\u0131da enum: \xfc\xe7 karar, tek yerde. Sar\u0131 sat\u0131r iki \u015femada da ayn\u0131: listeyi enum\'dan al. Alttaki test, iki \u015feman\u0131n da tam bu listeyi g\xf6nderdi\u011fini kontrol ediyor."\nHOLD  Sol sar\u0131 sat\u0131r, sonra sa\u011fdaki enum, sonra sa\u011f sar\u0131 sat\u0131r. Test ad\u0131n\u0131 g\xf6ster, okuma.\nNEXT  "Liste tamam. Peki cevap gelir ama i\xe7i bo\u015f olursa?"',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.It=new A.LS(B.JU,null)
-B.JR=new A.cA("/empty-reply","14. Kural 2, kod: bo\u015f cevap ba\u015far\u0131 de\u011fildir",'BEAT  [14:00 - 15:30] Kural 2, ikinci kod. Bo\u015f cevaba be\u015f y\u0131ld\u0131z hikayesi.\nSAY   "20 Kas\u0131m\'da denedim: modelin yerine sahte, bo\u015f bir cevap koydum. S\xfcsl\xfc parantez a\xe7, kapa, i\xe7i bo\u015f. Oyun ne yapt\u0131? Be\u015f y\u0131ld\u0131z, Tatl\u0131 M\xfckemmellik, alt\u0131nda Canl\u0131 Gemini rozeti ve tam puan. Neden? Solda sar\u0131 sat\u0131r: y\u0131ld\u0131z yoksa be\u015f y\u0131ld\u0131z say. Kod her bo\u015flu\u011fu ba\u015far\u0131yla dolduruyordu. Sa\u011fda yeni hali: bir alan eksikse ya da yanl\u0131\u015f t\xfcrdeyse, say\u0131 yerine yaz\u0131 gibi, bu bir cevap de\u011fildir. \u015eema bi\xe7imi tarif eder, de\u011ferin do\u011fru oldu\u011funu garanti etmez; Google\'\u0131n kendi dok\xfcman\u0131 da de\u011ferleri uygulaman\u0131zda do\u011frulay\u0131n diyor. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: bo\u015f cevap, ba\u015far\u0131 de\u011fildir."\nHOLD  Sol sar\u0131 sat\u0131r, sa\u011f sar\u0131 sat\u0131r, test ad\u0131. Alttaki \u0130ngilizce al\u0131nt\u0131y\u0131 okuma; sorulursa kayna\u011f\u0131 g\xf6ster.\nNEXT  "Buraya kadar modelin cevab\u0131yd\u0131. \u015eimdi uygulaman\u0131n kendisine ge\xe7iyoruz."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Ip=new A.LM(B.JR,null)
-B.JS=new A.cA("/order-state-rule","15. Kural 3: olmamas\u0131 gereken durum, yaz\u0131lamas\u0131n",'BEAT  [15:30 - 16:45] Kural 3. \xdc\xe7\xfcnc\xfc g\xf6revi salona sor, sonra yeni kelime: sealed class. SAY, canl\u0131 oyunun d\xfczeltilmi\u015f s\xfcr\xfcm oldu\u011funu varsayar; de\u011filse HOLD sat\u0131r\u0131ndaki c\xfcmleleri kullan.\nSAY   "\xdc\xe7\xfcnc\xfc kural. Kim Servis Et\'e bas\u0131p hemen S\u0131radaki M\xfc\u015fteri\'ye bast\u0131? Garip bir \u015fey g\xf6rmediniz, \xe7\xfcnk\xfc d\xfczelttim. 20 Kas\u0131m\'daki s\xfcr\xfcmde ayn\u0131 hamle \u015funu yap\u0131yordu: yeni m\xfc\u015fteri gelmi\u015f, tepsi bo\u015f, ama ekranda be\u015f y\u0131ld\u0131zl\u0131 bir kart ve elli puan. \xd6nceki sipari\u015fin cevab\u0131 yeni m\xfc\u015fteriye yaz\u0131l\u0131yordu. Yeni kelime sealed class: bir \u015feyin alabilece\u011fi halleri tek tek sayan bir kal\u0131p. Sipari\u015f ya bo\u015fta, ya j\xfcride, ya servis edildi. D\xf6rd\xfcnc\xfc hal yok. Kod yazman\u0131za izin vermiyorsa, yanl\u0131\u015fl\u0131kla da yapamazs\u0131n\u0131z."\nHOLD  CANLI OYUN ESK\u0130 S\xdcR\xdcMSE \xfc\xe7\xfcnc\xfc ve d\xf6rd\xfcnc\xfc c\xfcmlenin ("Garip bir \u015fey g\xf6rmediniz..." ve "20 Kas\u0131m\'daki s\xfcr\xfcmde...") yerine \u015funu s\xf6yle: "Yeterince h\u0131zl\u0131 olanlar \u015funu g\xf6rd\xfc: yeni m\xfc\u015fteri gelmi\u015f, tepsi bo\u015f, ama ekranda be\u015f y\u0131ld\u0131zl\u0131 bir kart ve elli puan. G\xf6rmediyseniz cevap parma\u011f\u0131n\u0131zdan h\u0131zl\u0131yd\u0131. Bu hata \u015fu an canl\u0131da duruyor; d\xfczeltmesi yaz\u0131ld\u0131, testi ye\u015fil." El kalkmazsa: "Normal, cevap sizden h\u0131zl\u0131yd\u0131." Bekleme, devam et. \u0130lk a\xe7\u0131l\u0131\u015fta be\u015f sat\u0131r n\xf6trd\xfcr; ilk t\u0131kta iki sa\xe7ma durum k\u0131rm\u0131z\u0131 yanar, ikinci t\u0131kta \xfcstleri \xe7izilir ve sa\u011fda \xfc\xe7 OrderState hali a\xe7\u0131l\u0131r.\nNEXT  "Hata tek bir unutulmu\u015f sat\u0131rd\u0131."',!1,!1,3,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Td=new A.OC(B.JS,null)
-B.K0=new A.cA("/forgotten-line","16. Kural 3, hata: unutulan sat\u0131r",'BEAT  [16:45 - 18:00] Kural 3, hata. \xdc\xe7 de\u011fi\u015fken, \xfc\xe7 s\u0131f\u0131rlama yeri, bir unutulan sat\u0131r.\nSAY   "Solda sipari\u015fin eski hali: \xfc\xe7 ayr\u0131 de\u011fi\u015fken, yani kodun bilgi tuttu\u011fu \xfc\xe7 ayr\u0131 kutu. J\xfcri d\xfc\u015f\xfcn\xfcyor mu, ka\xe7\u0131nc\u0131 tepsi, son karar ne. Ortadaki bir saya\xe7: cevap geldi\u011finde say\u0131 de\u011fi\u015fmi\u015fse cevap eski tepsiye aittir, at\u0131l\u0131r. Sipari\u015fi s\u0131f\u0131rlayan \xfc\xe7 yer var: Temizle, \u015fehir de\u011fi\u015ftir, S\u0131radaki M\xfc\u015fteri. Her biri \xfc\xe7 de\u011fi\u015fkeni de hat\u0131rlamak zorunda. Bu hata 12 Kas\u0131m\'da bir kez d\xfczeltildi; d\xfczeltme iki yeri kapatt\u0131, \xfc\xe7\xfcnc\xfcy\xfc unuttu. Sar\u0131 sat\u0131r, unutulan sat\u0131r\u0131n olmas\u0131 gereken yer. Sa\u011fda oyuncunun g\xf6rd\xfc\u011f\xfc: bo\u015f tepsiye be\u015f y\u0131ld\u0131z. Bunu bir testle kan\u0131tlad\u0131m: test k\u0131rm\u0131z\u0131 yand\u0131."\nHOLD  Soldaki \xfc\xe7 de\u011fi\u015fkeni parmakla say, sar\u0131 sat\u0131rda dur. Sonra sa\u011fdaki kart.\nNEXT  "\xc7\xf6z\xfcm, unutulan sat\u0131r\u0131 eklemek de\u011fil."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Km=new A.My(B.K0,null)
-B.K3=new A.cA("/sealed-order","17. Kural 3, \xe7\xf6z\xfcm: sealed OrderState",'BEAT  [18:00 - 19:30] Kural 3, \xe7\xf6z\xfcm. Tek tip, tek atama. Dosyan\u0131n h\xe2l\xe2 b\xfcy\xfck oldu\u011funu s\xf6yle.\nSAY   "Solda yeni kal\u0131p: \xfc\xe7 de\u011fi\u015fken yerine tek bir OrderState. Bo\u015fta, j\xfcride ya da servis edildi. Kart sadece servis edildi halinin i\xe7inde ya\u015f\u0131yor; sipari\u015f bo\u015ftaysa g\xf6sterecek kart yok. Sa\u011fda sar\u0131 sat\u0131r: s\u0131f\u0131rlamak art\u0131k tek bir atama. Unutulacak ikinci sat\u0131r kalmad\u0131. Ge\xe7 gelen cevap ne oluyor? Alttaki sat\u0131r soruyor: bu cevap h\xe2l\xe2 bekledi\u011fim sipari\u015fe mi ait? De\u011filse \xe7\xf6pe. D\xfcr\xfcst olay\u0131m: bu ekran dosyas\u0131 h\xe2l\xe2 2.600 sat\u0131rdan uzun; dosyay\u0131 d\xfczeltmedim, durumu d\xfczelttim. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: ayn\u0131 bilgiyi \xfc\xe7 yerde tutarsan\u0131z biri unutulur; tek yerde tutun."\nHOLD  Soldaki \xfc\xe7 s\u0131n\u0131f, sa\u011fdaki sar\u0131 sat\u0131r, test ad\u0131. "D\xfcr\xfcst olay\u0131m" c\xfcmlesinde ekrana de\u011fil salona bak.\nNEXT  "Buraya kadar cevap hep geldi. Ya hi\xe7 gelmezse?"',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.VK=new A.Qr(B.K3,null)
-B.K5=new A.cA("/fallback-rule","18. Kural 4: model susarsa oyun susmaz",'BEAT  [19:30 - 20:45] Kural 4. Yeni kelime: timeout. \xdc\xe7 plan; s\u0131n\u0131r ile \xf6l\xe7\xfcm\xfc ay\u0131r.\nSAY   "D\xf6rd\xfcnc\xfc kural. Yeni kelime timeout, zaman a\u015f\u0131m\u0131: en fazla \u015fu kadar beklerim s\u0131n\u0131r\u0131. Oyunda \xfc\xe7 plan var. A plan\u0131 canl\u0131 Gemini: en fazla sekiz saniye bekliyoruz. B plan\u0131 Gemma, bu laptopta \xe7al\u0131\u015fan k\xfc\xe7\xfck bir model: s\u0131n\u0131r on be\u015f saniye; o yaln\u0131zca benim laptopumda var, sizin telefonunuzda yok. C plan\u0131 pakete koydu\u011fumuz haz\u0131r yan\u0131tlar: model gerekmez. Ekrandaki sekiz ve on be\u015f \xf6l\xe7\xfcm de\u011fil, s\u0131n\u0131r. \xc7er\xe7eve s\u0131n\u0131r\u0131, dolu k\u0131s\u0131m \xf6l\xe7\xfcm\xfc g\xf6steriyor; 11 Kas\u0131m\'da 12 tepsiyle \xf6l\xe7t\xfcm."\nHOLD  Yukar\u0131dan a\u015fa\u011f\u0131 A, B, C. "\xd6l\xe7\xfcm de\u011fil, s\u0131n\u0131r" derken \xe7er\xe7eveyi, sonra dolu k\u0131sm\u0131 g\xf6ster. C \xe7ubu\u011funun ne kadar k\u0131sa oldu\u011funu g\xf6ster.\nNEXT  "C plan\u0131n\u0131 belki az \xf6nce siz test ettiniz."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Jv=new A.LY(B.K5,null)
-B.JY=new A.cA("/hall-load-test","19. Kural 4, kan\u0131t: y\xfck testini salon yapt\u0131",'BEAT  [20:45 - 22:30] Kural 4, kan\u0131t. \u0130kinci g\xf6revi salona sor: rozetinizde ne yaz\u0131yordu?\nSAY   "Rozetinde Canl\u0131 Gemini yazanlar el kald\u0131rs\u0131n. Yerel JSON \u015eemas\u0131 yazanlar? Yerel JSON \u015eemas\u0131, pakete koydu\u011fumuz haz\u0131r yan\u0131t demek. \u0130kinci grup: sizde model cevap veremedi ya da cevab\u0131 reddedildi, C plan\u0131 \xe7al\u0131\u015ft\u0131. Nedenini rozet s\xf6ylemiyor. Olas\u0131 bir neden: sunucumuz saniyede on iste\u011fe izin veriyor; fazlas\u0131na HTTP 429 diyor, yani \xe7ok fazla istek geldi, yava\u015fla. Soldaki kod rozetin arkas\u0131ndaki liste: \xfc\xe7 j\xfcri, \xfc\xe7 isim. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: yapay zeka \xe7a\u011f\u0131ran her \xf6zelli\u011fin bir B plan\u0131 olsun."\nHOLD  \u0130ki oylamada da 3 saniye bekle. \u0130lk grupta el yoksa: "Demek hepiniz C plan\u0131na d\xfc\u015ft\xfcn\xfcz; oyun yine de cevap verdi." \u0130kinci grupta el yoksa: "Bug\xfcn s\u0131n\u0131ra tak\u0131lmad\u0131k; tak\u0131lsayd\u0131k rozette Yerel JSON \u015eemas\u0131 yazacakt\u0131. C plan\u0131n\u0131 alttaki test kan\u0131tl\u0131yor." Sonra soldaki kod, sonra sa\u011fdaki kart.\nNEXT  "Son kural para ve g\xfcvenlikle ilgili."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Kv=new A.MY(B.JY,null)
-B.K_=new A.cA("/key-rule","20. Kural 5: anahtar sunucuda kal\u0131r",'BEAT  [22:30 - 24:00] Kural 5, g\xfcvenlik. Yeni kelime: proxy. Anahtar\u0131 ve iki kan\u0131t\u0131 g\xf6ster.\nSAY   "Be\u015finci kural. Gemini\'yi \xe7a\u011f\u0131rmak i\xe7in bir API anahtar\u0131 gerekiyor; anahtar, faturan\u0131z\u0131n \u015fifresi gibi: kimde varsa sizin hesab\u0131n\u0131za harcar. Web uygulamas\u0131n\u0131n i\xe7ine koyarsan\u0131z herkes taray\u0131c\u0131dan okuyabilir. Yeni kelime proxy: taray\u0131c\u0131 ile Gemini aras\u0131ndaki arac\u0131 sunucu. Telefonunuz bizim sunucuya soruyor; sar\u0131 sat\u0131rda sunucu anahtar\u0131 ekleyip Gemini\'ye iletiyor. Anahtar telefonunuza hi\xe7 inmiyor. Bunu s\xf6ylemek kolay, o y\xfczden iki kan\u0131t var. Bir test, giden istekte anahtar olmad\u0131\u011f\u0131n\u0131 kontrol ediyor. CI, yani her de\u011fi\u015fiklikte otomatik \xe7al\u0131\u015fan kontrol, derlenen pakette anahtara benzeyen bir \u015fey ar\u0131yor. Eve g\xf6t\xfcrece\u011finiz c\xfcmle: taray\u0131c\u0131ya giden her \u015feyi herkes okur."\nHOLD  \xd6nce soldaki iki \u015ferit: YANLI\u015e, sonra OYUNDA. Sonra sa\u011fdaki sar\u0131 sat\u0131r, en son alttaki iki kan\u0131t. Alttaki "\u0130leri seviye" sat\u0131r\u0131n\u0131 okuma; sorulursa: proxy\'de kimlik kontrol\xfc yok, \xfcretimde yol App Check.\nNEXT  "Anahtar g\xfcvende. Peki onu ne s\u0131kl\u0131kla kullan\u0131yoruz?"',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.MB=new A.NC(B.K_,null)
-B.JO=new A.cA("/cost-honest","21. Kural 5, maliyet: model bo\u015funa \xe7a\u011fr\u0131lmaz",'BEAT  [24:00 - 25:15] Kural 5, maliyet. Say\u0131lan rakamlar ve bir \xf6l\xe7\xfcm; eski tahminin tutmad\u0131\u011f\u0131n\u0131 s\xf6yle.\nSAY   "Token, modelin okudu\u011fu ve yazd\u0131\u011f\u0131 kelime par\xe7as\u0131; fatura token say\u0131s\u0131na g\xf6re kesiliyor. O y\xfczden en ucuz \xe7a\u011fr\u0131, hi\xe7 yapmad\u0131\u011f\u0131n\u0131z \xe7a\u011fr\u0131. Tepsiyi dizerken modele gitmiyoruz: s\u0131f\u0131r \xe7a\u011fr\u0131. Eksik tepside, i\xe7inde tuz ya da ac\u0131 yoksa, yine gitmiyoruz; cevab\u0131 kod veriyor. Tepsi servis edilince tek \xe7a\u011fr\u0131 gidiyor. Bu \xfc\xe7\xfcn\xfcn testi var. Sa\u011fdaki rakama dikkat: 322 token. Bunu 20 Kas\u0131m\'da tek bir tepside \xf6l\xe7t\xfcm. O g\xfcne kadar slayt\u0131mda 270 yaz\u0131yordu ve bir tahmindi; elli token eksik tahmin etmi\u015fim. \xd6l\xe7medi\u011finiz rakam\u0131 \xf6l\xe7m\xfc\u015f gibi g\xf6stermeyin."\nHOLD  Soldan sa\u011fa d\xf6rt kutu. Son kutudaki "\xd6L\xc7\xdcLD\xdc" etiketini g\xf6ster ve bir saniye dur.\nNEXT  "Toparlayal\u0131m."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Gv=new A.KW(B.JO,null)
-B.JW=new A.cA("/lesson-recap","22. \xd6zet: be\u015f kural, iki s\xfctun",'BEAT  [25:15 - 26:30] \xd6zet. \u0130ki s\xfctunu oku, yeniden anlatma. A\xe7\u0131l\u0131\u015ftaki soruyu salona geri sor.\nSAY   "Be\u015f kural, iki s\xfctun. Modelin cevab\u0131: model \xf6nerir, karar\u0131 kod verir. Serbest metin yerine kapal\u0131 liste; bo\u015f cevap ba\u015far\u0131 de\u011fildir. Uygulaman\u0131n kendisi: olmamas\u0131 gereken durum yaz\u0131lamas\u0131n. Model susarsa oyun susmaz. Anahtar sunucuda kal\u0131r, model bo\u015funa \xe7a\u011fr\u0131lmaz. Kodun hepsi, testleriyle birlikte, sa\u011fdaki QR kodda. Ba\u015fta bir soru sormu\u015ftum: tuzu kim yakalayacak, yapay zeka m\u0131, kod mu?"\nHOLD  S\xfctunlar\u0131 oku, a\xe7\u0131klama ekleme. Soruyu sorduktan sonra 3 saniye bekle; sessizlikse cevab\u0131 kendin s\xf6yle.\nNEXT  "Cevap: kod."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.N2=new A.NR(B.JW,null)
-B.Kc=new A.cA("/winners-podium","23. Podyum: ilk \xfc\xe7 sahneye",'BEAT  [26:30 - 28:00] \xd6d\xfcl an\u0131. \xdc\xe7 t\u0131k: \xfc\xe7\xfcnc\xfc, ikinci, birinci.\nSAY   "S\xf6z verdi\u011fim gibi: podyum. \xdc\xe7\xfcnc\xfcm\xfcz sticker setini al\u0131yor. \u0130kincimiz Google Cloud g\xf6zl\xfc\u011f\xfc. Ve birincimiz, Dash\'in yeni sahibi. \xdc\xe7\xfcn\xfcz\xfc de sahneye bekliyorum."\nHOLD  Slayt \xfc\xe7 soru i\u015faretiyle a\xe7\u0131l\u0131r. Her \xf6d\xfclden \xf6nce ileri tu\u015funa bir kez bas, ekrandaki kullan\u0131c\u0131 ad\u0131n\u0131 y\xfcksek sesle oku ve salonun alk\u0131\u015f\u0131n\u0131 bekle. \u0130sim *** g\xf6r\xfcn\xfcyorsa okuma, "\xfc\xe7\xfcnc\xfcm\xfcz kendini biliyor" de. Kutu "Hen\xfcz kimse yok" diyorsa o \xf6d\xfcl\xfc fuayede verece\u011fini s\xf6yle. \xdc\xe7\xfc sahneye gelince \xf6d\xfclleri ver, tek bir foto\u011fraf \xe7ektir.\nNEXT  "Ve son olarak: bana nas\u0131l ula\u015f\u0131rs\u0131n\u0131z?"',!1,!1,4,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.a4X=new A.Se(B.Kc,null)
-B.K4=new A.cA("/bana-ulasin","24. Bana ula\u015f\u0131n",'BEAT  [28:00 - 29:00] Kapan\u0131\u015f c\xfcmlesi ve fuaye daveti. Bu slayt konu\u015fma bittikten sonra ekranda a\xe7\u0131k kals\u0131n.\nSAY   "\u015eakay\u0131 model yazs\u0131n, karar\u0131 kodunuz versin. Yaz\u0131lar\u0131m, kodlar\u0131m ve ileti\u015fim bilgilerim ekrandaki QR kodda, esratech.com adresinde. Ayr\u0131 bir soru-cevap s\xfcremiz yok ama hemen d\u0131\u015far\u0131da, fuayede olaca\u011f\u0131m; gelin tan\u0131\u015fal\u0131m, kodu ve hatalar\u0131 konu\u015fal\u0131m. \xc7ok te\u015fekk\xfcrler Konya!"\nHOLD  \u0130lk c\xfcmleyi ekrandaki yaz\u0131y\u0131 g\xf6stererek, yava\u015f s\xf6yle. G\xfcl\xfcmse, salona el salla. Te\u015fekk\xfcrden sonra kumanday\u0131 b\u0131rak: bir t\u0131k daha yedek slayt\u0131 a\xe7ar. HDMI kablosunu s\xf6kmeden \xf6nce sahne ekibinin i\u015faretini bekle.\nNEXT  Son ana slayt (yedek slaytlar: /demo-hiccup ve /wifi-off-gemma).',!1,!1,1,B.an,B.aa,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Cl=new A.K_(B.K4,null)
-B.K1=new A.cA("/demo-hiccup","Yedek: demo aksarsa, \xe7evrimd\u0131\u015f\u0131 mod",'BEAT  [YEDEK] Salon Wi-Fi\'\u0131 kesilirse cankurtaran slayt\u0131.\nSAY   "Wi-Fi k\u0131sa bir \xe7ay molas\u0131 verdi. Sorun de\u011fil, mimariyi tam bu an i\xe7in kurduk. Haz\u0131rlad\u0131\u011f\u0131m yerel sekmeye ge\xe7iyorum: kod ayn\u0131, sadece bulut kapal\u0131. Karar\u0131 bu laptoptaki Gemma 4 veriyor; o da yeti\u015fmezse paketteki haz\u0131r yan\u0131tlar devreye giriyor. Oyuna kald\u0131\u011f\u0131m\u0131z yerden devam ediyoruz."\nHOLD  Sakin kal, g\xfcl\xfcmse, sahneden \xf6nce a\xe7t\u0131\u011f\u0131n yerel \xe7evrimd\u0131\u015f\u0131 sekmeye ge\xe7. Sahnede komut \xe7al\u0131\u015ft\u0131rma. Bitti\u011finde canl\u0131 oyun slayt\u0131na (/hall-plays) geri d\xf6n.\nNEXT  "Kald\u0131\u011f\u0131m\u0131z yerden devam edelim."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.Hc=new A.Ll(B.K1,null)
-B.JP=new A.cA("/wifi-off-gemma","Yedek: Wi-Fi kapal\u0131, j\xfcri bu laptopta",'BEAT  [YEDEK] B plan\u0131n\u0131n canl\u0131 g\xf6sterimi. Yaln\u0131zca s\xfcre kal\u0131rsa ya da sorulursa.\nSAY   "B plan\u0131n\u0131 canl\u0131 g\xf6relim. Wi-Fi\'\u0131 kapat\u0131yorum ve ayn\u0131 tuzlu tepsiyi g\xf6nderiyorum; bu kez bulut yok. Karar\u0131 bu laptoptaki Gemma 4 veriyor. Be\u015f ile sekiz saniye s\xfcrebiliyor; on be\u015f saniyelik s\u0131n\u0131r bunun i\xe7in. O da yeti\u015fmezse paketteki haz\u0131r yan\u0131t gelir."\nHOLD  Yerel oyun sekmesine ge\xe7 (sahneden \xf6nce a\xe7t\u0131\u011f\u0131n sekme). Sahnede komut \xe7al\u0131\u015ft\u0131rma. Gemma d\xfc\u015f\xfcn\xfcrken sus ve bekle. Bitince Stage Navigator ile kald\u0131\u011f\u0131n slayta d\xf6n.\nNEXT  "Kald\u0131\u011f\u0131m\u0131z yerden devam edelim."',!1,!1,1,B.an,null,B.ai,B.ae,B.aa,B.ac,B.a8,B.aj,!0,B.ak,B.ad,B.al)
-B.a4W=new A.Sb(B.JP,null)
-B.pH=s([B.a3k,B.C1,B.a3l,B.Yh,B.KD,B.Kw,B.Ku,B.KC,B.JA,B.Kt,B.Kr,B.a4B,B.It,B.Ip,B.Td,B.Km,B.VK,B.Jv,B.Kv,B.MB,B.Gv,B.N2,B.a4X,B.Cl,B.Hc,B.a4W],A.aj("v<c8>"))
+B.OM=s([B.CU],t.sq)
 B.AP=new A.DJ(0,"left")
 B.AQ=new A.DJ(1,"right")
-B.OP=s([B.AP,B.AQ],A.aj("v<DJ>"))
+B.OR=s([B.AP,B.AQ],A.aj("v<DJ>"))
 B.aq=new A.DW(0,"upstream")
-B.OS=s([B.aq,B.k],A.aj("v<DW>"))
+B.OT=s([B.aq,B.k],A.aj("v<DW>"))
 B.au=new A.E_(0,"rtl")
 B.Y=new A.E_(1,"ltr")
 B.lm=s([B.au,B.Y],A.aj("v<E_>"))
@@ -94753,57 +94753,57 @@ B.BF=new A.wp(2,"bottomLeft")
 B.a5r=new A.mb(B.BE,B.BF)
 B.a5s=new A.mb(B.BF,B.BE)
 B.Pa=s([B.a5q,B.a5t,B.a5r,B.a5s],A.aj("v<mb>"))
-B.Ph=s([35,30,20,25,30,35,30,25,25],t.n)
+B.Pi=s([35,30,20,25,30,35,30,25,25],t.n)
 B.Pl=s(["click","scroll"],t.s)
 B.jT=new A.tf()
 B.iF=new A.Qk(1,"page")
 B.iG=new A.eN(B.by,B.iF)
 B.Pm=s([B.jT,B.iG],A.aj("v<aT>"))
-B.PA=s([],t.QP)
+B.PB=s([],t.QP)
 B.pL=s([],A.aj("v<b_t>"))
-B.Ps=s([],t.D)
+B.Pt=s([],t.D)
 B.pN=s([],t.eu)
-B.PB=s([],t.fJ)
-B.Pt=s([],t.ER)
-B.PC=s([],t.NL)
+B.PC=s([],t.fJ)
+B.Pu=s([],t.ER)
+B.PD=s([],t.NL)
 B.pJ=s([],t.tc)
 B.ia=s([],t.jl)
 B.pM=s([],t.wi)
-B.Pu=s([],A.aj("v<eq<@>>"))
+B.Pv=s([],A.aj("v<eq<@>>"))
 B.ln=s([],t.AO)
-B.Pv=s([],t.yo)
+B.Pw=s([],t.yo)
 B.bZ=s([],t.i3)
 B.lo=s([],t.K1)
-B.Pz=s([],t.D1)
+B.PA=s([],t.D1)
 B.lq=s([],t.QF)
-B.PD=s([],t.Lx)
-B.Px=s([],t.AS)
+B.PE=s([],t.Lx)
+B.Py=s([],t.AS)
 B.a8f=s([],t.p)
-B.Py=s([],A.aj("v<fN>"))
-B.Pw=s([],t.n)
-B.Pq=s([],t.t)
+B.Pz=s([],A.aj("v<fN>"))
+B.Px=s([],t.n)
+B.Pr=s([],t.t)
 B.pI=s([],t.ee)
-B.Pr=s([],t.XS)
-B.PN=s(["amk","sik","orospu","pi\xe7","yarra","fuck","shit"],t.s)
+B.Ps=s([],t.XS)
+B.PM=s(["amk","sik","orospu","pi\xe7","yarra","fuck","shit"],t.s)
 B.SE=new A.h(0,2)
 B.CT=new A.dN(0.75,B.dG,B.nO,B.SE,1.5)
-B.PP=s([B.CT],t.sq)
+B.PO=s([B.CT],t.sq)
 B.Gd=new A.F(1,0.25882352941176473,0.5215686274509804,0.9568627450980393,B.i)
 B.FQ=new A.F(1,0.9176470588235294,0.2627450980392157,0.20784313725490197,B.i)
 B.FS=new A.F(1,0.9764705882352941,0.6705882352941176,0,B.i)
 B.G0=new A.F(1,0.20392156862745098,0.6588235294117647,0.3254901960784314,B.i)
-B.PQ=s([B.Gd,B.FQ,B.FS,B.G0],t.t_)
+B.PP=s([B.Gd,B.FQ,B.FS,B.G0],t.t_)
 B.fs=s([B.d6,B.cl,B.ha,B.hb,B.jP],t.QP)
 B.a5F=new A.wv("A","Canl\u0131 Gemini","telefonunuzda ve sahnede",B.b9,8,"s\u0131n\u0131r 8 sn",1,1.8,"\xf6l\xe7\xfcm 1,0 ile 1,8 sn")
 B.a5E=new A.wv("B","Yerel Gemma","yaln\u0131zca sahnedeki laptopta",B.y,15,"s\u0131n\u0131r 15 sn",5,8.4,"\xf6l\xe7\xfcm 5,0 ile 8,4 sn")
 B.a5G=new A.wv("C","Haz\u0131r yan\u0131tlar","pakette, model gerekmez",B.z,0.25,"en ge\xe7 250 ms",null,null,null)
 B.pO=s([B.a5F,B.a5E,B.a5G],A.aj("v<wv>"))
-B.NZ=s([0.001200833568784504,0.002389694492170889,0.0002795742885861124],t.n)
-B.Pn=s([0.0005891086651375999,0.0029785502573438758,0.0003270666104008398],t.n)
-B.Ob=s([0.00010146692491640572,0.0005364214359186694,0.0032979401770712076],t.n)
-B.Q2=s([B.NZ,B.Pn,B.Ob],t.zg)
-B.Q4=s([45,95,45,20,45,90,45,45,45],t.n)
-B.Q5=s([120,120,20,45,20,15,20,120,120],t.n)
+B.O_=s([0.001200833568784504,0.002389694492170889,0.0002795742885861124],t.n)
+B.Po=s([0.0005891086651375999,0.0029785502573438758,0.0003270666104008398],t.n)
+B.Od=s([0.00010146692491640572,0.0005364214359186694,0.0032979401770712076],t.n)
+B.Q4=s([B.O_,B.Po,B.Od],t.zg)
+B.Q6=s([45,95,45,20,45,90,45,45,45],t.n)
+B.Q7=s([120,120,20,45,20,15,20,120,120],t.n)
 B.ee=new A.hK(0,"controlModifier")
 B.ef=new A.hK(1,"shiftModifier")
 B.eg=new A.hK(2,"altModifier")
@@ -94815,13 +94815,13 @@ B.lP=new A.hK(7,"functionModifier")
 B.vQ=new A.hK(8,"symbolModifier")
 B.pP=s([B.ee,B.ef,B.eg,B.eh,B.lM,B.lN,B.lO,B.lP,B.vQ],A.aj("v<hK>"))
 B.lr=s([!0,!1],t.HZ)
-B.Qe=s(["pointerdown","pointermove","pointerleave","pointerup","pointercancel","touchstart","touchend","touchmove","touchcancel","mousedown","mousemove","mouseleave","mouseup","wheel"],t.s)
+B.Qf=s(["pointerdown","pointermove","pointerleave","pointerup","pointercancel","touchstart","touchend","touchmove","touchcancel","mousedown","mousemove","mouseleave","mouseup","wheel"],t.s)
 B.ld=new A.h0(100)
 B.Kj=new A.h0(200)
 B.Kk=new A.h0(300)
 B.Kl=new A.h0(800)
 B.p1=new A.h0(900)
-B.Qg=s([B.ld,B.Kj,B.Kk,B.t,B.am,B.cN,B.w,B.Kl,B.p1],A.aj("v<h0>"))
+B.Qh=s([B.ld,B.Kj,B.Kk,B.t,B.am,B.cN,B.w,B.Kl,B.p1],A.aj("v<h0>"))
 B.Qj=s([0.015176349177441876,0.045529047532325624,0.07588174588720938,0.10623444424209313,0.13658714259697685,0.16693984095186062,0.19729253930674434,0.2276452376616281,0.2579979360165119,0.28835063437139563,0.3188300904430532,0.350925934958123,0.3848314933096426,0.42057480301049466,0.458183274052838,0.4976837250274023,0.5391024159806381,0.5824650784040898,0.6277969426914107,0.6751227633498623,0.7244668422128921,0.775853049866786,0.829304845476233,0.8848452951698498,0.942497089126609,1.0022825574869039,1.0642236851973577,1.1283421258858297,1.1946592148522128,1.2631959812511864,1.3339731595349034,1.407011200216447,1.4823302800086415,1.5599503113873272,1.6398909516233677,1.7221716113234105,1.8068114625156377,1.8938294463134073,1.9832442801866852,2.075074464868551,2.1693382909216234,2.2660538449872063,2.36523901573795,2.4669114995532007,2.5710888059345764,2.6777882626779785,2.7870270208169257,2.898822059350997,3.0131901897720907,3.1301480604002863,3.2497121605402226,3.3718988244681087,3.4967242352587946,3.624204428461639,3.754355295633311,3.887192587735158,4.022731918402185,4.160988767090289,4.301978482107941,4.445716283538092,4.592217266055746,4.741496401646282,4.893568542229298,5.048448422192488,5.20615066083972,5.3666897647573375,5.5300801301023865,5.696336044816294,5.865471690767354,6.037501145825082,6.212438385869475,6.390297286737924,6.571091626112461,6.7548350853498045,6.941541251256611,7.131223617812143,7.323895587840543,7.5195704746346665,7.7182615035334345,7.919981813454504,8.124744458384042,8.332562408825165,8.543448553206703,8.757415699253682,8.974476575321063,9.194643831691977,9.417930041841839,9.644347703669503,9.873909240696694,10.106627003236781,10.342513269534024,10.58158024687427,10.8238400726681,11.069304815507364,11.317986476196008,11.569896988756009,11.825048221409341,12.083451977536606,12.345119996613247,12.610063955123938,12.878295467455942,13.149826086772048,13.42466730586372,13.702830557985108,13.984327217668513,14.269168601521828,14.55736596900856,14.848930523210871,15.143873411576273,15.44220572664832,15.743938506781891,16.04908273684337,16.35764934889634,16.66964922287304,16.985093187232053,17.30399201960269,17.62635644741625,17.95219714852476,18.281524751807332,18.614349837764564,18.95068293910138,19.290534541298456,19.633915083172692,19.98083495742689,20.331304511189067,20.685334046541502,21.042933821039977,21.404114048223256,21.76888489811322,22.137256497705877,22.50923893145328,22.884842241736916,23.264076429332462,23.6469514538663,24.033477234264016,24.42366364919083,24.817520537484558,25.21505769858089,25.61628489293138,26.021211842414342,26.429848230738664,26.842203703840827,27.258287870275353,27.678110301598522,28.10168053274597,28.529008062403893,28.96010235337422,29.39497283293396,29.83362889318845,30.276079891419332,30.722335150426627,31.172403958865512,31.62629557157785,32.08401920991837,32.54558406207592,33.010999283389665,33.4802739966603,33.953417292456834,34.430438229418264,34.911345834551085,35.39614910352207,35.88485700094671,36.37747846067349,36.87402238606382,37.37449765026789,37.87891309649659,38.38727753828926,38.89959975977785,39.41588851594697,39.93615253289054,40.460400508064545,40.98864111053629,41.520882981230194,42.05713473317016,42.597404951718396,43.141702194811224,43.6900349931913,44.24241185063697,44.798841244188324,45.35933162437017,45.92389141541209,46.49252901546552,47.065252796817916,47.64207110610409,48.22299226451468,48.808024568002054,49.3971762874833,49.9904556690408,50.587870934119984,51.189430279724725,51.79514187861014,52.40501387947288,53.0190544071392,53.637271562750364,54.259673423945976,54.88626804504493,55.517063457223934,56.15206766869424,56.79128866487574,57.43473440856916,58.08241284012621,58.734331877617365,59.39049941699807,60.05092333227251,60.715611475655585,61.38457167773311,62.057811747619894,62.7353394731159,63.417162620860914,64.10328893648692,64.79372614476921,65.48848194977529,66.18756403501224,66.89098006357258,67.59873767827808,68.31084450182222,69.02730813691093,69.74813616640164,70.47333615344107,71.20291564160104,71.93688215501312,72.67524319850172,73.41800625771542,74.16517879925733,74.9167682708136,75.67278210128072,76.43322770089146,77.1981124613393,77.96744375590167,78.74122893956174,79.51947534912904,80.30219030335869,81.08938110306934,81.88105503125999,82.67721935322541,83.4778813166706,84.28304815182372,85.09272707154808,85.90692527145302,86.72564993000343,87.54890820862819,88.3767072518277,89.2090541872801,90.04595612594655,90.88742016217518,91.73345337380438,92.58406282226491,93.43925555268066,94.29903859396902,95.16341895893969,96.03240364439274,96.9059996312159,97.78421388448044,98.6670533535366,99.55452497210776],t.n)
 B.UX=new A.a8(0.7078,8.3194)
 B.UQ=new A.a8(0.7895,2.4523)
@@ -95368,72 +95368,72 @@ B.vK=new A.bQ(B.bg,[],A.aj("bQ<DL,@>"))
 B.RX=new A.bQ(B.bg,[],A.aj("bQ<fM,cU>"))
 B.vI=new A.bQ(B.bg,[],A.aj("bQ<fM,pJ<cU>>"))
 B.vJ=new A.bQ(B.bg,[],A.aj("bQ<hB<fh>?,U<eM>>"))
-B.Ny=s([42,null,null,8589935146],t.Z)
-B.Nz=s([43,null,null,8589935147],t.Z)
-B.NA=s([45,null,null,8589935149],t.Z)
-B.NB=s([46,null,null,8589935150],t.Z)
-B.NC=s([47,null,null,8589935151],t.Z)
-B.ND=s([48,null,null,8589935152],t.Z)
-B.NE=s([49,null,null,8589935153],t.Z)
-B.NG=s([50,null,null,8589935154],t.Z)
-B.NI=s([51,null,null,8589935155],t.Z)
-B.NJ=s([52,null,null,8589935156],t.Z)
-B.NK=s([53,null,null,8589935157],t.Z)
-B.NL=s([54,null,null,8589935158],t.Z)
-B.NM=s([55,null,null,8589935159],t.Z)
-B.NN=s([56,null,null,8589935160],t.Z)
-B.NP=s([57,null,null,8589935161],t.Z)
+B.Nz=s([42,null,null,8589935146],t.Z)
+B.NA=s([43,null,null,8589935147],t.Z)
+B.NB=s([45,null,null,8589935149],t.Z)
+B.NC=s([46,null,null,8589935150],t.Z)
+B.ND=s([47,null,null,8589935151],t.Z)
+B.NE=s([48,null,null,8589935152],t.Z)
+B.NF=s([49,null,null,8589935153],t.Z)
+B.NH=s([50,null,null,8589935154],t.Z)
+B.NJ=s([51,null,null,8589935155],t.Z)
+B.NK=s([52,null,null,8589935156],t.Z)
+B.NL=s([53,null,null,8589935157],t.Z)
+B.NM=s([54,null,null,8589935158],t.Z)
+B.NN=s([55,null,null,8589935159],t.Z)
+B.NO=s([56,null,null,8589935160],t.Z)
+B.NQ=s([57,null,null,8589935161],t.Z)
 B.OV=s([8589934852,8589934852,8589934853,null],t.Z)
-B.Nn=s([4294967555,null,4294967555,null],t.Z)
-B.No=s([4294968065,null,null,8589935154],t.Z)
-B.Np=s([4294968066,null,null,8589935156],t.Z)
-B.Nq=s([4294968067,null,null,8589935158],t.Z)
-B.Nr=s([4294968068,null,null,8589935160],t.Z)
-B.Nw=s([4294968321,null,null,8589935157],t.Z)
+B.No=s([4294967555,null,4294967555,null],t.Z)
+B.Np=s([4294968065,null,null,8589935154],t.Z)
+B.Nq=s([4294968066,null,null,8589935156],t.Z)
+B.Nr=s([4294968067,null,null,8589935158],t.Z)
+B.Ns=s([4294968068,null,null,8589935160],t.Z)
+B.Nx=s([4294968321,null,null,8589935157],t.Z)
 B.OW=s([8589934848,8589934848,8589934849,null],t.Z)
-B.Nm=s([4294967423,null,null,8589935150],t.Z)
-B.Ns=s([4294968069,null,null,8589935153],t.Z)
-B.Nl=s([4294967309,null,null,8589935117],t.Z)
-B.Nt=s([4294968070,null,null,8589935159],t.Z)
-B.Nx=s([4294968327,null,null,8589935152],t.Z)
+B.Nn=s([4294967423,null,null,8589935150],t.Z)
+B.Nt=s([4294968069,null,null,8589935153],t.Z)
+B.Nm=s([4294967309,null,null,8589935117],t.Z)
+B.Nu=s([4294968070,null,null,8589935159],t.Z)
+B.Ny=s([4294968327,null,null,8589935152],t.Z)
 B.OX=s([8589934854,8589934854,8589934855,null],t.Z)
-B.Nu=s([4294968071,null,null,8589935155],t.Z)
-B.Nv=s([4294968072,null,null,8589935161],t.Z)
+B.Nv=s([4294968071,null,null,8589935155],t.Z)
+B.Nw=s([4294968072,null,null,8589935161],t.Z)
 B.OY=s([8589934850,8589934850,8589934851,null],t.Z)
-B.vL=new A.dn(["*",B.Ny,"+",B.Nz,"-",B.NA,".",B.NB,"/",B.NC,"0",B.ND,"1",B.NE,"2",B.NG,"3",B.NI,"4",B.NJ,"5",B.NK,"6",B.NL,"7",B.NM,"8",B.NN,"9",B.NP,"Alt",B.OV,"AltGraph",B.Nn,"ArrowDown",B.No,"ArrowLeft",B.Np,"ArrowRight",B.Nq,"ArrowUp",B.Nr,"Clear",B.Nw,"Control",B.OW,"Delete",B.Nm,"End",B.Ns,"Enter",B.Nl,"Home",B.Nt,"Insert",B.Nx,"Meta",B.OX,"PageDown",B.Nu,"PageUp",B.Nv,"Shift",B.OY],A.aj("dn<l,U<p?>>"))
-B.NO=s([B.pY,null,null,B.lE],t.L)
+B.vL=new A.dn(["*",B.Nz,"+",B.NA,"-",B.NB,".",B.NC,"/",B.ND,"0",B.NE,"1",B.NF,"2",B.NH,"3",B.NJ,"4",B.NK,"5",B.NL,"6",B.NM,"7",B.NN,"8",B.NO,"9",B.NQ,"Alt",B.OV,"AltGraph",B.No,"ArrowDown",B.Np,"ArrowLeft",B.Nq,"ArrowRight",B.Nr,"ArrowUp",B.Ns,"Clear",B.Nx,"Control",B.OW,"Delete",B.Nn,"End",B.Nt,"Enter",B.Nm,"Home",B.Nu,"Insert",B.Ny,"Meta",B.OX,"PageDown",B.Nv,"PageUp",B.Nw,"Shift",B.OY],A.aj("dn<l,U<p?>>"))
+B.NP=s([B.pY,null,null,B.lE],t.L)
 B.PH=s([B.vj,null,null,B.lF],t.L)
-B.Oq=s([B.vk,null,null,B.lG],t.L)
+B.Os=s([B.vk,null,null,B.lG],t.L)
 B.OZ=s([B.lD,null,null,B.cR],t.L)
 B.Na=s([B.vl,null,null,B.lH],t.L)
-B.Q_=s([B.vm,null,null,B.ie],t.L)
+B.Q1=s([B.vm,null,null,B.ie],t.L)
 B.PU=s([B.vn,null,null,B.e9],t.L)
-B.NW=s([B.vo,null,null,B.cS],t.L)
-B.Qc=s([B.vp,null,null,B.ea],t.L)
+B.NX=s([B.vo,null,null,B.cS],t.L)
+B.Qd=s([B.vp,null,null,B.ea],t.L)
 B.PT=s([B.vq,null,null,B.cT],t.L)
-B.NT=s([B.vr,null,null,B.ig],t.L)
-B.Ni=s([B.vs,null,null,B.cU],t.L)
-B.O7=s([B.vt,null,null,B.eb],t.L)
-B.PK=s([B.vu,null,null,B.cV],t.L)
-B.PM=s([B.vv,null,null,B.ec],t.L)
-B.O_=s([B.e3,B.e3,B.fz,null],t.L)
-B.Q1=s([B.fv,null,B.fv,null],t.L)
-B.Oz=s([B.c_,null,null,B.cS],t.L)
-B.OA=s([B.bJ,null,null,B.cT],t.L)
-B.OB=s([B.bK,null,null,B.cU],t.L)
-B.Qa=s([B.c0,null,null,B.cV],t.L)
-B.PR=s([B.lv,null,null,B.ig],t.L)
-B.O0=s([B.e2,B.e2,B.fy,null],t.L)
-B.Pi=s([B.b3,null,null,B.cR],t.L)
-B.OC=s([B.cO,null,null,B.e9],t.L)
-B.NS=s([B.fu,null,null,B.id],t.L)
-B.OD=s([B.cP,null,null,B.eb],t.L)
-B.PS=s([B.e1,null,null,B.ie],t.L)
-B.O1=s([B.e4,B.e4,B.fA,null],t.L)
-B.OE=s([B.e_,null,null,B.ea],t.L)
-B.Pp=s([B.e0,null,null,B.ec],t.L)
-B.O2=s([B.cs,B.cs,B.cQ,null],t.L)
-B.RZ=new A.dn(["*",B.NO,"+",B.PH,"-",B.Oq,".",B.OZ,"/",B.Na,"0",B.Q_,"1",B.PU,"2",B.NW,"3",B.Qc,"4",B.PT,"5",B.NT,"6",B.Ni,"7",B.O7,"8",B.PK,"9",B.PM,"Alt",B.O_,"AltGraph",B.Q1,"ArrowDown",B.Oz,"ArrowLeft",B.OA,"ArrowRight",B.OB,"ArrowUp",B.Qa,"Clear",B.PR,"Control",B.O0,"Delete",B.Pi,"End",B.OC,"Enter",B.NS,"Home",B.OD,"Insert",B.PS,"Meta",B.O1,"PageDown",B.OE,"PageUp",B.Pp,"Shift",B.O2],A.aj("dn<l,U<f?>>"))
+B.NU=s([B.vr,null,null,B.ig],t.L)
+B.Nj=s([B.vs,null,null,B.cU],t.L)
+B.O9=s([B.vt,null,null,B.eb],t.L)
+B.PJ=s([B.vu,null,null,B.cV],t.L)
+B.PL=s([B.vv,null,null,B.ec],t.L)
+B.O0=s([B.e3,B.e3,B.fz,null],t.L)
+B.Q3=s([B.fv,null,B.fv,null],t.L)
+B.OA=s([B.c_,null,null,B.cS],t.L)
+B.OB=s([B.bJ,null,null,B.cT],t.L)
+B.OC=s([B.bK,null,null,B.cU],t.L)
+B.Qb=s([B.c0,null,null,B.cV],t.L)
+B.PQ=s([B.lv,null,null,B.ig],t.L)
+B.O1=s([B.e2,B.e2,B.fy,null],t.L)
+B.Pj=s([B.b3,null,null,B.cR],t.L)
+B.OD=s([B.cO,null,null,B.e9],t.L)
+B.NT=s([B.fu,null,null,B.id],t.L)
+B.OE=s([B.cP,null,null,B.eb],t.L)
+B.PR=s([B.e1,null,null,B.ie],t.L)
+B.O2=s([B.e4,B.e4,B.fA,null],t.L)
+B.OF=s([B.e_,null,null,B.ea],t.L)
+B.Pq=s([B.e0,null,null,B.ec],t.L)
+B.O3=s([B.cs,B.cs,B.cQ,null],t.L)
+B.RZ=new A.dn(["*",B.NP,"+",B.PH,"-",B.Os,".",B.OZ,"/",B.Na,"0",B.Q1,"1",B.PU,"2",B.NX,"3",B.Qd,"4",B.PT,"5",B.NU,"6",B.Nj,"7",B.O9,"8",B.PJ,"9",B.PL,"Alt",B.O0,"AltGraph",B.Q3,"ArrowDown",B.OA,"ArrowLeft",B.OB,"ArrowRight",B.OC,"ArrowUp",B.Qb,"Clear",B.PQ,"Control",B.O1,"Delete",B.Pj,"End",B.OD,"Enter",B.NT,"Home",B.OE,"Insert",B.PR,"Meta",B.O2,"PageDown",B.OF,"PageUp",B.Pq,"Shift",B.O3],A.aj("dn<l,U<f?>>"))
 B.S_=new A.dn([B.Ak,B.jT,B.iY,B.hh,B.ev,B.oe,B.eu,B.oc,B.ds,B.of,B.dt,B.od],t.Fp)
 B.Su={KeyA:0,KeyB:1,KeyC:2,KeyD:3,KeyE:4,KeyF:5,KeyG:6,KeyH:7,KeyI:8,KeyJ:9,KeyK:10,KeyL:11,KeyM:12,KeyN:13,KeyO:14,KeyP:15,KeyQ:16,KeyR:17,KeyS:18,KeyT:19,KeyU:20,KeyV:21,KeyW:22,KeyX:23,KeyY:24,KeyZ:25,Digit1:26,Digit2:27,Digit3:28,Digit4:29,Digit5:30,Digit6:31,Digit7:32,Digit8:33,Digit9:34,Digit0:35,Minus:36,Equal:37,BracketLeft:38,BracketRight:39,Backslash:40,Semicolon:41,Quote:42,Backquote:43,Comma:44,Period:45,Slash:46}
 B.vM=new A.bQ(B.Su,["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0","-","=","[","]","\\",";","'","`",",",".","/"],t.li)
@@ -95903,25 +95903,25 @@ B.a7v=new A.YY(null)
 B.a6P=new A.We(null)
 B.a6g=new A.VI(null)
 B.a6U=new A.Wn(null)
-B.Pd=s([B.a7g,B.a7v,B.a6P,B.a6g,B.a6U],t.p)
-B.Vj=new A.d4(B.H,B.j,B.a1,B.o,null,B.R,null,0,B.Pd,null)
+B.Pe=s([B.a7g,B.a7v,B.a6P,B.a6g,B.a6U],t.p)
+B.Vk=new A.d4(B.H,B.j,B.a1,B.o,null,B.R,null,0,B.Pe,null)
 B.Lt=new A.aJ(983530,"MaterialIcons",null,!1)
 B.LD=new A.cK(B.Lt,30,B.aV,null,null)
 B.fS=new A.bP(10,null,null,null)
 B.Be=new A.j(!0,B.aV,null,"GoogleSansFlex",null,null,20,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.a2U=new A.bL("s\xfcre dolarsa ya da hata gelirse s\u0131radaki plan",null,B.Be,null,null,null,null,null,null,null,null,null,null)
-B.Q3=s([B.dv,B.LD,B.fS,B.a2U],t.p)
-B.Vk=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.Q3,null)
+B.Q5=s([B.dv,B.LD,B.fS,B.a2U],t.p)
+B.Vl=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.Q5,null)
 B.dw=new A.DA(1,null)
 B.a5f=new A.EY("\xd6NCE \xb7 String",B.a6,null)
 B.a5e=new A.EY("SONRA \xb7 enum",B.z,null)
-B.Q9=s([B.dw,B.a5f,B.a5e],t.p)
-B.Vq=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.Q9,null)
+B.Qa=s([B.dw,B.a5f,B.a5e],t.p)
+B.Vq=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.Qa,null)
 B.LX=new A.cK(B.ph,80,B.a6,null,null)
 B.mt=new A.bP(14,null,null,null)
 B.U1=new A.OT(null)
-B.Or=s([B.LX,B.mt,B.U1],t.p)
-B.VA=new A.d4(B.H,B.j,B.a1,B.o,null,B.R,null,0,B.Or,null)
+B.Ot=s([B.LX,B.mt,B.U1],t.p)
+B.VA=new A.d4(B.H,B.j,B.a1,B.o,null,B.R,null,0,B.Ot,null)
 B.VC=new A.Q4(null,null)
 B.dr=new A.qY(0,"idle")
 B.zP=new A.qY(1,"transientCallbacks")
@@ -96046,9 +96046,9 @@ B.Wt=new A.hR(B.y,null,null,null,B.Ve)
 B.FZ=new A.F(0.23529411764705882,0,0,0,B.i)
 B.SH=new A.h(0,4)
 B.CW=new A.dN(0.5,B.dG,B.FZ,B.SH,10)
-B.Pj=s([B.CW],t.sq)
+B.Pk=s([B.CW],t.sq)
 B.Vg=new A.k9(B.ng,B.x)
-B.Wu=new A.hR(null,null,null,B.Pj,B.Vg)
+B.Wu=new A.hR(null,null,null,B.Pk,B.Vg)
 B.Wv=new A.ab(B.e1,!1,!0,!1,!1,B.p)
 B.Ah=new A.ab(B.lt,!1,!1,!1,!0,B.p)
 B.Ww=new A.ab(B.pT,!0,!1,!1,!1,B.p)
@@ -96154,45 +96154,30 @@ B.mw=new A.bP(null,6,null,null)
 B.XD=new A.bP(null,7,null,null)
 B.cz=new A.bP(null,8,null,null)
 B.XE=new A.bP(null,null,null,null)
-B.OT=s(["1. Model \xf6nerir, karar\u0131 kod verir.","2. Serbest metin yerine kapal\u0131 liste."],t.s)
-B.H7=new A.ej("Model yanl\u0131\u015f ya da eksik cevap verirse","MODEL\u0130N CEVABI",B.OT,B.a6,null,38,36,null)
-B.Jh=new A.aN(1,B.r,B.H7,null)
+B.OU=s(["1. Model \xf6nerir, karar\u0131 kod verir.","2. Serbest metin yerine kapal\u0131 liste."],t.s)
+B.H8=new A.ej("Model yanl\u0131\u015f ya da eksik cevap verirse","MODEL\u0130N CEVABI",B.OU,B.a6,null,38,36,null)
+B.Jg=new A.aN(1,B.r,B.H8,null)
 B.py=s(["3. Olmamas\u0131 gereken durum, yaz\u0131lamas\u0131n.","4. Model susarsa oyun susmaz.","5. Anahtar sunucuda kal\u0131r, model bo\u015funa \xe7a\u011fr\u0131lmaz."],t.s)
-B.GX=new A.ej("Model do\u011fru olsa bile bozulabilen yerler","UYGULAMANIN KEND\u0130S\u0130",B.py,B.z,null,38,36,null)
-B.IQ=new A.aN(1,B.r,B.GX,null)
-B.Po=s([B.Jh,B.bM,B.IQ],t.p)
-B.Vr=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Po,null)
-B.IO=new A.aN(1,B.r,B.Vr,null)
+B.GW=new A.ej("Model do\u011fru olsa bile bozulabilen yerler","UYGULAMANIN KEND\u0130S\u0130",B.py,B.z,null,38,36,null)
+B.IS=new A.aN(1,B.r,B.GW,null)
+B.Pp=s([B.Jg,B.bM,B.IS],t.p)
+B.Vr=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Pp,null)
+B.IQ=new A.aN(1,B.r,B.Vr,null)
 B.a6M=new A.oo("guard","koruyucu kontrol",null)
-B.IB=new A.aN(1,B.r,B.a6M,null)
+B.IE=new A.aN(1,B.r,B.a6M,null)
 B.a6O=new A.oo("enum","kapal\u0131 liste",null)
-B.IC=new A.aN(1,B.r,B.a6O,null)
+B.IF=new A.aN(1,B.r,B.a6O,null)
 B.a6N=new A.oo("sealed class","kapal\u0131 durum listesi",null)
-B.IK=new A.aN(1,B.r,B.a6N,null)
+B.IN=new A.aN(1,B.r,B.a6N,null)
 B.a6L=new A.oo("timeout","zaman a\u015f\u0131m\u0131",null)
-B.ID=new A.aN(1,B.r,B.a6L,null)
+B.IG=new A.aN(1,B.r,B.a6L,null)
 B.a6K=new A.oo("proxy","arac\u0131 sunucu",null)
 B.J5=new A.aN(1,B.r,B.a6K,null)
-B.P0=s([B.IB,B.bM,B.IC,B.bM,B.IK,B.bM,B.ID,B.bM,B.J5],t.p)
+B.P0=s([B.IE,B.bM,B.IF,B.bM,B.IN,B.bM,B.IG,B.bM,B.J5],t.p)
 B.Vz=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.P0,null)
-B.Q7=s([B.IO,B.fW,B.Vz],t.p)
-B.Gr=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.Q7,null)
-B.XF=new A.dE("BUG\xdcN NE G\xd6RECE\u011e\u0130Z","Be\u015f kural, be\u015f yeni kelime",B.ey,null,B.Gr,null)
-B.En=new A.KJ(null)
-B.N0=new A.lg("Enum","\u0130zin verilen de\u011ferlerin kapal\u0131 listesi. Listede olmayan de\u011fer kabul edilmez.",B.En,"Dart 3 exhaustive switch: listeye yeni de\u011fer eklenince derleyici eksik case'i g\xf6sterir, default dal\u0131 kalmad\u0131",null)
-B.XG=new A.dE("KURAL 2 / 5","Serbest metin yerine kapal\u0131 liste",B.ez,null,B.N0,null)
-B.Nb=s(["Canl\u0131 Gemini art\u0131k ula\u015f\u0131lamaz.","Oyun ayn\u0131, kod ayn\u0131."],t.s)
-B.GV=new A.ej("Wi-Fi'\u0131 kapat","ADIM 1",B.Nb,B.a6,null,30,34,null)
-B.IM=new A.aN(1,B.r,B.GV,null)
-B.OO=s(["Karar\u0131 laptoptaki Gemma 4 verir.","S\u0131n\u0131r 15 saniye."],t.s)
-B.H6=new A.ej("Tuzlu tepsiyi servis et","ADIM 2",B.OO,B.y,"\xf6l\xe7\xfcm: 5,0 ile 8,4 sn aras\u0131 \xb7 12 tepsi \xb7 11 Kas 2026",30,34,null)
-B.J9=new A.aN(1,B.r,B.H6,null)
-B.PE=s(['"Yerel Gemma 4": B plan\u0131.','"Yerel JSON \u015eemas\u0131": C plan\u0131.'],t.s)
-B.GY=new A.ej("Rozeti oku","ADIM 3",B.PE,B.z,null,30,34,null)
-B.IV=new A.aN(1,B.r,B.GY,null)
-B.OU=s([B.IM,B.bM,B.J9,B.bM,B.IV],t.p)
-B.Vt=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.OU,null)
-B.XH=new A.dE("YEDEK \xb7 B PLANI CANLI","Wi-Fi kapal\u0131: j\xfcri bu laptopta",B.cA,null,B.Vt,null)
+B.Q9=s([B.IQ,B.fW,B.Vz],t.p)
+B.Gs=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.Q9,null)
+B.XF=new A.dE("BUG\xdcN NE G\xd6RECE\u011e\u0130Z","Be\u015f kural, be\u015f yeni kelime",B.ey,null,B.Gs,null)
 B.a7a=new A.GC("A","sugar_jar.png",null)
 B.Xy=new A.bP(28,null,null,null)
 B.a7b=new A.GC("B","salt_shaker.png",null)
@@ -96203,207 +96188,222 @@ B.a72=new A.Gn("customer_happy.png",5,"\u015eeker, sipari\u015f edildi\u011fi gi
 B.Zs=new A.j(!0,B.bo,null,"GoogleSansFlex",null,null,44,B.w,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.a32=new A.bL("Bir tepsi. Bir karar.",null,B.Zs,null,null,null,null,null,null,null,null,null,null)
 B.XB=new A.bP(null,132,null,null)
-B.PF=s([B.a73,B.XC,B.a72,B.dw,B.a32,B.XB],t.p)
-B.Go=new A.f_(B.W,B.j,B.l,B.X,null,B.R,null,0,B.PF,null)
-B.Ji=new A.aN(1,B.r,B.Go,null)
-B.PW=s([B.a7a,B.Xy,B.a7b,B.XA,B.Ji],t.p)
-B.Vv=new A.d4(B.H,B.j,B.l,B.X,null,B.R,null,0,B.PW,null)
-B.XI=new A.dE("SALON OYLAMASI \xb7 ELLER YUKARI","Hangisi \u015feker?",B.j0,"Biri tuz. M\xfc\u015fteriyi kimse uyarm\u0131yor. Peki tuzu kim yakalayacak?",B.Vv,null)
-B.Ks=new A.MS(null)
-B.N_=new A.lg("Guard","Koruyucu: modelin cevab\u0131 ekrana \xe7\u0131kmadan \xf6nce onu kontrol eden kod.",B.Ks,'kontrol \xf6nce yaln\u0131zca tasteVerdict alan\u0131na bak\u0131yordu; "tuzlu" deyip 5 y\u0131ld\u0131z veren cevap 20 Kas\u0131m\'a kadar ge\xe7iyordu',null)
-B.XJ=new A.dE("KURAL 1 / 5","Model \xf6nerir, karar\u0131 kod verir",B.ez,null,B.N_,null)
-B.D=new A.yW(0,"plain")
-B.Fg=new A.aX("final parsedStars = rawStars is num",B.D)
-B.EA=new A.aX("    ? rawStars.toInt()",B.D)
-B.Ff=new A.aX("    : maxCafeRatingStars;",B.bV)
-B.c8=new A.yW(2,"comment")
-B.F9=new A.aX("// y\u0131ld\u0131z yoksa: 5 y\u0131ld\u0131z",B.c8)
-B.dd=new A.aX("",B.D)
-B.EJ=new A.aX("tasteVerdict: json['tasteVerdict']",B.D)
-B.Es=new A.aX("    ?? 'sweet_perfection',",B.D)
-B.OF=s([B.Fg,B.EA,B.Ff,B.F9,B.dd,B.EJ,B.Es],t.fC)
-B.MZ=new A.h6("\xd6NCE \xb7 BO\u015eLUK BA\u015eARIYLA DOLUYORDU","cafe_review.dart \xb7 sadele\u015ftirildi",B.OF,B.a6,null)
-B.EB=new A.aX("if (tasteVerdict == null ||",B.D)
-B.Ex=new A.aX("    ratingStars is! int ||",B.D)
-B.F2=new A.aX("    headline is! String || ...) {",B.D)
-B.EL=new A.aX("  return null;",B.bV)
-B.c9=new A.aX("}",B.D)
-B.F4=new A.aX("// null: s\u0131radaki j\xfcriye d\xfc\u015f",B.c8)
-B.Nj=s([B.EB,B.Ex,B.F2,B.EL,B.c9,B.F4],t.fC)
-B.MR=new A.h6("SONRA \xb7 EKS\u0130K CEVAP, CEVAP DE\u011e\u0130L","cafe_review.dart \xb7 sadele\u015ftirildi",B.Nj,B.z,null)
-B.Ux=new A.k4("a Gemini reply with no fields does not score a sweet tray","20 Kas: k\u0131rm\u0131z\u0131yd\u0131, art\u0131k ye\u015fil",!1,null)
-B.MN=new A.lf(B.MZ,B.MR,B.Ux,'Google dok\xfcman\u0131: "always validate values in your application." (aistudio.google.com/docs/structured-output, 20 Kas 2026)',null)
-B.XK=new A.dE("KURAL 2 / 5 \xb7 KOD","Bo\u015f cevap, ba\u015far\u0131 de\u011fildir",B.ez,null,B.MN,null)
-B.Ez=new A.aX("// 11 Kas\u0131m'a kadar: evet ya da hay\u0131r",B.c8)
-B.Fe=new A.aX("final bool isFromLiveGemini;",B.D)
-B.EM=new A.aX("// \xfc\xe7\xfcnc\xfc j\xfcri gelince: \xfc\xe7 isim",B.c8)
-B.F3=new A.aX("enum JudgeSource {",B.bV)
-B.Ev=new A.aX("  liveGemini,",B.D)
-B.EK=new A.aX("  localGemma,",B.D)
-B.EQ=new A.aX("  offlineBundle,",B.D)
-B.PG=s([B.Ez,B.Fe,B.dd,B.EM,B.F3,B.Ev,B.EK,B.EQ,B.c9],t.fC)
-B.MX=new A.h6("K\u0130M CEVAPLADI? \xb7 \xd6NCE VE SONRA","cafe_review.dart",B.PG,B.fb,null)
-B.Nh=s(['"Canl\u0131 Gemini": cevap modelden geldi.','"Yerel JSON \u015eemas\u0131": haz\u0131r yan\u0131t, C plan\u0131.',"Her sunucu saniyede 10 istek al\u0131r."],t.s)
-B.H4=new A.ej("Rozet, cevab\u0131n nereden geldi\u011fini s\xf6yler","ROZET\u0130N\u0130ZDE NE YAZIYORDU?",B.Nh,B.z,"nginx limit_req 10 r/s + burst 20 \xb7 sunucu kopyas\u0131 ba\u015f\u0131na tek kova: harcamay\u0131 s\u0131n\u0131rlar, k\xf6t\xfcye kullan\u0131m\u0131 de\u011fil",30,36,null)
-B.UB=new A.k4("Proxy errors such as a 429 rate limit fall back to the offline roast","ye\u015fil",!1,null)
-B.MM=new A.lf(B.MX,B.H4,B.UB,null,null)
-B.XL=new A.dE("KURAL 4 / 5 \xb7 KANIT","Az \xf6nce y\xfck testini siz yapt\u0131n\u0131z",B.cA,'HTTP 429: sunucunun "\xe7ok fazla istek geldi, yava\u015fla" demesi',B.MM,null)
+B.PG=s([B.a73,B.XC,B.a72,B.dw,B.a32,B.XB],t.p)
+B.Gp=new A.f_(B.W,B.j,B.l,B.X,null,B.R,null,0,B.PG,null)
+B.Jh=new A.aN(1,B.r,B.Gp,null)
+B.PX=s([B.a7a,B.Xy,B.a7b,B.XA,B.Jh],t.p)
+B.Vu=new A.d4(B.H,B.j,B.l,B.X,null,B.R,null,0,B.PX,null)
+B.XG=new A.dE("SALON OYLAMASI \xb7 ELLER YUKARI","Hangisi \u015feker?",B.j0,"Biri tuz. M\xfc\u015fteriyi kimse uyarm\u0131yor. Peki tuzu kim yakalayacak?",B.Vu,null)
 B.Sm=new A.BE("Proxy","Taray\u0131c\u0131 ile Gemini aras\u0131ndaki arac\u0131 sunucu. API anahtar\u0131n\u0131 iste\u011fe o ekler.",null)
 B.MA=new A.NB(null)
 B.Jr=new A.aN(1,B.r,B.MA,null)
-B.F8=new A.aX("location = /api/gemini/generate {",B.D)
+B.D=new A.yW(0,"plain")
+B.F7=new A.aX("location = /api/gemini/generate {",B.D)
 B.Ey=new A.aX("  limit_req zone=gemini_all burst=20;",B.D)
 B.Eq=new A.aX("  proxy_pass https://...googleapis.com/...;",B.D)
-B.EW=new A.aX("  proxy_set_header x-goog-api-key",B.bV)
-B.Fa=new A.aX('      "${GEMINI_API_KEY}";',B.D)
-B.Qb=s([B.F8,B.Ey,B.Eq,B.EW,B.Fa,B.c9],t.fC)
-B.MS=new A.h6("SUNUCU \xb7 ANAHTARI BURASI EKLER","nginx/default.conf.template \xb7 sadele\u015ftirildi",B.Qb,B.z,null)
-B.Ix=new A.aN(1,B.r,B.MS,null)
-B.Q0=s([B.Jr,B.aX,B.Ix],t.p)
-B.Vu=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Q0,null)
-B.Jf=new A.aN(1,B.r,B.Vu,null)
+B.EV=new A.aX("  proxy_set_header x-goog-api-key",B.bV)
+B.F9=new A.aX('      "${GEMINI_API_KEY}";',B.D)
+B.c9=new A.aX("}",B.D)
+B.Qc=s([B.F7,B.Ey,B.Eq,B.EV,B.F9,B.c9],t.fC)
+B.MT=new A.h6("SUNUCU \xb7 ANAHTARI BURASI EKLER","nginx/default.conf.template \xb7 sadele\u015ftirildi",B.Qc,B.z,null)
+B.Iy=new A.aN(1,B.r,B.MT,null)
+B.Q2=s([B.Jr,B.aX,B.Iy],t.p)
+B.Vt=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Q2,null)
+B.Je=new A.aN(1,B.r,B.Vt,null)
 B.Uw=new A.C3("TEST","Taray\u0131c\u0131dan giden istekte anahtar yok.",null)
-B.J2=new A.aN(1,B.r,B.Uw,null)
+B.J3=new A.aN(1,B.r,B.Uw,null)
 B.Uv=new A.C3("CI","Pakette anahtar kal\u0131b\u0131 arar; sahtesini yakalad\u0131.",null)
-B.J3=new A.aN(1,B.r,B.Uv,null)
-B.NY=s([B.J2,B.aX,B.J3],t.p)
-B.Vn=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.NY,null)
+B.J4=new A.aN(1,B.r,B.Uv,null)
+B.NZ=s([B.J3,B.aX,B.J4],t.p)
+B.Vn=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.NZ,null)
 B.C5=new A.oV("proxy'de kimlik kontrol\xfc yok, isteyen bu adrese istek atabilir; \xfcretimde yol App Check, bu demoda yok",null)
-B.Og=s([B.Sm,B.bk,B.Jf,B.bk,B.Vn,B.bk,B.C5],t.p)
-B.Gp=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.Og,null)
-B.XM=new A.dE("KURAL 5 / 5","Anahtar sunucuda kal\u0131r",B.cA,null,B.Gp,null)
-B.EY=new A.aX("sealed class OrderState {}",B.D)
-B.EX=new A.aX("final class OrderIdle",B.D)
+B.Oi=s([B.Sm,B.bk,B.Je,B.bk,B.Vn,B.bk,B.C5],t.p)
+B.Gq=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.Oi,null)
+B.XH=new A.dE("KURAL 5 / 5","Anahtar sunucuda kal\u0131r",B.cA,null,B.Gq,null)
+B.En=new A.KJ(null)
+B.N_=new A.lg("Enum","\u0130zin verilen de\u011ferlerin kapal\u0131 listesi. Listede olmayan de\u011fer kabul edilmez.",B.En,"Structured output: modele JSON \u015femas\u0131 verip cevab\u0131 o kal\u0131pta isteriz. \u015eema bi\xe7imi garanti eder, de\u011ferin do\u011fru oldu\u011funu de\u011fil",null)
+B.XI=new A.dE("KURAL 2 / 5","Serbest metin yerine kapal\u0131 liste",B.ez,null,B.N_,null)
+B.EX=new A.aX("sealed class OrderState {}",B.D)
+B.dd=new A.aX("",B.D)
+B.EW=new A.aX("final class OrderIdle",B.D)
 B.nD=new A.aX("    extends OrderState {}",B.D)
 B.Ew=new A.aX("final class OrderEvaluating",B.D)
 B.Fj=new A.aX("final class OrderServed",B.D)
-B.EG=new A.aX("    extends OrderState {",B.D)
-B.EH=new A.aX("  final CafeReview review;",B.D)
-B.PY=s([B.EY,B.dd,B.EX,B.nD,B.Ew,B.nD,B.Fj,B.EG,B.EH,B.c9],t.fC)
-B.MW=new A.h6("T\u0130P \xb7 \xdc\xc7 HAL, D\xd6RD\xdcNC\xdcS\xdc YOK","order_state.dart \xb7 sadele\u015ftirildi",B.PY,B.z,null)
+B.EF=new A.aX("    extends OrderState {",B.D)
+B.EG=new A.aX("  final CafeReview review;",B.D)
+B.Q_=s([B.EX,B.dd,B.EW,B.nD,B.Ew,B.nD,B.Fj,B.EF,B.EG,B.c9],t.fC)
+B.MW=new A.h6("T\u0130P \xb7 \xdc\xc7 HAL, D\xd6RD\xdcNC\xdcS\xdc YOK","order_state.dart \xb7 sadele\u015ftirildi",B.Q_,B.z,null)
 B.nE=new A.aX("void _advanceToNextCustomer() {",B.D)
-B.F0=new A.aX("  _order = const OrderIdle();",B.bV)
+B.F_=new A.aX("  _order = const OrderIdle();",B.bV)
 B.nG=new A.aX("  _selectedTray.clear();",B.D)
-B.ES=new A.aX("// ge\xe7 gelen cevap: h\xe2l\xe2 ayn\u0131 sipari\u015f mi?",B.c8)
-B.EN=new A.aX("if (!identical(_order, evaluatingOrder)) {",B.D)
-B.F6=new A.aX("  return;",B.D)
-B.ON=s([B.nE,B.F0,B.nG,B.c9,B.dd,B.ES,B.EN,B.F6,B.c9],t.fC)
-B.MU=new A.h6("SIFIRLAMA \xb7 TEK SATIR",u.r,B.ON,B.z,null)
-B.UC=new A.k4(u.y,"k\u0131rm\u0131z\u0131yd\u0131, art\u0131k ye\u015fil",!1,null)
-B.ML=new A.lf(B.MW,B.MU,B.UC,"a\xe7\u0131k kalan: cafe_counter_screen.dart h\xe2l\xe2 2.670 sat\u0131r ve 22 s\u0131n\u0131f; d\xfczelen dosya de\u011fil, durum",null)
-B.XN=new A.dE("KURAL 3 / 5 \xb7 \xc7\xd6Z\xdcM","Tek tip, tek atama",B.cA,null,B.ML,null)
-B.EZ=new A.aX("final liveReview =",B.D)
-B.ED=new A.aX("    await _tryCallGemini(...);",B.D)
-B.Fd=new A.aX("if (liveReview != null) {",B.bV)
-B.nF=new A.aX("  return liveReview;",B.D)
-B.Et=new A.aX("// model ne derse ekranda o",B.c8)
-B.Ql=s([B.EZ,B.ED,B.dd,B.Fd,B.nF,B.c9,B.Et],t.fC)
-B.MQ=new A.h6("\xd6NCE \xb7 12 KASIM'A KADAR","cafe_judge_service.dart \xb7 sadele\u015ftirildi",B.Ql,B.a6,null)
-B.EE=new A.aX("if (liveReview != null &&",B.D)
-B.Fh=new A.aX("    _verdictMatchesPranks(liveReview,",B.bV)
-B.F7=new A.aX("        containsSaltPrank: ...,",B.D)
-B.Fc=new A.aX("        containsChiliPrank: ...)) {",B.D)
-B.EC=new A.aX("// uymuyorsa: s\u0131radaki j\xfcri, sonra haz\u0131r yan\u0131t",B.c8)
-B.P4=s([B.EE,B.Fh,B.F7,B.Fc,B.nF,B.c9,B.EC],t.fC)
-B.MY=new A.h6("SONRA","cafe_judge_service.dart \xb7 sadele\u015ftirildi",B.P4,B.z,null)
-B.Uz=new A.k4("a Gemini verdict that misses the salt prank falls back to the offline roast","kontrol\xfc sil: k\u0131rm\u0131z\u0131",!1,null)
-B.MO=new A.lf(B.MQ,B.MY,B.Uz,null,null)
-B.XO=new A.dE("KURAL 1 / 5 \xb7 KOD","\xd6nce: cevap geldiyse g\xf6ster. Sonra: uyu\u015fuyorsa g\xf6ster",B.ez,null,B.MO,null)
-B.Pf=s(["1. Model \xf6nerir, karar\u0131 kod verir.","2. Serbest metin yerine kapal\u0131 liste; bo\u015f cevap ba\u015far\u0131 de\u011fildir."],t.s)
-B.H2=new A.ej("Modele g\xfcvenme, kontrol et","MODEL\u0130N CEVABI",B.Pf,B.a6,null,38,36,null)
-B.IA=new A.aN(1,B.r,B.H2,null)
+B.c8=new A.yW(2,"comment")
+B.ER=new A.aX("// ge\xe7 gelen cevap: h\xe2l\xe2 ayn\u0131 sipari\u015f mi?",B.c8)
+B.EM=new A.aX("if (!identical(_order, evaluatingOrder)) {",B.D)
+B.F5=new A.aX("  return;",B.D)
+B.OP=s([B.nE,B.F_,B.nG,B.c9,B.dd,B.ER,B.EM,B.F5,B.c9],t.fC)
+B.MU=new A.h6("SIFIRLAMA \xb7 TEK SATIR",u.r,B.OP,B.z,null)
+B.UA=new A.k4(u.y,"k\u0131rm\u0131z\u0131yd\u0131, art\u0131k ye\u015fil",!1,null)
+B.MK=new A.lf(B.MW,B.MU,B.UA,"a\xe7\u0131k kalan: cafe_counter_screen.dart h\xe2l\xe2 2.670 sat\u0131r ve 22 s\u0131n\u0131f; d\xfczelen dosya de\u011fil, durum",null)
+B.XJ=new A.dE("KURAL 3 / 5 \xb7 \xc7\xd6Z\xdcM","Tek tip, tek atama",B.cA,null,B.MK,null)
+B.a5i=new A.rE("0","\xe7a\u011fr\u0131","Tepsiyi dizerken, de\u011fi\u015ftirirken, temizlerken","TEST VAR",B.z,null)
+B.J2=new A.aN(1,B.r,B.a5i,null)
+B.a5k=new A.rE("0","\xe7a\u011fr\u0131","Eksik tepside (tuz, ac\u0131 yoksa): cevab\u0131 kod veriyor","TEST VAR",B.z,null)
+B.Jb=new A.aN(1,B.r,B.a5k,null)
+B.a5h=new A.rE("1","\xe7a\u011fr\u0131","Servis edilen tepsi ba\u015f\u0131na","TEST VAR",B.z,null)
+B.J1=new A.aN(1,B.r,B.a5h,null)
+B.a5j=new A.rE("322","token","Bir tatl\u0131 tepsi: 223 girdi, 99 \xe7\u0131kt\u0131. Eski tahmin 270 idi","\xd6L\xc7\xdcLD\xdc \xb7 1 TEPS\u0130",B.y,null)
+B.Ix=new A.aN(1,B.r,B.a5j,null)
+B.P6=s([B.J2,B.aX,B.Jb,B.aX,B.J1,B.aX,B.Ix],t.p)
+B.Vm=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.P6,null)
+B.IK=new A.aN(1,B.r,B.Vm,null)
+B.Uy=new A.k4("building, changing and clearing a tray sends no request; serving it sends one","ye\u015fil",!1,null)
+B.C4=new A.oV("tek \xf6l\xe7\xfcm: canl\u0131 oyun, Konya s\xfcr\xfcm\xfc, gemini-3.5-flash-lite, usageMetadata 223 + 99; eski tahmin benchmark arac\u0131ndaki 152 + 118 sabitiydi",null)
+B.Nd=s([B.IK,B.bk,B.Uy,B.bk,B.C4],t.p)
+B.Gn=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.Nd,null)
+B.XK=new A.dE("KURAL 5 / 5 \xb7 MAL\u0130YET","Model bo\u015funa \xe7a\u011fr\u0131lmaz",B.cA,"Token: modelin okudu\u011fu ve yazd\u0131\u011f\u0131 kelime par\xe7as\u0131. Fatura token say\u0131s\u0131na g\xf6re kesilir",B.Gn,null)
+B.Er=new A.aX("bool _isEvaluatingOrder = false;",B.D)
+B.EH=new A.aX("int _trayGeneration = 0;",B.D)
+B.EQ=new A.aX("CafeReview? _latestReview;",B.D)
+B.EN=new A.aX("  _latestReview = null;",B.D)
+B.EU=new A.aX("  // _trayGeneration++ burada yok",B.bV)
+B.NY=s([B.Er,B.EH,B.EQ,B.dd,B.nE,B.nG,B.EN,B.EU,B.c9],t.fC)
+B.MY=new A.h6("\xd6NCE",u.r,B.NY,B.a6,null)
+B.Op=s(["Servis Et'e bas, hemen S\u0131radaki M\xfc\u015fteri'ye bas.","Yeni m\xfc\u015fteri geldi, tepsi bo\u015f (0/3).","Yine de 5 y\u0131ld\u0131zl\u0131 kart \xe7\u0131kt\u0131.","\u0130ki oyuncuya +50 puan, ekip Lv.2 oldu."],t.s)
+B.H_=new A.ej("Bo\u015f tepsiye 5 y\u0131ld\u0131z","OYUNCU NE G\xd6RD\xdc",B.Op,B.a6,"main 408f1c6 \xb7 ekran testiyle yakaland\u0131",30,40,null)
+B.UB=new A.k4(u.y,"k\u0131rm\u0131z\u0131",!0,null)
+B.MM=new A.lf(B.MY,B.H_,B.UB,null,null)
+B.XL=new A.dE("KURAL 3 / 5 \xb7 HATA","\xdc\xe7 de\u011fi\u015fken, \xfc\xe7 s\u0131f\u0131rlama yeri, bir unutulan sat\u0131r",B.cA,null,B.MM,null)
+B.Pg=s(["1. Model \xf6nerir, karar\u0131 kod verir.","2. Serbest metin yerine kapal\u0131 liste; bo\u015f cevap ba\u015far\u0131 de\u011fildir."],t.s)
+B.H2=new A.ej("Modele g\xfcvenme, kontrol et","MODEL\u0130N CEVABI",B.Pg,B.a6,null,38,36,null)
+B.ID=new A.aN(1,B.r,B.H2,null)
 B.H1=new A.ej("Hatay\u0131 yaz\u0131lamaz yap","UYGULAMANIN KEND\u0130S\u0130",B.py,B.z,null,38,36,null)
-B.IP=new A.aN(1,B.r,B.H1,null)
+B.IR=new A.aN(1,B.r,B.H1,null)
 B.UE=new A.C6("assets/images/starter_repo_qr.png","Kod, testler ve slaytlar","github.com/esrakadah/devfest-2026-backyard-barista-cloudrun",400,B.y,null)
 B.Ec=new A.fU(B.U,null,null,B.UE,null)
-B.Qh=s([B.IA,B.bM,B.IP,B.bM,B.Ec],t.p)
-B.Vi=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Qh,null)
-B.XP=new A.dE("\xd6ZET \xb7 KOD VE TESTLER A\xc7IK KAYNAK","Be\u015f kural, iki s\xfctun",B.mx,null,B.Vi,null)
-B.a5i=new A.rE("0","\xe7a\u011fr\u0131","Tepsiyi dizerken, de\u011fi\u015ftirirken, temizlerken","TEST VAR",B.z,null)
-B.J1=new A.aN(1,B.r,B.a5i,null)
-B.a5k=new A.rE("0","\xe7a\u011fr\u0131","Eksik tepside (tuz, ac\u0131 yoksa): cevab\u0131 kod veriyor","TEST VAR",B.z,null)
-B.Jc=new A.aN(1,B.r,B.a5k,null)
-B.a5h=new A.rE("1","\xe7a\u011fr\u0131","Servis edilen tepsi ba\u015f\u0131na","TEST VAR",B.z,null)
-B.J0=new A.aN(1,B.r,B.a5h,null)
-B.a5j=new A.rE("322","token","Bir tatl\u0131 tepsi: 223 girdi, 99 \xe7\u0131kt\u0131. Eski tahmin 270 idi","\xd6L\xc7\xdcLD\xdc \xb7 1 TEPS\u0130 \xb7 20 KAS",B.y,null)
-B.IR=new A.aN(1,B.r,B.a5j,null)
-B.P5=s([B.J1,B.aX,B.Jc,B.aX,B.J0,B.aX,B.IR],t.p)
-B.Vm=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.P5,null)
-B.IW=new A.aN(1,B.r,B.Vm,null)
-B.UA=new A.k4("building, changing and clearing a tray sends no request; serving it sends one","ye\u015fil",!1,null)
-B.C4=new A.oV("tek \xf6l\xe7\xfcm: canl\u0131 oyun, Konya s\xfcr\xfcm\xfc, gemini-3.5-flash-lite, usageMetadata 223 + 99; eski tahmin benchmark arac\u0131ndaki 152 + 118 sabitiydi",null)
-B.PI=s([B.IW,B.bk,B.UA,B.bk,B.C4],t.p)
-B.Gt=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.PI,null)
-B.XQ=new A.dE("KURAL 5 / 5 \xb7 MAL\u0130YET","Model bo\u015funa \xe7a\u011fr\u0131lmaz",B.cA,"Token: modelin okudu\u011fu ve yazd\u0131\u011f\u0131 kelime par\xe7as\u0131. Fatura token say\u0131s\u0131na g\xf6re kesilir",B.Gt,null)
-B.EP=new A.aX("// Gemini'ye giden \u015fema",B.c8)
-B.F5=new A.aX("'tasteVerdict': {'type': 'STRING'},",B.bV)
-B.ET=new A.aX("// yerel modele giden \u015fema",B.c8)
+B.Qi=s([B.ID,B.bM,B.IR,B.bM,B.Ec],t.p)
+B.Vj=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Qi,null)
+B.XM=new A.dE("\xd6ZET \xb7 KOD VE TESTLER A\xc7IK KAYNAK","Be\u015f kural, iki s\xfctun",B.mx,null,B.Vj,null)
+B.Ks=new A.MS(null)
+B.N0=new A.lg("Guard","Koruyucu: modelin cevab\u0131 ekrana \xe7\u0131kmadan \xf6nce onu kontrol eden kod.",B.Ks,'kontrol \xf6nce yaln\u0131zca tasteVerdict alan\u0131na bak\u0131yordu; "tuzlu" deyip 5 y\u0131ld\u0131z veren cevap ge\xe7iyordu',null)
+B.XN=new A.dE("KURAL 1 / 5","Model \xf6nerir, karar\u0131 kod verir",B.ez,null,B.N0,null)
+B.EO=new A.aX("// Gemini'ye giden \u015fema",B.c8)
+B.F4=new A.aX("'tasteVerdict': {'type': 'STRING'},",B.bV)
+B.ES=new A.aX("// yerel modele giden \u015fema",B.c8)
 B.Ep=new A.aX("'tasteVerdict': {'type': 'string',",B.D)
-B.F_=new A.aX("  'enum': ['sweet_perfection',",B.D)
+B.EZ=new A.aX("  'enum': ['sweet_perfection',",B.D)
 B.Eo=new A.aX("    'salty_sabotage', 'spicy_chaos']},",B.D)
-B.Nf=s([B.EP,B.F5,B.dd,B.ET,B.Ep,B.F_,B.Eo],t.fC)
-B.MV=new A.h6("\xd6NCE \xb7 \u0130K\u0130 \u015eEMA, \u0130K\u0130 AYRI L\u0130STE","cafe_judge_service.dart \xb7 sadele\u015ftirildi",B.Nf,B.a6,null)
-B.EU=new A.aX("enum TasteVerdict {",B.D)
-B.EF=new A.aX("  sweetPerfection('sweet_perfection'),",B.D)
+B.Ng=s([B.EO,B.F4,B.dd,B.ES,B.Ep,B.EZ,B.Eo],t.fC)
+B.MV=new A.h6("\xd6NCE \xb7 \u0130K\u0130 \u015eEMA, \u0130K\u0130 AYRI L\u0130STE","cafe_judge_service.dart \xb7 sadele\u015ftirildi",B.Ng,B.a6,null)
+B.ET=new A.aX("enum TasteVerdict {",B.D)
+B.EE=new A.aX("  sweetPerfection('sweet_perfection'),",B.D)
 B.Eu=new A.aX("  saltySabotage('salty_sabotage'),",B.D)
 B.Fb=new A.aX("  spicyChaos('spicy_chaos'), ...",B.D)
-B.F1=new A.aX("// iki \u015femada da ayn\u0131 sat\u0131r",B.c8)
+B.F0=new A.aX("// iki \u015femada da ayn\u0131 sat\u0131r",B.c8)
 B.Fi=new A.aX("'enum': TasteVerdict.modelJsonValues,",B.bV)
-B.Oo=s([B.EU,B.EF,B.Eu,B.Fb,B.c9,B.F1,B.Fi],t.fC)
-B.MP=new A.h6("SONRA \xb7 TEK L\u0130STE","cafe_review.dart + cafe_judge_service.dart \xb7 sadele\u015ftirildi",B.Oo,B.z,null)
+B.Oq=s([B.ET,B.EE,B.Eu,B.Fb,B.c9,B.F0,B.Fi],t.fC)
+B.MP=new A.h6("SONRA \xb7 TEK L\u0130STE","cafe_review.dart + cafe_judge_service.dart \xb7 sadele\u015ftirildi",B.Oq,B.z,null)
 B.UD=new A.k4("the Gemini and the local Gemma schema both allow exactly the model verdicts","ye\u015fil",!1,null)
-B.MK=new A.lf(B.MV,B.MP,B.UD,null,null)
-B.XR=new A.dE("KURAL 2 / 5 \xb7 KOD","\u0130ki elle yaz\u0131lm\u0131\u015f liste yerine tek enum",B.ez,null,B.MK,null)
+B.MJ=new A.lf(B.MV,B.MP,B.UD,null,null)
+B.XO=new A.dE("KURAL 2 / 5 \xb7 KOD","\u0130ki elle yaz\u0131lm\u0131\u015f liste yerine tek enum",B.ez,null,B.MJ,null)
 B.Jw=new A.LZ(null)
 B.N1=new A.lg("Timeout",'Zaman a\u015f\u0131m\u0131: "en fazla \u015fu kadar beklerim" s\u0131n\u0131r\u0131. S\xfcre dolunca s\u0131radaki plana ge\xe7ilir.',B.Jw,"her katman CafeReview? d\xf6nd\xfcr\xfcyor: null; 429, zaman a\u015f\u0131m\u0131 ve bozuk JSON birbirinden ayr\u0131lm\u0131yor, neden d\xfc\u015ft\xfc\u011f\xfc kayboluyor",null)
-B.XS=new A.dE("KURAL 4 / 5","Model susarsa oyun susmaz",B.cA,null,B.N1,null)
+B.XP=new A.dE("KURAL 4 / 5","Model susarsa oyun susmaz",B.cA,null,B.N1,null)
 B.a77=new A.Gw("assets/images/about_photos.png","Sahnede ve toplulukta",null)
 B.Iu=new A.aN(1,B.r,B.a77,null)
 B.a78=new A.Gw("assets/images/about_communities.png","Y\xfcr\xfctt\xfc\u011f\xfcm topluluklar ve kitap",null)
-B.IT=new A.aN(1,B.r,B.a78,null)
-B.Os=s([B.Iu,B.fT,B.IT],t.p)
-B.Vs=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.Os,null)
+B.IU=new A.aN(1,B.r,B.a78,null)
+B.Ou=s([B.Iu,B.fT,B.IU],t.p)
+B.Vs=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.Ou,null)
 B.Iw=new A.aN(1,B.r,B.Vs,null)
 B.a5B=new A.wu("GOOGLE DEVELOPER EXPERT","Flutter ve Dart",null)
-B.II=new A.aN(3,B.r,B.a5B,null)
+B.IM=new A.aN(3,B.r,B.a5B,null)
 B.a5C=new A.wu("TECH LEAD","Antigua Mobile, Berlin",null)
 B.J8=new A.aN(3,B.r,B.a5C,null)
 B.a5D=new A.wu("K\u0130TAP","Flutter Design Patterns and Best Practices",null)
-B.Jb=new A.aN(5,B.r,B.a5D,null)
-B.OG=s([B.II,B.fT,B.J8,B.fT,B.Jb],t.p)
-B.Vp=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.OG,null)
+B.Ja=new A.aN(5,B.r,B.a5D,null)
+B.OH=s([B.IM,B.fT,B.J8,B.fT,B.Ja],t.p)
+B.Vp=new A.d4(B.H,B.j,B.l,B.o,null,B.R,null,0,B.OH,null)
 B.Qm=s([B.Iw,B.AG,B.Vp],t.p)
 B.Gl=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.Qm,null)
-B.XT=new A.dE("K\u0130M KONU\u015eUYOR","Merhaba, ben Esra",B.j0,null,B.Gl,null)
+B.XQ=new A.dE("K\u0130M KONU\u015eUYOR","Merhaba, ben Esra",B.j0,null,B.Gl,null)
 B.Pb=s(["Kahve + tatl\u0131 + tuzluk, sonra Servis Et."],t.s)
-B.H5=new A.ej("Tatl\u0131 sipari\u015fe gizlice tuz at\u0131n","G\xd6REV 1",B.Pb,B.y,null,28,36,null)
-B.Jo=new A.aN(1,B.r,B.H5,null)
-B.NV=s(['"J\xfcri:" yaz\u0131s\u0131ndan sonra ne geliyor? Akl\u0131n\u0131zda tutun.'],t.s)
-B.H3=new A.ej("Kart\u0131n alt\u0131ndaki j\xfcri rozetini okuyun","G\xd6REV 2",B.NV,B.b9,null,28,36,null)
-B.IY=new A.aN(1,B.r,B.H3,null)
-B.Oy=s(["J\xfcri d\xfc\u015f\xfcn\xfcrken yeti\u015febildiniz mi?"],t.s)
-B.GZ=new A.ej("H\u0131zl\u0131ysan\u0131z: Servis Et, hemen ard\u0131ndan S\u0131radaki M\xfc\u015fteri","G\xd6REV 3",B.Oy,B.z,null,28,36,null)
-B.Je=new A.aN(1,B.r,B.GZ,null)
-B.P7=s([B.Jo,B.ex,B.IY,B.ex,B.Je],t.p)
-B.Gq=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.P7,null)
-B.Jl=new A.aN(1,B.r,B.Gq,null)
+B.H6=new A.ej("Tatl\u0131 sipari\u015fe gizlice tuz at\u0131n","G\xd6REV 1",B.Pb,B.y,null,28,36,null)
+B.Jo=new A.aN(1,B.r,B.H6,null)
+B.NW=s(['"J\xfcri:" yaz\u0131s\u0131ndan sonra ne geliyor? Akl\u0131n\u0131zda tutun.'],t.s)
+B.H3=new A.ej("Kart\u0131n alt\u0131ndaki j\xfcri rozetini okuyun","G\xd6REV 2",B.NW,B.b9,null,28,36,null)
+B.IX=new A.aN(1,B.r,B.H3,null)
+B.Oz=s(["J\xfcri d\xfc\u015f\xfcn\xfcrken yeti\u015febildiniz mi?"],t.s)
+B.GY=new A.ej("H\u0131zl\u0131ysan\u0131z: Servis Et, hemen ard\u0131ndan S\u0131radaki M\xfc\u015fteri","G\xd6REV 3",B.Oz,B.z,null,28,36,null)
+B.Jd=new A.aN(1,B.r,B.GY,null)
+B.P7=s([B.Jo,B.ex,B.IX,B.ex,B.Jd],t.p)
+B.Gr=new A.f_(B.W,B.j,B.l,B.Q,null,B.R,null,0,B.P7,null)
+B.Jl=new A.aN(1,B.r,B.Gr,null)
 B.UF=new A.C6("assets/images/backyard_barista_konya_qr.png","Konya kafesini oyna",null,500,B.z,null)
 B.Ef=new A.fU(B.U,null,null,B.UF,null)
-B.Ov=s([B.Jl,B.AF,B.Ef],t.p)
-B.Vy=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Ov,null)
-B.XU=new A.dE("CANLI OYUN \xb7 TELEFONUNUZLA KATILIN","S\u0131ra sizde: QR kodu okutun",B.ey,null,B.Vy,null)
-B.Er=new A.aX("bool _isEvaluatingOrder = false;",B.D)
-B.EI=new A.aX("int _trayGeneration = 0;",B.D)
-B.ER=new A.aX("CafeReview? _latestReview;",B.D)
-B.EO=new A.aX("  _latestReview = null;",B.D)
-B.EV=new A.aX("  // _trayGeneration++ burada yok",B.bV)
-B.NX=s([B.Er,B.EI,B.ER,B.dd,B.nE,B.nG,B.EO,B.EV,B.c9],t.fC)
-B.MT=new A.h6("\xd6NCE \xb7 20 KASIM'A KADAR",u.r,B.NX,B.a6,null)
-B.On=s(["Servis Et'e bas, hemen S\u0131radaki M\xfc\u015fteri'ye bas.","Yeni m\xfc\u015fteri geldi, tepsi bo\u015f (0/3).","Yine de 5 y\u0131ld\u0131zl\u0131 kart \xe7\u0131kt\u0131.","\u0130ki oyuncuya +50 puan, ekip Lv.2 oldu."],t.s)
-B.H8=new A.ej("Bo\u015f tepsiye 5 y\u0131ld\u0131z","OYUNCU NE G\xd6RD\xdc",B.On,B.a6,"20 Kas 2026 \xb7 main 408f1c6 \xb7 ekran testiyle yakaland\u0131",30,40,null)
-B.Uy=new A.k4(u.y,"20 Kas: k\u0131rm\u0131z\u0131",!0,null)
-B.MJ=new A.lf(B.MT,B.H8,B.Uy,null,null)
-B.XV=new A.dE("KURAL 3 / 5 \xb7 HATA","\xdc\xe7 de\u011fi\u015fken, \xfc\xe7 s\u0131f\u0131rlama yeri, bir unutulan sat\u0131r",B.cA,null,B.MJ,null)
+B.Ox=s([B.Jl,B.AF,B.Ef],t.p)
+B.Vy=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.Ox,null)
+B.XR=new A.dE("CANLI OYUN \xb7 TELEFONUNUZLA KATILIN","S\u0131ra sizde: QR kodu okutun",B.ey,null,B.Vy,null)
+B.Fa=new A.aX("// eskiden: evet ya da hay\u0131r",B.c8)
+B.Fe=new A.aX("final bool isFromLiveGemini;",B.D)
+B.EL=new A.aX("// \xfc\xe7\xfcnc\xfc j\xfcri gelince: \xfc\xe7 isim",B.c8)
+B.F2=new A.aX("enum JudgeSource {",B.bV)
+B.Ev=new A.aX("  liveGemini,",B.D)
+B.EJ=new A.aX("  localGemma,",B.D)
+B.EP=new A.aX("  offlineBundle,",B.D)
+B.O4=s([B.Fa,B.Fe,B.dd,B.EL,B.F2,B.Ev,B.EJ,B.EP,B.c9],t.fC)
+B.MS=new A.h6("K\u0130M CEVAPLADI? \xb7 \xd6NCE VE SONRA","cafe_review.dart",B.O4,B.fb,null)
+B.Ni=s(['"Canl\u0131 Gemini": cevap modelden geldi.','"Yerel JSON \u015eemas\u0131": haz\u0131r yan\u0131t, C plan\u0131.',"Her sunucu saniyede 10 istek al\u0131r."],t.s)
+B.H4=new A.ej("Rozet, cevab\u0131n nereden geldi\u011fini s\xf6yler","ROZET\u0130N\u0130ZDE NE YAZIYORDU?",B.Ni,B.z,"nginx limit_req 10 r/s + burst 20 \xb7 sunucu kopyas\u0131 ba\u015f\u0131na tek kova: harcamay\u0131 s\u0131n\u0131rlar, k\xf6t\xfcye kullan\u0131m\u0131 de\u011fil",30,36,null)
+B.Uz=new A.k4("Proxy errors such as a 429 rate limit fall back to the offline roast","ye\u015fil",!1,null)
+B.MO=new A.lf(B.MS,B.H4,B.Uz,null,null)
+B.XS=new A.dE("KURAL 4 / 5 \xb7 KANIT","Az \xf6nce y\xfck testini siz yapt\u0131n\u0131z",B.cA,'HTTP 429: sunucunun "\xe7ok fazla istek geldi, yava\u015fla" demesi',B.MO,null)
+B.Fg=new A.aX("final parsedStars = rawStars is num",B.D)
+B.Ez=new A.aX("    ? rawStars.toInt()",B.D)
+B.Ff=new A.aX("    : maxCafeRatingStars;",B.bV)
+B.F8=new A.aX("// y\u0131ld\u0131z yoksa: 5 y\u0131ld\u0131z",B.c8)
+B.EI=new A.aX("tasteVerdict: json['tasteVerdict']",B.D)
+B.Es=new A.aX("    ?? 'sweet_perfection',",B.D)
+B.OG=s([B.Fg,B.Ez,B.Ff,B.F8,B.dd,B.EI,B.Es],t.fC)
+B.MZ=new A.h6("\xd6NCE \xb7 BO\u015eLUK BA\u015eARIYLA DOLUYORDU","cafe_review.dart \xb7 sadele\u015ftirildi",B.OG,B.a6,null)
+B.EA=new A.aX("if (tasteVerdict == null ||",B.D)
+B.Ex=new A.aX("    ratingStars is! int ||",B.D)
+B.F1=new A.aX("    headline is! String || ...) {",B.D)
+B.EK=new A.aX("  return null;",B.bV)
+B.F3=new A.aX("// null: s\u0131radaki j\xfcriye d\xfc\u015f",B.c8)
+B.Nk=s([B.EA,B.Ex,B.F1,B.EK,B.c9,B.F3],t.fC)
+B.MR=new A.h6("SONRA \xb7 EKS\u0130K CEVAP, CEVAP DE\u011e\u0130L","cafe_review.dart \xb7 sadele\u015ftirildi",B.Nk,B.z,null)
+B.UC=new A.k4("a Gemini reply with no fields does not score a sweet tray","k\u0131rm\u0131z\u0131yd\u0131, art\u0131k ye\u015fil",!1,null)
+B.ML=new A.lf(B.MZ,B.MR,B.UC,'Google dok\xfcman\u0131: "always validate values in your application." (aistudio.google.com/docs/structured-output)',null)
+B.XT=new A.dE("KURAL 2 / 5 \xb7 KOD","Bo\u015f cevap, ba\u015far\u0131 de\u011fildir",B.ez,null,B.ML,null)
+B.Nb=s(["Canl\u0131 Gemini art\u0131k ula\u015f\u0131lamaz.","Oyun ayn\u0131, kod ayn\u0131."],t.s)
+B.GV=new A.ej("Wi-Fi'\u0131 kapat","ADIM 1",B.Nb,B.a6,null,30,34,null)
+B.IO=new A.aN(1,B.r,B.GV,null)
+B.OQ=s(["Karar\u0131 laptoptaki Gemma 4 verir.","S\u0131n\u0131r 15 saniye."],t.s)
+B.H7=new A.ej("Tuzlu tepsiyi servis et","ADIM 2",B.OQ,B.y,"\xf6l\xe7\xfcm: 5,0 ile 8,4 sn aras\u0131 \xb7 12 tepsi",30,34,null)
+B.IZ=new A.aN(1,B.r,B.H7,null)
+B.PF=s(['"Yerel Gemma 4": B plan\u0131.','"Yerel JSON \u015eemas\u0131": C plan\u0131.'],t.s)
+B.GX=new A.ej("Rozeti oku","ADIM 3",B.PF,B.z,null,30,34,null)
+B.IV=new A.aN(1,B.r,B.GX,null)
+B.ON=s([B.IO,B.bM,B.IZ,B.bM,B.IV],t.p)
+B.Vh=new A.d4(B.H,B.j,B.l,B.Q,null,B.R,null,0,B.ON,null)
+B.XU=new A.dE("YEDEK \xb7 B PLANI CANLI","Wi-Fi kapal\u0131: j\xfcri bu laptopta",B.cA,null,B.Vh,null)
+B.EY=new A.aX("final liveReview =",B.D)
+B.EC=new A.aX("    await _tryCallGemini(...);",B.D)
+B.Fd=new A.aX("if (liveReview != null) {",B.bV)
+B.nF=new A.aX("  return liveReview;",B.D)
+B.Et=new A.aX("// model ne derse ekranda o",B.c8)
+B.Ql=s([B.EY,B.EC,B.dd,B.Fd,B.nF,B.c9,B.Et],t.fC)
+B.MQ=new A.h6("\xd6NCE","cafe_judge_service.dart \xb7 sadele\u015ftirildi",B.Ql,B.a6,null)
+B.ED=new A.aX("if (liveReview != null &&",B.D)
+B.Fh=new A.aX("    _verdictMatchesPranks(liveReview,",B.bV)
+B.F6=new A.aX("        containsSaltPrank: ...,",B.D)
+B.Fc=new A.aX("        containsChiliPrank: ...)) {",B.D)
+B.EB=new A.aX("// uymuyorsa: s\u0131radaki j\xfcri, sonra haz\u0131r yan\u0131t",B.c8)
+B.P4=s([B.ED,B.Fh,B.F6,B.Fc,B.nF,B.c9,B.EB],t.fC)
+B.MX=new A.h6("SONRA","cafe_judge_service.dart \xb7 sadele\u015ftirildi",B.P4,B.z,null)
+B.Ux=new A.k4("a Gemini verdict that misses the salt prank falls back to the offline roast","kontrol\xfc sil: k\u0131rm\u0131z\u0131",!1,null)
+B.MN=new A.lf(B.MQ,B.MX,B.Ux,null,null)
+B.XV=new A.dE("KURAL 1 / 5 \xb7 KOD","\xd6nce: cevap geldiyse g\xf6ster. Sonra: uyu\u015fuyorsa g\xf6ster",B.ez,null,B.MN,null)
 B.XW=new A.Dt(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.AI=new A.QT(0,0,0,0,0,0,!1,!1,null,0)
 B.XX=new A.ak9(0,"firstIsTop")
@@ -96839,10 +96839,10 @@ B.a3a=new A.bL("Open presenter view",null,null,null,null,null,null,null,null,nul
 B.a3b=new A.bL("Use light mode",null,null,null,null,null,null,null,null,null,null,null,null)
 B.a2c=new A.j(!0,B.E,null,"GoogleSansFlex",null,null,24,B.w,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.a3c=new A.bL("Stage Navigator \xb7 Backyard Barista",null,B.a2c,null,null,null,null,null,null,null,null,null,null)
+B.a3d=new A.bL("\xc7al\u0131\u015f\u0131yor. 32 test ye\u015fildi. Yine de i\xe7inde 5 hata buldum.",null,B.Bc,null,B.aI,null,null,null,null,null,null,null,null)
 B.a_d=new A.j(!0,B.m,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.a3d=new A.bL("Go to home page",null,B.a_d,null,null,null,null,null,null,null,null,null,null)
-B.a3e=new A.bL("Page Not Found",null,B.j5,null,null,null,null,null,null,null,null,null,null)
-B.a3f=new A.bL("\xc7al\u0131\u015f\u0131yor. 32 test ye\u015fildi. 20 Kas\u0131m'da i\xe7inde 5 hata buldum.",null,B.Bc,null,B.aI,null,null,null,null,null,null,null,null)
+B.a3e=new A.bL("Go to home page",null,B.a_d,null,null,null,null,null,null,null,null,null,null)
+B.a3f=new A.bL("Page Not Found",null,B.j5,null,null,null,null,null,null,null,null,null,null)
 B.Zm=new A.j(!0,B.ke,null,"GoogleSansFlex",null,null,26,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.a3g=new A.bL("Esra Kadah \xb7 esratech.com \xb7 @esrakadah \xb7 Flutter & Dart GDE, kendi g\xf6r\xfc\u015flerim",null,B.Zm,null,B.aI,null,null,null,null,null,null,null,null)
 B.SS=new A.h(0.056,0.024)
@@ -97025,8 +97025,8 @@ B.KO=new A.aJ(58283,"MaterialIcons",null,!1)
 B.GT=new A.ph("DEVFEST KONYA 2026",B.a6,B.KO,!1,null)
 B.KQ=new A.aJ(58337,"MaterialIcons",null,!1)
 B.GS=new A.ph("21 KASIM \xb7 ANA SALON \xb7 30 DK",B.y,B.KQ,!1,null)
-B.Op=s([B.GT,B.GS],t.p)
-B.a54=new A.Sf(B.Op,null)
+B.Or=s([B.GT,B.GS],t.p)
+B.a54=new A.Sf(B.Or,null)
 B.bc=new A.Sz(0,"forward")
 B.ji=new A.Sz(1,"reverse")
 B.a58=new A.ET(0,"checkbox")
@@ -97336,7 +97336,7 @@ return A.b([A.H(A.H(A.ak(),q),"Alphabetic"),A.H(A.H(A.ak(),q),"Ideographic")],t.
 s($,"b3t","aMZ",()=>{var q="PlaceholderAlignment"
 return A.b([A.H(A.H(A.ak(),q),"Baseline"),A.H(A.H(A.ak(),q),"AboveBaseline"),A.H(A.H(A.ak(),q),"BelowBaseline"),A.H(A.H(A.ak(),q),"Top"),A.H(A.H(A.ak(),q),"Bottom"),A.H(A.H(A.ak(),q),"Middle")],t.O)})
 r($,"b3i","aMR",()=>A.dj().gX4()+"roboto/v32/KFOmCnqEu92Fr1Me4GZLCzYlKw.woff2")
-s($,"b2I","aMr",()=>A.aRl(B.OI))
+s($,"b2I","aMr",()=>A.aRl(B.OJ))
 s($,"b2H","az0",()=>A.ab_(A.aOb($.aMr())))
 s($,"b_P","d_",()=>{var q,p=A.H(A.H(A.oP(),"window"),"screen")
 p=p==null?null:A.H(p,"width")
