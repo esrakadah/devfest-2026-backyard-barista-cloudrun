@@ -14,7 +14,7 @@ class EmptyReplySlide extends FlutterDeckSlideWidget {
             route: '/empty-reply',
             title: '14. Kural 2, kod: boş cevap başarı değildir',
             speakerNotes: 'BEAT  [14:00 - 15:30] Kural 2, ikinci kod. Boş cevaba beş yıldız hikayesi.\n'
-                'SAY   "20 Kasım\'da denedim: modelin yerine sahte, boş bir cevap koydum. Süslü parantez aç, kapa, içi boş. Oyun ne yaptı? Beş yıldız, Tatlı Mükemmellik, altında Canlı Gemini rozeti ve tam puan. Neden? Solda sarı satır: yıldız yoksa beş yıldız say. Kod her boşluğu başarıyla dolduruyordu. Sağda yeni hali: bir alan eksikse ya da yanlış türdeyse, sayı yerine yazı gibi, bu bir cevap değildir. Şema biçimi tarif eder, değerin doğru olduğunu garanti etmez; Google\'ın kendi dokümanı da değerleri uygulamanızda doğrulayın diyor. Eve götüreceğiniz cümle: boş cevap, başarı değildir."\n'
+                'SAY   "Şunu denedim: modelin yerine sahte, boş bir cevap koydum. Süslü parantez aç, kapa, içi boş. Oyun ne yaptı? Beş yıldız, Tatlı Mükemmellik, altında Canlı Gemini rozeti ve tam puan. Neden? Solda sarı satır: yıldız yoksa beş yıldız say. Kod her boşluğu başarıyla dolduruyordu. Sağda yeni hali: bir alan eksikse ya da yanlış türdeyse, sayı yerine yazı gibi, bu bir cevap değildir. Şema biçimi tarif eder, değerin doğru olduğunu garanti etmez; Google\'ın kendi dokümanı da değerleri uygulamanızda doğrulayın diyor. Eve götüreceğiniz cümle: boş cevap, başarı değildir."\n'
                 'HOLD  Sol sarı satır, sağ sarı satır, test adı. Alttaki İngilizce alıntıyı okuma; sorulursa kaynağı göster.\n'
                 'NEXT  "Buraya kadar modelin cevabıydı. Şimdi uygulamanın kendisine geçiyoruz."',
           ),
@@ -58,10 +58,10 @@ class EmptyReplySlide extends FlutterDeckSlideWidget {
             ),
             proof: ProofStrip(
               testName: 'a Gemini reply with no fields does not score a sweet tray',
-              outcome: '20 Kas: kırmızıydı, artık yeşil',
+              outcome: 'kırmızıydı, artık yeşil',
             ),
             advanced: 'Google dokümanı: "always validate values in your application." '
-                '(aistudio.google.com/docs/structured-output, 20 Kas 2026)',
+                '(aistudio.google.com/docs/structured-output)',
           ),
         );
       },

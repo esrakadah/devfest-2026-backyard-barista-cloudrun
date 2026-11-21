@@ -15,7 +15,7 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
             title: '21. Kural 5, maliyet: model boşuna çağrılmaz',
             speakerNotes:
                 'BEAT  [24:00 - 25:15] Kural 5, maliyet. Sayılan rakamlar ve bir ölçüm; eski tahminin tutmadığını söyle.\n'
-                'SAY   "Token, modelin okuduğu ve yazdığı kelime parçası; fatura token sayısına göre kesiliyor. O yüzden en ucuz çağrı, hiç yapmadığınız çağrı. Tepsiyi dizerken modele gitmiyoruz: sıfır çağrı. Eksik tepside, içinde tuz ya da acı yoksa, yine gitmiyoruz; cevabı kod veriyor. Tepsi servis edilince tek çağrı gidiyor. Bu üçünün testi var. Sağdaki rakama dikkat: 322 token. Bunu 20 Kasım\'da tek bir tepside ölçtüm. O güne kadar slaytımda 270 yazıyordu ve bir tahmindi; elli token eksik tahmin etmişim. Ölçmediğiniz rakamı ölçmüş gibi göstermeyin."\n'
+                'SAY   "Token, modelin okuduğu ve yazdığı kelime parçası; fatura token sayısına göre kesiliyor. O yüzden en ucuz çağrı, hiç yapmadığınız çağrı. Tepsiyi dizerken modele gitmiyoruz: sıfır çağrı. Eksik tepside, içinde tuz ya da acı yoksa, yine gitmiyoruz; cevabı kod veriyor. Tepsi servis edilince tek çağrı gidiyor. Bu üçünün testi var. Sağdaki rakama dikkat: 322 token. Bunu tek bir tepside ölçtüm. Ondan önce slaytımda 270 yazıyordu ve bir tahmindi; elli token eksik tahmin etmişim. Ölçmediğiniz rakamı ölçmüş gibi göstermeyin."\n'
                 'HOLD  Soldan sağa dört kutu. Son kutudaki "ÖLÇÜLDÜ" etiketini göster ve bir saniye dur.\n'
                 'NEXT  "Toparlayalım."',
           ),
@@ -74,7 +74,7 @@ class CostHonestSlide extends FlutterDeckSlideWidget {
                         value: '322',
                         unit: 'token',
                         caption: 'Bir tatlı tepsi: 223 girdi, 99 çıktı. Eski tahmin 270 idi',
-                        tag: 'ÖLÇÜLDÜ · 1 TEPSİ · 20 KAS',
+                        tag: 'ÖLÇÜLDÜ · 1 TEPSİ',
                         color: DeckColors.googleYellow,
                       ),
                     ),

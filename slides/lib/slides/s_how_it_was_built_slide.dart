@@ -14,7 +14,7 @@ class HowItWasBuiltSlide extends FlutterDeckSlideWidget {
             title: '8. Bu oyun nasıl yazıldı',
             speakerNotes:
                 'BEAT  [07:30 - 08:30] Dört araç tek slaytta, testin tanımı, ardından konuşmanın çerçevesi: çalışıyor, ama beş hata.\n'
-                'SAY   "Bu oyunu dört araçla yaptım. Google AI Studio: tarayıcıda isteğini yazıyorsun, çalışan uygulamayı alıyorsun. Antigravity: tek istekle birçok dosyayı değiştiren bir yapay zeka editörü. Oyun sahnesi Flame ile, raflar ve tepsi Flutter ile. Hepsi Cloud Run\'da; Cloud Run, uygulamanızı internette çalıştıran Google servisi. Yapım adımları ve istek metinleri GitHub\'daki açık kaynak kodda. Sonuç: çalışan bir oyun ve 32 test. Test, kodun doğru çalıştığını kontrol eden küçük bir program: geçerse yeşil, kalırsa kırmızı. 32\'si de yeşildi. 20 Kasım\'da aynı kodda beş hata buldum. Çalışıyor olması ve testlerin yeşil olması, doğru olduğu anlamına gelmiyor."\n'
+                'SAY   "Bu oyunu dört araçla yaptım. Google AI Studio: tarayıcıda isteğini yazıyorsun, çalışan uygulamayı alıyorsun. Antigravity: tek istekle birçok dosyayı değiştiren bir yapay zeka editörü. Oyun sahnesi Flame ile, raflar ve tepsi Flutter ile. Hepsi Cloud Run\'da. Cloud Run, Google Cloud\'un bir servisi: sunucu kurmuyorsunuz, tek komutla yayınlıyorsunuz, size bir https adresi veriyor. Az önce oynadığınız adres orada çalışıyor. Yapım adımları ve istek metinleri GitHub\'daki açık kaynak kodda. Sonuç: çalışan bir oyun ve 32 test. Test, kodun doğru çalıştığını kontrol eden küçük bir program: geçerse yeşil, kalırsa kırmızı. 32\'si de yeşildi. Sonra aynı kodda beş hata buldum. Çalışıyor olması ve testlerin yeşil olması, doğru olduğu anlamına gelmiyor."\n'
                 'HOLD  Dört kartı soldan sağa göster, okuma. Alttaki cümlede dur ve salona bak.\n'
                 'NEXT  "Bu hatalardan üçünü bugün göstereceğim; beşi de testleriyle GitHub\'da. Bu oyundan çıkardığım beş kural var."',
           ),
@@ -51,7 +51,11 @@ class HowItWasBuiltSlide extends FlutterDeckSlideWidget {
                         title: 'İsteğini yaz, uygulamayı al',
                         talkTitleFontSize: _toolTitleSize,
                         talkBulletFontSize: _toolLineSize,
-                        bullets: ['Tarayıcıda, kurulum yok.', "İstek metni (prompt) GitHub'da."],
+                        bullets: [
+                          'Google AI Studio: tarayıcıda çalışır, kurulum yok.',
+                          'Ne istediğini yazarsın, çalışan bir uygulama üretir.',
+                          "İstek metinleri (prompt) GitHub'da.",
+                        ],
                       ),
                     ),
                     SizedBox(width: _gap),
@@ -62,7 +66,11 @@ class HowItWasBuiltSlide extends FlutterDeckSlideWidget {
                         talkTitleFontSize: _toolTitleSize,
                         talkBulletFontSize: _toolLineSize,
                         accentColor: DeckColors.googleYellow,
-                        bullets: ['AI destekli kod editörü.', 'Kodu yazar, testleri çalıştırır.'],
+                        bullets: [
+                          "Google'ın AI destekli kod editörü.",
+                          'Tek istekle birçok dosyayı değiştirir.',
+                          'Kodu yazar, testleri çalıştırır.',
+                        ],
                       ),
                     ),
                     SizedBox(width: _gap),
@@ -73,18 +81,26 @@ class HowItWasBuiltSlide extends FlutterDeckSlideWidget {
                         talkTitleFontSize: _toolTitleSize,
                         talkBulletFontSize: _toolLineSize,
                         accentColor: DeckColors.googleGreen,
-                        bullets: ['Flame: Flutter için oyun motoru.', 'Raflar ve tepsi: Flutter.'],
+                        bullets: [
+                          'Flutter: tek kodla web ve mobil uygulama.',
+                          'Flame: Flutter için oyun motoru.',
+                          'Oyun sahnesi Flame, raflar ve tepsi Flutter.',
+                        ],
                       ),
                     ),
                     SizedBox(width: _gap),
                     Expanded(
                       child: DeckFeatureCard(
                         badge: 'CLOUD RUN',
-                        title: 'İnternette canlı adres',
+                        title: 'Uygulamayı internete koyar',
                         talkTitleFontSize: _toolTitleSize,
                         talkBulletFontSize: _toolLineSize,
                         accentColor: DeckColors.googleRed,
-                        bullets: ['Uygulamayı internette çalıştırır.', 'Az önce oynadığınız yer.'],
+                        bullets: [
+                          'Google Cloud servisi: sunucu kurmazsın, yönetmezsin.',
+                          'Tek komutla yayınlarsın, sana bir https adresi verir.',
+                          'Az önce oynadığınız adres orada çalışıyor.',
+                        ],
                       ),
                     ),
                   ],
@@ -105,7 +121,7 @@ class HowItWasBuiltSlide extends FlutterDeckSlideWidget {
                   ),
                 ),
                 child: const Text(
-                  "Çalışıyor. 32 test yeşildi. 20 Kasım'da içinde 5 hata buldum.",
+                  'Çalışıyor. 32 test yeşildi. Yine de içinde 5 hata buldum.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: DeckFonts.sans,

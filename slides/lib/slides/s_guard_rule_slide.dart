@@ -13,7 +13,7 @@ class GuardRuleSlide extends FlutterDeckSlideWidget {
             route: '/guard-rule',
             title: '10. Kural 1: model önerir, kararı kod verir',
             speakerNotes: 'BEAT  [09:00 - 10:15] Kural 1. Salona sor, sonra yeni kelime: guard.\n'
-                'SAY   "Kim tuz attı? Kaç yıldız aldınız? Bir. Peki o yıldızı kim verdi? Öneri jüriden geldi; son sözü kod söyledi: tepside tuz varsa kod bir yıldızdan fazlasına izin vermiyor. Yeni kelimemiz guard, Türkçesiyle koruyucu: modelin cevabı ekrana çıkmadan önce onu kontrol eden kod. Hikaye şöyle: 12 Kasım\'a kadar Gemini\'nin cevabı kontrolsüz ekrana çıkıyordu. Model tuzu kaçırırsa tuzlu tepsi beş yıldız alabiliyordu. Tepside tuz var mı, bunu artık kodumuz biliyor; modelin kararı buna uymuyorsa cevabı atıyoruz."\n'
+                'SAY   "Kim tuz attı? Kaç yıldız aldınız? Bir. Peki o yıldızı kim verdi? Öneri jüriden geldi; son sözü kod söyledi: tepside tuz varsa kod bir yıldızdan fazlasına izin vermiyor. Yeni kelimemiz guard, Türkçesiyle koruyucu: modelin cevabı ekrana çıkmadan önce onu kontrol eden kod. Hikaye şöyle: önceki sürümde Gemini\'nin cevabı kontrolsüz ekrana çıkıyordu. Model tuzu kaçırırsa tuzlu tepsi beş yıldız alabiliyordu. Tepside tuz var mı, bunu artık kodumuz biliyor; modelin kararı buna uymuyorsa cevabı atıyoruz."\n'
                 'HOLD  "Kim verdi?" sorusundan sonra 2 saniye bekle; "Gemini" diyeni de "kod" diyeni de duy, sonra cevabı ver. "Kim tuz attı?" sorusuna el kalkmazsa: "Ben attım, gördünüz: bir yıldız." Sonra üst şeridi (ÖNCE), ardından alt şeridi (SONRA) soldan sağa göster; Guard kutusunda dur. Alttaki satırı okuma.\n'
                 'NEXT  "Kodda bu tek bir satır."',
           ),
@@ -32,7 +32,7 @@ class GuardRuleSlide extends FlutterDeckSlideWidget {
             definition: 'Koruyucu: modelin cevabı ekrana çıkmadan önce onu kontrol eden kod.',
             picture: GuardFlowDiagram(),
             advanced: 'kontrol önce yalnızca tasteVerdict alanına bakıyordu; '
-                '"tuzlu" deyip 5 yıldız veren cevap 20 Kasım\'a kadar geçiyordu',
+                '"tuzlu" deyip 5 yıldız veren cevap geçiyordu',
           ),
         );
       },

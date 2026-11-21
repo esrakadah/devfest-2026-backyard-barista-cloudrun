@@ -1,4 +1,3 @@
-import 'package:backyard_barista_deck/deck_language.dart';
 import 'package:backyard_barista_deck/theme.dart';
 import 'package:backyard_barista_deck/widgets/deck_cards.dart';
 import 'package:backyard_barista_deck/widgets/story_arc.dart';
@@ -13,7 +12,7 @@ class TodayPlanSlide extends FlutterDeckSlideWidget {
             route: '/today-plan',
             title: '3. Bugün: 30 dakika, üç parça',
             speakerNotes: 'BEAT  [01:15 - 02:00] Harita ve ana fikir. Üç kartı göster, alttaki cümleyi yavaş söyle.\n'
-                'SAY   "Yarım saatimiz üç parça. Önce oynuyoruz: birazdan telefonunuzla canlı bir oyuna gireceksiniz, ilk üçe ödül var. Sonra konuşmanın asıl kısmı: beş kural. Bu oyunun kodunu yapay zeka araçlarıyla birlikte yazdım; çalışıyor, testlerden geçiyor. ${isIzmirDeck ? "20 Kasım'da" : "Dün"} aynı kodda beş hata buldum. O hatalardan üçünü ve bu oyundan çıkardığım beş kuralı göstereceğim. En sonda podyum ve ödüller. Başlıkta \'yap ve canlıya al\' yazıyor. Yapmak artık kolay; ben canlıya aldıktan sonra olanı anlatacağım."\n'
+                'SAY   "Yarım saatimiz üç parça. Önce oynuyoruz: birazdan telefonunuzla canlı bir oyuna gireceksiniz, ilk üçe ödül var. Sonra konuşmanın asıl kısmı: beş kural. Bu oyunun kodunu yapay zeka araçlarıyla birlikte yazdım; çalışıyor, testlerden geçiyor. Sonra aynı kodda beş hata buldum. O hatalardan üçünü ve bu oyundan çıkardığım beş kuralı göstereceğim. En sonda podyum ve ödüller. Başlıkta \'yap ve canlıya al\' yazıyor. Yapmak artık kolay; ben canlıya aldıktan sonra olanı anlatacağım."\n'
                 'HOLD  Kartları okuma, üç parçayı soldan sağa göster. "Beş hata buldum" dedikten sonra 2 saniye bekle.\n'
                 'NEXT  "Koda geçmeden önce bütün salonla küçük bir oylama yapalım."',
           ),

@@ -14,7 +14,7 @@ class FallbackRuleSlide extends FlutterDeckSlideWidget {
             route: '/fallback-rule',
             title: '18. Kural 4: model susarsa oyun susmaz',
             speakerNotes: 'BEAT  [19:30 - 20:45] Kural 4. Yeni kelime: timeout. Üç plan; sınır ile ölçümü ayır.\n'
-                'SAY   "Dördüncü kural. Yeni kelime timeout, zaman aşımı: en fazla şu kadar beklerim sınırı. Oyunda üç plan var. A planı canlı Gemini: en fazla sekiz saniye bekliyoruz. B planı Gemma, bu laptopta çalışan küçük bir model: sınır on beş saniye; o yalnızca benim laptopumda var, sizin telefonunuzda yok. C planı pakete koyduğumuz hazır yanıtlar: model gerekmez. Ekrandaki sekiz ve on beş ölçüm değil, sınır. Çerçeve sınırı, dolu kısım ölçümü gösteriyor; 11 Kasım\'da 12 tepsiyle ölçtüm."\n'
+                'SAY   "Dördüncü kural. Yeni kelime timeout, zaman aşımı: en fazla şu kadar beklerim sınırı. Oyunda üç plan var. A planı canlı Gemini: en fazla sekiz saniye bekliyoruz. B planı Gemma, bu laptopta çalışan küçük bir model: sınır on beş saniye; o yalnızca benim laptopumda var, sizin telefonunuzda yok. C planı pakete koyduğumuz hazır yanıtlar: model gerekmez. Ekrandaki sekiz ve on beş ölçüm değil, sınır. Çerçeve sınırı, dolu kısım ölçümü gösteriyor; 12 tepsiyle ölçtüm."\n'
                 'HOLD  Yukarıdan aşağı A, B, C. "Ölçüm değil, sınır" derken çerçeveyi, sonra dolu kısmı göster. C çubuğunun ne kadar kısa olduğunu göster.\n'
                 'NEXT  "C planını belki az önce siz test ettiniz."',
           ),

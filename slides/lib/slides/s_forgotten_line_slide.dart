@@ -14,7 +14,7 @@ class ForgottenLineSlide extends FlutterDeckSlideWidget {
             route: '/forgotten-line',
             title: '16. Kural 3, hata: unutulan satır',
             speakerNotes: 'BEAT  [16:45 - 18:00] Kural 3, hata. Üç değişken, üç sıfırlama yeri, bir unutulan satır.\n'
-                'SAY   "Solda siparişin eski hali: üç ayrı değişken, yani kodun bilgi tuttuğu üç ayrı kutu. Jüri düşünüyor mu, kaçıncı tepsi, son karar ne. Ortadaki bir sayaç: cevap geldiğinde sayı değişmişse cevap eski tepsiye aittir, atılır. Siparişi sıfırlayan üç yer var: Temizle, şehir değiştir, Sıradaki Müşteri. Her biri üç değişkeni de hatırlamak zorunda. Bu hata 12 Kasım\'da bir kez düzeltildi; düzeltme iki yeri kapattı, üçüncüyü unuttu. Sarı satır, unutulan satırın olması gereken yer. Sağda oyuncunun gördüğü: boş tepsiye beş yıldız. Bunu bir testle kanıtladım: test kırmızı yandı."\n'
+                'SAY   "Solda siparişin eski hali: üç ayrı değişken, yani kodun bilgi tuttuğu üç ayrı kutu. Jüri düşünüyor mu, kaçıncı tepsi, son karar ne. Ortadaki bir sayaç: cevap geldiğinde sayı değişmişse cevap eski tepsiye aittir, atılır. Siparişi sıfırlayan üç yer var: Temizle, şehir değiştir, Sıradaki Müşteri. Her biri üç değişkeni de hatırlamak zorunda. Bu hata daha önce bir kez düzeltildi; düzeltme iki yeri kapattı, üçüncüyü unuttu. Sarı satır, unutulan satırın olması gereken yer. Sağda oyuncunun gördüğü: boş tepsiye beş yıldız. Bunu bir testle kanıtladım: test kırmızı yandı."\n'
                 'HOLD  Soldaki üç değişkeni parmakla say, sarı satırda dur. Sonra sağdaki kart.\n'
                 'NEXT  "Çözüm, unutulan satırı eklemek değil."',
           ),
@@ -33,7 +33,7 @@ class ForgottenLineSlide extends FlutterDeckSlideWidget {
           act: StoryAct.underTheHood,
           child: LessonCodeBody(
             left: LessonCodeCard(
-              label: "ÖNCE · 20 KASIM'A KADAR",
+              label: 'ÖNCE',
               filePathLabel: 'cafe_counter_screen.dart · sadeleştirildi',
               accentColor: DeckColors.googleRed,
               lines: [
@@ -60,11 +60,11 @@ class ForgottenLineSlide extends FlutterDeckSlideWidget {
                 'Yine de 5 yıldızlı kart çıktı.',
                 'İki oyuncuya +50 puan, ekip Lv.2 oldu.',
               ],
-              footerText: '20 Kas 2026 · main 408f1c6 · ekran testiyle yakalandı',
+              footerText: 'main 408f1c6 · ekran testiyle yakalandı',
             ),
             proof: ProofStrip.failing(
               testName: 'a verdict that arrives after Next Customer is dropped',
-              outcome: '20 Kas: kırmızı',
+              outcome: 'kırmızı',
             ),
           ),
         );
