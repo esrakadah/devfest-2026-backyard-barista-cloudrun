@@ -606,6 +606,25 @@ class _VerdictFace extends StatelessWidget {
   }
 }
 
+/// Progressive reveal steps of [OrderStateDiagram] on `/order-state-rule`.
+enum OrderStateStep {
+  /// Step 1: all five variable combinations are shown neutrally so the hall can spot the invalid ones.
+  allCombinations,
+
+  /// Step 2: the three valid combinations turn green and the two impossible ones light up red.
+  invalidHighlighted,
+
+  /// Step 3: impossible combinations are crossed out as unrepresentable and the three sealed states appear.
+  sealedStates;
+
+  /// Maps the 1-based `stepNumber` from `FlutterDeckSlideStepsBuilder` to an [OrderStateStep].
+  factory OrderStateStep.fromStepNumber(int stepNumber) => switch (stepNumber) {
+        <= 1 => OrderStateStep.allCombinations,
+        2 => OrderStateStep.invalidHighlighted,
+        _ => OrderStateStep.sealedStates,
+      };
+}
+
 /// One combination the three old variables could hold.
 @immutable
 class _OrderCombination {
@@ -618,20 +637,27 @@ class _OrderCombination {
 
 /// Rule 3: what the three loose variables allowed, next to the three states the sealed class allows.
 class OrderStateDiagram extends StatelessWidget {
-  const OrderStateDiagram({super.key});
+  const OrderStateDiagram({this.step = OrderStateStep.sealedStates, super.key});
+
+  final OrderStateStep step;
 
   static const double _variablesSize = 23;
   static const double _meaningSize = 23;
   static const double _rowGap = 8;
   static const double _rowRadius = 10;
   static const double _rowFillOpacity = 0.12;
+  static const double _invalidHighlightFillOpacity = 0.2;
   static const double _rowBorderOpacity = 0.4;
+  static const double _invalidHighlightBorderOpacity = 0.75;
+  static const double _blockedTintOpacity = 0.85;
   static const double _rowIconSize = 28;
   static const double _stateNameSize = 28;
   static const double _stateTypeSize = 19;
   static const double _stateIconSize = 44;
   static const double _stateArrowSize = 34;
   static const double _closingSize = 24;
+  static const double _waitingPromptSize = 25;
+  static const double _waitingIconSize = 52;
 
   static const List<_OrderCombination> _combinations = [
     _OrderCombination('jüride: hayır · kart: yok', 'Boşta', makesSense: true),
@@ -641,8 +667,21 @@ class OrderStateDiagram extends StatelessWidget {
     _OrderCombination('yeni müşteri · tepsi boş · kart: var', 'Boş tepsiye 5 yıldız!', makesSense: false),
   ];
 
+  String get _leftTag => switch (step) {
+        OrderStateStep.allCombinations => '5 KOMBİNASYON',
+        OrderStateStep.invalidHighlighted => '2 SAÇMA DURUM YAZILABİLİYORDU',
+        OrderStateStep.sealedStates => 'SEALED İLE 2 SAÇMA DURUM YAZILAMAZ',
+      };
+
+  Color get _leftAccent => switch (step) {
+        OrderStateStep.allCombinations => DeckColors.googleYellow,
+        OrderStateStep.invalidHighlighted => DeckColors.googleRed,
+        OrderStateStep.sealedStates => DeckColors.googleGreen,
+      };
+
   @override
   Widget build(BuildContext context) {
+    final showsSealedPanel = step == OrderStateStep.sealedStates;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -650,8 +689,8 @@ class OrderStateDiagram extends StatelessWidget {
           flex: 7,
           child: DiagramPanel(
             label: 'ÖNCE · ÜÇ AYRI DEĞİŞKEN',
-            tag: '2 SAÇMA DURUM YAZILABİLİYORDU',
-            accentColor: DeckColors.googleRed,
+            tag: _leftTag,
+            accentColor: _leftAccent,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -664,84 +703,270 @@ class OrderStateDiagram extends StatelessWidget {
           ),
         ),
         const SizedBox(width: _gap),
-        const Expanded(
+        Expanded(
           flex: 5,
           child: DiagramPanel(
             label: 'SONRA · sealed class OrderState',
-            tag: '3 HAL',
-            accentColor: DeckColors.googleGreen,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(child: _OrderStateChip(Icons.storefront_rounded, name: 'Boşta', type: 'OrderIdle')),
-                Icon(Icons.arrow_downward_rounded, size: _stateArrowSize, color: DeckColors.googleGreen),
-                Expanded(child: _OrderStateChip(Icons.hourglass_top_rounded, name: 'Jüride', type: 'OrderEvaluating')),
-                Icon(Icons.arrow_downward_rounded, size: _stateArrowSize, color: DeckColors.googleGreen),
-                Expanded(
-                  child: _OrderStateChip(Icons.reviews_rounded, name: 'Servis edildi', type: 'OrderServed + kart'),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Dördüncü hal yok: yazmaya kalkarsan derlenmez.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: DeckFonts.sans,
-                    fontSize: _closingSize,
-                    fontWeight: FontWeight.w600,
-                    color: DeckColors.offWhite,
-                  ),
-                ),
-              ],
-            ),
+            tag: showsSealedPanel ? '3 HAL' : 'BİRAZDAN',
+            accentColor: showsSealedPanel ? DeckColors.googleGreen : DeckColors.mutedText,
+            child: showsSealedPanel ? const _SealedOrderStatePanel() : _waitingRightPanel(),
           ),
         ),
       ],
     );
   }
 
-  Widget _combinationRow(_OrderCombination combination) {
-    final rowColor = combination.makesSense ? DeckColors.googleGreen : DeckColors.googleRed;
+  Widget _waitingRightPanel() {
+    final isRedStep = step == OrderStateStep.invalidHighlighted;
+    final accent = isRedStep ? DeckColors.googleRed : DeckColors.googleYellow;
+    final prompt = isRedStep
+        ? 'Kod bu iki kırmızı satırı engellemiyor:\nbir unutulan sıfırlama satırı yetiyor.'
+        : 'Üç ayrı değişken bu beş satırın\nhepsine izin veriyor.\nHangileri gerçekte olmamalı?';
+    final icon = isRedStep ? Icons.error_outline_rounded : Icons.help_outline_rounded;
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       decoration: BoxDecoration(
-        color: rowColor.withValues(alpha: _rowFillOpacity),
-        borderRadius: BorderRadius.circular(_rowRadius),
-        border: Border.all(color: rowColor.withValues(alpha: _rowBorderOpacity)),
+        color: DeckColors.surfaceInset,
+        borderRadius: BorderRadius.circular(_plateRadius),
+        border: Border.all(color: DeckColors.outline, width: 1.5),
       ),
-      child: Row(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            combination.makesSense ? Icons.check_circle_rounded : Icons.error_rounded,
-            size: _rowIconSize,
-            color: rowColor,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                combination.variables,
-                style: const TextStyle(
-                  fontFamily: DeckFonts.mono,
-                  fontSize: _variablesSize,
-                  color: DeckColors.offWhite,
-                ),
-              ),
+          Container(
+            width: 88,
+            height: 88,
+            decoration: BoxDecoration(
+              color: accent.withValues(alpha: 0.14),
+              shape: BoxShape.circle,
             ),
+            child: Icon(icon, size: _waitingIconSize, color: accent),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(height: 22),
           Text(
-            combination.meaning,
-            style: TextStyle(
+            prompt,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
               fontFamily: DeckFonts.sans,
-              fontSize: _meaningSize,
-              fontWeight: FontWeight.w700,
-              color: rowColor,
+              fontSize: _waitingPromptSize,
+              fontWeight: FontWeight.w600,
+              height: 1.38,
+              color: DeckColors.offWhite,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _combinationRow(_OrderCombination combination) {
+    switch (step) {
+      case OrderStateStep.allCombinations:
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: DeckColors.surfaceElevated,
+            borderRadius: BorderRadius.circular(_rowRadius),
+            border: Border.all(color: DeckColors.outlineLight.withValues(alpha: _rowBorderOpacity)),
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.help_outline_rounded, size: _rowIconSize, color: DeckColors.googleYellow),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    combination.variables,
+                    style: const TextStyle(
+                      fontFamily: DeckFonts.mono,
+                      fontSize: _variablesSize,
+                      color: DeckColors.offWhite,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                combination.meaning,
+                style: const TextStyle(
+                  fontFamily: DeckFonts.sans,
+                  fontSize: _meaningSize,
+                  fontWeight: FontWeight.w600,
+                  color: DeckColors.mutedText,
+                ),
+              ),
+            ],
+          ),
+        );
+
+      case OrderStateStep.invalidHighlighted:
+        final isValid = combination.makesSense;
+        final rowColor = isValid ? DeckColors.googleGreen : DeckColors.googleRed;
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: rowColor.withValues(alpha: isValid ? _rowFillOpacity : _invalidHighlightFillOpacity),
+            borderRadius: BorderRadius.circular(_rowRadius),
+            border: Border.all(
+              color: rowColor.withValues(alpha: isValid ? _rowBorderOpacity : _invalidHighlightBorderOpacity),
+              width: isValid ? 1 : 1.5,
+            ),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                isValid ? Icons.check_circle_rounded : Icons.error_rounded,
+                size: _rowIconSize,
+                color: rowColor,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    combination.variables,
+                    style: const TextStyle(
+                      fontFamily: DeckFonts.mono,
+                      fontSize: _variablesSize,
+                      color: DeckColors.offWhite,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                combination.meaning,
+                style: TextStyle(
+                  fontFamily: DeckFonts.sans,
+                  fontSize: _meaningSize,
+                  fontWeight: FontWeight.w700,
+                  color: rowColor,
+                ),
+              ),
+            ],
+          ),
+        );
+
+      case OrderStateStep.sealedStates:
+        if (combination.makesSense) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: DeckColors.googleGreen.withValues(alpha: _rowFillOpacity),
+              borderRadius: BorderRadius.circular(_rowRadius),
+              border: Border.all(color: DeckColors.googleGreen.withValues(alpha: _rowBorderOpacity)),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.check_circle_rounded, size: _rowIconSize, color: DeckColors.googleGreen),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      combination.variables,
+                      style: const TextStyle(
+                        fontFamily: DeckFonts.mono,
+                        fontSize: _variablesSize,
+                        color: DeckColors.offWhite,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  combination.meaning,
+                  style: const TextStyle(
+                    fontFamily: DeckFonts.sans,
+                    fontSize: _meaningSize,
+                    fontWeight: FontWeight.w700,
+                    color: DeckColors.googleGreen,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        final blockedColor = DeckColors.googleRed.withValues(alpha: _blockedTintOpacity);
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: DeckColors.surfaceInset,
+            borderRadius: BorderRadius.circular(_rowRadius),
+            border: Border.all(color: DeckColors.outline),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.block_rounded, size: _rowIconSize, color: blockedColor),
+              const SizedBox(width: 12),
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    combination.variables,
+                    style: TextStyle(
+                      fontFamily: DeckFonts.mono,
+                      fontSize: _variablesSize,
+                      color: DeckColors.mutedText,
+                      decoration: TextDecoration.lineThrough,
+                      decorationColor: blockedColor,
+                      decorationThickness: 2.2,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'YAZILAMAZ',
+                style: TextStyle(
+                  fontFamily: DeckFonts.mono,
+                  fontSize: _meaningSize - 2,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.6,
+                  color: blockedColor,
+                ),
+              ),
+            ],
+          ),
+        );
+    }
+  }
+}
+
+class _SealedOrderStatePanel extends StatelessWidget {
+  const _SealedOrderStatePanel();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(child: _OrderStateChip(Icons.storefront_rounded, name: 'Boşta', type: 'OrderIdle')),
+        Icon(Icons.arrow_downward_rounded, size: OrderStateDiagram._stateArrowSize, color: DeckColors.googleGreen),
+        Expanded(child: _OrderStateChip(Icons.hourglass_top_rounded, name: 'Jüride', type: 'OrderEvaluating')),
+        Icon(Icons.arrow_downward_rounded, size: OrderStateDiagram._stateArrowSize, color: DeckColors.googleGreen),
+        Expanded(
+          child: _OrderStateChip(Icons.reviews_rounded, name: 'Servis edildi', type: 'OrderServed + kart'),
+        ),
+        SizedBox(height: 10),
+        Text(
+          'Dördüncü hal yok: yazmaya kalkarsan derlenmez.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: DeckFonts.sans,
+            fontSize: OrderStateDiagram._closingSize,
+            fontWeight: FontWeight.w600,
+            color: DeckColors.offWhite,
+          ),
+        ),
+      ],
     );
   }
 }
