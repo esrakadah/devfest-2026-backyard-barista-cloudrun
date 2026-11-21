@@ -289,9 +289,12 @@ class _HallLeaderboardPageState extends State<HallLeaderboardPage> {
                               hasLoadedOnce: widget.controller.hasLoadedOnce,
                               isEnglish: _isEnglish,
                             );
+                            final showKonyaPhoto =
+                                widget.controller.eventId.startsWith('konya') || widget.controller.eventId == 'prova';
                             final prizesPanel = _PrizesSidePanel(
                               entries: entries,
                               isEnglish: _isEnglish,
+                              showKonyaPhoto: showKonyaPhoto,
                             );
 
                             if (constraints.maxWidth >= _wideLayoutBreakpoint) {
@@ -308,7 +311,10 @@ class _HallLeaderboardPageState extends State<HallLeaderboardPage> {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: <Widget>[
-                                _CompactPrizesBanner(isEnglish: _isEnglish),
+                                _CompactPrizesBanner(
+                                  isEnglish: _isEnglish,
+                                  showKonyaPhoto: showKonyaPhoto,
+                                ),
                                 const SizedBox(height: 12),
                                 Expanded(child: standingsPanel),
                               ],
@@ -610,10 +616,12 @@ class _PrizesSidePanel extends StatelessWidget {
   const _PrizesSidePanel({
     required this.entries,
     required this.isEnglish,
+    required this.showKonyaPhoto,
   });
 
   final List<HallBoardPlayerEntry> entries;
   final bool isEnglish;
+  final bool showKonyaPhoto;
 
   @override
   Widget build(BuildContext context) {
@@ -642,7 +650,7 @@ class _PrizesSidePanel extends StatelessWidget {
     ];
 
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: _panelBackground,
         borderRadius: BorderRadius.circular(_cardCornerRadius),
@@ -660,71 +668,98 @@ class _PrizesSidePanel extends StatelessWidget {
               color: _goldAccent,
             ),
           ),
-          const SizedBox(height: 12),
-          for (final prize in prizes) ...<Widget>[
+          const SizedBox(height: 10),
+          if (showKonyaPhoto) ...<Widget>[
             Expanded(
+              flex: 5,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                key: const Key('konya_prizes_photo_card'),
                 decoration: BoxDecoration(
-                  color: _elevatedRowBackground,
+                  color: _pageBackground,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: prize.color.withValues(alpha: 0.6)),
+                  border: Border.all(color: _goldAccent.withValues(alpha: 0.65), width: 1.5),
                 ),
-                child: Row(
-                  children: <Widget>[
-                    Icon(prize.icon, size: 34, color: prize.color),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            isEnglish ? 'PLACE #${prize.rank}' : '${prize.rank}. OLANA',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w800,
-                              color: prize.color,
-                            ),
-                          ),
-                          Text(
-                            prize.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w800,
-                              color: _creamText,
-                            ),
-                          ),
-                          if (prize.leader != null)
-                            Text(
-                              prize.leader!,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 12.5,
-                                fontWeight: FontWeight.w600,
-                                color: _mutedCreamText,
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ],
+                clipBehavior: Clip.antiAlias,
+                child: Image.asset(
+                  'assets/editions/konya_prizes.jpg',
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
-            if (prize.rank < _podiumCount) const SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
-          const SizedBox(height: 10),
+          Expanded(
+            flex: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                for (final prize in prizes) ...<Widget>[
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: _elevatedRowBackground,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: prize.color.withValues(alpha: 0.6)),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(prize.icon, size: 28, color: prize.color),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    isEnglish ? 'PLACE #${prize.rank}' : '${prize.rank}. OLANA',
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w800,
+                                      color: prize.color,
+                                    ),
+                                  ),
+                                  Text(
+                                    prize.title,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w800,
+                                      color: _creamText,
+                                    ),
+                                  ),
+                                  if (prize.leader != null)
+                                    Text(
+                                      prize.leader!,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: _mutedCreamText,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (prize.rank < _podiumCount) const SizedBox(height: 8),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
           Text(
             isEnglish
                 ? 'Correct tray: 100 pts · Prank or incomplete tray: 30 pts'
                 : 'Doğru tepsi: 100p · Şaka veya eksik tepsi: 30p',
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 11.5,
               fontWeight: FontWeight.w600,
               color: _mutedCreamText,
             ),
@@ -736,29 +771,50 @@ class _PrizesSidePanel extends StatelessWidget {
 }
 
 class _CompactPrizesBanner extends StatelessWidget {
-  const _CompactPrizesBanner({required this.isEnglish});
+  const _CompactPrizesBanner({
+    required this.isEnglish,
+    required this.showKonyaPhoto,
+  });
 
   final bool isEnglish;
+  final bool showKonyaPhoto;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: _panelBackground,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: _goldAccent.withValues(alpha: 0.5)),
       ),
-      child: Text(
-        isEnglish
-            ? '1st: Dash · 2nd: Google Cloud Glasses · 3rd: Sticker Set'
-            : '1. Dash · 2. Google Cloud Gözlük · 3. Sticker Seti',
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 12.5,
-          fontWeight: FontWeight.w700,
-          color: _creamText,
-        ),
+      child: Row(
+        children: <Widget>[
+          if (showKonyaPhoto) ...<Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                'assets/editions/konya_prizes.jpg',
+                width: 48,
+                height: 54,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const SizedBox(width: 10),
+          ],
+          Expanded(
+            child: Text(
+              isEnglish
+                  ? '1st: Dash · 2nd: Google Cloud Glasses · 3rd: Sticker Set'
+                  : '1. Dash · 2. Google Cloud Gözlük · 3. Sticker Seti',
+              style: const TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w700,
+                color: _creamText,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
