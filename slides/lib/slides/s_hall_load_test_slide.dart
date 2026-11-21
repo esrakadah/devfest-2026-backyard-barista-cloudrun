@@ -37,7 +37,7 @@ class HallLoadTestSlide extends FlutterDeckSlideWidget {
               label: 'KİM CEVAPLADI? · ÖNCE VE SONRA',
               filePathLabel: 'cafe_review.dart',
               lines: [
-                CodeLine.comment("// 11 Kasım'a kadar: evet ya da hayır"),
+                CodeLine.comment('// eskiden: evet ya da hayır'),
                 CodeLine('final bool isFromLiveGemini;'),
                 CodeLine(''),
                 CodeLine.comment('// üçüncü jüri gelince: üç isim'),

@@ -1097,7 +1097,7 @@ class FallbackTimelineDiagram extends StatelessWidget {
   Widget build(BuildContext context) {
     return DiagramPanel(
       label: 'ÜÇ PLAN · AYNI ZAMAN EKSENİ',
-      tag: 'ÇERÇEVE: SINIR · DOLU: ÖLÇÜM (12 TEPSİ, 11 KAS 2026)',
+      tag: 'ÇERÇEVE: SINIR · DOLU: ÖLÇÜM (12 TEPSİ)',
       accentColor: DeckColors.googleYellow,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

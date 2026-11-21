@@ -52,7 +52,7 @@ class WifiOffGemmaSlide extends FlutterDeckSlideWidget {
                   talkBulletFontSize: _stepLineSize,
                   accentColor: DeckColors.googleYellow,
                   bullets: ['Kararı laptoptaki Gemma 4 verir.', 'Sınır 15 saniye.'],
-                  footerText: 'ölçüm: 5,0 ile 8,4 sn arası · 12 tepsi · 11 Kas 2026',
+                  footerText: 'ölçüm: 5,0 ile 8,4 sn arası · 12 tepsi',
                 ),
               ),
               SizedBox(width: _gap),

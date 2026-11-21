@@ -14,7 +14,7 @@ class GuardBeforeAfterSlide extends FlutterDeckSlideWidget {
             route: '/guard-before-after',
             title: '11. Kural 1, kod: önce ve sonra',
             speakerNotes: 'BEAT  [10:15 - 11:45] Kural 1, kod. Yalnızca iki sarı satır ve test adı.\n'
-                'SAY   "Solda eski hali. Sarı satıra bakın: cevap geldiyse göster. Modelin ne dediğine bakan yok. Sağda yeni hali: cevap geldiyse ve tepsideki tuzla uyuşuyorsa göster. Uyuşmuyorsa cevap çöpe gidiyor, yerine hazır yanıt geliyor. Bunu nereden biliyoruz? Alttaki test. Sağdaki sarı satırı silerseniz bu test kırmızıya dönüyor. 20 Kasım\'da bir şey daha buldum: kontrol sadece kelimeye bakıyordu. Model tuzlu deyip beş yıldız verirse geçiyordu; artık yıldıza da bakıyor. Eve götüreceğiniz cümle: modelin cevabı bir öneridir, karar değil."\n'
+                'SAY   "Solda eski hali. Sarı satıra bakın: cevap geldiyse göster. Modelin ne dediğine bakan yok. Sağda yeni hali: cevap geldiyse ve tepsideki tuzla uyuşuyorsa göster. Uyuşmuyorsa cevap çöpe gidiyor, yerine hazır yanıt geliyor. Bunu nereden biliyoruz? Alttaki test. Sağdaki sarı satırı silerseniz bu test kırmızıya dönüyor. Sonra bir şey daha buldum: kontrol sadece kelimeye bakıyordu. Model tuzlu deyip beş yıldız verirse geçiyordu; artık yıldıza da bakıyor. Eve götüreceğiniz cümle: modelin cevabı bir öneridir, karar değil."\n'
                 'HOLD  Önce soldaki sarı satır, sonra sağdaki sarı satır, en son alttaki test adı. Kodun geri kalanını okuma.\n'
                 'NEXT  "Peki \'tuzlu\' kararı kodda nasıl yazılıyor? Orada da bir tuzak vardı."',
           ),
@@ -30,7 +30,7 @@ class GuardBeforeAfterSlide extends FlutterDeckSlideWidget {
           act: StoryAct.realNumbers,
           child: LessonCodeBody(
             left: LessonCodeCard(
-              label: "ÖNCE · 12 KASIM'A KADAR",
+              label: 'ÖNCE',
               filePathLabel: 'cafe_judge_service.dart · sadeleştirildi',
               accentColor: DeckColors.googleRed,
               lines: [
